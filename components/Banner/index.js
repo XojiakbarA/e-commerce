@@ -27,7 +27,7 @@ const Banner = () => {
     ]
 
     return (
-        <Carousel autoPlay={false}>
+        <Carousel>
             {
                 banners.map( (banner, i) => <BannerItem key={i} banner={banner} /> )
             }
