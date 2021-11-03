@@ -1,7 +1,16 @@
+import { CssBaseline } from '@mui/material'
+
+import Layout from '../components/Layout'
+
 import '../styles/globals.css'
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+const MyApp = ({Component, pageProps}) => {
+    return(
+        <Layout>
+            <CssBaseline />
+            <Component {...pageProps} />
+        </Layout>
+    )
 }
 
 export default MyApp
