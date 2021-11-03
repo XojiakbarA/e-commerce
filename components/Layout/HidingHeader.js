@@ -26,7 +26,7 @@ HideOnScroll.propTypes = {
 const HidingHeader = (props) => {
     return (
         <HideOnScroll {...props}>
-            <AppBar sx={{zIndex: 1}} color='inherit'>
+            <AppBar sx={{zIndex: 10}} color='inherit'>
                 <Toolbar sx={{display: {xs: 'none', sm: 'block'}}} />
                 <Container maxWidth='xl'>
                     <Toolbar>
