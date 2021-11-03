@@ -34,6 +34,7 @@ const MenuCategories = () => {
                 aria-expanded={open ? 'true' : undefined}
                 onClick={handleClick}
                 variant='contained'
+                sx={{display: {xs: 'none', sm: 'block'}}}
             >
                 Categories
             </Button>

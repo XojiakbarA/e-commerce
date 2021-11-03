@@ -1,5 +1,6 @@
 import FixedHeader from "./FixedHeader"
 import HidingHeader from "./HidingHeader"
+import MenuMobile from "../Menu/MenuMobile"
 
 const Layout = ({children}) => {
 
@@ -10,6 +11,7 @@ const Layout = ({children}) => {
         <main>
             {children}
         </main>
+        <MenuMobile />
         </>
     )
 }

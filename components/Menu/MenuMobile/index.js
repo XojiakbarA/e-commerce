@@ -1,37 +1,34 @@
-import { IconButton, Badge, MenuItem, Menu } from '@mui/material'
+import { Badge, Box, BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
 
-import MenuMobileItem from './MenuMobileItem'
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 
-const MenuMobile = ({
-        anchorEl,
-        isMenuMobileOpen,
-        handleMenuMobileClose,
-        menu
-}) => {
-    return(
-        <Menu
-            anchorEl={anchorEl}
-            anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            keepMounted
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            open={isMenuMobileOpen}
-            onClose={handleMenuMobileClose}
-        >
-            {
-                menu.map((item, i) => (
-                    <MenuMobileItem key={i} item={item} />
-                ))
-            }
-            
-            
-        </Menu>
-    )
+const menu = [
+    {id: 1, badge: 4, title: 'Wishlist', icon: (<FavoriteIcon/>)},
+    {id: 2, badge: 17, title: 'Cart', icon: (<ShoppingCartIcon/>)},
+    {id: 3, badge: 0, title: 'Account', icon: (<AccountCircle/>)}
+]
+
+const MenuMobile = () => {
+
+    return (
+        <Box sx={{ pb: 7, display: {xs: 'block', sm: 'none'}}}>
+        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+            <BottomNavigation showLabels>
+                {
+                    menu.map((item, i) => (
+                        <BottomNavigationAction
+                        key={i}
+                        label={item.title}
+                        icon={<Badge badgeContent={item.badge} color="error">{item.icon}</Badge>}
+                        />
+                    ))
+                }
+            </BottomNavigation>
+        </Paper>
+        </Box>
+    );
 }
 
 export default MenuMobile
