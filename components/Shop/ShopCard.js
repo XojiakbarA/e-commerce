@@ -1,5 +1,6 @@
 import {Card, CardActions, CardContent,
-        CardMedia, Button, Typography, Rating, IconButton} from '@mui/material'
+        CardMedia, Typography, Rating,
+        IconButton, Avatar} from '@mui/material'
 
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
@@ -31,6 +32,9 @@ const ShopCard = ({shop}) => {
                 </Typography>
             </CardContent>
             <CardActions sx={{position: 'absolute', zIndex: 2, bottom: 0}}>
+                <IconButton>
+                    <Avatar src={shop.avatar} alt={shop.title} />
+                </IconButton>
                 <IconButton>
                     <ChevronRightIcon sx={{color: 'white'}} />
                 </IconButton>
