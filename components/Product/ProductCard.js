@@ -1,5 +1,6 @@
 import {Card, CardContent, CardMedia,
-        CardActionArea, CardActions, Typography, IconButton, Tooltip} from '@mui/material'
+        CardActionArea, CardActions,
+        Typography, IconButton, Tooltip} from '@mui/material'
 
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
@@ -11,7 +12,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility'
 const ProductCard = ({product}) => {
 
     return (
-        <Card sx={{boxShadow: 3}}>
+        <Card sx={{boxShadow: 3, borderRadius: 4}}>
             <CardActionArea>
                 <CardMedia
                     component="img"

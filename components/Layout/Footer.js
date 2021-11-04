@@ -1,12 +1,12 @@
-import {AppBar, Box, Toolbar, Typography,
+import {AppBar, Toolbar, Typography,
         Button, Container, Grid, Stack} from '@mui/material'
 import Image from 'next/image'
 
 import AppLogo from '../AppLogo'
 import MenuIcon from '../Menu/MenuIcon'
 
-import googlePlay from '../../public/images/google-play.png'
-import appStore from '../../public/images/app-store.png'
+import googlePlay from '../../public/images/logo/google-play.png'
+import appStore from '../../public/images/logo/app-store.png'
 
 import FacebookIcon from '@mui/icons-material/Facebook'
 import InstagramIcon from '@mui/icons-material/Instagram'

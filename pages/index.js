@@ -36,10 +36,7 @@ const Index = () => {
     return(
         <>
         <Banner />
-        <Container maxWidth='lg'>
-            <ProductList products={products} />
-
-        </Container>
+        <ProductList products={products} />
         </>
     )
 }
