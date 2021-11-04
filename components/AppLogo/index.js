@@ -1,15 +1,17 @@
-import { Typography } from "@mui/material"
+import { Button, Typography } from "@mui/material"
+import Link from "next/link"
 
 const AppLogo = () => {
     return(
-        <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-        >
-            e-commerce
-        </Typography>
+        <Link href='/'>
+        <a>
+            <Button size='large' sx={{color: 'inherit'}}>
+                <Typography variant='h6'>
+                    e-commerce
+                </Typography>
+            </Button>
+        </a>
+        </Link>
     )
 }
 

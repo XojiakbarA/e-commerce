@@ -13,7 +13,7 @@ const menu = [
 const MenuMobile = () => {
 
     return (
-        <Box sx={{ pb: 7, display: {xs: 'block', sm: 'none'}}}>
+        <Box sx={{marginTop: 2, pb: 7, display: {xs: 'block', sm: 'none'}}}>
             <Paper sx={{zIndex: 10, position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
                 <BottomNavigation showLabels>
                     {
