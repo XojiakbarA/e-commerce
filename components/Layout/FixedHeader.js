@@ -9,9 +9,9 @@ import AppLogo from '../AppLogo';
 import MenuIcon from '../Menu/MenuIcon';
 
 const menu = [
-    {id: 1, badge: 4, title: 'Wishlist', icon: (<FavoriteIcon/>)},
-    {id: 2, badge: 17, title: 'Cart', icon: (<ShoppingCartIcon/>)},
-    {id: 3, badge: 0, title: 'Account', icon: (<AccountCircle/>)}
+    {id: 1, badge: 0, title: 'Account', icon: (<AccountCircle/>)},
+    {id: 2, badge: 4, title: 'Wishlist', icon: (<FavoriteIcon/>)},
+    {id: 3, badge: 17, title: 'Cart', icon: (<ShoppingCartIcon/>)}
 ]
 
 const FixedHeader = () => {

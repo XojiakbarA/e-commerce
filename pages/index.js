@@ -1,6 +1,6 @@
 import { Container } from "@mui/material"
 import Banner from "../components/Banner"
-import ProductList from "../components/Product/ProductList"
+import ProductList from "../components/Product/ProductList/ProductList"
 
 const products = {
     title: "New Products",
