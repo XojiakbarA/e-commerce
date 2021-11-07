@@ -9,13 +9,28 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 
-const ProductCard = ({product}) => {
+const grid = {
+    card: {boxShadow: 3, borderRadius: 2},
+    cardActionArea: null,
+    cardMedia: null,
+    cardActions: null
+}
+
+const list = {
+    card: {boxShadow: 3, borderRadius: 2, display: 'flex', justifyContent: 'flex-start'},
+    cardActionArea: {display: 'flex', justifyContent: 'flex-start'},
+    cardMedia: {width: 200},
+    cardActions: {display: 'flex', flexDirection: 'column', alignItems: 'center'}
+}
+
+const ProductCard = ({product, view}) => {
 
     return (
-        <Card sx={{boxShadow: 3, borderRadius: 2}}>
-            <CardActionArea>
+        <Card sx={ view == 'grid' ? grid.card : list.card }>
+            <CardActionArea sx={ view == 'grid' ? grid.cardActionArea : list.cardActionArea }>
                 <CardMedia
                     component="img"
+                    sx={ view == 'grid' ? grid.cardMedia : list.cardMedia }
                     image={product.img}
                     alt={product.title}
                 />
@@ -28,7 +43,7 @@ const ProductCard = ({product}) => {
                     </Typography>
                 </CardContent>
             </CardActionArea>
-            <CardActions>
+            <CardActions sx={ view == 'grid' ? grid.cardActions : list.cardActions }>
                 <IconButton>
                     <Tooltip title='Add to wishlist'>
                         <FavoriteBorderIcon />

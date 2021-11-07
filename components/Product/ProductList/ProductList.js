@@ -1,7 +1,7 @@
 import { Grid, Box, Typography } from "@mui/material"
 import ProductCard from "./ProductCard"
 
-const ProductList = ({products, itemWidth}) => {
+const ProductList = ({products, view}) => {
     return(
         <Box>
             {
@@ -14,8 +14,8 @@ const ProductList = ({products, itemWidth}) => {
             <Grid container spacing={2}>
                 {
                     products.items.map((product, i) => (
-                        <Grid item xs={12} lg={itemWidth} key={i}>
-                            <ProductCard product={product} />
+                        <Grid item xs={12} lg={view == 'grid' ? 4 : 12} key={i}>
+                            <ProductCard product={product} view={view} />
                         </Grid>
                     ))
                 }

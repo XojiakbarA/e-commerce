@@ -1,28 +1,10 @@
-import { useState } from "react"
 import {FormControl, InputLabel, MenuItem,
         Select, Grid, Paper, Typography, Stack, IconButton} from "@mui/material"
 
 import AppsIcon from '@mui/icons-material/Apps'
 import ViewListIcon from '@mui/icons-material/ViewList'
 
-const SearchPanel = () => {
-
-    const [sort, setSort] = useState('new')
-    const [view1, setView1] = useState(true)
-    const [view2, setView2] = useState(false)
-
-    function handleSortChange(e) {
-        setSort(e.target.value)
-    }
-
-    function handleViewClick1() {
-        setView1(true)
-        setView2(false)
-    }
-    function handleViewClick2() {
-        setView1(false)
-        setView2(true)
-    }
+const SearchPanel = ({sort, view, handleSortChange, handleViewClick}) => {
 
     return(
         <Paper sx={{py: 2, px: 4}}>
@@ -55,10 +37,10 @@ const SearchPanel = () => {
                             <Typography variant='body2'>
                                 View:
                             </Typography>
-                            <IconButton color={view1 ? 'primary' : 'default'} onClick={handleViewClick1}>
+                            <IconButton color={view == 'grid' ? 'primary' : 'default'} onClick={(e) => handleViewClick(e, 'grid')}>
                                 <AppsIcon />
                             </IconButton>
-                            <IconButton color={view2 ? 'primary' : 'default'} onClick={handleViewClick2}>
+                            <IconButton color={view == 'list' ? 'primary' : 'default'} onClick={(e) => handleViewClick(e, 'list')}>
                                 <ViewListIcon />
                             </IconButton>
                         </Stack>

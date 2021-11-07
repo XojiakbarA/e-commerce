@@ -1,3 +1,4 @@
+import { useState } from "react"
 import {Grid, Paper} from "@mui/material"
 import SearchPanel from "../components/SearchPanel/SearchPanel"
 import ProductList from "../components/Product/ProductList/ProductList"
@@ -33,11 +34,29 @@ const products = {
 }
 
 const Search = () => {
+
+    const [sort, setSort] = useState('new')
+    const [view, setView] = useState('grid')
+
+    function handleSortChange(e) {
+        setSort(e.target.value)
+    }
+
+    function handleViewClick(e, newView) {
+        setView(newView)
+        console.log(view)
+    }
+
     return(
         <>
             <Grid container spacing={2}>
                 <Grid item lg={12}>
-                    <SearchPanel />
+                    <SearchPanel
+                        sort={sort}
+                        view={view}
+                        handleSortChange={handleSortChange}
+                        handleViewClick={handleViewClick}
+                    />
                 </Grid>
                 <Grid item lg={3}>
                     <Paper>
@@ -45,7 +64,10 @@ const Search = () => {
                     </Paper>
                 </Grid>
                 <Grid item lg={9}>
-                    <ProductList products={products} itemWidth={4} />
+                    <ProductList
+                        products={products}
+                        view={view}
+                    />
                 </Grid>
             </Grid>
         </>
