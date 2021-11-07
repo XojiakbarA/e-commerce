@@ -12,7 +12,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility'
 const ProductCard = ({product}) => {
 
     return (
-        <Card sx={{boxShadow: 3, borderRadius: 4}}>
+        <Card sx={{boxShadow: 3, borderRadius: 2}}>
             <CardActionArea>
                 <CardMedia
                     component="img"

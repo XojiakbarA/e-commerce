@@ -1,8 +1,9 @@
-import Banner from "../components/Banner"
+import {Grid, Paper} from "@mui/material"
+import SearchPanel from "../components/SearchPanel/SearchPanel"
 import ProductList from "../components/Product/ProductList/ProductList"
+import SearchSidebar from "../components/SearchPanel/SearchSidebar/SearchSidebar"
 
 const products = {
-    title: "New Products",
     items: [
         {
             id: 1, title: 'Product 1', price: 60, rating: 2, img: 'images/products/product1.png'
@@ -31,13 +32,24 @@ const products = {
     ]
 }
 
-const Index = () => {
+const Search = () => {
     return(
         <>
-            <Banner />
-            <ProductList products={products} itemWidth={3} />
+            <Grid container spacing={2}>
+                <Grid item lg={12}>
+                    <SearchPanel />
+                </Grid>
+                <Grid item lg={3}>
+                    <Paper>
+                        <SearchSidebar />
+                    </Paper>
+                </Grid>
+                <Grid item lg={9}>
+                    <ProductList products={products} itemWidth={4} />
+                </Grid>
+            </Grid>
         </>
     )
 }
 
-export default Index
+export default Search

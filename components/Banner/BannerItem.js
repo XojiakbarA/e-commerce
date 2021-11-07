@@ -6,7 +6,7 @@ const BannerItem = ({banner}) => {
         <Grid container spacing={0}
             sx={{
                 boxShadow: 3,
-                borderRadius: 6,
+                borderRadius: 2,
                 backgroundColor: 'white',
                 position: 'relative', 
                 overflow: 'hidden'
