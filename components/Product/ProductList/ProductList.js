@@ -10,11 +10,10 @@ const ProductList = ({products, view}) => {
                     {products.title}
                 </Typography> : false
             }
-            
             <Grid container spacing={2}>
                 {
                     products.items.map((product, i) => (
-                        <Grid item xs={12} lg={view == 'grid' ? 4 : 12} key={i}>
+                        <Grid item xs={12} lg={view == 'grid' ? 4 : view == undefined ? 3 : 12} key={i}>
                             <ProductCard product={product} view={view} />
                         </Grid>
                     ))

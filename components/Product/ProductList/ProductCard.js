@@ -1,6 +1,6 @@
 import {Card, CardContent, CardMedia,
         CardActionArea, CardActions,
-        Typography, IconButton, Tooltip} from '@mui/material'
+        Typography, IconButton, Tooltip, Rating} from '@mui/material'
 
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
@@ -26,11 +26,11 @@ const list = {
 const ProductCard = ({product, view}) => {
 
     return (
-        <Card sx={ view == 'grid' ? grid.card : list.card }>
-            <CardActionArea sx={ view == 'grid' ? grid.cardActionArea : list.cardActionArea }>
+        <Card sx={ view == 'grid' || view == undefined ? grid.card : list.card }>
+            <CardActionArea sx={ view == 'grid' || view == undefined ? grid.cardActionArea : list.cardActionArea }>
                 <CardMedia
                     component="img"
-                    sx={ view == 'grid' ? grid.cardMedia : list.cardMedia }
+                    sx={ view == 'grid' || view == undefined ? grid.cardMedia : list.cardMedia }
                     image={product.img}
                     alt={product.title}
                 />
@@ -38,12 +38,15 @@ const ProductCard = ({product, view}) => {
                     <Typography gutterBottom variant="h5" component="div">
                         {product.title}
                     </Typography>
+
+                    <Rating value={product.rating} size='small' readOnly/>
+                    
                     <Typography variant="h6" color="text.secondary">
                         $ {product.price}
                     </Typography>
                 </CardContent>
             </CardActionArea>
-            <CardActions sx={ view == 'grid' ? grid.cardActions : list.cardActions }>
+            <CardActions sx={ view == 'grid' || view == undefined ? grid.cardActions : list.cardActions }>
                 <IconButton>
                     <Tooltip title='Add to wishlist'>
                         <FavoriteBorderIcon />
