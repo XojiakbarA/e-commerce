@@ -9,7 +9,7 @@ const BrandList = ({brands}) => {
             <FormGroup>
                 {
                     brands.map((brand, i) => (
-                        <FormControlLabel key={i} control={<Checkbox />} label={brand} />
+                        <FormControlLabel key={i} control={<Checkbox />} label={brand.title} />
                     ))
                 }
             </FormGroup>

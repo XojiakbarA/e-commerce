@@ -1,4 +1,4 @@
-import { Grid, Box, Typography } from "@mui/material"
+import { Grid, Box, Typography, Pagination } from "@mui/material"
 import ProductCard from "./ProductCard"
 
 const ProductList = ({products, view}) => {
@@ -19,6 +19,12 @@ const ProductList = ({products, view}) => {
                     ))
                 }
             </Grid>
+            {
+                view !== undefined
+                ? <Pagination count={5} size='large' color='primary' sx={{my: 2}} />
+                : null
+            }
+            
         </Box>
     )
 }

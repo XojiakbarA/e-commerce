@@ -9,7 +9,7 @@ const CategoryList = ({categories}) => {
             <MenuList>
                 {
                     categories.map((category, i) => (
-                        <MenuItem key={i}>{category}</MenuItem>
+                        <MenuItem key={i}>{category.title}</MenuItem>
                     ))
                 }
             </MenuList>

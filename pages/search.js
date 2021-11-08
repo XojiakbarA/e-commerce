@@ -2,7 +2,8 @@ import { useState } from "react"
 import {Grid, Paper} from "@mui/material"
 import SearchPanel from "../components/SearchPanel/SearchPanel"
 import ProductList from "../components/Product/ProductList/ProductList"
-import SearchSidebar from "../components/SearchPanel/SearchSidebar/SearchSidebar"
+import SearchSidebar from "../components/SearchSidebar/SearchSidebar"
+import SearchSidebarMobile from "../components/SearchSidebar/SearchSidebarMobile"
 
 const products = {
     items: [
@@ -32,11 +33,26 @@ const products = {
         }
     ]
 }
+const categories = [
+    {id: 1, title: 'Category 1'},
+    {id: 2, title: 'Category 2'},
+    {id: 3, title: 'Category 3'},
+    {id: 4, title: 'Category 4'},
+    {id: 5, title: 'Category 5'},
+    {id: 6, title: 'Category 6'}
+]
+const brands = [
+    {id: 1, title: 'Brand 1'},
+    {id: 2, title: 'Brand 2'},
+    {id: 3, title: 'Brand 3'},
+    {id: 4, title: 'Brand 4'},
+]
 
 const Search = () => {
 
     const [sort, setSort] = useState('new')
     const [view, setView] = useState('grid')
+    const [sidebar, setSidebar] = useState(false)
 
     function handleSortChange(e) {
         setSort(e.target.value)
@@ -44,23 +60,34 @@ const Search = () => {
 
     function handleViewClick(e, newView) {
         setView(newView)
-        console.log(view)
+    }
+
+    function handleSidebarClick() {
+        setSidebar(!sidebar)
+    }
+
+    function handleSidebarClose() {
+        setSidebar(false)
     }
 
     return(
         <>
             <Grid container spacing={2}>
-                <Grid item lg={12}>
+                <Grid item lg={12} xs={12}>
                     <SearchPanel
                         sort={sort}
                         view={view}
                         handleSortChange={handleSortChange}
                         handleViewClick={handleViewClick}
+                        handleSidebarClick={handleSidebarClick}
                     />
                 </Grid>
-                <Grid item lg={3}>
+                <Grid item lg={3} display={{xs: 'none', sm: 'block'}}>
                     <Paper>
-                        <SearchSidebar />
+                        <SearchSidebar
+                            categories={categories}
+                            brands={brands}
+                        />
                     </Paper>
                 </Grid>
                 <Grid item lg={9}>
@@ -70,6 +97,12 @@ const Search = () => {
                     />
                 </Grid>
             </Grid>
+            <SearchSidebarMobile
+                categories={categories}
+                brands={brands}
+                sidebar={sidebar}
+                handleSidebarClose={handleSidebarClose}
+            />
         </>
     )
 }

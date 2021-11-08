@@ -3,12 +3,13 @@ import {FormControl, InputLabel, MenuItem,
 
 import AppsIcon from '@mui/icons-material/Apps'
 import ViewListIcon from '@mui/icons-material/ViewList'
+import ViewSidebarIcon from '@mui/icons-material/ViewSidebar';
 
-const SearchPanel = ({sort, view, handleSortChange, handleViewClick}) => {
+const SearchPanel = ({sort, view, handleSortChange, handleViewClick, handleSidebarClick}) => {
 
     return(
         <Paper sx={{py: 2, px: 4}}>
-            <Grid container justifyContent='space-between'>
+            <Grid container justifyContent='space-between' spacing={2}>
                 <Grid item>
                     <Typography variant='body1'>
                         Searching for “ mobile phone ”
@@ -18,7 +19,7 @@ const SearchPanel = ({sort, view, handleSortChange, handleViewClick}) => {
                     </Typography>
                 </Grid>
                 <Grid item>
-                    <Stack direction='row' alignItems='center' spacing={4}>
+                    <Stack direction={{xs: 'column', sm: 'row'}} alignItems={{xs: 'flex-start', sm: 'center'}} spacing={4}>
                         <FormControl sx={{minWidth: 120}}>
                             <InputLabel id="demo-simple-select-label">Sort by</InputLabel>
                             <Select
@@ -42,6 +43,9 @@ const SearchPanel = ({sort, view, handleSortChange, handleViewClick}) => {
                             </IconButton>
                             <IconButton color={view == 'list' ? 'primary' : 'default'} onClick={(e) => handleViewClick(e, 'list')}>
                                 <ViewListIcon />
+                            </IconButton>
+                            <IconButton sx={{display: {xs: 'flex', sm: 'none'}}} onClick={handleSidebarClick}>
+                                <ViewSidebarIcon />
                             </IconButton>
                         </Stack>
                     </Stack>
