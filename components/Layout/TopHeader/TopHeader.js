@@ -1,5 +1,4 @@
 import { Container, AppBar, Box, Toolbar, Drawer, IconButton, Badge, Tooltip } from '@mui/material'
-import { useState } from 'react'
 
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
@@ -7,6 +6,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle'
 
 import InputSearch from '../../Input/InputSearch'
 import AppLogo from '../../AppLogo'
+import CartSidebar from '../../CartSidebar/CartSidebar'
 
 const menu = {
     account: { id: 1, badge: 0, title: 'Account' },
@@ -15,18 +15,8 @@ const menu = {
 }
 
 
-const TopHeader = () => {
+const TopHeader = ({cart, handleCartOpen, handleCartClose}) => {
 
-    const [cart, setCart] = useState(false)
-
-    function handleCartOpen() {
-        setCart(true)
-    }
-
-    function handleCartClose() {
-        setCart(false)
-    }
-    
     return (
         <Box sx={{ flexGrow: 1, display: {xs: 'none', sm: 'block'} }}>
             <AppBar position='fixed'>
@@ -72,7 +62,7 @@ const TopHeader = () => {
                 open={cart}
                 onClose={handleCartClose}
             >
-                slp[awkfaw[pfkawkfadfadl;awda]]
+                <CartSidebar handleCartClose={handleCartClose} />
             </Drawer>
         </Box>
     );

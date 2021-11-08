@@ -1,6 +1,6 @@
 import {Card, CardContent, CardMedia,
-        CardActionArea, CardActions,
-        Typography, IconButton, Tooltip, Rating} from '@mui/material'
+        CardActionArea, Box, Typography,
+        IconButton, Tooltip, Rating} from '@mui/material'
 
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
@@ -46,7 +46,7 @@ const ProductCard = ({product, view}) => {
                     </Typography>
                 </CardContent>
             </CardActionArea>
-            <CardActions sx={ view == 'grid' || view == undefined ? grid.cardActions : list.cardActions }>
+            <Box sx={ view == 'grid' || view == undefined ? grid.cardActions : list.cardActions }>
                 <IconButton>
                     <Tooltip title='Add to wishlist'>
                         <FavoriteBorderIcon />
@@ -62,7 +62,7 @@ const ProductCard = ({product, view}) => {
                         <VisibilityOutlinedIcon />
                     </Tooltip>
                 </IconButton>
-            </CardActions>
+            </Box>
         </Card>
     );
 }
