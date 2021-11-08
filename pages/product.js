@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material"
 import ProductGallery from "../components/Product/ProductGallery/ProductGallery"
-import ProductInfo from '../components/Product/ProductInfo'
+import ProductInfo from '../components/Product/ProductInfo/ProductInfo'
 import ProductTab from "../components/Product/ProductTab/ProductTab"
 
 const product = {

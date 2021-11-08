@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import {Tabs, Tab, Box} from '@mui/material'
 import ProductTabPanel from './ProductTabPanel'
-import ProductDescription from './ProductDescription';
+import ProductDescription from './ProductDescription/ProductDescription';
 import ProductReview from './ProductReview/ProductReview';
 
 function a11yProps(index) {

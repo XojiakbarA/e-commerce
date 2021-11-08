@@ -1,21 +1,21 @@
 import { Container } from "@mui/material"
 
-import FixedHeader from "./FixedHeader"
-import HidingHeader from "./HidingHeader"
-import Footer from './Footer'
-import MenuMobile from "../Menu/MenuMobile"
+import TopHeader from "./TopHeader/TopHeader"
+import BottomHeader from "./BottomHeader/BottomHeader"
+import Footer from './Footer/Footer'
+import FooterMobile from "./FooterMobile/FooterMobile"
 
 const Layout = ({children}) => {
 
     return(
         <>
-        <FixedHeader />
-        <HidingHeader />
+        <TopHeader />
+        <BottomHeader />
             <Container sx={{minHeight: '100vh', marginTop: {xs: 9, lg: 3}}}>
                 {children}
             </Container>
         <Footer />
-        <MenuMobile />
+        <FooterMobile />
         </>
     )
 }

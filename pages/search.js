@@ -1,9 +1,8 @@
 import { useState } from "react"
-import {Grid, Paper} from "@mui/material"
+import {Grid, Paper, Drawer} from "@mui/material"
 import SearchPanel from "../components/SearchPanel/SearchPanel"
 import ProductList from "../components/Product/ProductList/ProductList"
 import SearchSidebar from "../components/SearchSidebar/SearchSidebar"
-import SearchSidebarMobile from "../components/SearchSidebar/SearchSidebarMobile"
 
 const products = {
     items: [
@@ -97,12 +96,13 @@ const Search = () => {
                     />
                 </Grid>
             </Grid>
-            <SearchSidebarMobile
-                categories={categories}
-                brands={brands}
-                sidebar={sidebar}
-                handleSidebarClose={handleSidebarClose}
-            />
+            <Drawer
+                anchor='left'
+                open={sidebar}
+                onClose={handleSidebarClose}
+            >
+                <SearchSidebar categories={categories} brands={brands} />
+            </Drawer>
         </>
     )
 }

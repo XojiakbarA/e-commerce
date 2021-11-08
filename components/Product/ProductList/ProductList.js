@@ -4,12 +4,6 @@ import ProductCard from "./ProductCard"
 const ProductList = ({products, view}) => {
     return(
         <Box>
-            {
-                products.title ?
-                <Typography variant='h3' gutterBottom>
-                    {products.title}
-                </Typography> : false
-            }
             <Grid container spacing={2}>
                 {
                     products.items.map((product, i) => (

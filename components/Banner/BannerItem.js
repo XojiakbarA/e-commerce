@@ -1,4 +1,4 @@
-import { Button, Grid, Container, Box } from '@mui/material'
+import { Button, Grid, Box } from '@mui/material'
 import Image from 'next/image'
 
 const BannerItem = ({banner}) => {

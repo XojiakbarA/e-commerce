@@ -2,8 +2,8 @@ import PropTypes from 'prop-types'
 import useScrollTrigger from '@mui/material/useScrollTrigger'
 import { Container, AppBar, Toolbar, Slide, Box } from '@mui/material'
 
-import Navigation from '../Navigation'
-import MenuCategories from '../Menu/MenuCategories'
+import Navigation from '../../Navigation/Navigation'
+import MenuCategories from '../../MenuCategories'
 
 function HideOnScroll({ children, window }) {
     
@@ -23,7 +23,7 @@ HideOnScroll.propTypes = {
     window: PropTypes.func,
 };
 
-const HidingHeader = (props) => {
+const BottomHeader = (props) => {
     return (
         <HideOnScroll {...props}>
             <AppBar sx={{zIndex: 10}} color='inherit'>
@@ -40,4 +40,4 @@ const HidingHeader = (props) => {
     );
 }
 
-export default HidingHeader
+export default BottomHeader

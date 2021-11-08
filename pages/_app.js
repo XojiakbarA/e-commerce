@@ -1,6 +1,6 @@
 import { CssBaseline } from '@mui/material'
 
-import Layout from '../components/Layout'
+import Layout from '../components/Layout/Layout'
 
 import '../styles/globals.css'
 

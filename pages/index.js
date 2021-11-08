@@ -1,4 +1,5 @@
-import Banner from "../components/Banner"
+import { Typography } from "@mui/material"
+import Banner from "../components/Banner/Banner"
 import ProductList from "../components/Product/ProductList/ProductList"
 
 const products = {
@@ -35,7 +36,10 @@ const Index = () => {
     return(
         <>
             <Banner />
-            <ProductList products={products} itemWidth={3} />
+            <Typography variant='h3' gutterBottom>
+                New Products
+            </Typography>
+            <ProductList products={products} />
         </>
     )
 }

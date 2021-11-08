@@ -1,30 +1,29 @@
-import {AppBar, Toolbar, Typography,
-        Button, Container, Grid, Stack} from '@mui/material'
-import Image from 'next/image'
-
-import AppLogo from '../AppLogo'
-import MenuIcon from '../Menu/MenuIcon'
-
-import googlePlay from '../../public/images/logo/google-play.png'
-import appStore from '../../public/images/logo/app-store.png'
+import { AppBar, Toolbar, Typography, Button, Container, Grid, Stack, Box, IconButton, Tooltip } from '@mui/material'
 
 import FacebookIcon from '@mui/icons-material/Facebook'
 import InstagramIcon from '@mui/icons-material/Instagram'
 import TwitterIcon from '@mui/icons-material/Twitter'
-import YouTubeIcon from '@mui/icons-material/YouTube';
+import YouTubeIcon from '@mui/icons-material/YouTube'
 
-const social = [
-    {id: 1, title: 'Facebook', icon: (<FacebookIcon />)},
-    {id: 2, title: 'Instagram', icon: (<InstagramIcon />)},
-    {id: 3, title: 'Twitter', icon: (<TwitterIcon />)},
-    {id: 4, title: 'YouTube', icon: (<YouTubeIcon />)}
-]
+import Image from 'next/image'
+import AppLogo from '../../AppLogo'
+
+import googlePlay from '../../../public/images/logo/google-play.png'
+import appStore from '../../../public/images/logo/app-store.png'
+
+
+const menu = {
+    facebook: {id: 1, title: 'Facebook'},
+    instagram: {id: 2, title: 'Instagram'},
+    twitter: {id: 3, title: 'Twitter'},
+    youtube: {id: 4, title: 'YouTube'}
+}
 
 const Footer = () => {
     return (
         <AppBar position="static" color="inherit" sx={{ marginTop: 3, display: {xs: 'none', sm: 'block'} }}>
             <Container maxWidth='xl'>
-                <Toolbar sx={{padding: 3}}>
+                <Toolbar sx={{ padding: 3 }}>
                     <Grid container spacing={3}>
                         <Grid item lg={8}>
                             <AppLogo />
@@ -53,7 +52,28 @@ const Footer = () => {
                             <Typography variant='body2'>
                                 Phone: +1 1123 456 780
                             </Typography>
-                            <MenuIcon menu={social} />
+                            <Box sx={{ display:'flex' }}>
+                                <IconButton size="large" color="inherit">
+                                    <Tooltip title={ menu.facebook.title } >
+                                            <FacebookIcon/>
+                                    </Tooltip>
+                                </IconButton>
+                                <IconButton size="large" color="inherit">
+                                    <Tooltip title={ menu.instagram.title } >
+                                            <InstagramIcon/>
+                                    </Tooltip>
+                                </IconButton>
+                                <IconButton size="large" color="inherit">
+                                    <Tooltip title={ menu.twitter.title } >
+                                            <TwitterIcon/>
+                                    </Tooltip>
+                                </IconButton>
+                                <IconButton size="large" color="inherit">
+                                    <Tooltip title={ menu.youtube.title } >
+                                            <YouTubeIcon/>
+                                    </Tooltip>
+                                </IconButton>
+                            </Box>
                         </Grid>
                     </Grid>
                 </Toolbar>
