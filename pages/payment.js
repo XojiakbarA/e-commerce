@@ -1,13 +1,13 @@
 import { FormControlLabel, Grid, Paper, Stack, Radio, TextField, Button, Box, Divider, FormControl } from "@mui/material"
 import CheckoutInfo from "../components/CheckoutInfo/CheckoutInfo"
-import CartStepper from '../components/Stepper/CartStepper'
+import ShoppingStep from "../components/ShoppingStep"
 
 
 const Payment = () => {
     return(
         <Grid container spacing={2}>
             <Grid item lg={8}>
-                <CartStepper />
+                <ShoppingStep />
             </Grid>
             <Grid item lg={8}>
                 <Paper sx={{ padding: 3, marginBottom: 3 }}>

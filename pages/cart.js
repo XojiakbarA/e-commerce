@@ -1,13 +1,13 @@
 import { Grid, Stack } from "@mui/material"
-import CartStepper from "../components/Stepper/CartStepper"
+import ShoppingStep from "../components/ShoppingStep"
 import CartProductPage from "../components/CartSidebar/CartProductPage"
 import CartForm from "../components/Form/CartForm/CartForm"
 
 const Cart = () => {
     return(
         <Grid container spacing={2}>
-            <Grid item lg={9}>
-                <CartStepper />
+            <Grid item lg={8}>
+                <ShoppingStep />
             </Grid>
             <Grid item lg={8}>
                 <Stack spacing={2}>

@@ -1,4 +1,6 @@
 import { Badge, Box, BottomNavigation, BottomNavigationAction, Paper } from '@mui/material'
+import { useDispatch } from 'react-redux'
+import { cartOpen } from '../../../redux/cartSidebarState/cartSidebarState'
 
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
@@ -10,7 +12,9 @@ const {account, wishlist, cart} = {
     cart: { id: 3, badge: 17, title: 'Cart' }
 }
 
-const MenuMobile = ({ handleCartOpen }) => {
+const MenuMobile = () => {
+
+    const dispatch = useDispatch()
 
     return (
         <Box sx={{marginTop: 2, pb: 7, display: {xs: 'block', sm: 'none'}}}>
@@ -18,16 +22,28 @@ const MenuMobile = ({ handleCartOpen }) => {
                 <BottomNavigation showLabels>
                     <BottomNavigationAction
                         label={account.title}
-                        icon={<Badge badgeContent={account.badge} color="error"><AccountCircle/></Badge>}
+                        icon={
+                            <Badge badgeContent={account.badge} color="error">
+                                <AccountCircle/>
+                            </Badge>
+                        }
                     />
                     <BottomNavigationAction
                         label={wishlist.title}
-                        icon={<Badge badgeContent={wishlist.badge} color="error"><FavoriteIcon/></Badge>}
+                        icon={
+                            <Badge badgeContent={wishlist.badge} color="error">
+                                <FavoriteIcon/>
+                            </Badge>
+                        }
                     />
                     <BottomNavigationAction
                         label={cart.title}
-                        icon={<Badge badgeContent={cart.badge} color="error"><ShoppingCartIcon/></Badge>}
-                        onClick={handleCartOpen}
+                        icon={
+                            <Badge badgeContent={cart.badge} color="error">
+                                <ShoppingCartIcon/>
+                            </Badge>
+                        }
+                        onClick={ () => dispatch(cartOpen()) }
                     />
                 </BottomNavigation>
             </Paper>

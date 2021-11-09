@@ -2,13 +2,13 @@ import { Grid, Stack, Button } from "@mui/material"
 import CheckoutInfo from "../components/CheckoutInfo/CheckoutInfo"
 import BillingAddressForm from "../components/Form/BillingAddressForm/BillingAddressForm"
 import ShippingAddressForm from "../components/Form/ShippingAddressForm/ShippingAddressForm"
-import CartStepper from "../components/Stepper/CartStepper"
+import ShoppingStep from "../components/ShoppingStep"
 
 const Checkout = () => {
     return(
         <Grid container spacing={2}>
             <Grid item lg={8}>
-                <CartStepper />
+                <ShoppingStep />
             </Grid>
             <Grid item lg={8}>
                 <ShippingAddressForm />

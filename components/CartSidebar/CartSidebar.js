@@ -1,10 +1,15 @@
-import { Box, Typography, Stack, Divider, Button, IconButton } from '@mui/material'
+import { Box, Typography, Stack, Divider, IconButton } from '@mui/material'
 import CartButtons from './CartButtons'
 import CartProduct from './CartProduct'
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { useDispatch } from 'react-redux'
+import { cartClose } from '../../redux/cartSidebarState/cartSidebarState'
 
-const CartSidebar = ({handleCartClose}) => {
+const CartSidebar = () => {
+
+    const dispatch = useDispatch()
+
     return(
         <Box sx={{padding: 1, width: 350}}>
             <Stack spacing={2} divider={<Divider orientation='horizontal' flexItem />}>
@@ -12,7 +17,7 @@ const CartSidebar = ({handleCartClose}) => {
                     <Typography variant='h5'>
                         17 items
                     </Typography>
-                    <IconButton onClick={handleCartClose}>
+                    <IconButton onClick={ () => dispatch(cartClose()) }>
                         <ChevronRightIcon />
                     </IconButton>
                 </Box>
