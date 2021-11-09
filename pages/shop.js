@@ -80,9 +80,7 @@ const shops = {
 
 const Shop = () => {
     return(
-        <>
-            <ShopList shops={shops} />
-        </>
+        <ShopList shops={shops} />
     )
 }
 

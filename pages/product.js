@@ -51,19 +51,17 @@ const product = {
 
 const Product = () => {
     return(
-        <>
-            <Grid container spacing={2}>
-                <Grid item lg={6}>
-                    <ProductGallery gallery={product.gallery} />
-                </Grid>
-                <Grid item lg={6}>
-                    <ProductInfo info={product.info} />
-                </Grid>
-                <Grid item lg={12}>
-                    <ProductTab description={product.description} reviews={product.reviews} />
-                </Grid>
+        <Grid container spacing={2}>
+            <Grid item lg={6}>
+                <ProductGallery gallery={product.gallery} />
             </Grid>
-        </>
+            <Grid item lg={6}>
+                <ProductInfo info={product.info} />
+            </Grid>
+            <Grid item lg={12}>
+                <ProductTab description={product.description} reviews={product.reviews} />
+            </Grid>
+        </Grid>
     )
 }
 
