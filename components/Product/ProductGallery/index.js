@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Box } from "@mui/material"
 import Image from 'next/image'
-import ProductGalleryButtons from "./ProductGalleryButtons"
+import GalleryButtons from "./GalleryButtons"
 
 const ProductGallery = ({gallery}) => {
 
@@ -14,7 +14,7 @@ const ProductGallery = ({gallery}) => {
     return(
         <Box>
             <Image src={src} alt={src} width={500} height={625} />
-            <ProductGalleryButtons gallery={gallery} handleClick={handleClick} />
+            <GalleryButtons gallery={gallery} handleClick={handleClick} />
         </Box>
     )
 }

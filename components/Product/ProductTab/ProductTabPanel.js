@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import {Typography, Box} from '@mui/material'
+import { Box } from '@mui/material'
 
 const ProductTabPanel = ({ children, value, index, ...other }) => {
     return (

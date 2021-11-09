@@ -2,8 +2,8 @@ import PropTypes from 'prop-types'
 import useScrollTrigger from '@mui/material/useScrollTrigger'
 import { Container, AppBar, Toolbar, Slide, Box } from '@mui/material'
 
-import Navigation from '../../Navigation/Navigation'
-import MenuCategories from '../../MenuCategories'
+import Navigation from './Navigation'
+import MenuCategories from './MenuCategories'
 
 function HideOnScroll({ children, window }) {
     

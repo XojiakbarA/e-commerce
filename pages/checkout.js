@@ -1,10 +1,10 @@
 import { Grid } from "@mui/material"
 import { useState } from "react"
 
-import ShoppingInfo from "../components/ShoppingInfo"
-import CheckoutForm from "../components/Form/CheckoutForm"
-import ShoppingStep from "../components/ShoppingStep"
-import ShoppingLinks from "../components/ShoppingLinks"
+import ShoppingInfo from "../components/shopping-pages/common/ShoppingInfo"
+import CheckoutForm from "../components/shopping-pages/checkout/CheckoutForm"
+import ShoppingStep from "../components/shopping-pages/common/ShoppingStep"
+import ShoppingLinks from "../components/shopping-pages/common/ShoppingLinks"
 
 const Checkout = () => {
 

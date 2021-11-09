@@ -1,6 +1,6 @@
 import {Grid} from '@mui/material'
-import ProductReviewForm from './ProductReviewForm'
-import ProductReviewItem from './ProductReviewItem'
+import ReviewForm from './ReviewForm'
+import ReviewItem from './ReviewItem'
 
 const ProductReview = ({reviews}) => {
     return(
@@ -8,12 +8,12 @@ const ProductReview = ({reviews}) => {
             <Grid item lg={6}>
                 {
                     reviews.map((review, i) => (
-                        <ProductReviewItem key={i} review={review} />
+                        <ReviewItem key={i} review={review} />
                     ))
                 }
             </Grid>
             <Grid item lg={6}>
-                <ProductReviewForm />
+                <ReviewForm />
             </Grid>
         </Grid>
     )

@@ -6,7 +6,7 @@ import TwitterIcon from '@mui/icons-material/Twitter'
 import YouTubeIcon from '@mui/icons-material/YouTube'
 
 import Image from 'next/image'
-import AppLogo from '../../AppLogo'
+import AppLogo from '../AppLogo'
 
 import googlePlay from '../../../public/images/logo/google-play.png'
 import appStore from '../../../public/images/logo/app-store.png'

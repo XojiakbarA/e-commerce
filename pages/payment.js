@@ -1,10 +1,10 @@
 import { RadioGroup, FormControlLabel, Grid, Paper, Stack, Radio, Box, Divider } from "@mui/material"
 import { useState } from "react"
-import CreditCardForm from "../components/Form/PaymentForm/CreditCardForm"
-import PayPalForm from "../components/Form/PaymentForm/PayPalForm"
-import ShoppingInfo from "../components/ShoppingInfo"
-import ShoppingLinks from "../components/ShoppingLinks"
-import ShoppingStep from "../components/ShoppingStep"
+import CreditCardForm from "../components/shopping-pages/payment/CreditCardForm"
+import PayPalForm from "../components/shopping-pages/payment/PayPalForm"
+import ShoppingInfo from "../components/shopping-pages/common/ShoppingInfo"
+import ShoppingLinks from "../components/shopping-pages/common/ShoppingLinks"
+import ShoppingStep from "../components/shopping-pages/common/ShoppingStep"
 
 const Payment = () => {
 

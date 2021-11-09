@@ -1,11 +1,10 @@
 import { useState } from "react"
-import {Grid, Paper, Drawer} from "@mui/material"
-import SearchPanel from "../components/SearchPanel/SearchPanel"
-import ProductList from "../components/Product/ProductList/ProductList"
-import SearchSidebar from "../components/SearchSidebar/SearchSidebar"
+import {Grid, Paper, Drawer, Pagination} from "@mui/material"
+import SearchPanel from "../components/search/SearchPanel"
+import SearchSidebar from "../components/search/SearchSidebar"
+import ProductCard from "../components/common/ProductCard"
 
-const products = {
-    items: [
+const products = [
         {
             id: 1, title: 'Product 1', price: 60, rating: 2, img: 'images/products/product1.png'
         },
@@ -31,7 +30,7 @@ const products = {
             id: 8, title: 'Product 8', price: 200, rating: 5, img: 'images/products/product8.png'
         }
     ]
-}
+
 const categories = [
     {id: 1, title: 'Category 1'},
     {id: 2, title: 'Category 2'},
@@ -90,10 +89,16 @@ const Search = () => {
                     </Paper>
                 </Grid>
                 <Grid item lg={9}>
-                    <ProductList
-                        products={products}
-                        view={view}
-                    />
+                    <Grid container spacing={2}>
+                    {
+                        products.map((product, i) => (
+                            <Grid item xs={12} lg={view == 'grid' ? 4 : 12} key={i}>
+                                <ProductCard product={product} view={view} />
+                            </Grid>
+                        ))
+                    }
+                    </Grid>
+                    <Pagination count={5} size='large' color='primary' sx={{my: 2}} />
                 </Grid>
             </Grid>
             <Drawer

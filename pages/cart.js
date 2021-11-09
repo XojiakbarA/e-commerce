@@ -1,7 +1,7 @@
 import { Grid, Stack } from "@mui/material"
-import ShoppingStep from "../components/ShoppingStep"
-import CartProductPage from "../components/CartSidebar/CartProductPage"
-import CartForm from "../components/Form/CartForm"
+import ShoppingStep from "../components/shopping-pages/common/ShoppingStep"
+import CartProductCard from "../components/shopping-pages/cart/CartProductCard"
+import CartForm from "../components/shopping-pages/cart/CartForm"
 
 const Cart = () => {
     return(
@@ -11,10 +11,10 @@ const Cart = () => {
             </Grid>
             <Grid item lg={8}>
                 <Stack spacing={2}>
-                    <CartProductPage />
-                    <CartProductPage />
-                    <CartProductPage />
-                    <CartProductPage />
+                    <CartProductCard />
+                    <CartProductCard />
+                    <CartProductCard />
+                    <CartProductCard />
                 </Stack>
             </Grid>
             <Grid item lg={4}>

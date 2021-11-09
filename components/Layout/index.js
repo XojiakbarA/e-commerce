@@ -1,8 +1,8 @@
 import { Container } from "@mui/material"
 
 import TopHeader from "./TopHeader"
-import BottomHeader from "./BottomHeader/BottomHeader"
-import Footer from './Footer/Footer'
+import BottomHeader from "./BottomHeader"
+import Footer from './Footer'
 import MenuMobile from "./MenuMobile"
 
 const Layout = ({children}) => {

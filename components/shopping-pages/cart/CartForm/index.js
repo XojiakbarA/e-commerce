@@ -1,8 +1,8 @@
 import { Divider, Paper, Stack } from "@mui/material"
-import ShippingEstimatesForm from "./ShippingEstimatesForm"
-import VoucherForm from './VoucherForm'
+import ShippingEstimates from "./ShippingEstimates"
 import AdditionalComments from "./AdditionalComments"
-import ShoppingInfoItem from "../../ShoppingInfo/ShoppingInfoItem"
+import VoucherForm from '../../common/VoucherForm'
+import ShoppingInfoItem from "../../common/ShoppingInfo/ShoppingInfoItem"
 
 
 const CartForm = () => {
@@ -12,7 +12,7 @@ const CartForm = () => {
                 <ShoppingInfoItem prop={{ name: 'Total:', value: 750 }} />
                 <AdditionalComments />
                 <VoucherForm />
-                <ShippingEstimatesForm />
+                <ShippingEstimates />
             </Stack>
         </Paper>
     )

@@ -1,6 +1,6 @@
 import { Stack, Button } from "@mui/material"
 
-const CartButtons = () => {
+const SidebarButtons = () => {
     return(
         <Stack
             spacing={2}
@@ -13,4 +13,4 @@ const CartButtons = () => {
     )
 }
 
-export default CartButtons
+export default SidebarButtons

@@ -2,7 +2,7 @@ import Button from '@mui/material/Button'
 import ButtonGroup from '@mui/material/ButtonGroup'
 import Image from 'next/image'
 
-const ProductGalleryButtons = ({gallery, handleClick}) => {
+const GalleryButtons = ({gallery, handleClick}) => {
 
     return (
         <ButtonGroup>
@@ -23,4 +23,4 @@ const ProductGalleryButtons = ({gallery, handleClick}) => {
     );
 }
 
-export default ProductGalleryButtons
+export default GalleryButtons

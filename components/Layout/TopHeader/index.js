@@ -2,9 +2,9 @@ import { Container, AppBar, Box, Toolbar, Drawer } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
 import { cartClose } from '../../../redux/cartSidebarState/cartSidebarState'
 
-import InputSearch from '../../Input/InputSearch'
-import AppLogo from '../../AppLogo'
-import CartSidebar from '../../CartSidebar/CartSidebar'
+import InputSearch from './InputSearch'
+import AppLogo from '../AppLogo'
+import CartSidebar from './CartSidebar'
 import Menu from './Menu'
 
 const TopHeader = () => {

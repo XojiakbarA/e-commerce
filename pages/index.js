@@ -1,10 +1,8 @@
-import { Typography } from "@mui/material"
-import Banner from "../components/Banner/Banner"
-import ProductList from "../components/Product/ProductList/ProductList"
+import { Typography, Grid } from "@mui/material"
+import Banner from "../components/index/Banner"
+import ProductCard from "../components/common/ProductCard"
 
-const products = {
-    title: "New Products",
-    items: [
+const products = [
         {
             id: 1, title: 'Product 1', price: 60, rating: 2, img: 'images/products/product1.png'
         },
@@ -30,7 +28,6 @@ const products = {
             id: 8, title: 'Product 8', price: 200, rating: 5, img: 'images/products/product8.png'
         }
     ]
-}
 
 const Index = () => {
     return(
@@ -39,7 +36,15 @@ const Index = () => {
             <Typography variant='h3' gutterBottom>
                 New Products
             </Typography>
-            <ProductList products={products} />
+            <Grid container spacing={2}>
+                {
+                    products.map((product, i) => (
+                        <Grid item xs={12} lg={3} key={i}>
+                            <ProductCard product={product} />
+                        </Grid>
+                    ))
+                }
+            </Grid>
         </>
     )
 }

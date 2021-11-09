@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material"
-import ProductGallery from "../components/Product/ProductGallery/ProductGallery"
-import ProductInfo from '../components/Product/ProductInfo/ProductInfo'
-import ProductTab from "../components/Product/ProductTab/ProductTab"
+import ProductGallery from "../components/product/ProductGallery"
+import ProductInfo from '../components/product/ProductInfo'
+import ProductTab from "../components/product/ProductTab/ProductTab"
 
 const product = {
     id: 1,

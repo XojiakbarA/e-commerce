@@ -1,10 +1,11 @@
 import { Box, Typography, Stack, Divider, IconButton } from '@mui/material'
-import CartButtons from './CartButtons'
-import CartProduct from './CartProduct'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 
+import SidebarButtons from './SidebarButtons'
+import SidebarProductCard from './SidebarProductCard'
+
 import { useDispatch } from 'react-redux'
-import { cartClose } from '../../redux/cartSidebarState/cartSidebarState'
+import { cartClose } from '../../../../redux/cartSidebarState/cartSidebarState'
 
 const CartSidebar = () => {
 
@@ -23,17 +24,17 @@ const CartSidebar = () => {
                 </Box>
                 
                 <Stack spacing={1}>
-                    <CartProduct />
-                    <CartProduct />
-                    <CartProduct />
-                    <CartProduct />
-                    <CartProduct />
-                    <CartProduct />
-                    <CartProduct />
-                    <CartProduct />
+                    <SidebarProductCard />
+                    <SidebarProductCard />
+                    <SidebarProductCard />
+                    <SidebarProductCard />
+                    <SidebarProductCard />
+                    <SidebarProductCard />
+                    <SidebarProductCard />
+                    <SidebarProductCard />
                 </Stack>
             </Stack>
-            <CartButtons />
+            <SidebarButtons />
         </Box>
     )
 }

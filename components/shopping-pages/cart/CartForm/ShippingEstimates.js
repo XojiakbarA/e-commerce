@@ -17,7 +17,7 @@ const cities = [
     {id: 5, label: 'Bukhara'}
 ]
 
-const ShippingEstimatesForm = () => {
+const ShippingEstimates = () => {
     return(
         <Stack spacing={2}>
             <Typography variant='body1'>
@@ -44,4 +44,4 @@ const ShippingEstimatesForm = () => {
     )
 }
 
-export default ShippingEstimatesForm
+export default ShippingEstimates

@@ -1,5 +1,5 @@
 import { Stack, Paper, Typography, Box, Divider } from "@mui/material"
-import VoucherForm from "../Form/CartForm/VoucherForm"
+import VoucherForm from "../VoucherForm"
 import ShoppingInfoItem from './ShoppingInfoItem'
 
 const ShoppingInfo = () => {

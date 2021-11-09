@@ -1,6 +1,6 @@
 import {Box, Avatar, Stack, Typography, Rating} from '@mui/material'
 
-const ProductReviewItem = ({review}) => {
+const ReviewItem = ({review}) => {
     return(
         <Box marginBottom={4}>
             <Stack direction='row' spacing={2} alignItems='center' marginBottom={1}>
@@ -24,4 +24,4 @@ const ProductReviewItem = ({review}) => {
     )
 }
 
-export default ProductReviewItem
+export default ReviewItem

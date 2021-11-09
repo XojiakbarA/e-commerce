@@ -1,8 +1,7 @@
-import ShopList from "../components/Shop/ShopList"
+import { Grid, Pagination } from "@mui/material"
+import ShopCard from '../components/shop/ShopCard'
 
-const shops = {
-    title: 'All Shops',
-    items: [
+const shops = [
         {
             id: 1,
             title: 'Scarlett Beauty',
@@ -75,12 +74,22 @@ const shops = {
             avatar: 'images/shop/no-av.jpeg',
             background: 'images/shop/no-bg.jpeg'
         }
-    ]
-}
+]
 
 const Shop = () => {
     return(
-        <ShopList shops={shops} />
+        <>
+            <Grid container spacing={2}>
+                {
+                    shops.map((shop, i) => (
+                        <Grid item xs={12} lg={4} key={i}>
+                            <ShopCard shop={shop} />
+                        </Grid>
+                    ))
+                }
+            </Grid>
+            <Pagination count={5} size='large' color='primary' sx={{my: 2}} />
+        </>
     )
 }
 

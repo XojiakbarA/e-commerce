@@ -2,7 +2,7 @@ import { Grid, Rating, Typography, TextField, Button } from "@mui/material"
 
 import SendIcon from '@mui/icons-material/Send'
 
-const ProductReviewForm = () => {
+const ReviewForm = () => {
     return(
         <Grid container spacing={2}>
             <Grid item lg={12}>
@@ -30,4 +30,4 @@ const ProductReviewForm = () => {
     )
 }
 
-export default ProductReviewForm
+export default ReviewForm

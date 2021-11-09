@@ -3,9 +3,9 @@ import Carousel from 'react-material-ui-carousel'
 import BannerItem from './BannerItem'
 
 import style from './Banner.module.css'
-import bannerImage1 from '../../public/images/banner/nike-shoes-1.jpeg'
-import bannerImage2 from '../../public/images/banner/nike-shoes-2.jpeg'
-import bannerImage3 from '../../public/images/banner/nike-shoes-3.jpeg'
+import bannerImage1 from '../../../public/images/banner/nike-shoes-1.jpeg'
+import bannerImage2 from '../../../public/images/banner/nike-shoes-2.jpeg'
+import bannerImage3 from '../../../public/images/banner/nike-shoes-3.jpeg'
 
 const banners = [
     {
