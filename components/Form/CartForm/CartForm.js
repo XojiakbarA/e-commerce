@@ -36,6 +36,9 @@ const CartForm = () => {
                             <Button variant='outlined' >Apply Voucher</Button>
                         </Stack>
                         <Stack spacing={2}>
+                            <Typography variant='body1'>
+                                Shipping Estimates
+                            </Typography>
                             <Autocomplete
                                 size='small'
                                 options={countries}
