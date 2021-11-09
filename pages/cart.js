@@ -1,7 +1,7 @@
 import { Grid, Stack } from "@mui/material"
 import ShoppingStep from "../components/ShoppingStep"
 import CartProductPage from "../components/CartSidebar/CartProductPage"
-import CartForm from "../components/Form/CartForm/CartForm"
+import CartForm from "../components/Form/CartForm"
 
 const Cart = () => {
     return(

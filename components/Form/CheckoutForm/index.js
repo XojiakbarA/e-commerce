@@ -1,4 +1,4 @@
-import { Grid, Paper, Typography, Stack, TextField, Autocomplete } from "@mui/material"
+import { Grid, Paper, Typography, Stack, TextField, Autocomplete, FormControlLabel, Checkbox } from "@mui/material"
 
 const countries = [
     {id: 1, label: 'Kazakhstan'},
@@ -8,13 +8,24 @@ const countries = [
     {id: 5, label: 'Turkmenistan'}
 ]
 
-const ShippingAddressForm = () => {
+const CheckoutForm = ({title, display, hideForm}) => {
+
     return(
         <Paper sx={{ padding: 3, marginBottom: 3 }}>
             <Typography variant='body1' gutterBottom>
-                Shipping Address
+                {title}
             </Typography>
-            <Grid container spacing={2}>
+            {
+                title == 'Billing Address' ?
+                    <FormControlLabel
+                        control={<Checkbox />}
+                        label='Same as shipping address'
+                        sx={{marginBottom: 2}}
+                        onClick={hideForm}
+                    />
+                    : null
+            }
+            <Grid container spacing={2} display={display ? 'flex' : 'none'}>
                 <Grid item lg={6}>
                     <Stack spacing={2}>
                         <TextField size='small' label='Full Name' />
@@ -40,4 +51,4 @@ const ShippingAddressForm = () => {
     )
 }
 
-export default ShippingAddressForm
+export default CheckoutForm
