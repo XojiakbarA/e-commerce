@@ -5,6 +5,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle'
 
 import { useDispatch } from 'react-redux'
 import { cartOpen } from '../../../../redux/cartSidebarState/cartSidebarState'
+import { dialogOpen } from '../../../../redux/loginDialogState/loginDialogState'
 
 import MenuItem from './MenuItem'
 
@@ -20,7 +21,7 @@ const Menu = () => {
 
     return(
         <Box sx={{ display:'flex' }}>
-            <MenuItem item={menu.account}>
+            <MenuItem item={menu.account} onClick={ () => dispatch(dialogOpen()) }>
                 <AccountCircle />
             </MenuItem>
             <MenuItem item={menu.wishlist}>

@@ -30,6 +30,7 @@ const products = [
     ]
 
 const Index = () => {
+
     return(
         <>
             <Banner />

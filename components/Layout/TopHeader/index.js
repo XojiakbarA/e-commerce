@@ -6,6 +6,7 @@ import InputSearch from './InputSearch'
 import AppLogo from '../AppLogo'
 import CartSidebar from './CartSidebar'
 import Menu from './Menu'
+import LoginDialog from './LoginDialog'
 
 const TopHeader = () => {
 
@@ -33,6 +34,7 @@ const TopHeader = () => {
             >
                 <CartSidebar />
             </Drawer>
+            <LoginDialog />
         </Box>
     );
 }
