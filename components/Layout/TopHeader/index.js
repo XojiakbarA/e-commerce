@@ -1,17 +1,15 @@
 import { Container, AppBar, Box, Toolbar, Drawer } from '@mui/material'
-import { useSelector, useDispatch } from 'react-redux'
-import { cartClose } from '../../../redux/cartSidebarState/cartSidebarState'
-
 import InputSearch from './InputSearch'
 import AppLogo from '../AppLogo'
 import CartSidebar from './CartSidebar'
 import Menu from './Menu'
 import LoginDialog from './LoginDialog'
+import { connect } from 'react-redux'
+import { closeCartSidebar } from '../../../redux/actions/main'
 
-const TopHeader = () => {
+const TopHeader = ({cartSidebar, closeCartSidebar}) => {
 
-    const cart = useSelector((state) => state.cartSidebarState.value)
-    const dispatch = useDispatch()
+    const isOpen = cartSidebar.isOpen
 
     return (
         <Box sx={{ flexGrow: 1, display: {xs: 'none', sm: 'block'} }}>
@@ -29,8 +27,8 @@ const TopHeader = () => {
             <Toolbar />
             <Drawer
                 anchor='right'
-                open={cart}
-                onClose={ () => dispatch(cartClose()) }
+                open={isOpen}
+                onClose={closeCartSidebar}
             >
                 <CartSidebar />
             </Drawer>
@@ -39,4 +37,12 @@ const TopHeader = () => {
     );
 }
 
-export default TopHeader
+const mapStateToProps = (state) => ({
+    cartSidebar: state.cartSidebar
+})
+
+const mapDispatchToProps = dispatch => ({
+    closeCartSidebar: () => dispatch(closeCartSidebar())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(TopHeader)

@@ -1,4 +1,5 @@
 import { MenuList, MenuItem, Typography, Box } from "@mui/material"
+import { connect } from "react-redux"
 
 const CategoryList = ({categories}) => {
     return(
@@ -17,4 +18,8 @@ const CategoryList = ({categories}) => {
     )
 }
 
-export default CategoryList
+const mapStateToProps = (state) => ({
+    categories: state.categories
+})
+
+export default connect(mapStateToProps)(CategoryList)

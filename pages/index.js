@@ -29,7 +29,7 @@ const products = [
         }
     ]
 
-const Index = () => {
+const Index = ({ categories }) => {
 
     return(
         <>

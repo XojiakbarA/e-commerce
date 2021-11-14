@@ -1,15 +1,14 @@
 import { Stack, Button, Dialog, TextField, Typography, Box } from '@mui/material'
 import Link from 'next/link'
-import { useSelector, useDispatch } from 'react-redux'
-import { dialogClose } from '../../../../redux/loginDialogState/loginDialogState'
+import { connect } from 'react-redux'
+import { closeLoginDialog } from '../../../../redux/actions/main'
 
-const LoginDialog = () => {
+const LoginDialog = ({ loginDialog, closeLoginDialog }) => {
 
-    const open = useSelector((state) => state.loginDialogState.value)
-    const dispatch = useDispatch()
+    const isOpen = loginDialog.isOpen
 
     return(
-        <Dialog onClose={ () => dispatch(dialogClose()) } open={open}>
+        <Dialog open={isOpen} onClose={closeLoginDialog}>
             <Box sx={{marginX: {xs: 3, sm: 10}, marginY: {xs: 3, sm: 7}}}>
                 <Typography variant='h5' textAlign='center' paddingBottom={5}>
                     Welcome to e-commerce
@@ -30,4 +29,12 @@ const LoginDialog = () => {
     )
 }
 
-export default LoginDialog
+const mapStateToProps = state => ({
+    loginDialog: state.loginDialog
+})
+
+const mapDispatchToProps = dispatch => ({
+    closeLoginDialog: () => dispatch(closeLoginDialog())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginDialog)

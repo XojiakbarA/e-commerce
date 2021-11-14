@@ -2,19 +2,11 @@ import {useState} from 'react'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-
 import Link from 'next/link'
+import { connect } from 'react-redux'
 
-const categories = [
-    {id: 1, title: 'Category1'},
-    {id: 2, title: 'Category2'},
-    {id: 3, title: 'Category3'},
-    {id: 4, title: 'Category4'},
-    {id: 5, title: 'Category5'},
-    {id: 6, title: 'Category6'}
-]
+const MenuCategories = ({categories}) => {
 
-const MenuCategories = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
@@ -48,9 +40,9 @@ const MenuCategories = () => {
                 }}
             >
                 {
-                    categories.map((category, i) => (
+                    categories.map(category => (
                         <MenuItem
-                            key={i}
+                            key={category.id}
                         >
                             <Link href='#'>
                                 <a>{category.title}</a>
@@ -63,4 +55,8 @@ const MenuCategories = () => {
     );
 }
 
-export default MenuCategories
+const mapStateToProps = (state) => ({
+    categories: state.categories
+})
+
+export default connect(mapStateToProps)(MenuCategories)

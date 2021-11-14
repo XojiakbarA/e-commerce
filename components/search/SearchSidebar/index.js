@@ -1,14 +1,14 @@
-import { MenuList, MenuItem, Stack, Typography, Box, Divider, FormGroup, FormControlLabel, Checkbox } from "@mui/material"
+import { Stack, Box, Divider } from "@mui/material"
 import BrandList from "./BrandList"
 import CategoryList from "./CategoryList"
 import PriceRange from "./PriceRange"
 import RatingList from "./RatingList"
 
-const SearchSidebar = ({categories, brands}) => {
+const SearchSidebar = ({brands}) => {
     return(
         <Box sx={{width: {xs: 300, sm: 'auto'}}}>
             <Stack padding={2} divider={<Divider orientation='horizontal' />}>
-                <CategoryList categories={categories} />
+                <CategoryList />
                 <PriceRange />
                 <BrandList brands={brands} />
                 <RatingList />

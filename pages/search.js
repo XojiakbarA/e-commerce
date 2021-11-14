@@ -31,14 +31,6 @@ const products = [
         }
     ]
 
-const categories = [
-    {id: 1, title: 'Category 1'},
-    {id: 2, title: 'Category 2'},
-    {id: 3, title: 'Category 3'},
-    {id: 4, title: 'Category 4'},
-    {id: 5, title: 'Category 5'},
-    {id: 6, title: 'Category 6'}
-]
 const brands = [
     {id: 1, title: 'Brand 1'},
     {id: 2, title: 'Brand 2'},
@@ -83,7 +75,6 @@ const Search = () => {
                 <Grid item lg={3} display={{xs: 'none', sm: 'block'}}>
                     <Paper>
                         <SearchSidebar
-                            categories={categories}
                             brands={brands}
                         />
                     </Paper>
@@ -106,7 +97,7 @@ const Search = () => {
                 open={sidebar}
                 onClose={handleSidebarClose}
             >
-                <SearchSidebar categories={categories} brands={brands} />
+                <SearchSidebar brands={brands} />
             </Drawer>
         </>
     )

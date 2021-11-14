@@ -1,10 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit'
-import cartSidebarStateReducer from './cartSidebarState/cartSidebarState'
-import loginDialogStateReducer from './loginDialogState/loginDialogState'
+import { createStore, applyMiddleware, compose } from "redux"
+import { createWrapper } from "next-redux-wrapper"
+import rootReducer from "./reducers/rootReducer"
+import thunk from "redux-thunk"
 
-export default configureStore({
-    reducer: {
-        cartSidebarState: cartSidebarStateReducer,
-        loginDialogState: loginDialogStateReducer
-    }
-})
+const middleware = [thunk]
+
+const makeStore = () => createStore(rootReducer)
+
+export const wrapper = createWrapper(makeStore)

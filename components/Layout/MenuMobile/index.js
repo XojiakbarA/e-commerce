@@ -1,10 +1,10 @@
 import { Badge, Box, BottomNavigation, BottomNavigationAction, Paper } from '@mui/material'
-import { useDispatch } from 'react-redux'
-import { cartOpen } from '../../../redux/cartSidebarState/cartSidebarState'
-
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import AccountCircle from '@mui/icons-material/AccountCircle'
+import { openCartSidebar } from '../../../redux/actions/main'
+import { openLoginDialog } from '../../../redux/actions/main'
+import { connect } from 'react-redux'
 
 const {account, wishlist, cart} = {
     account: { id: 1, badge: 0, title: 'Account' },
@@ -12,9 +12,7 @@ const {account, wishlist, cart} = {
     cart: { id: 3, badge: 17, title: 'Cart' }
 }
 
-const MenuMobile = () => {
-
-    const dispatch = useDispatch()
+const MenuMobile = ({ openCartSidebar, openLoginDialog }) => {
 
     return (
         <Box sx={{marginTop: 2, pb: 7, display: {xs: 'block', sm: 'none'}}}>
@@ -27,6 +25,7 @@ const MenuMobile = () => {
                                 <AccountCircle/>
                             </Badge>
                         }
+                        onClick={openLoginDialog}
                     />
                     <BottomNavigationAction
                         label={wishlist.title}
@@ -43,7 +42,7 @@ const MenuMobile = () => {
                                 <ShoppingCartIcon/>
                             </Badge>
                         }
-                        onClick={ () => dispatch(cartOpen()) }
+                        onClick={openCartSidebar}
                     />
                 </BottomNavigation>
             </Paper>
@@ -51,4 +50,9 @@ const MenuMobile = () => {
     );
 }
 
-export default MenuMobile
+const mapDispatchToProps = dispatch => ({
+    openCartSidebar: () => dispatch(openCartSidebar()),
+    openLoginDialog: () => dispatch(openLoginDialog())
+})
+
+export default connect(null, mapDispatchToProps)(MenuMobile)
