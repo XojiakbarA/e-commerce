@@ -5,6 +5,5 @@ const instance = axios.create({
 })
 
 export const fetchCategories = async () => {
-    const res = await instance.get('categories')
-    return res
+    return await instance.get('categories')
 }

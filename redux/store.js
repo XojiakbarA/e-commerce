@@ -3,8 +3,6 @@ import { createWrapper } from "next-redux-wrapper"
 import rootReducer from "./reducers/rootReducer"
 import thunk from "redux-thunk"
 
-const middleware = [thunk]
-
-const makeStore = () => createStore(rootReducer)
+const makeStore = () => createStore(rootReducer, applyMiddleware(thunk))
 
 export const wrapper = createWrapper(makeStore)
