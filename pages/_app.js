@@ -1,5 +1,5 @@
 import { CssBaseline } from '@mui/material'
-import Layout from '../components/Layout'
+import Layout from '../components/layout'
 import '../styles/globals.css'
 import { wrapper } from '../redux/store'
 import { getCategories } from '../redux/actions/main'
@@ -15,7 +15,7 @@ const MyApp = ({Component, pageProps}) => {
 
 MyApp.getInitialProps = wrapper.getInitialAppProps(store => async ({Component, ctx}) => {
     
-    await getCategories(store)
+    await getCategories(store.dispatch)
     
     return {
         pageProps: {

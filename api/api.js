@@ -7,3 +7,7 @@ const instance = axios.create({
 export const fetchCategories = async () => {
     return await instance.get('categories')
 }
+
+export const fetchBanners = async () => {
+    return await instance.get('banners')
+}

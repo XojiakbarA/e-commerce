@@ -1,6 +1,9 @@
 import { Typography, Grid } from "@mui/material"
 import Banner from "../components/index/Banner"
 import ProductCard from "../components/common/ProductCard"
+import { fetchBanners } from "../api/api"
+import { getBanners } from "../redux/actions/main"
+import { wrapper } from "../redux/store"
 
 const products = [
         {
@@ -29,7 +32,7 @@ const products = [
         }
     ]
 
-const Index = ({ categories }) => {
+const Index = () => {
 
     return(
         <>
@@ -49,5 +52,11 @@ const Index = ({ categories }) => {
         </>
     )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(store => async () => {
+
+    await getBanners(store.dispatch)
+    
+})
 
 export default Index

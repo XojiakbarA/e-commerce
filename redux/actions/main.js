@@ -1,9 +1,14 @@
 import * as type from '../types'
-import { fetchCategories } from '../../api/api'
+import { fetchBanners, fetchCategories } from '../../api/api'
 
 export const setCat = (cats) => ({
     type: type.SET_CAT,
     payload: cats
+})
+
+export const setBanners = (banners) => ({
+    type: type.SET_BANNERS,
+    payload: banners
 })
 
 export const openCartSidebar = () => ({
@@ -22,12 +27,21 @@ export const closeLoginDialog = () => ({
     type: type.CLOSE_LOGIN_DIALOG
 })
 
-export const getCategories = async (store) => {
+export const getCategories = async (dispatch) => {
     try {
         const res = await fetchCategories()
-        store.dispatch(setCat(res.data))
+        dispatch(setCat(res.data))
     } catch (e) {
-        store.dispatch(setCat([{id: 1, title: 'server is offline'}]))
+        dispatch(setCat([{id: 1, title: 'server is offline'}]))
+        console.log(e.errno, e.code)
+    }
+}
+
+export const getBanners = async (dispatch) => {
+    try {
+        const res = await fetchBanners()
+        dispatch(setBanners(res.data))
+    } catch (e) {
         console.log(e.errno, e.code)
     }
 }

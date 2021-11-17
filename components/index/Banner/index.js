@@ -6,6 +6,7 @@ import style from './Banner.module.css'
 import bannerImage1 from '../../../public/images/banner/nike-shoes-1.jpeg'
 import bannerImage2 from '../../../public/images/banner/nike-shoes-2.jpeg'
 import bannerImage3 from '../../../public/images/banner/nike-shoes-3.jpeg'
+import { connect } from 'react-redux'
 
 const banners = [
     {
@@ -36,4 +37,8 @@ const Banner = () => {
     )
 }
 
-export default Banner
+const mapStateToProps = (state) => ({
+    banners: state.banners
+})
+
+export default connect(mapStateToProps)(Banner)
