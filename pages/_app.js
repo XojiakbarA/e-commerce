@@ -2,8 +2,8 @@ import { CssBaseline } from '@mui/material'
 import Layout from '../components/Layout'
 import '../styles/globals.css'
 import { setCat } from '../redux/actions/main'
-
 import { wrapper } from '../redux/store'
+import { fetchCategories } from '../api/api'
 
 const MyApp = ({Component, pageProps}) => {
     return(
@@ -15,9 +15,13 @@ const MyApp = ({Component, pageProps}) => {
 }
 
 MyApp.getInitialProps = wrapper.getInitialAppProps(store => async ({Component, ctx}) => {
-    const res = await fetch('http://127.0.0.1:8000/api/categories')
-    const data = await res.json()
-    store.dispatch(setCat(data))
+    
+    try {
+        const res = await fetchCategories()
+        store.dispatch(setCat(res.data))
+    } catch (e) {
+        console.log(e.errno, e.code)
+    }
     
     return {
         pageProps: {
