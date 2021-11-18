@@ -42,6 +42,7 @@ export const getBanners = async (dispatch) => {
         const res = await fetchBanners()
         dispatch(setBanners(res.data))
     } catch (e) {
+        dispatch(setBanners([{id: 1, title: 'server is offline', image: 'server is offline'}]))
         console.log(e.errno, e.code)
     }
 }
