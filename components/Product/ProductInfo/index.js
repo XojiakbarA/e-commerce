@@ -1,31 +1,34 @@
 import { Button, Rating, Stack, Typography } from "@mui/material"
 
-const ProductInfo = ({info}) => {
+const ProductInfo = ({product}) => {
     return(
         <Stack spacing={3} sx={{marginTop: 5}} alignItems='flex-start'>
             <Typography variant='h3'>
-                {info.title}
+                {product.title}
             </Typography>
             <Typography variant='body1'>
-                Brand: <b>{info.brand}</b>
+                Category: <b>{product.category.title}</b>
+            </Typography>
+            <Typography variant='body1'>
+                Brand: <b>{product.brand.title}</b>
             </Typography>
             <Stack direction='row' spacing={2}>
                 <Typography variant='body1'>
                     Rated:
                 </Typography>
-                <Rating name="read-only" value={info.rating} readOnly />
+                <Rating name="read-only" value={product.rating} readOnly />
             </Stack>
             <Typography variant='h4' color='primary'>
-                $ {info.price}
+                $ {product.price}
             </Typography>
             <Typography variant='body2'>
                 {
-                    info.availability ? 'Stock in available' : 'Unavailable'
+                    product.avail ? 'Stock in available' : 'Unavailable'
                 }
             </Typography>
             <Button variant='contained'>Add To Cart</Button>
             <Typography>
-                Sold by: <b>{info.shop}</b>
+                Sold by: <b>{product.shop}</b>
             </Typography>
         </Stack>
     )

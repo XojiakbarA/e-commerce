@@ -1,5 +1,5 @@
 import * as type from '../types'
-import { fetchBanners, fetchCategories, fetchNewProducts } from '../../api/api'
+import { fetchBanners, fetchCategories, fetchNewProducts, fetchProduct } from '../../api/api'
 
 export const setCats = (cats) => ({
     type: type.SET_CATS,
@@ -14,6 +14,11 @@ export const setBanners = (banners) => ({
 export const setNewProducts = (products) => ({
     type: type.SET_NEW_PRODUCTS,
     payload: products
+})
+
+export const setProduct = (product) => ({
+    type: type.SET_PRODUCT,
+    payload: product
 })
 
 export const openCartSidebar = () => ({
@@ -58,6 +63,16 @@ export const getNewProducts = async (dispatch) => {
         dispatch(setNewProducts(res.data.data))
     } catch (e) {
         dispatch(setNewProducts([{id: 1, title: 'server is offline', price: 'server is offline'}]))
+        console.log(e.errno, e.code)
+    }
+}
+
+export const getProduct = async (id, dispatch) => {
+    try {
+        const res = await fetchProduct(id)
+        dispatch(setProduct(res.data))
+    } catch (e) {
+        dispatch(setProduct({id: 1, title: 'server is offline', price: 'server is offline'}))
         console.log(e.errno, e.code)
     }
 }

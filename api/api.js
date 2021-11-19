@@ -15,3 +15,7 @@ export const fetchBanners = async () => {
 export const fetchNewProducts = async () => {
     return await instance.get('products?order=new&count=8')
 }
+
+export const fetchProduct = async (id) => {
+    return await instance.get('products/' + id)
+}

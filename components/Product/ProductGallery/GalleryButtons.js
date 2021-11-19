@@ -1,17 +1,19 @@
 import Button from '@mui/material/Button'
 import ButtonGroup from '@mui/material/ButtonGroup'
 import Image from 'next/image'
+import { imageLoader } from '../../../utils/utils'
 
-const GalleryButtons = ({gallery, handleClick}) => {
+const GalleryButtons = ({images, handleClick}) => {
 
     return (
         <ButtonGroup>
             {
-                gallery.map((img, i) => (
-                    <Button key={i} sx={{padding: 0}} >
+                images.map((image) => (
+                    <Button key={image.id} sx={{padding: 0}}>
                         <Image
-                            src={img.src}
-                            alt={img.src}
+                            loader={imageLoader}
+                            src={'products/' + image.src}
+                            alt={image.src}
                             width={100}
                             height={125}
                             onClick={handleClick}
