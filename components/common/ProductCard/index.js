@@ -9,6 +9,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import { productImageURL } from '../../../utils/utils'
+import Link from 'next/link'
 
 const grid = {
     card: {boxShadow: 3, borderRadius: 2},
@@ -29,6 +30,8 @@ const ProductCard = ({product, view}) => {
     return (
         <Card sx={ view == 'grid' || view == undefined ? grid.card : list.card }>
             <CardActionArea sx={ view == 'grid' || view == undefined ? grid.cardActionArea : list.cardActionArea }>
+                <Link href={'/products/' + product.id} >
+                <a>
                 <CardMedia
                     component="img"
                     sx={ view == 'grid' || view == undefined ? grid.cardMedia : list.cardMedia }
@@ -53,6 +56,8 @@ const ProductCard = ({product, view}) => {
                         $ {product.price}
                     </Typography>
                 </CardContent>
+                </a>
+                </Link>
             </CardActionArea>
             <Box sx={ view == 'grid' || view == undefined ? grid.cardActions : list.cardActions }>
                 <IconButton>
