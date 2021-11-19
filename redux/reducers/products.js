@@ -2,13 +2,13 @@ import * as type from '../types'
 
 const initialState = []
 
-const categories = (state = initialState, action) => {
+const products = (state = initialState, action) => {
     switch (action.type) {
-        case type.SET_CATS:
+        case type.SET_NEW_PRODUCTS:
             return action.payload
         default:
             return state
     }
 }
 
-export default categories
+export default products

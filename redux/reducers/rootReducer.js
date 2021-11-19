@@ -4,12 +4,14 @@ import cartSidebar from './cartSidebar'
 import loginDialog from './loginDialog'
 import categories from './categories'
 import banners from './banners'
+import products from './products'
 
 const combindedReducer = combineReducers({
     cartSidebar: cartSidebar,
     loginDialog: loginDialog,
     categories: categories,
-    banners: banners
+    banners: banners,
+    products: products
 })
 
 const rootReducer = (state, action) => {

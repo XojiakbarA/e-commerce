@@ -1,6 +1,6 @@
 import { Button, Grid, Box } from '@mui/material'
 import Image from 'next/image'
-import { bannerLoader } from '../../../utils/utils'
+import { imageLoader } from '../../../utils/utils'
 
 const BannerItem = ({banner}) => {
     return (
@@ -39,7 +39,7 @@ const BannerItem = ({banner}) => {
                     display: {sm: 'block'}
                 }}
             >
-                <Image loader={bannerLoader} src={banner.image} alt={banner.image} width={450} height={450} />
+                <Image loader={imageLoader} src={'banners/' + banner.image} alt={banner.image} width={450} height={450} />
             </Grid>
         </Grid>
     )

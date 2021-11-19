@@ -1,14 +1,19 @@
 import * as type from '../types'
-import { fetchBanners, fetchCategories } from '../../api/api'
+import { fetchBanners, fetchCategories, fetchNewProducts } from '../../api/api'
 
-export const setCat = (cats) => ({
-    type: type.SET_CAT,
+export const setCats = (cats) => ({
+    type: type.SET_CATS,
     payload: cats
 })
 
 export const setBanners = (banners) => ({
     type: type.SET_BANNERS,
     payload: banners
+})
+
+export const setNewProducts = (products) => ({
+    type: type.SET_NEW_PRODUCTS,
+    payload: products
 })
 
 export const openCartSidebar = () => ({
@@ -30,9 +35,9 @@ export const closeLoginDialog = () => ({
 export const getCategories = async (dispatch) => {
     try {
         const res = await fetchCategories()
-        dispatch(setCat(res.data))
+        dispatch(setCats(res.data))
     } catch (e) {
-        dispatch(setCat([{id: 1, title: 'server is offline'}]))
+        dispatch(setCats([{id: 1, title: 'server is offline'}]))
         console.log(e.errno, e.code)
     }
 }
@@ -43,6 +48,16 @@ export const getBanners = async (dispatch) => {
         dispatch(setBanners(res.data))
     } catch (e) {
         dispatch(setBanners([{id: 1, title: 'server is offline', image: 'server is offline'}]))
+        console.log(e.errno, e.code)
+    }
+}
+
+export const getNewProducts = async (dispatch) => {
+    try {
+        const res = await fetchNewProducts()
+        dispatch(setNewProducts(res.data.data))
+    } catch (e) {
+        dispatch(setNewProducts([{id: 1, title: 'server is offline', price: 'server is offline'}]))
         console.log(e.errno, e.code)
     }
 }

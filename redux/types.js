@@ -1,5 +1,6 @@
-export const SET_CAT = 'SET_CAT'
+export const SET_CATS = 'SET_CATS'
 export const SET_BANNERS = 'SET_BANNERS'
+export const SET_NEW_PRODUCTS = 'SET_NEW_PRODUCTS'
 export const OPEN_CART_SIDEBAR = 'OPEN_CART_SIDEBAR'
 export const CLOSE_CART_SIDEBAR = 'CLOSE_CART_SIDEBAR'
 export const OPEN_LOGIN_DIALOG = 'OPEN_LOGIN_DIALOG'

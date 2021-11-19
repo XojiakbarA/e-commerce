@@ -8,12 +8,13 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import VisibilityIcon from '@mui/icons-material/Visibility'
+import { productImageURL } from '../../../utils/utils'
 
 const grid = {
     card: {boxShadow: 3, borderRadius: 2},
     cardActionArea: null,
     cardMedia: null,
-    cardActions: null
+    cardActions: null,
 }
 
 const list = {
@@ -31,11 +32,18 @@ const ProductCard = ({product, view}) => {
                 <CardMedia
                     component="img"
                     sx={ view == 'grid' || view == undefined ? grid.cardMedia : list.cardMedia }
-                    image={product.img}
+                    image={productImageURL + product.image.src}
                     alt={product.title}
-                />
+                >
+                </CardMedia>
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
+                    <Typography gutterBottom
+                        variant="h6"
+                        component="div"
+                        whiteSpace='nowrap'
+                        textOverflow='ellipsis'
+                        overflow='hidden'
+                    >
                         {product.title}
                     </Typography>
 
