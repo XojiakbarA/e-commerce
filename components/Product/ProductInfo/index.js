@@ -7,7 +7,7 @@ const ProductInfo = ({product}) => {
                 {product.title}
             </Typography>
             <Typography variant='body1'>
-                Category: <b>{product.category.title}</b>
+                Category: <b>{product.sub_category.title}</b>
             </Typography>
             <Typography variant='body1'>
                 Brand: <b>{product.brand.title}</b>

@@ -40,7 +40,7 @@ export const closeLoginDialog = () => ({
 export const getCategories = async (dispatch) => {
     try {
         const res = await fetchCategories()
-        dispatch(setCats(res.data))
+        dispatch(setCats(res.data.data))
     } catch (e) {
         dispatch(setCats([{id: 1, title: 'server is offline'}]))
         console.log(e.errno, e.code)
@@ -50,7 +50,7 @@ export const getCategories = async (dispatch) => {
 export const getBanners = async (dispatch) => {
     try {
         const res = await fetchBanners()
-        dispatch(setBanners(res.data))
+        dispatch(setBanners(res.data.data))
     } catch (e) {
         dispatch(setBanners([{id: 1, title: 'server is offline', image: 'server is offline'}]))
         console.log(e.errno, e.code)
@@ -70,7 +70,7 @@ export const getNewProducts = async (dispatch) => {
 export const getProduct = async (id, dispatch) => {
     try {
         const res = await fetchProduct(id)
-        dispatch(setProduct(res.data))
+        dispatch(setProduct(res.data.data))
     } catch (e) {
         dispatch(setProduct({id: 1, title: 'server is offline', price: 'server is offline'}))
         console.log(e.errno, e.code)
