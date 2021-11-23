@@ -19,3 +19,7 @@ export const fetchNewProducts = async () => {
 export const fetchProduct = async (id) => {
     return await instance.get('products/' + id)
 }
+
+export const fetchSearchResults = async (title) => {
+    return await instance.get('products/?title=' + title)
+}

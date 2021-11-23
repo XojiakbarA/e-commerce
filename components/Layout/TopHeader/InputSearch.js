@@ -1,7 +1,8 @@
 import { styled, alpha } from '@mui/material/styles'
 import InputBase from '@mui/material/InputBase'
-
 import SearchIcon from '@mui/icons-material/Search'
+import router from 'next/router'
+import { useDispatch } from 'react-redux'
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -44,6 +45,19 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const InputSearch = () => {
+
+    const dispatch = useDispatch()
+
+    function handleEnter(e) {
+        const value = e.target.value
+        if (e.keyCode === 13) {
+            if (!value) {
+                return
+            }
+            router.push('/search?title=' + value)
+        }
+    }
+
     return(
         <Search>
             <SearchIconWrapper>
@@ -52,6 +66,7 @@ const InputSearch = () => {
             <StyledInputBase
                 placeholder="Search…"
                 inputProps={{ 'aria-label': 'search' }}
+                onKeyUp={handleEnter}
             />
         </Search>
     )

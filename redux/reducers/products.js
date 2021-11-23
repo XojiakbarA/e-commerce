@@ -6,6 +6,8 @@ const products = (state = initialState, action) => {
     switch (action.type) {
         case type.SET_NEW_PRODUCTS:
             return action.payload
+        case type.SET_SEARCH_PRODUCTS:
+            return action.payload
         default:
             return state
     }

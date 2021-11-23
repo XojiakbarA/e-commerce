@@ -3,33 +3,10 @@ import {Grid, Paper, Drawer, Pagination} from "@mui/material"
 import SearchPanel from "../components/search/SearchPanel"
 import SearchSidebar from "../components/search/SearchSidebar"
 import ProductCard from "../components/common/ProductCard"
+import { wrapper } from "../redux/store"
+import { getSearchResults } from "../redux/actions/main"
+import { useSelector } from "react-redux"
 
-const products = [
-        {
-            id: 1, title: 'Product 1', price: 60, rating: 2, img: 'images/products/product1.png'
-        },
-        {
-            id: 2, title: 'Product 2', price: 100, rating: 3, img: 'images/products/product2.png'
-        },
-        {
-            id: 3, title: 'Product 3', price: 220, rating: 4, img: 'images/products/product3.png'
-        },
-        {
-            id: 4, title: 'Product 4', price: 40, rating: 4, img: 'images/products/product4.png'
-        },
-        {
-            id: 5, title: 'Product 5', price: 180, rating: 5, img: 'images/products/product5.png'
-        },
-        {
-            id: 6, title: 'Product 6', price: 50, rating: 3, img: 'images/products/product6.png'
-        },
-        {
-            id: 7, title: 'Product 7', price: 70, rating: 4, img: 'images/products/product7.png'
-        },
-        {
-            id: 8, title: 'Product 8', price: 200, rating: 5, img: 'images/products/product8.png'
-        }
-    ]
 
 const brands = [
     {id: 1, title: 'Brand 1'},
@@ -38,7 +15,9 @@ const brands = [
     {id: 4, title: 'Brand 4'},
 ]
 
-const Search = () => {
+const Search = ({query}) => {
+
+    const products = useSelector(state => state.products)
 
     const [sort, setSort] = useState('new')
     const [view, setView] = useState('grid')
@@ -102,5 +81,18 @@ const Search = () => {
         </>
     )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(store => async ({query}) => {
+
+    const title = query.title
+    await getSearchResults(title, store.dispatch)
+
+    return {
+        props: {
+            query: title
+        }
+    }
+
+})
 
 export default Search
