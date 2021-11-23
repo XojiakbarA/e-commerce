@@ -13,7 +13,7 @@ export const fetchBanners = async () => {
 }
 
 export const fetchNewProducts = async () => {
-    return await instance.get('products?order=new&count=8')
+    return await instance.get('products?sort=new&count=8')
 }
 
 export const fetchProduct = async (id) => {
