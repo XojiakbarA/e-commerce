@@ -27,6 +27,10 @@ const list = {
 
 const ProductCard = ({product, view}) => {
 
+    if (!product.image) {
+        product.image = {id: null, src: 'no_image.jpeg'}
+    }
+
     return (
         <Card sx={ view == 'grid' || view == undefined ? grid.card : list.card }>
             <CardActionArea sx={ view == 'grid' || view == undefined ? grid.cardActionArea : list.cardActionArea }>

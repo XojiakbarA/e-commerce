@@ -6,6 +6,10 @@ import { imageLoader } from "../../../utils/utils"
 
 const ProductGallery = ({images}) => {
 
+    if (images.length === 0) {
+        images = [{id: null, src: 'no_image.jpeg'}]
+    }
+
     const [src, setSrc] = useState(images[0].src)
 
     const handleClick = (e) => {
