@@ -3,10 +3,14 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import SidebarButtons from './SidebarButtons'
 import SidebarProductCard from './SidebarProductCard'
 import { closeCartSidebar } from '../../../../redux/actions/main'
-import { connect } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 
-const CartSidebar = ({closeCartSidebar}) => {
+const CartSidebar = () => {
+
+    const dispatch = useDispatch()
+
+    const closeSidebar = () => dispatch(closeCartSidebar())
 
     return(
         <Box sx={{padding: 1, width: 350}}>
@@ -15,7 +19,7 @@ const CartSidebar = ({closeCartSidebar}) => {
                     <Typography variant='h5'>
                         17 items
                     </Typography>
-                    <IconButton onClick={closeCartSidebar}>
+                    <IconButton onClick={ closeSidebar }>
                         <ChevronRightIcon />
                     </IconButton>
                 </Box>
@@ -36,8 +40,4 @@ const CartSidebar = ({closeCartSidebar}) => {
     )
 }
 
-const mapDispatchToProps = dispatch => ({
-    closeCartSidebar: () => dispatch(closeCartSidebar())
-})
-
-export default connect(null, mapDispatchToProps)(CartSidebar)
+export default CartSidebar

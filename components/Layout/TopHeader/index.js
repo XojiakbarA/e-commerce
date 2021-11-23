@@ -4,12 +4,17 @@ import AppLogo from '../AppLogo'
 import CartSidebar from './CartSidebar'
 import Menu from './Menu'
 import LoginDialog from './LoginDialog'
-import { connect } from 'react-redux'
 import { closeCartSidebar } from '../../../redux/actions/main'
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
-const TopHeader = ({cartSidebar, closeCartSidebar}) => {
+const TopHeader = () => {
 
-    const isOpen = cartSidebar.isOpen
+    const isOpen = useSelector(state => state.cartSidebar.isOpen)
+
+    const dispatch = useDispatch()
+
+    const closeSidebar = () => dispatch(closeCartSidebar())
 
     return (
         <Box sx={{ flexGrow: 1, display: {xs: 'none', sm: 'block'} }}>
@@ -28,7 +33,7 @@ const TopHeader = ({cartSidebar, closeCartSidebar}) => {
             <Drawer
                 anchor='right'
                 open={isOpen}
-                onClose={closeCartSidebar}
+                onClose={closeSidebar}
             >
                 <CartSidebar />
             </Drawer>
@@ -37,12 +42,4 @@ const TopHeader = ({cartSidebar, closeCartSidebar}) => {
     );
 }
 
-const mapStateToProps = (state) => ({
-    cartSidebar: state.cartSidebar
-})
-
-const mapDispatchToProps = dispatch => ({
-    closeCartSidebar: () => dispatch(closeCartSidebar())
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(TopHeader)
+export default TopHeader

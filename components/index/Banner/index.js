@@ -1,10 +1,12 @@
 import Carousel from 'react-material-ui-carousel'
 import BannerItem from './BannerItem'
 import style from './Banner.module.css'
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 
-const Banner = ({ banners }) => {
-    
+const Banner = () => {
+
+    const banners = useSelector(state => state.banners)
+
     return (
         <Carousel className={style.wrapper}>
             {
@@ -14,8 +16,4 @@ const Banner = ({ banners }) => {
     )
 }
 
-const mapStateToProps = (state) => ({
-    banners: state.banners
-})
-
-export default connect(mapStateToProps)(Banner)
+export default Banner

@@ -1,11 +1,13 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Link from 'next/link'
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 
-const MenuCategories = ({categories}) => {
+const MenuCategories = () => {
+
+    const categories = useSelector(state => state.categories)
 
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -55,8 +57,4 @@ const MenuCategories = ({categories}) => {
     );
 }
 
-const mapStateToProps = (state) => ({
-    categories: state.categories
-})
-
-export default connect(mapStateToProps)(MenuCategories)
+export default MenuCategories

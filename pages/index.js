@@ -3,9 +3,11 @@ import Banner from "../components/index/Banner"
 import ProductCard from "../components/common/ProductCard"
 import { getBanners, getNewProducts } from "../redux/actions/main"
 import { wrapper } from "../redux/store"
-import { connect } from "react-redux"
+import { useSelector } from "react-redux"
 
-const Index = ({products}) => {
+const Index = () => {
+
+    const products = useSelector(state => state.products)
 
     return(
         <>
@@ -33,8 +35,4 @@ export const getServerSideProps = wrapper.getServerSideProps(store => async () =
 
 })
 
-const mapStateToProps = (state) => ({
-    products: state.products
-})
-
-export default connect(mapStateToProps)(Index)
+export default Index

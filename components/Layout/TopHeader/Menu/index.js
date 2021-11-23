@@ -5,7 +5,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle'
 import MenuItem from './MenuItem'
 import { openCartSidebar } from "../../../../redux/actions/main"
 import { openLoginDialog } from "../../../../redux/actions/main"
-import { connect } from "react-redux"
+import { useDispatch } from "react-redux"
 
 const menu = {
     account: { id: 1, badge: 0, title: 'Account' },
@@ -13,26 +13,26 @@ const menu = {
     cart: { id: 3, badge: 17, title: 'Cart' }
 }
 
-const Menu = ({openCartSidebar, openLoginDialog}) => {
+const Menu = () => {
+
+    const dispatch = useDispatch()
+
+    const openDialog = () => dispatch(openLoginDialog())
+    const openSidebar = () => dispatch(openCartSidebar())
 
     return(
         <Box sx={{ display:'flex' }}>
-            <MenuItem item={menu.account} onClick={openLoginDialog}>
+            <MenuItem item={menu.account} onClick={ openDialog }>
                 <AccountCircle />
             </MenuItem>
             <MenuItem item={menu.wishlist}>
                 <FavoriteIcon />
             </MenuItem>
-            <MenuItem item={menu.cart} onClick={openCartSidebar}>
+            <MenuItem item={menu.cart} onClick={ openSidebar }>
                 <ShoppingCartIcon />
             </MenuItem>
         </Box>
     )
 }
 
-const mapDispatchToProps = (dispatch) => ({
-    openCartSidebar: () => dispatch(openCartSidebar()),
-    openLoginDialog: () => dispatch(openLoginDialog())
-})
-
-export default connect(null, mapDispatchToProps)(Menu)
+export default Menu

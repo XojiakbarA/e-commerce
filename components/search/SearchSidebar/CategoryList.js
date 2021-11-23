@@ -1,7 +1,10 @@
 import { MenuList, MenuItem, Typography, Box } from "@mui/material"
-import { connect } from "react-redux"
+import { useSelector } from "react-redux"
 
-const CategoryList = ({categories}) => {
+const CategoryList = () => {
+
+    const categories = useSelector(state => state.categories)
+
     return(
         <Box>
             <Typography variant='h6'>
@@ -18,8 +21,4 @@ const CategoryList = ({categories}) => {
     )
 }
 
-const mapStateToProps = (state) => ({
-    categories: state.categories
-})
-
-export default connect(mapStateToProps)(CategoryList)
+export default CategoryList
