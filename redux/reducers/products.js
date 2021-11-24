@@ -1,6 +1,6 @@
 import * as type from '../types'
 
-const initialState = []
+const initialState = {}
 
 const products = (state = initialState, action) => {
     switch (action.type) {

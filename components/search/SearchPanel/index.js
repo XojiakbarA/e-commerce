@@ -3,19 +3,19 @@ import {FormControl, InputLabel, MenuItem,
 
 import AppsIcon from '@mui/icons-material/Apps'
 import ViewListIcon from '@mui/icons-material/ViewList'
-import ViewSidebarIcon from '@mui/icons-material/ViewSidebar';
+import ViewSidebarIcon from '@mui/icons-material/ViewSidebar'
 
-const SearchPanel = ({sort, view, handleSortChange, handleViewClick, handleSidebarClick, query, count}) => {
+const SearchPanel = ({sort, view, handleSortChange, handleViewClick, handleSidebarClick, title, total}) => {
 
     return(
         <Paper sx={{py: 2, px: 4}}>
             <Grid container justifyContent='space-between' spacing={2}>
                 <Grid item>
                     <Typography variant='body1'>
-                        Searching for “ {query} ”
+                        Searching for “ {title} ”
                     </Typography>
                     <Typography variant='caption'>
-                        {count} results found
+                        {total} results found
                     </Typography>
                 </Grid>
                 <Grid item>

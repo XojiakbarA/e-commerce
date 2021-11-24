@@ -97,10 +97,10 @@ export const getProduct = async (id, dispatch) => {
     }
 }
 
-export const getSearchResults = async (title, dispatch) => {
+export const getSearchResults = async (title, page, dispatch) => {
     try {
-        const res = await fetchSearchResults(title)
-        dispatch(setSearchProducts(res.data.data))
+        const res = await fetchSearchResults(title, page)
+        dispatch(setSearchProducts(res.data))
     } catch (e) {
         dispatch(setSearchProducts({id: 1, title: 'server is offline', price: 'server is offline'}))
         console.log(e.errno, e.code)
