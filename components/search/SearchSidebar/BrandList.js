@@ -1,6 +1,10 @@
 import { Typography, Box, FormGroup, FormControlLabel, Checkbox } from "@mui/material"
+import { useSelector } from "react-redux"
 
-const BrandList = ({brands}) => {
+const BrandList = () => {
+
+    const brands = useSelector(state => state.brands)
+
     return(
         <Box sx={{marginTop: 2}}>
             <Typography variant='h6'>

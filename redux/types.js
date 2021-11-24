@@ -1,4 +1,5 @@
 export const SET_CATS = 'SET_CATS'
+export const SET_BRANDS = 'SET_BRANDS'
 export const SET_BANNERS = 'SET_BANNERS'
 export const SET_NEW_PRODUCTS = 'SET_NEW_PRODUCTS'
 export const SET_SEARCH_PRODUCTS = 'SET_SEARCH_VALUE'

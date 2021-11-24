@@ -37,9 +37,9 @@ const PriceRange = () => {
                 step={5}
             />
             <Stack direction='row' spacing={1} alignItems='center' marginBottom={2}>
-                <TextField variant='outlined' label='Min' value={minValue} onChange={handleMinChange} />
+                <TextField variant='outlined' label='Min' value={minValue} onChange={handleMinChange} size='small' />
                 <p>-</p>
-                <TextField variant='outlined' label='Max' value={maxValue} onChange={handleMaxChange} />
+                <TextField variant='outlined' label='Max' value={maxValue} onChange={handleMaxChange} size='small' />
             </Stack>
         </Box>
     );

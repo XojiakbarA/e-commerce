@@ -8,6 +8,10 @@ export const fetchCategories = async () => {
     return await instance.get('categories')
 }
 
+export const fetchBrands = async () => {
+    return await instance.get('brands')
+}
+
 export const fetchBanners = async () => {
     return await instance.get('banners')
 }

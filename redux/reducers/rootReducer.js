@@ -3,6 +3,7 @@ import { HYDRATE } from 'next-redux-wrapper'
 import cartSidebar from './cartSidebar'
 import loginDialog from './loginDialog'
 import categories from './categories'
+import brands from './brands'
 import banners from './banners'
 import products from './products'
 import product from './product'
@@ -11,6 +12,7 @@ const combindedReducer = combineReducers({
     cartSidebar: cartSidebar,
     loginDialog: loginDialog,
     categories: categories,
+    brands: brands,
     banners: banners,
     products: products,
     product: product

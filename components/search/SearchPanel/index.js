@@ -5,17 +5,17 @@ import AppsIcon from '@mui/icons-material/Apps'
 import ViewListIcon from '@mui/icons-material/ViewList'
 import ViewSidebarIcon from '@mui/icons-material/ViewSidebar';
 
-const SearchPanel = ({sort, view, handleSortChange, handleViewClick, handleSidebarClick}) => {
+const SearchPanel = ({sort, view, handleSortChange, handleViewClick, handleSidebarClick, query, count}) => {
 
     return(
         <Paper sx={{py: 2, px: 4}}>
             <Grid container justifyContent='space-between' spacing={2}>
                 <Grid item>
                     <Typography variant='body1'>
-                        Searching for “ mobile phone ”
+                        Searching for “ {query} ”
                     </Typography>
                     <Typography variant='caption'>
-                        30 results found
+                        {count} results found
                     </Typography>
                 </Grid>
                 <Grid item>
@@ -28,6 +28,7 @@ const SearchPanel = ({sort, view, handleSortChange, handleViewClick, handleSideb
                                 label="Sort by"
                                 value={sort}
                                 onChange={handleSortChange}
+                                size='small'
                             >
                                 <MenuItem value='new'>New</MenuItem>
                                 <MenuItem value='expensive'>Expensive</MenuItem>

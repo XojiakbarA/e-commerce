@@ -7,17 +7,10 @@ import { wrapper } from "../redux/store"
 import { getSearchResults } from "../redux/actions/main"
 import { useSelector } from "react-redux"
 
-
-const brands = [
-    {id: 1, title: 'Brand 1'},
-    {id: 2, title: 'Brand 2'},
-    {id: 3, title: 'Brand 3'},
-    {id: 4, title: 'Brand 4'},
-]
-
 const Search = ({query}) => {
 
     const products = useSelector(state => state.products)
+    const count = products.length
 
     const [sort, setSort] = useState('new')
     const [view, setView] = useState('grid')
@@ -49,13 +42,13 @@ const Search = ({query}) => {
                         handleSortChange={handleSortChange}
                         handleViewClick={handleViewClick}
                         handleSidebarClick={handleSidebarClick}
+                        query={query}
+                        count={count}
                     />
                 </Grid>
                 <Grid item lg={3} display={{xs: 'none', sm: 'block'}}>
                     <Paper>
-                        <SearchSidebar
-                            brands={brands}
-                        />
+                        <SearchSidebar />
                     </Paper>
                 </Grid>
                 <Grid item lg={9}>
@@ -76,7 +69,7 @@ const Search = ({query}) => {
                 open={sidebar}
                 onClose={handleSidebarClose}
             >
-                <SearchSidebar brands={brands} />
+                <SearchSidebar />
             </Drawer>
         </>
     )
