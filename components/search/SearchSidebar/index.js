@@ -1,6 +1,6 @@
 import { Stack, Box, Divider } from "@mui/material"
 import BrandList from "./BrandList"
-import CategoryList from "./CategoryList"
+import CategoryList from "./CategoryList/CategoryList"
 import PriceRange from "./PriceRange"
 import RatingList from "./RatingList"
 

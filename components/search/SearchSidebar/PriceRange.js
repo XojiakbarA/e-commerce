@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import { FormGroup, Typography, TextField, Box, Slider, Stack, FormControl } from '@mui/material'
+import { FormGroup, Typography, TextField, Box, Slider, Stack, FormControl, ListSubheader } from '@mui/material'
 
 function valuetext(value) {
     return `${value}°C`;
@@ -23,9 +23,9 @@ const PriceRange = () => {
 
     return (
         <Box sx={{marginTop: 2}}>
-            <Typography variant='h6'>
+            <ListSubheader component="div">
                 Price Range
-            </Typography>
+            </ListSubheader>
             <Slider
                 getAriaLabel={() => 'Temperature range'}
                 value={[minValue, maxValue]}

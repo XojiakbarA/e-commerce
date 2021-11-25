@@ -3,14 +3,14 @@ import {Grid, Paper, Drawer, Pagination, PaginationItem} from "@mui/material"
 import SearchPanel from "../components/search/SearchPanel"
 import SearchSidebar from "../components/search/SearchSidebar"
 import ProductCard from "../components/common/ProductCard"
-import Link from "next/link"
 import { wrapper } from "../redux/store"
 import { getSearchResults } from "../redux/actions/main"
 import { useSelector } from "react-redux"
-import router from "next/router"
+import { useRouter } from "next/router"
 
 const Search = ({title}) => {
 
+    const router = useRouter()
     const products = useSelector(state => state.products.data)
     const total = useSelector(state => state.products.meta.total)
     const meta = useSelector(state => state.products.meta)
@@ -18,7 +18,6 @@ const Search = ({title}) => {
     const [sort, setSort] = useState('new')
     const [view, setView] = useState('grid')
     const [sidebar, setSidebar] = useState(false)
-    const [page, setPage] = useState(1)
 
     function handleSortChange(e) {
         setSort(e.target.value)
@@ -37,7 +36,10 @@ const Search = ({title}) => {
     }
 
     function handlePageChange(e, p) {
-        router.push('/search?title=' + title + '&page=' + p)
+        router.push({
+            pathname: '/search',
+            query: { ...router.query, page: p }
+        })
     }
 
     return(
@@ -98,13 +100,14 @@ const Search = ({title}) => {
 export const getServerSideProps = wrapper.getServerSideProps(store => async ({query}) => {
 
     const title = query.title
-    const page = query.page ? query.page : 1
-    await getSearchResults(title, page, store.dispatch)
+    const page = query.page
+    const cat_id = query.cat_id
+    const is_sub = query.is_sub
+    await getSearchResults(title, page, cat_id, is_sub, store.dispatch)
 
     return {
         props: {
             title,
-            page
         }
     }
 

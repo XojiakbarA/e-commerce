@@ -1,4 +1,4 @@
-import { Typography, Box, FormGroup, FormControlLabel, Checkbox } from "@mui/material"
+import { ListSubheader, Box, FormGroup, FormControlLabel, Checkbox } from "@mui/material"
 import { useSelector } from "react-redux"
 
 const BrandList = () => {
@@ -7,9 +7,9 @@ const BrandList = () => {
 
     return(
         <Box sx={{marginTop: 2}}>
-            <Typography variant='h6'>
+            <ListSubheader component="div">
                 Brands
-            </Typography>
+            </ListSubheader>
             <FormGroup>
                 {
                     brands.map((brand, i) => (
