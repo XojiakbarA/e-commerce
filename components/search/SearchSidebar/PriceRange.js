@@ -1,9 +1,5 @@
 import {useState} from 'react'
-import { FormGroup, Typography, TextField, Box, Slider, Stack, FormControl, ListSubheader } from '@mui/material'
-
-function valuetext(value) {
-    return `${value}°C`;
-}
+import {  TextField, Box, Slider, Stack, ListSubheader } from '@mui/material'
 
 const PriceRange = () => {
     const [minValue, setMinValue] = useState(50)
@@ -23,7 +19,7 @@ const PriceRange = () => {
 
     return (
         <Box sx={{marginTop: 2}}>
-            <ListSubheader component="div">
+            <ListSubheader component="div" sx={{zIndex: 0}}>
                 Price Range
             </ListSubheader>
             <Slider
@@ -31,7 +27,6 @@ const PriceRange = () => {
                 value={[minValue, maxValue]}
                 onChange={handleSliderChange}
                 valueLabelDisplay="auto"
-                getAriaValueText={valuetext}
                 min={10}
                 max={1500}
                 step={5}

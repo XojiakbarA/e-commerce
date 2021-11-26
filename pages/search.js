@@ -102,8 +102,8 @@ export const getServerSideProps = wrapper.getServerSideProps(store => async ({qu
     const title = query.title
     const page = query.page
     const cat_id = query.cat_id
-    const is_sub = query.is_sub
-    await getSearchResults(title, page, cat_id, is_sub, store.dispatch)
+    const sub_cat_id = query.sub_cat_id
+    await getSearchResults(title, page, cat_id, sub_cat_id, store.dispatch)
 
     return {
         props: {

@@ -21,16 +21,26 @@ const CategoryListItem = ({ category }) => {
         setRipple(false)
     }
 
-    function handleCatClick(id, value) {
+    function handleCatClick(id, value = 'cat') {
+        const query = router.query
+
+        if (value == 'cat') {
+            query.sub_cat_id ? delete query.sub_cat_id : null
+            query.cat_id = id
+        } else {
+            query.cat_id ? delete query.cat_id : null
+            query.sub_cat_id = id
+        }
+
         router.push({
             pathname: '/search',
-            query: { ...router.query, cat_id: id, is_sub: value, page: 1 }
+            query: { ...query, page: 1 }
         })
     }
 
     return(
         <Box>
-            <ListItemButton disableRipple={ripple} onClick={ () => handleCatClick(category.id, 'no') }>
+            <ListItemButton disableRipple={ripple} onClick={ () => handleCatClick(category.id) }>
                 <ListItemText primary={category.title} />
                 <IconButton onClick={handleClick} onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
                     { category.sub_categories && (open ? <ExpandLess /> : <ExpandMore />) }
@@ -40,7 +50,7 @@ const CategoryListItem = ({ category }) => {
                 <Collapse in={open} timeout="auto" unmountOnExit>
                     {
                         category.sub_categories.map(sub => (
-                            <List component="div" disablePadding key={sub.id} onClick={ () => handleCatClick(sub.id, 'yes') }>
+                            <List component="div" disablePadding key={sub.id} onClick={ () => handleCatClick(sub.id, 'sub') }>
                                 <ListItemButton sx={{ pl: 4 }}>
                                     <ListItemText primary={sub.title} />
                                 </ListItemButton>
