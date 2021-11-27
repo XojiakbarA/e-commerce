@@ -102,7 +102,8 @@ export const getServerSideProps = wrapper.getServerSideProps(store => async ({qu
     const sort = query.sort || 'new'
     const price_min = query.price_min || 0
     const price_max = query.price_max || 0
-    await getSearchResults(title, page, cat_id, sub_cat_id, sort, price_min, price_max, store.dispatch)
+    const brand_id = query.brand_id || null
+    await getSearchResults(title, page, cat_id, sub_cat_id, sort, price_min, price_max, brand_id, store.dispatch)
 
     return {
         props: {
