@@ -1,3 +1,5 @@
+import { useState } from "react"
+import { useRouter } from "next/router"
 import {FormControl, InputLabel, MenuItem,
         Select, Grid, Paper, Typography, Stack, IconButton} from "@mui/material"
 
@@ -5,7 +7,21 @@ import AppsIcon from '@mui/icons-material/Apps'
 import ViewListIcon from '@mui/icons-material/ViewList'
 import ViewSidebarIcon from '@mui/icons-material/ViewSidebar'
 
-const SearchPanel = ({sort, view, handleSortChange, handleViewClick, handleSidebarClick, title, total}) => {
+const SearchPanel = ({view, handleViewClick, handleSidebarClick, title, total}) => {
+
+    const router = useRouter()
+    const initSort = router.query.sort || 'new'
+    const [sort, setSort] = useState(initSort)
+
+    function handleSortChange(e) {
+        const sort = e.target.value
+        setSort(sort)
+
+        router.push({
+            pathname: '/search',
+            query: { ...router.query, sort: sort, page: 1 }
+        })
+    }
 
     return(
         <Paper sx={{py: 2, px: 4}}>
@@ -27,7 +43,7 @@ const SearchPanel = ({sort, view, handleSortChange, handleViewClick, handleSideb
                                 id="demo-simple-select"
                                 label="Sort by"
                                 value={sort}
-                                onChange={handleSortChange}
+                                onChange={ (e) => handleSortChange(e) }
                                 size='small'
                             >
                                 <MenuItem value='new'>New</MenuItem>

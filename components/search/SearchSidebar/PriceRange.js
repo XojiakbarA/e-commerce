@@ -1,20 +1,44 @@
 import {useState} from 'react'
-import {  TextField, Box, Slider, Stack, ListSubheader } from '@mui/material'
+import { useRouter } from 'next/router'
+import { TextField, Box, Slider, Stack, ListSubheader } from '@mui/material'
 
 const PriceRange = () => {
-    const [minValue, setMinValue] = useState(50)
-    const [maxValue, setMaxValue] = useState(700)
+
+    const router = useRouter()
+    const initMinValue = Number(router.query.price_min) || 0
+    const initMaxValue = Number(router.query.price_max) || 0
+    const [minValue, setMinValue] = useState(initMinValue)
+    const [maxValue, setMaxValue] = useState(initMaxValue)
 
     const handleSliderChange = (event, newValue) => {
-        setMinValue(newValue[0])
-        setMaxValue(newValue[1])
+        const minValue = newValue[0]
+        const maxValue = newValue[1]
+        setMinValue(minValue)
+        setMaxValue(maxValue)
+
+        router.push({
+            pathname: '/search',
+            query: { ...router.query, price_min: minValue, price_max: maxValue }
+        }, null, {scroll: false})
     }
 
-    const handleMinChange = (event, newValue) => {
-        setMinValue(Number(event.target.value))
+    const handleMinChange = (event) => {
+        const minValue = Number(event.target.value)
+        setMinValue(minValue)
+
+        router.push({
+            pathname: '/search',
+            query: { ...router.query, price_min: minValue }
+        }, null, {scroll: false})
     };
-    const handleMaxChange = (event, newValue) => {
-        setMaxValue(Number(event.target.value))
+    const handleMaxChange = (event) => {
+        const maxValue = Number(event.target.value)
+        setMaxValue(maxValue)
+
+        router.push({
+            pathname: '/search',
+            query: { ...router.query, price_max: maxValue }
+        }, null, {scroll: false})
     };
 
     return (
@@ -27,7 +51,7 @@ const PriceRange = () => {
                 value={[minValue, maxValue]}
                 onChange={handleSliderChange}
                 valueLabelDisplay="auto"
-                min={10}
+                min={0}
                 max={1500}
                 step={5}
             />

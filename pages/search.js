@@ -11,17 +11,15 @@ import { useRouter } from "next/router"
 const Search = ({title}) => {
 
     const router = useRouter()
-    const products = useSelector(state => state.products.data)
-    const total = useSelector(state => state.products.meta.total)
-    const meta = useSelector(state => state.products.meta)
+    const data = useSelector(state => state.products)
+    const products = data.data
+    const meta = data.meta
+    const total = meta.total
+    const currentPage = meta.current_page
+    const lastPage = meta.last_page
 
-    const [sort, setSort] = useState('new')
     const [view, setView] = useState('grid')
     const [sidebar, setSidebar] = useState(false)
-
-    function handleSortChange(e) {
-        setSort(e.target.value)
-    }
 
     function handleViewClick(e, newView) {
         setView(newView)
@@ -47,9 +45,7 @@ const Search = ({title}) => {
             <Grid container spacing={2}>
                 <Grid item lg={12} xs={12}>
                     <SearchPanel
-                        sort={sort}
                         view={view}
-                        handleSortChange={handleSortChange}
                         handleViewClick={handleViewClick}
                         handleSidebarClick={handleSidebarClick}
                         title={title}
@@ -75,9 +71,9 @@ const Search = ({title}) => {
                         size='large' 
                         color='primary'
                         sx={{my: 2}}
-                        page={meta.current_page}
-                        count={meta.last_page}
-                        onChange={handlePageChange}
+                        page={currentPage}
+                        count={lastPage}
+                        onChange={ (e, p) => handlePageChange(e, p) }
                         renderItem={item => (    
                             <PaginationItem
                                 {...item}
@@ -99,11 +95,14 @@ const Search = ({title}) => {
 
 export const getServerSideProps = wrapper.getServerSideProps(store => async ({query}) => {
 
-    const title = query.title
-    const page = query.page
-    const cat_id = query.cat_id
-    const sub_cat_id = query.sub_cat_id
-    await getSearchResults(title, page, cat_id, sub_cat_id, store.dispatch)
+    const title = query.title || 'all'
+    const page = query.page || 1
+    const cat_id = query.cat_id || null
+    const sub_cat_id = query.sub_cat_id || null
+    const sort = query.sort || 'new'
+    const price_min = query.price_min || 0
+    const price_max = query.price_max || 0
+    await getSearchResults(title, page, cat_id, sub_cat_id, sort, price_min, price_max, store.dispatch)
 
     return {
         props: {

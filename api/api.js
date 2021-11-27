@@ -24,13 +24,16 @@ export const fetchProduct = async (id) => {
     return await instance.get('products/' + id)
 }
 
-export const fetchSearchResults = async (title, page = 1, cat_id = null, sub_cat_id = null) => {
+export const fetchSearchResults = async (title, page, cat_id, sub_cat_id, sort, price_min, price_max) => {
     return await instance.get('products/', {
         params: {
             title,
             page,
             cat_id,
-            sub_cat_id
+            sub_cat_id,
+            sort,
+            price_min,
+            price_max
         }
     })
 }
