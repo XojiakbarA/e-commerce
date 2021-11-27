@@ -6,6 +6,8 @@ import { useRouter } from 'next/router'
 const CategoryListItem = ({ category }) => {
 
     const router = useRouter()
+    const cat_id = router.query.cat_id
+    const sub_cat_id = router.query.sub_cat_id
     const [open, setOpen] = useState(false);
     const [ripple, setRipple] = useState(false);
 
@@ -40,9 +42,17 @@ const CategoryListItem = ({ category }) => {
 
     return(
         <Box>
-            <ListItemButton disableRipple={ripple} onClick={ () => handleCatClick(category.id) }>
+            <ListItemButton
+                selected={cat_id == category.id}
+                disableRipple={ripple}
+                onClick={ () => handleCatClick(category.id) }
+            >
                 <ListItemText primary={category.title} />
-                <IconButton onClick={handleClick} onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
+                <IconButton
+                    onClick={handleClick}
+                    onMouseEnter={handleEnter}
+                    onMouseLeave={handleLeave}
+                >
                     { category.sub_categories && (open ? <ExpandLess /> : <ExpandMore />) }
                 </IconButton>
             </ListItemButton>
@@ -50,8 +60,13 @@ const CategoryListItem = ({ category }) => {
                 <Collapse in={open} timeout="auto" unmountOnExit>
                     {
                         category.sub_categories.map(sub => (
-                            <List component="div" disablePadding key={sub.id} onClick={ () => handleCatClick(sub.id, 'sub') }>
-                                <ListItemButton sx={{ pl: 4 }}>
+                            <List
+                                component="div"
+                                disablePadding
+                                key={sub.id}
+                                onClick={ () => handleCatClick(sub.id, 'sub') }
+                            >
+                                <ListItemButton selected={sub_cat_id == sub.id} sx={{ pl: 4 }}>
                                     <ListItemText primary={sub.title} />
                                 </ListItemButton>
                             </List>
