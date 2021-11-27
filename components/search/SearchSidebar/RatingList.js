@@ -1,6 +1,7 @@
 import { ListSubheader, Rating, FormControlLabel, FormGroup, Checkbox, Box } from "@mui/material"
 import { useState } from "react"
 import { useRouter } from "next/router"
+import { stringToArray } from "../../../utils/utils"
 
 const arr = [5, 4, 3, 2, 1]
 
@@ -8,8 +9,10 @@ const RatingList = () => {
 
     const router = useRouter()
 
-    const [checked, setChecked] = useState(Array(arr.length).fill(0))
-console.log(checked)
+    const rating = router.query.rating ? stringToArray(router.query.rating) : null
+    const initChecked = rating || Array(arr.length).fill(0)
+
+    const [checked, setChecked] = useState(initChecked)
 
     function handleChange(e, i) {
         const newArray = [...checked]
