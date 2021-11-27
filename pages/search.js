@@ -1,5 +1,5 @@
 import { useState } from "react"
-import {Grid, Paper, Drawer, Pagination, PaginationItem} from "@mui/material"
+import {Grid, Paper, Drawer, Pagination, PaginationItem, Typography} from "@mui/material"
 import SearchPanel from "../components/search/SearchPanel"
 import SearchSidebar from "../components/search/SearchSidebar"
 import ProductCard from "../components/common/ProductCard"
@@ -59,27 +59,36 @@ const Search = ({title}) => {
                 </Grid>
                 <Grid item lg={9}>
                     <Grid container spacing={2}>
-                    {
-                        products.map((product, i) => (
-                            <Grid item xs={12} lg={view == 'grid' ? 4 : 12} key={i}>
+                    {products.length == 0
+                        ?
+                            <Grid item>
+                                <Typography variant='h2'>
+                                    Not found products
+                                </Typography>
+                            </Grid>
+                        :
+                        products.map((product) => (
+                            <Grid item xs={12} lg={view == 'grid' ? 4 : 12} key={product.id}>
                                 <ProductCard product={product} view={view} />
                             </Grid>
                         ))
                     }
                     </Grid>
-                    <Pagination
-                        size='large' 
-                        color='primary'
-                        sx={{my: 2}}
-                        page={currentPage}
-                        count={lastPage}
-                        onChange={ (e, p) => handlePageChange(e, p) }
-                        renderItem={item => (    
-                            <PaginationItem
-                                {...item}
-                            />
-                        )}
-                    />
+                    {lastPage == 1 ? null :
+                        <Pagination
+                            size='large' 
+                            color='primary'
+                            sx={{my: 2}}
+                            page={currentPage}
+                            count={lastPage}
+                            onChange={ (e, p) => handlePageChange(e, p) }
+                            renderItem={item => (    
+                                <PaginationItem
+                                    {...item}
+                                />
+                            )}
+                        />
+                        }
                 </Grid>
             </Grid>
             <Drawer

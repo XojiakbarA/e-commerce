@@ -17,8 +17,8 @@ const Index = () => {
             </Typography>
             <Grid container spacing={2}>
                 {
-                    products.map((product, i) => (
-                        <Grid item xs={12} lg={3} key={i}>
+                    products.map(product => (
+                        <Grid item xs={12} lg={3} key={product.id}>
                             <ProductCard product={product} />
                         </Grid>
                     ))
