@@ -14,9 +14,9 @@ const Search = ({title}) => {
     const data = useSelector(state => state.products)
     const products = data.data
     const meta = data.meta
-    const total = meta.total
-    const currentPage = meta.current_page
-    const lastPage = meta.last_page
+    const total = meta?.total
+    const currentPage = meta?.current_page
+    const lastPage = meta?.last_page
 
     const [view, setView] = useState('grid')
     const [sidebar, setSidebar] = useState(false)
@@ -59,7 +59,7 @@ const Search = ({title}) => {
                 </Grid>
                 <Grid item lg={9}>
                     <Grid container spacing={2}>
-                    {products.length == 0
+                    {!products.length
                         ?
                             <Grid item>
                                 <Typography variant='h2'>
@@ -105,8 +105,14 @@ const Search = ({title}) => {
 export const getServerSideProps = wrapper.getServerSideProps(store => async ({query}) => {
 
     const title = query.title
+
+    !query.sort ? query.sort = 'new' : null
     
     await getSearchResults(query, store.dispatch)
+
+    if (!title) {
+        return { props: { title: '' } }
+    }
 
     return {
         props: {
