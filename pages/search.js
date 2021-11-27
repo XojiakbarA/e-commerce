@@ -104,16 +104,9 @@ const Search = ({title}) => {
 
 export const getServerSideProps = wrapper.getServerSideProps(store => async ({query}) => {
 
-    const title = query.title || 'all'
-    const page = query.page || 1
-    const cat_id = query.cat_id || null
-    const sub_cat_id = query.sub_cat_id || null
-    const sort = query.sort || 'new'
-    const price_min = query.price_min || 0
-    const price_max = query.price_max || 0
-    const brand_id = query.brand_id || null
-    const rating = query.rating || null
-    await getSearchResults(title, page, cat_id, sub_cat_id, sort, price_min, price_max, brand_id, rating, store.dispatch)
+    const title = query.title
+    
+    await getSearchResults(query, store.dispatch)
 
     return {
         props: {
