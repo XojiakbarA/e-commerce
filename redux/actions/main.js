@@ -47,6 +47,15 @@ export const closeLoginDialog = () => ({
     type: type.CLOSE_LOGIN_DIALOG
 })
 
+export const openAccountMenu = (anchorEl) => ({
+    type: type.OPEN_ACCOUNT_MENU,
+    payload: anchorEl
+})
+
+export const closeAccountMenu = () => ({
+    type: type.CLOSE_ACCOUNT_MENU
+})
+
 export const getCategories = async (dispatch) => {
     try {
         const res = await fetchCategories()

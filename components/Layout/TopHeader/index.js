@@ -7,6 +7,7 @@ import LoginDialog from './LoginDialog'
 import { closeCartSidebar } from '../../../redux/actions/main'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
+import AccountMenu from './AccountMenu/AccountMenu'
 
 const TopHeader = () => {
 
@@ -38,6 +39,7 @@ const TopHeader = () => {
                 <CartSidebar />
             </Drawer>
             <LoginDialog />
+            <AccountMenu />
         </Box>
     );
 }
