@@ -1,12 +1,12 @@
 import { Stack, Button, Dialog, TextField, Typography, Box, IconButton } from '@mui/material'
 import Link from 'next/link'
-import ReportIcon from '@mui/icons-material/Report'
 import CloseIcon from '@mui/icons-material/Close'
 import { closeLoginDialog } from '../../../../redux/actions/main'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
+import { login } from '../../../../api/api'
 
 const LoginDialog = () => {
 
@@ -15,6 +15,8 @@ const LoginDialog = () => {
     const dispatch = useDispatch()
 
     const closeDialog = () => dispatch(closeLoginDialog())
+
+    
 
     const validationSchema = yup.object({
         email: yup
@@ -33,8 +35,8 @@ const LoginDialog = () => {
             password: ''
         },
         validationSchema,
-        onSubmit: (values) => {
-            alert(JSON.stringify(values))
+        onSubmit: async (data) => {
+            login(data)
         }
     })
 
@@ -67,7 +69,7 @@ const LoginDialog = () => {
                             { ...formik.getFieldProps('password') }
                         />
                         <Button variant='contained' type='submit'>Login</Button>
-
+                        
                         <Typography variant='body1' textAlign='center'>
                             Don`t have Account? <Link href='/signup'><a style={{textDecoration: 'underline'}}> Sign Up </a></Link>
                         </Typography>
