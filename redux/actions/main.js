@@ -56,6 +56,16 @@ export const closeAccountMenu = () => ({
     type: type.CLOSE_ACCOUNT_MENU
 })
 
+export const setLoading = (bool) => ({
+    type: type.IS_LOADING,
+    payload: bool
+})
+
+export const setSnackbar = (bool) => ({
+    type: type.IS_OPEN_SNACKBAR,
+    payload: bool
+})
+
 export const getCategories = async (dispatch) => {
     try {
         const res = await fetchCategories()

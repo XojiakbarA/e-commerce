@@ -1,18 +1,22 @@
-import { Menu, MenuItem } from "@mui/material"
+import { CircularProgress, Menu, MenuItem } from "@mui/material"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
-import { closeAccountMenu } from "../../../../redux/actions/main"
+import { closeAccountMenu, setLoading, setSnackbar } from "../../../../redux/actions/main"
 import { logout } from "../../../../api/api"
 
 const AccountMenu = () => {
 
     const anchorEl = useSelector(state => state.accountMenu)
+    const isLoading = useSelector(state => state.isLoading)
     const dispatch = useDispatch()
 
     const handleClose = () => dispatch(closeAccountMenu())
 
-    const handleLogOut = () => {
-        logout()
+    const handleLogOut = async () => {
+        dispatch(setLoading(true))
+        await logout()
+        dispatch(setLoading(false))
+        dispatch(setSnackbar({isOpen: true, text: 'You are logged out!'}))
         dispatch(closeAccountMenu())
     }
 
@@ -34,7 +38,9 @@ const AccountMenu = () => {
             >
             <MenuItem onClick={handleClose}>Profile</MenuItem>
             <MenuItem onClick={handleClose}>My account</MenuItem>
-            <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
+            <MenuItem onClick={handleLogOut}>Log Out
+                {isLoading && <CircularProgress size={20} sx={{marginLeft: 2}} />}
+            </MenuItem>
         </Menu>
     )
 }

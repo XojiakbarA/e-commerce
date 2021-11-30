@@ -8,6 +8,8 @@ import banners from './banners'
 import products from './products'
 import product from './product'
 import accountMenu from './accountMenu'
+import isLoading from './isLoading'
+import snackbar from './snackbar'
 
 const combindedReducer = combineReducers({
     cartSidebar: cartSidebar,
@@ -17,7 +19,9 @@ const combindedReducer = combineReducers({
     banners: banners,
     products: products,
     product: product,
-    accountMenu: accountMenu
+    accountMenu: accountMenu,
+    isLoading: isLoading,
+    snackbar: snackbar
 })
 
 const rootReducer = (state, action) => {
