@@ -31,12 +31,8 @@ export const setProduct = (product) => ({
     payload: product
 })
 
-export const openCartSidebar = () => ({
-    type: type.OPEN_CART_SIDEBAR
-})
-
-export const closeCartSidebar = () => ({
-    type: type.CLOSE_CART_SIDEBAR
+export const toggleCartSidebar = () => ({
+    type: type.TOGGLE_CART_SIDEBAR
 })
 
 export const openLoginDialog = () => ({

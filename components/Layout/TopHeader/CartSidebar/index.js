@@ -2,7 +2,7 @@ import { Box, Typography, Stack, Divider, IconButton } from '@mui/material'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import SidebarButtons from './SidebarButtons'
 import SidebarProductCard from './SidebarProductCard'
-import { closeCartSidebar } from '../../../../redux/actions/main'
+import { toggleCartSidebar } from '../../../../redux/actions/main'
 import { useDispatch } from 'react-redux'
 
 
@@ -10,7 +10,7 @@ const CartSidebar = () => {
 
     const dispatch = useDispatch()
 
-    const closeSidebar = () => dispatch(closeCartSidebar())
+    const closeSidebar = () => dispatch(toggleCartSidebar())
 
     return(
         <Box sx={{padding: 1, width: 350}}>

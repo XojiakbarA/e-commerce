@@ -4,14 +4,14 @@ import AppLogo from '../AppLogo'
 import CartSidebar from './CartSidebar'
 import Menu from './Menu'
 import LoginDialog from './LoginDialog'
-import { closeCartSidebar, setSnackbar } from '../../../redux/actions/main'
+import { toggleCartSidebar, setSnackbar } from '../../../redux/actions/main'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import AccountMenu from './AccountMenu/AccountMenu'
 
 const TopHeader = () => {
 
-    const isOpen = useSelector(state => state.cartSidebar.isOpen)
+    const cartSidebar = useSelector(state => state.cartSidebar)
     const isOpenSnackbar = useSelector(state => state.snackbar.isOpen)
     const snackbarText = useSelector(state => state.snackbar.text)
 
@@ -19,7 +19,7 @@ const TopHeader = () => {
 
     const handleCloseSnackbar = () => dispatch(setSnackbar(false))
 
-    const closeSidebar = () => dispatch(closeCartSidebar())
+    const closeSidebar = () => dispatch(toggleCartSidebar())
 
     return (
         <Box sx={{ flexGrow: 1, display: {xs: 'none', sm: 'block'} }}>
@@ -37,7 +37,7 @@ const TopHeader = () => {
             <Toolbar />
             <Drawer
                 anchor='right'
-                open={isOpen}
+                open={cartSidebar}
                 onClose={closeSidebar}
             >
                 <CartSidebar />

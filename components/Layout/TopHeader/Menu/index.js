@@ -3,7 +3,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import MenuItem from './MenuItem'
-import { openAccountMenu, openCartSidebar } from "../../../../redux/actions/main"
+import { openAccountMenu, toggleCartSidebar } from "../../../../redux/actions/main"
 import { openLoginDialog } from "../../../../redux/actions/main"
 import { useDispatch } from "react-redux"
 
@@ -24,7 +24,7 @@ const Menu = () => {
             dispatch(openLoginDialog())
         }
     }
-    const openSidebar = () => dispatch(openCartSidebar())
+    const openSidebar = () => dispatch(toggleCartSidebar())
 
     return(
         <Box sx={{ display:'flex' }}>
