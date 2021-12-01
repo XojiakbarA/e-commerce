@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import ProductGallery from "../../components/product/ProductGallery"
 import ProductInfo from '../../components/product/ProductInfo'
 import ProductTab from "../../components/product/ProductTab/ProductTab"
-import { getProduct } from "../../redux/actions/main"
+import { getProduct } from "../../redux/actions/thunk"
 import { wrapper } from "../../redux/store"
 
 const Product = ({product}) => {

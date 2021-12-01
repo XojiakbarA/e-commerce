@@ -2,7 +2,7 @@ import { CssBaseline, Backdrop, CircularProgress } from '@mui/material'
 import Layout from '../components/layout'
 import '../styles/globals.css'
 import { wrapper } from '../redux/store'
-import { getBrands, getCategories } from '../redux/actions/main'
+import { getBrands, getCategories } from '../redux/actions/thunk'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
