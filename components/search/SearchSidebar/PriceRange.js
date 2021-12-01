@@ -42,8 +42,8 @@ const PriceRange = () => {
     };
 
     return (
-        <Box sx={{marginTop: 2}}>
-            <ListSubheader component="div" sx={{zIndex: 0}}>
+        <Box>
+            <ListSubheader sx={{zIndex: 0}}>
                 Price Range
             </ListSubheader>
             <Slider

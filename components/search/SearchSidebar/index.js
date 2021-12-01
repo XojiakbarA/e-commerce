@@ -7,7 +7,7 @@ import RatingList from "./RatingList"
 const SearchSidebar = () => {
     return(
         <Box sx={{width: {xs: 300, sm: 'auto'}}}>
-            <Stack padding={2} divider={<Divider orientation='horizontal' />}>
+            <Stack padding={2} spacing={2} divider={<Divider orientation='horizontal' />}>
                 <CategoryList />
                 <PriceRange />
                 <BrandList />

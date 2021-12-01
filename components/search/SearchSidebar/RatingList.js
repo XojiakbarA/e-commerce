@@ -28,10 +28,8 @@ const RatingList = () => {
     }
 
     return(
-        <Box sx={{marginTop: 2}}>
-            <ListSubheader component="div">
-                Rating
-            </ListSubheader>
+        <Box>
+            <ListSubheader>Rating</ListSubheader>
             <FormGroup>
                 {
                     arr.map((num, i) => (

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { IconButton, Box, List, ListItemButton, ListItemText, Collapse } from '@mui/material'
+import { IconButton, List, ListItemButton, ListItemText, Collapse } from '@mui/material'
 import {ExpandLess, ExpandMore} from '@mui/icons-material'
 import { useRouter } from 'next/router'
 
@@ -41,7 +41,7 @@ const CategoryListItem = ({ category }) => {
     }
 
     return(
-        <Box>
+        <>
             <ListItemButton
                 selected={cat_id == category.id}
                 disableRipple={ripple}
@@ -74,7 +74,7 @@ const CategoryListItem = ({ category }) => {
                     }
                 </Collapse>
             }
-        </Box>
+        </>
     )
 }
 

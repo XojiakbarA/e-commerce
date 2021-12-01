@@ -28,10 +28,8 @@ const BrandList = () => {
     }
 
     return(
-        <Box sx={{marginTop: 2}}>
-            <ListSubheader component="div">
-                Brands
-            </ListSubheader>
+        <Box>
+            <ListSubheader>Brands</ListSubheader>
             <FormGroup>
                 {
                     brands.map((brand, i) => (

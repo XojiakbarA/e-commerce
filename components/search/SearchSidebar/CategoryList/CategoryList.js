@@ -7,15 +7,8 @@ const CategoryList = () => {
     const categories = useSelector(state => state.categories)
 
     return (
-    <List
-        sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-        component="nav"
-        subheader={
-            <ListSubheader component="div">
-                Categories
-            </ListSubheader>
-        }
-    >
+    <List>
+        <ListSubheader>Categories</ListSubheader>
         {
             categories.map(category => (
                 <CategoryListItem key={category.id} category={category} />
