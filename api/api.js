@@ -12,10 +12,12 @@ const auth = axios.create({
 
 export const login = async (data) => {
     const csrf = await auth.get('sanctum/csrf-cookie')
-    const res = await auth.post('login', data)
-    if (res.status === 204) {
-        const token = res.config.headers['X-XSRF-TOKEN']
+    const login = await auth.post('login', data)
+    const user = await auth.get('api/user')
+    if (user.status === 200) {
+        const token = login.config.headers['X-XSRF-TOKEN']
         localStorage.setItem('token', token)
+        localStorage.setItem('user', JSON.stringify(user.data))
     }
 }
 
@@ -23,6 +25,7 @@ export const logout = async () => {
     const res = await auth.post('logout')
     if (res.status === 204) {
         localStorage.removeItem('token')
+        localStorage.removeItem('user')
     }
 }
 
