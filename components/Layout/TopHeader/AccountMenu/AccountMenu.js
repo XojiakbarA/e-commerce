@@ -15,7 +15,7 @@ const AccountMenu = () => {
     useEffect(()=> {
         const user = JSON.parse(localStorage.getItem('user'))
         setName(user?.name)
-    }, [name])
+    }, [])
 
     const handleClose = () => dispatch(closeAccountMenu())
 
