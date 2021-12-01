@@ -48,7 +48,7 @@ const TopHeader = () => {
                 open={isOpenSnackbar}
                 anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
                 onClose={ handleCloseSnackbar }
-                autoHideDuration={5000}
+                autoHideDuration={3000}
             >
                 <Alert
                     severity='success'

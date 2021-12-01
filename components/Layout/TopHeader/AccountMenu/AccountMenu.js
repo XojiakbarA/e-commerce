@@ -14,8 +14,8 @@ const AccountMenu = () => {
     
     useEffect(()=> {
         const user = JSON.parse(localStorage.getItem('user'))
-        setName(user.name)
-    }, [])
+        setName(user?.name)
+    }, [name])
 
     const handleClose = () => dispatch(closeAccountMenu())
 
@@ -35,6 +35,7 @@ const AccountMenu = () => {
                 vertical: 'top',
                 horizontal: 'left',
             }}
+            autoFocus={false}
             keepMounted
             transformOrigin={{
                 vertical: 'top',
