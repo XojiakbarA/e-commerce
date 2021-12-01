@@ -18,6 +18,15 @@ const MyApp = ({Component, pageProps}) => {
         router.events.on('routeChangeComplete', () => {
             setRouting(false)
         })
+
+        return () => {
+            router.events.off('routeChangeStart', () => {
+                setRouting(true)
+            })
+            router.events.off('routeChangeComplete', () => {
+                setRouting(false)
+            })
+        }
     })
 
     return (

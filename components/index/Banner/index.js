@@ -10,7 +10,7 @@ const Banner = () => {
     return (
         <Carousel className={style.wrapper}>
             {
-                banners.map( (banner, i) => <BannerItem key={i} banner={banner} /> )
+                banners.map( (banner) => <BannerItem key={banner.id} banner={banner} /> )
             }
         </Carousel>
     )
