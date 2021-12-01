@@ -1,4 +1,5 @@
 import { CircularProgress, ListItem, Menu, MenuItem } from "@mui/material"
+import Link from '../../../common/Link'
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 import { closeAccountMenu, setLoading, setSnackbar } from "../../../../redux/actions/main"
@@ -44,8 +45,10 @@ const AccountMenu = () => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
         >
-            <ListItem divider >Hello, {name}</ListItem>
-            <MenuItem onClick={handleClose}>Profile</MenuItem>
+            <ListItem divider>Hello, {name}</ListItem>
+            <Link href='/profile'>
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+            </Link>
             <MenuItem onClick={handleClose}>My account</MenuItem>
             <MenuItem onClick={handleLogOut}>Log Out
                 {isLoading && <CircularProgress size={20} sx={{marginLeft: 2}} />}
