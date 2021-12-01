@@ -1,16 +1,14 @@
 import { Stack, Typography, Button } from "@mui/material"
-import Person from "@mui/icons-material/Person"
-import EditIcon from '@mui/icons-material/Edit'
 
-const ProfileTitle = () => {
+const ProfileTitle = ({title, titleIcon, buttonText, buttonIcon}) => {
     return (
         <Stack direction='row' justifyContent='space-between'>
             <Stack direction='row'>
-                <Person fontSize='large' />
-                <Typography variant='h4'>My Profile</Typography>
+                {titleIcon}
+                <Typography variant='h4'>{title}</Typography>
             </Stack>
-            <Button variant='contained' startIcon={<EditIcon />}>
-                Edit Profile
+            <Button variant='contained' startIcon={buttonIcon}>
+                {buttonText}
             </Button>
         </Stack>
     )

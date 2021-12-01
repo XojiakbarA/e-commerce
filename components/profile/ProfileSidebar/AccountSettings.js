@@ -8,7 +8,7 @@ import { useRouter } from "next/dist/client/router"
 const list = [
     {title: 'Profile Info', path: '/profile', icon: (<PersonIcon/>)},
     {title: 'Addresses', path: '/profile/addresses', icon: (<LocationOnIcon/>)},
-    {title: 'Payment Methods', path: 'profile/payment-methods', icon: (<PaymentIcon/>)}
+    {title: 'Payment Methods', path: '/profile/payment-methods', icon: (<PaymentIcon/>)}
 ]
 
 const AccountSettings = () => {

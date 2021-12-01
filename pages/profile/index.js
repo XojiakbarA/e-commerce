@@ -1,24 +1,23 @@
-import { Grid, Stack } from "@mui/material"
+import Person from "@mui/icons-material/Person"
+import EditIcon from '@mui/icons-material/Edit'
+import ProfileLayout from "../../components/layout/ProfileLayout"
 import UserInfoTable from "../../components/profile/UserInfoTable"
 import UserInfoGrid from "../../components/profile/UserInfoGrid"
-import ProfileSidebar from "../../components/profile/ProfileSidebar/ProfileSidebar"
 import ProfileTitle from "../../components/profile/ProfileTitle"
 
 
 const Profile = () => {
     return (
-        <>
-            <Grid container spacing={2}>
-                <ProfileSidebar />
-                <Grid item lg={9}>
-                    <Stack spacing={3}>
-                        <ProfileTitle />
-                        <UserInfoGrid />
-                        <UserInfoTable />
-                    </Stack>
-                </Grid>
-            </Grid>
-        </>
+        <ProfileLayout>
+            <ProfileTitle
+                title='My Profile'
+                titleIcon={<Person fontSize='large' />}
+                buttonText='Edit Profile'
+                buttonIcon={<EditIcon />}
+            />
+            <UserInfoGrid />
+            <UserInfoTable />
+        </ProfileLayout>
     )
 }
 
