@@ -3,8 +3,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import MenuItem from './MenuItem'
-import { openAccountMenu, toggleCartSidebar } from "../../../../redux/actions/main"
-import { openLoginDialog } from "../../../../redux/actions/main"
+import { openAccountMenu, toggleCartSidebar, toggleLoginDialog } from "../../../../redux/actions/main"
 import { useDispatch } from "react-redux"
 
 const menu = {
@@ -21,7 +20,7 @@ const Menu = () => {
         if (localStorage.getItem('token')) {
             dispatch(openAccountMenu(e.currentTarget))
         } else {
-            dispatch(openLoginDialog())
+            dispatch(toggleLoginDialog())
         }
     }
     const openSidebar = () => dispatch(toggleCartSidebar())

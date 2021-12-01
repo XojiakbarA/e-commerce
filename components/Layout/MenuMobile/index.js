@@ -2,8 +2,7 @@ import { Badge, Box, BottomNavigation, BottomNavigationAction, Paper } from '@mu
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import AccountCircle from '@mui/icons-material/AccountCircle'
-import { toggleCartSidebar } from '../../../redux/actions/main'
-import { openLoginDialog } from '../../../redux/actions/main'
+import { toggleCartSidebar, toggleLoginDialog, openAccountMenu } from '../../../redux/actions/main'
 import { useDispatch } from 'react-redux'
 
 const {account, wishlist, cart} = {
@@ -16,7 +15,13 @@ const MenuMobile = () => {
 
     const dispatch = useDispatch()
 
-    const openDialog = () => dispatch(openLoginDialog())
+    const openDialog = (e) => {
+        if (localStorage.getItem('token')) {
+            dispatch(openAccountMenu(e.currentTarget))
+        } else {
+            dispatch(toggleLoginDialog())
+        }
+    }
     const openSidebar = () => dispatch(toggleCartSidebar())
 
     return (

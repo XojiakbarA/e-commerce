@@ -35,12 +35,8 @@ export const toggleCartSidebar = () => ({
     type: type.TOGGLE_CART_SIDEBAR
 })
 
-export const openLoginDialog = () => ({
-    type: type.OPEN_LOGIN_DIALOG
-})
-
-export const closeLoginDialog = () => ({
-    type: type.CLOSE_LOGIN_DIALOG
+export const toggleLoginDialog = () => ({
+    type: type.TOGGLE_LOGIN_DIALOG
 })
 
 export const openAccountMenu = (anchorEl) => ({

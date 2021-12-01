@@ -1,7 +1,7 @@
 import { Stack, Button, Dialog, TextField, Typography, Box, IconButton, CircularProgress } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import Link from 'next/link'
-import { closeLoginDialog, setLoading, setSnackbar } from '../../../../redux/actions/main'
+import { toggleLoginDialog, setLoading, setSnackbar } from '../../../../redux/actions/main'
 import { useSelector, useDispatch } from 'react-redux'
 import { useFormik } from 'formik'
 import { login } from '../../../../api/api'
@@ -10,11 +10,11 @@ import { loginValidationSchema } from '../../../../utils/validate'
 
 const LoginDialog = () => {
 
-    const isOpen = useSelector(state => state.loginDialog.isOpen)
+    const dialog = useSelector(state => state.loginDialog)
     const isLoading = useSelector(state => state.isLoading)
 
     const dispatch = useDispatch()
-    const closeDialog = () => dispatch(closeLoginDialog())
+    const closeDialog = () => dispatch(toggleLoginDialog())
 
     const formik = useFormik({
         initialValues: {
@@ -27,12 +27,12 @@ const LoginDialog = () => {
             await login(data)
             dispatch(setLoading(false))
             dispatch(setSnackbar({isOpen: true, text: 'You are logged in!'}))
-            dispatch(closeLoginDialog())
+            dispatch(toggleLoginDialog())
         }
     })
 
     return(
-        <Dialog open={isOpen} onClose={ closeDialog }>
+        <Dialog open={dialog} onClose={ closeDialog }>
             <Box sx={{marginX: {xs: 3, sm: 10}, marginY: {xs: 3, sm: 7}, width: {xs: 250, sm: 300}}}>
                 <IconButton sx={{ position: 'absolute', top: 8, right: 8 }} onClick={ closeDialog }>
                     <CloseIcon />

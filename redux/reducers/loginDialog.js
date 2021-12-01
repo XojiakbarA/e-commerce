@@ -1,15 +1,11 @@
 import * as type from '../types'
 
-const initialState = {
-    isOpen: false
-}
+const initialState = false
 
 const loginDialog = (state = initialState, action) => {
     switch (action.type) {
-        case type.OPEN_LOGIN_DIALOG:
-            return { isOpen: true }
-        case type.CLOSE_LOGIN_DIALOG:
-            return { isOpen: false }
+        case type.TOGGLE_LOGIN_DIALOG:
+            return !state
         default:
             return state
     }
