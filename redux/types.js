@@ -1,3 +1,4 @@
+export const SET_USER = 'SET_USER'
 export const SET_CATS = 'SET_CATS'
 export const SET_BRANDS = 'SET_BRANDS'
 export const SET_BANNERS = 'SET_BANNERS'

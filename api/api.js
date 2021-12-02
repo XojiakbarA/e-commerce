@@ -11,30 +11,16 @@ const auth = axios.create({
 })
 
 export const login = async (data) => {
-    const csrf = await auth.get('sanctum/csrf-cookie')
-    const login = await auth.post('login', data)
-    const user = await auth.get('api/user')
-    if (user.status === 200) {
-        const token = login.config.headers['X-XSRF-TOKEN']
-        localStorage.setItem('token', token)
-        localStorage.setItem('user', JSON.stringify(user.data))
-    }
+    await auth.get('sanctum/csrf-cookie')
+    await auth.post('login', data)
 }
 
 export const logout = async () => {
-    const res = await auth.post('logout')
-    if (res.status === 204) {
-        localStorage.removeItem('token')
-        localStorage.removeItem('user')
-    }
+    await auth.post('logout')
 }
 
 export const fetchUser = async () => {
-    try {
-        return await auth.get('api/user')
-    } catch (e) {
-        console.log(e.response.data)
-    }
+    return await auth.get('api/user')
 }
 
 export const fetchCategories = async () => {

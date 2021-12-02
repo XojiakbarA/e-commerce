@@ -2,16 +2,21 @@ import { CssBaseline, Backdrop, CircularProgress } from '@mui/material'
 import Layout from '../components/layout'
 import '../styles/globals.css'
 import { wrapper } from '../redux/store'
-import { getBrands, getCategories } from '../redux/actions/thunk'
+import { getBrands, getCategories, getUser } from '../redux/actions/thunk'
 import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 
 const MyApp = ({Component, pageProps}) => {
 
     const router = useRouter()
+    const dispatch = useDispatch()
     const [routing, setRouting] = useState(false)
     
     useEffect(() => {
+
+        getUser(dispatch)
+
         router.events.on('routeChangeStart', () => {
             setRouting(true)
         })

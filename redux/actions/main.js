@@ -1,5 +1,10 @@
 import * as type from '../types'
 
+export const setUser = (user) => ({
+    type: type.SET_USER,
+    payload: user
+})
+
 export const setCats = (cats) => ({
     type: type.SET_CATS,
     payload: cats

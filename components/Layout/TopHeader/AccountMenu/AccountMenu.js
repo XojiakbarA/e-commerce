@@ -2,27 +2,22 @@ import { CircularProgress, ListItem, Menu, MenuItem } from "@mui/material"
 import Link from '../../../common/Link'
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
-import { closeAccountMenu, setLoading, setSnackbar } from "../../../../redux/actions/main"
+import { closeAccountMenu, setLoading, setSnackbar, setUser } from "../../../../redux/actions/main"
 import { logout } from "../../../../api/api"
-import { useEffect, useState } from "react"
 
 const AccountMenu = () => {
 
-    const [name, setName] = useState('Guest')
+    const user = useSelector(state => state.user)
     const anchorEl = useSelector(state => state.accountMenu)
     const isLoading = useSelector(state => state.isLoading)
     const dispatch = useDispatch()
-    
-    useEffect(()=> {
-        const user = JSON.parse(localStorage.getItem('user'))
-        setName(user?.name)
-    }, [])
 
     const handleClose = () => dispatch(closeAccountMenu())
 
     const handleLogOut = async () => {
         dispatch(setLoading(true))
         await logout()
+        dispatch(setUser(null))
         dispatch(setLoading(false))
         dispatch(setSnackbar({isOpen: true, text: 'You are logged out!'}))
         dispatch(closeAccountMenu())
@@ -45,7 +40,7 @@ const AccountMenu = () => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
         >
-            <ListItem divider>Hello, {name}</ListItem>
+            <ListItem divider>Hello, {user?.name}</ListItem>
             <Link href='/profile'>
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
             </Link>

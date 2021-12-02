@@ -1,5 +1,16 @@
-import { fetchBanners, fetchBrands, fetchCategories, fetchNewProducts, fetchProduct, fetchSearchResults } from '../../api/api'
-import { setCats, setBrands, setBanners, setNewProducts, setProduct, setSearchProducts } from './main'
+import { fetchBanners, fetchBrands, fetchCategories, fetchNewProducts, fetchProduct, fetchSearchResults, fetchUser } from '../../api/api'
+import { setCats, setBrands, setBanners, setNewProducts, setProduct, setSearchProducts, setUser } from './main'
+
+export const getUser = async (dispatch) => {
+    try {
+        const res = await fetchUser()
+        if (res.status === 200) {
+            dispatch(setUser(res.data))
+        }
+    } catch (e) {
+        console.log(e)
+    }
+}
 
 export const getCategories = async (dispatch) => {
     try {

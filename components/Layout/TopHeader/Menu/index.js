@@ -4,7 +4,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import MenuItem from './MenuItem'
 import { openAccountMenu, toggleCartSidebar, toggleLoginDialog } from "../../../../redux/actions/main"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 
 const menu = {
     account: { id: 1, badge: 0, title: 'Account' },
@@ -15,9 +15,10 @@ const menu = {
 const Menu = () => {
 
     const dispatch = useDispatch()
+    const user = useSelector(state => state.user)
 
     const openDialog = (e) => {
-        if (localStorage.getItem('token')) {
+        if (user) {
             dispatch(openAccountMenu(e.currentTarget))
         } else {
             dispatch(toggleLoginDialog())

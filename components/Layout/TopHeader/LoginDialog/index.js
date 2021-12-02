@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useFormik } from 'formik'
 import { login } from '../../../../api/api'
 import { loginValidationSchema } from '../../../../utils/validate'
+import { getUser } from '../../../../redux/actions/thunk'
 
 
 const LoginDialog = () => {
@@ -25,6 +26,7 @@ const LoginDialog = () => {
         onSubmit: async (data) => {
             dispatch(setLoading(true))
             await login(data)
+            getUser(dispatch)
             dispatch(setLoading(false))
             dispatch(setSnackbar({isOpen: true, text: 'You are logged in!'}))
             dispatch(toggleLoginDialog())
