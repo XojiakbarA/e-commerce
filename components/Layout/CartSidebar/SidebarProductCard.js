@@ -3,8 +3,8 @@ import Link from 'next/link'
 import CloseIcon from '@mui/icons-material/Close'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
-import { productImageURL } from '../../../../utils/utils'
-import { addToCart, deleteFromCart, removeFromCart } from '../../../../redux/actions/thunk'
+import { productImageURL } from '../../../utils/utils'
+import { addToCart, deleteFromCart, removeFromCart } from '../../../redux/actions/thunk'
 import { useDispatch } from 'react-redux'
 import { useState } from 'react'
 
@@ -21,20 +21,23 @@ const SidebarProductCard = ({product}) => {
         setRipple(false)
     }
     function handleDeleteCartClick(e, id) {
+        e.preventDefault()
         dispatch(deleteFromCart(id))
     }
     function handleAddClick(e, id) {
+        e.preventDefault()
         dispatch(addToCart(id))
     }
     function handleRemoveClick(e, id) {
+        e.preventDefault()
         dispatch(removeFromCart(id))
     }
 
     return(
         <Card sx={{display: 'flex'}}>
-            <CardActionArea disableRipple={ripple}>
+            <CardActionArea disableRipple={ripple} component='div'>
                 <Link href={'/products/' + product.id}>
-                <a style={{display: 'flex', justifyContent: 'flex-start'}}>
+                <a style={{display: 'flex', justifyContent: 'flex-start'}} onClick={ (e) => product.quantity == 1 ? e.preventDefault() : false }>
                     <Stack
                         padding={1}
                         justifyContent='center'

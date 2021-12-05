@@ -28,11 +28,11 @@ export const deleteCart = async (id) => {
 
 export const login = async (data) => {
     await auth.get('sanctum/csrf-cookie')
-    await auth.post('login', data)
+    return await auth.post('login', data)
 }
 
 export const logout = async () => {
-    await auth.post('logout')
+    return await auth.post('logout')
 }
 
 export const fetchUser = async () => {

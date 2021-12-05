@@ -1,5 +1,5 @@
 import { CssBaseline, Backdrop, CircularProgress } from '@mui/material'
-import Layout from '../components/layout'
+import MainLayout from '../components/layout/MainLayout'
 import '../styles/globals.css'
 import { wrapper } from '../redux/store'
 import { getBrands, getCart, getCategories, getUser } from '../redux/actions/thunk'
@@ -44,10 +44,10 @@ const MyApp = ({Component, pageProps}) => {
             >
                 <CircularProgress color="inherit" />
             </Backdrop>
-            <Layout>
+            <MainLayout>
                 <CssBaseline />
                 <Component {...pageProps} />
-            </Layout>
+            </MainLayout>
             </>
     )
 }

@@ -1,12 +1,10 @@
 import { Stack, Button, Dialog, TextField, Typography, Box, IconButton, CircularProgress } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import Link from 'next/link'
-import { toggleLoginDialog, setLoading, setSnackbar } from '../../../../redux/actions/main'
+import { toggleLoginDialog } from '../../../redux/actions/main'
 import { useSelector, useDispatch } from 'react-redux'
 import { useFormik } from 'formik'
-import { login } from '../../../../api/api'
-import { loginValidationSchema } from '../../../../utils/validate'
-import { getUser } from '../../../../redux/actions/thunk'
+import { loginValidationSchema } from '../../../utils/validate'
+import { userLogin } from '../../../redux/actions/thunk'
 
 
 const LoginDialog = () => {
@@ -23,13 +21,8 @@ const LoginDialog = () => {
             password: ''
         },
         validationSchema: loginValidationSchema,
-        onSubmit: async (data) => {
-            dispatch(setLoading(true))
-            await login(data)
-            getUser(dispatch)
-            dispatch(setLoading(false))
-            dispatch(setSnackbar({isOpen: true, text: 'You are logged in!'}))
-            dispatch(toggleLoginDialog())
+        onSubmit: (data) => {
+            dispatch(userLogin(data))
         }
     })
 
@@ -78,10 +71,10 @@ const LoginDialog = () => {
                         </Button>
                         
                         <Typography variant='body1' textAlign='center'>
-                            Don`t have Account? <Link href='/signup'><a style={{textDecoration: 'underline'}}> Sign Up </a></Link>
+                            Don`t have Account? <Button>Sign Up</Button>
                         </Typography>
                         <Typography variant='body1' textAlign='center'>
-                            Forgot your password? <Link href='/resetit'><a style={{textDecoration: 'underline'}}> Reset It </a></Link>
+                            Forgot your password? <Button>Reset It</Button>
                         </Typography>
                     </Stack>
                 </form>

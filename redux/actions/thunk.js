@@ -1,5 +1,5 @@
-import { fetchBanners, fetchBrands, fetchCart, addCart, fetchCategories, fetchNewProducts, fetchProduct, fetchSearchResults, fetchUser, removeCart, deleteCart } from '../../api/api'
-import { setCats, setBrands, setBanners, setNewProducts, setProduct, setSearchProducts, setUser, setCart } from './main'
+import { fetchBanners, fetchBrands, fetchCart, addCart, fetchCategories, fetchNewProducts, fetchProduct, fetchSearchResults, fetchUser, removeCart, deleteCart, login, logout } from '../../api/api'
+import { setCats, setBrands, setBanners, setNewProducts, setProduct, setSearchProducts, setUser, setCart, setLoading, closeAccountMenu, setSnackbar, toggleLoginDialog } from './main'
 
 export const getCart = () => {
     return async (dispatch) => {
@@ -61,6 +61,42 @@ export const getUser = async (dispatch) => {
         }
     } catch (e) {
         console.log(e.response.statusText)
+    }
+}
+
+export const userLogin = (data) => {
+    return async (dispatch) => {
+        try {
+            dispatch(setLoading(true))
+            const res1 = await login(data)
+            const res2 = await fetchUser()
+            if (res1.status === 204 && res2.status === 200) {
+                dispatch(setUser(res2.data))
+                dispatch(setLoading(false))
+                dispatch(setSnackbar({isOpen: true, text: 'You are logged in!'}))
+                dispatch(toggleLoginDialog())
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const userLogout = () => {
+    return async (dispatch) => {
+        try {
+            dispatch(setLoading(true))
+            const res = await logout()
+            if (res.status === 204) {
+                dispatch(setLoading(false))
+                dispatch(closeAccountMenu())
+                dispatch(setUser(null))
+                dispatch(setCart([]))
+                dispatch(setSnackbar({isOpen: true, text: 'You are logged out!'}))
+            }
+        } catch (e) {
+            console.log(e)
+        }
     }
 }
 

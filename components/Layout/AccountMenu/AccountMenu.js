@@ -1,9 +1,8 @@
 import { CircularProgress, ListItem, Menu, MenuItem } from "@mui/material"
-import Link from '../../../common/Link'
-import { useSelector } from "react-redux"
-import { useDispatch } from "react-redux"
-import { closeAccountMenu, setCart, setLoading, setSnackbar, setUser } from "../../../../redux/actions/main"
-import { logout } from "../../../../api/api"
+import Link from '../../common/Link'
+import { useSelector, useDispatch } from "react-redux"
+import { closeAccountMenu } from "../../../redux/actions/main"
+import { userLogout } from "../../../redux/actions/thunk"
 
 const AccountMenu = () => {
 
@@ -14,14 +13,8 @@ const AccountMenu = () => {
 
     const handleClose = () => dispatch(closeAccountMenu())
 
-    const handleLogOut = async () => {
-        dispatch(setLoading(true))
-        await logout()
-        dispatch(setLoading(false))
-        dispatch(setUser(null))
-        dispatch(setCart([]))
-        dispatch(setSnackbar({isOpen: true, text: 'You are logged out!'}))
-        dispatch(closeAccountMenu())
+    const handleLogOut = () => {
+        dispatch(userLogout())
     }
 
     return (
