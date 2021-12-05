@@ -2,7 +2,7 @@ import { CssBaseline, Backdrop, CircularProgress } from '@mui/material'
 import Layout from '../components/layout'
 import '../styles/globals.css'
 import { wrapper } from '../redux/store'
-import { getBrands, getCategories, getUser } from '../redux/actions/thunk'
+import { getBrands, getCart, getCategories, getUser } from '../redux/actions/thunk'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
@@ -14,9 +14,6 @@ const MyApp = ({Component, pageProps}) => {
     const [routing, setRouting] = useState(false)
     
     useEffect(() => {
-
-        getUser(dispatch)
-
         router.events.on('routeChangeStart', () => {
             setRouting(true)
         })
@@ -32,6 +29,11 @@ const MyApp = ({Component, pageProps}) => {
                 setRouting(false)
             })
         }
+    })
+
+    useEffect( () => {
+        getUser(dispatch)
+        dispatch(getCart())
     })
 
     return (

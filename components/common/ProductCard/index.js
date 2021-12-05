@@ -11,6 +11,8 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import { productImageURL } from '../../../utils/utils'
 import Link from 'next/link'
+import { useDispatch, useSelector } from 'react-redux'
+import { addToCart, deleteFromCart } from '../../../redux/actions/thunk'
 
 const grid = {
     card: {boxShadow: 3, borderRadius: 2, position: 'relative'},
@@ -30,58 +32,55 @@ const ProductCard = ({product, view}) => {
         product.image = {id: null, src: 'no_image.jpeg'}
     }
 
-    const [display, setDisplay] = useState('none')
+    const dispatch = useDispatch()
+    const cart = useSelector(state => state.cart)
+    const findInCart = cart.find(item => item.id == product.id)
+    const hasInCart = Boolean(findInCart)
+
     const [ripple, setRipple] = useState(false)
 
-    function handleCardEnter(e) {
-        setDisplay('flex')
-    }
-    function handleCardLeave(e) {
-        setDisplay('none')
-    }
     function handleActionEnter(e) {
         setRipple(true)
     }
     function handleActionLeave(e) {
         setRipple(false)
     }
-    function handleWishlistClick(e) {
-        
+    function handleAddCartClick(e, id) {
+        dispatch(addToCart(id))
+    }
+    function handleDeleteCartClick(e, id) {
+        dispatch(deleteFromCart(id))
     }
 
     return (
-        <Card
-            sx={ view == 'grid' || view == undefined ? grid.card : list.card }
-            onMouseEnter={ (e) => handleCardEnter(e) }
-            onMouseLeave={ (e) => handleCardLeave(e) }
-        >
+        <Card sx={ view == 'grid' || view == undefined ? grid.card : list.card }>
             <CardActionArea disableRipple={ripple}>
                 <Link href={'/products/' + product.id}>
                 <a style={ view == 'grid' || view == undefined ? grid.cardActionArea : list.cardActionArea }>
-                <CardMedia
-                    component="img"
-                    sx={ view == 'grid' || view == undefined ? grid.cardMedia : list.cardMedia }
-                    image={productImageURL + product.image.src}
-                    alt={product.title}
-                >
-                </CardMedia>
-                <CardContent>
-                    <Typography gutterBottom
-                        variant="h6"
-                        component="div"
-                        whiteSpace='nowrap'
-                        textOverflow='ellipsis'
-                        overflow='hidden'
+                    <CardMedia
+                        component="img"
+                        sx={ view == 'grid' || view == undefined ? grid.cardMedia : list.cardMedia }
+                        image={productImageURL + product.image.src}
+                        alt={product.title}
                     >
-                        {product.title}
-                    </Typography>
+                    </CardMedia>
+                    <CardContent>
+                        <Typography gutterBottom
+                            variant="h6"
+                            component="div"
+                            whiteSpace='nowrap'
+                            textOverflow='ellipsis'
+                            overflow='hidden'
+                        >
+                            {product.title}
+                        </Typography>
 
-                    <Rating value={product.rating} size='small' readOnly/>
-                    
-                    <Typography variant="h6" color="text.secondary">
-                        $ {product.price}
-                    </Typography>
-                </CardContent>
+                        <Rating value={product.rating} size='small' readOnly/>
+                        
+                        <Typography variant="h6" color="text.secondary">
+                            $ {product.price}
+                        </Typography>
+                    </CardContent>
                 </a>
                 </Link>
             </CardActionArea>
@@ -90,16 +89,26 @@ const ProductCard = ({product, view}) => {
                 onMouseEnter={ (e) => handleActionEnter(e) }
                 onMouseLeave={ (e) => handleActionLeave(e) }
             >
-                <IconButton onClick={ (e) => handleWishlistClick(e) }>
+                <IconButton>
                     <Tooltip title='Add to wishlist' placement='right'>
                         <FavoriteBorderIcon />
                     </Tooltip>
                 </IconButton>
-                <IconButton>
-                    <Tooltip title='Add to cart' placement='right'>
-                        <ShoppingCartOutlinedIcon />
-                    </Tooltip>
-                </IconButton>
+                {
+                    hasInCart
+                    ?
+                    <IconButton onClick={ (e) => handleDeleteCartClick(e, product.id) }>
+                        <Tooltip title='Remove from cart' placement='right' key={product.id}>
+                            <ShoppingCartIcon />
+                        </Tooltip>
+                    </IconButton>
+                    :
+                    <IconButton onClick={ (e) => handleAddCartClick(e, product.id) }>
+                        <Tooltip title='Add to cart' placement='right'>
+                            <ShoppingCartOutlinedIcon />
+                        </Tooltip>
+                    </IconButton>
+                }
                 <IconButton>
                     <Tooltip title='View' placement='right'>
                         <VisibilityOutlinedIcon />

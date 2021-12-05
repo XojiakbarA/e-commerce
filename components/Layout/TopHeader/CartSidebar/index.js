@@ -3,21 +3,21 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import SidebarButtons from './SidebarButtons'
 import SidebarProductCard from './SidebarProductCard'
 import { toggleCartSidebar } from '../../../../redux/actions/main'
-import { useDispatch } from 'react-redux'
-
+import { useDispatch, useSelector } from 'react-redux'
 
 const CartSidebar = () => {
 
     const dispatch = useDispatch()
+    const cart = useSelector(state => state.cart)
 
     const closeSidebar = () => dispatch(toggleCartSidebar())
 
     return(
         <Box sx={{padding: 1, width: 350}}>
-            <Stack spacing={2} divider={<Divider orientation='horizontal' flexItem />}>
+            <Stack spacing={2} divider={<Divider orientation='horizontal' flexItem />} sx={{height: '100vh'}}>
                 <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
                     <Typography variant='h5'>
-                        17 items
+                        {cart.length} items
                     </Typography>
                     <IconButton onClick={ closeSidebar }>
                         <ChevronRightIcon />
@@ -25,14 +25,14 @@ const CartSidebar = () => {
                 </Box>
                 
                 <Stack spacing={1}>
-                    <SidebarProductCard />
-                    <SidebarProductCard />
-                    <SidebarProductCard />
-                    <SidebarProductCard />
-                    <SidebarProductCard />
-                    <SidebarProductCard />
-                    <SidebarProductCard />
-                    <SidebarProductCard />
+                    { cart.length
+                        ?
+                        cart.map(product => (
+                            <SidebarProductCard key={product.id} product={product} />
+                        ))
+                        :
+                        <Typography variant='h6' textAlign='center'>Cart is empty</Typography>
+                    }
                 </Stack>
             </Stack>
             <SidebarButtons />

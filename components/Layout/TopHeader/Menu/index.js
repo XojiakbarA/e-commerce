@@ -6,16 +6,12 @@ import MenuItem from './MenuItem'
 import { openAccountMenu, toggleCartSidebar, toggleLoginDialog } from "../../../../redux/actions/main"
 import { useDispatch, useSelector } from "react-redux"
 
-const menu = {
-    account: { id: 1, badge: 0, title: 'Account' },
-    wishlist: { id: 2, badge: 4, title: 'Wishlist' },
-    cart: { id: 3, badge: 17, title: 'Cart' }
-}
-
 const Menu = () => {
 
     const dispatch = useDispatch()
     const user = useSelector(state => state.user)
+    const cart = useSelector(state => state.cart)
+    const cartCount = cart.length
 
     const openDialog = (e) => {
         if (user) {
@@ -25,6 +21,12 @@ const Menu = () => {
         }
     }
     const openSidebar = () => dispatch(toggleCartSidebar())
+
+    const menu = {
+        account: { id: 1, badge: 0, title: 'Account' },
+        wishlist: { id: 2, badge: 4, title: 'Wishlist' },
+        cart: { id: 3, badge: cartCount, title: 'Cart' }
+    }
 
     return(
         <Box sx={{ display:'flex' }}>

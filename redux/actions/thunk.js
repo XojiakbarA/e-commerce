@@ -1,5 +1,57 @@
-import { fetchBanners, fetchBrands, fetchCategories, fetchNewProducts, fetchProduct, fetchSearchResults, fetchUser } from '../../api/api'
-import { setCats, setBrands, setBanners, setNewProducts, setProduct, setSearchProducts, setUser } from './main'
+import { fetchBanners, fetchBrands, fetchCart, addCart, fetchCategories, fetchNewProducts, fetchProduct, fetchSearchResults, fetchUser, removeCart, deleteCart } from '../../api/api'
+import { setCats, setBrands, setBanners, setNewProducts, setProduct, setSearchProducts, setUser, setCart } from './main'
+
+export const getCart = () => {
+    return async (dispatch) => {
+        try {
+            const res = await fetchCart()
+            if (res.status === 200) {
+                dispatch(setCart(res.data.data))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const addToCart = (id) => {
+    return async (dispatch) => {
+        try {
+            const res = await addCart(id)
+            if (res.status === 200) {
+                dispatch(setCart(res.data.data))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const removeFromCart = (id) => {
+    return async (dispatch) => {
+        try {
+            const res = await removeCart(id)
+            if (res.status === 200) {
+                dispatch(setCart(res.data.data))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const deleteFromCart = (id) => {
+    return async (dispatch) => {
+        try {
+            const res = await deleteCart(id)
+            if (res.status === 200) {
+                dispatch(setCart(res.data.data))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
 
 export const getUser = async (dispatch) => {
     try {
@@ -8,7 +60,7 @@ export const getUser = async (dispatch) => {
             dispatch(setUser(res.data))
         }
     } catch (e) {
-        console.log(e)
+        console.log(e.response.statusText)
     }
 }
 

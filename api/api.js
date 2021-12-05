@@ -10,6 +10,22 @@ const auth = axios.create({
     baseURL: 'http://localhost:8000/'
 })
 
+export const fetchCart = async () => {
+    return await auth.get('api/cart')
+}
+
+export const addCart = async (id) => {
+    return await auth.post('api/cart/' + id)
+}
+
+export const removeCart = async (id) => {
+    return await auth.put('api/cart/' + id)
+}
+
+export const deleteCart = async (id) => {
+    return await auth.delete('api/cart/' + id)
+}
+
 export const login = async (data) => {
     await auth.get('sanctum/csrf-cookie')
     await auth.post('login', data)
