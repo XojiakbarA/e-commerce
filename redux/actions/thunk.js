@@ -1,4 +1,5 @@
-import { fetchBanners, fetchBrands, fetchCart, addCart, fetchCategories, fetchNewProducts, fetchProduct, fetchSearchResults, fetchUser, removeCart, deleteCart, login, logout } from '../../api/api'
+import { fetchBanners, fetchBrands, fetchCategories, fetchNewProducts, fetchProduct, fetchSearchResults } from '../../api/api'
+import { login, logout, fetchUser, fetchCart, addCart, removeCart, deleteCart } from '../../api/auth'
 import { setCats, setBrands, setBanners, setNewProducts, setProduct, setSearchProducts, setUser, setCart, setLoading, closeAccountMenu, setSnackbar, toggleLoginDialog } from './main'
 
 export const getCart = () => {
