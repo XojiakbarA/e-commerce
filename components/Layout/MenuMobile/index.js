@@ -2,7 +2,7 @@ import { Badge, Box, BottomNavigation, BottomNavigationAction, Paper } from '@mu
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import AccountCircle from '@mui/icons-material/AccountCircle'
-import { toggleCartSidebar, toggleLoginDialog, openAccountMenu } from '../../../redux/actions/main'
+import { toggleCartSidebar, toggleLoginDialog, openAccountMenu } from '../../../redux/actions'
 import { useDispatch } from 'react-redux'
 
 const {account, wishlist, cart} = {

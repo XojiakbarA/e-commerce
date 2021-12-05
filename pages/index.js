@@ -1,7 +1,7 @@
 import { Typography, Grid } from "@mui/material"
 import Banner from "../components/index/Banner"
 import ProductCard from "../components/common/ProductCard"
-import { getBanners, getNewProducts } from "../redux/actions/thunk"
+import { getBanners, getNewProducts } from "../redux/actions"
 import { wrapper } from "../redux/store"
 import { useSelector } from "react-redux"
 

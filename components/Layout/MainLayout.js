@@ -1,6 +1,6 @@
 import { Container, Drawer, Snackbar, Alert } from "@mui/material"
 import { useSelector, useDispatch } from "react-redux"
-import { toggleCartSidebar, setSnackbar } from "../../redux/actions/main"
+import { toggleCartSidebar, setSnackbar } from "../../redux/actions"
 import TopHeader from "./TopHeader/TopHeader"
 import BottomHeader from "./BottomHeader"
 import Footer from './Footer'

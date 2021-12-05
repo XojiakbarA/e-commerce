@@ -12,7 +12,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility'
 import { productImageURL } from '../../../utils/utils'
 import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCart, deleteFromCart } from '../../../redux/actions/thunk'
+import { addToCart, deleteFromCart } from '../../../redux/actions'
 
 const grid = {
     card: {boxShadow: 3, borderRadius: 2, position: 'relative'},

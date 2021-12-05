@@ -3,7 +3,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import MenuItem from './MenuItem'
-import { openAccountMenu, toggleCartSidebar, toggleLoginDialog } from "../../../../redux/actions/main"
+import { openAccountMenu, toggleCartSidebar, toggleLoginDialog } from "../../../../redux/actions"
 import { useDispatch, useSelector } from "react-redux"
 
 const Menu = () => {

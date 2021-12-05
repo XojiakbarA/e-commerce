@@ -4,7 +4,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import { productImageURL } from '../../../utils/utils'
-import { addToCart, deleteFromCart, removeFromCart } from '../../../redux/actions/thunk'
+import { addToCart, deleteFromCart, removeFromCart } from '../../../redux/actions'
 import { useDispatch } from 'react-redux'
 import { useState } from 'react'
 

@@ -1,11 +1,9 @@
 import { Stack, Button, Dialog, TextField, Typography, Box, IconButton, CircularProgress } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import { toggleLoginDialog } from '../../../redux/actions/main'
 import { useSelector, useDispatch } from 'react-redux'
 import { useFormik } from 'formik'
 import { loginValidationSchema } from '../../../utils/validate'
-import { userLogin } from '../../../redux/actions/thunk'
-
+import { toggleLoginDialog, userLogin } from '../../../redux/actions'
 
 const LoginDialog = () => {
 

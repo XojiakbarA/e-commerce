@@ -2,7 +2,7 @@ import { Box, Typography, Stack, Divider, IconButton } from '@mui/material'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import SidebarButtons from './SidebarButtons'
 import SidebarProductCard from './SidebarProductCard'
-import { toggleCartSidebar } from '../../../redux/actions/main'
+import { toggleCartSidebar } from '../../../redux/actions'
 import { useDispatch, useSelector } from 'react-redux'
 
 const CartSidebar = () => {
