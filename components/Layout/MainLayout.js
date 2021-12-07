@@ -8,11 +8,12 @@ import MenuMobile from "./MenuMobile"
 import AccountMenu from "./AccountMenu/AccountMenu"
 import LoginDialog from "./LoginDialog/LoginDialog"
 import CartSidebar from "./CartSidebar"
+import RegisterDialog from "./RegisterDialog/RegisterDialog"
 
 const MainLayout = ({children}) => {
 
     const dispatch = useDispatch()
-    const cartSidebar = useSelector(state => state.cartSidebar)
+    const cartSidebar = useSelector(state => state.toggle.cartSidebar)
     const isOpenSnackbar = useSelector(state => state.snackbar.isOpen)
     const snackbarText = useSelector(state => state.snackbar.text)
 
@@ -31,6 +32,7 @@ const MainLayout = ({children}) => {
 
         <AccountMenu />
         <LoginDialog />
+        <RegisterDialog />
         <Drawer
             anchor='right'
             open={cartSidebar}

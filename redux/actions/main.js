@@ -48,6 +48,11 @@ export const toggleLoginDialog = () => ({
     type: type.TOGGLE_LOGIN_DIALOG
 })
 
+export const toggleRegisterDialog = (bool) => ({
+    type: type.TOGGLE_REGISTER_DIALOG,
+    payload: bool
+})
+
 export const openAccountMenu = (anchorEl) => ({
     type: type.OPEN_ACCOUNT_MENU,
     payload: anchorEl

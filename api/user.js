@@ -18,6 +18,11 @@ export const fetchUser = async () => {
     return await user.get('api/user')
 }
 
+export const register = async (data) => {
+    await user.get('sanctum/csrf-cookie')
+    return await user.post('register', data)
+}
+
 export const fetchCart = async () => {
     return await user.get('api/cart')
 }

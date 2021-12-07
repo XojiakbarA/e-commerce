@@ -1,5 +1,5 @@
-import { login, logout, fetchUser, fetchCart, addCart, removeCart, deleteCart } from '../../../api/user'
-import { setUser, setCart, setLoading, closeAccountMenu, setSnackbar, toggleLoginDialog } from '..'
+import { login, logout, fetchUser, fetchCart, addCart, removeCart, deleteCart, register } from '../../../api/user'
+import { setUser, setCart, setLoading, closeAccountMenu, setSnackbar, toggleLoginDialog, toggleRegisterDialog } from '..'
 
 export const getCart = () => {
     return async (dispatch) => {
@@ -95,6 +95,24 @@ export const userLogout = () => {
                 dispatch(setUser(null))
                 dispatch(setCart([]))
                 dispatch(setSnackbar({isOpen: true, text: 'You are logged out!'}))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const userRegister = (data) => {
+    return async (dispatch) => {
+        try {
+            dispatch(setLoading(true))
+            const res1 = await register(data)
+            const res2 = await fetchUser()
+            if (res1.status === 201 && res2.status === 200) {
+                dispatch(setUser(res2.data))
+                dispatch(setLoading(false))
+                dispatch(setSnackbar({isOpen: true, text: 'You are logged in!'}))
+                dispatch(toggleRegisterDialog())
             }
         } catch (e) {
             console.log(e)

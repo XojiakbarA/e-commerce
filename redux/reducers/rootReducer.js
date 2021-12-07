@@ -1,7 +1,5 @@
 import { combineReducers } from 'redux'
 import { HYDRATE } from 'next-redux-wrapper'
-import cartSidebar from './cartSidebar'
-import loginDialog from './loginDialog'
 import categories from './categories'
 import brands from './brands'
 import banners from './banners'
@@ -12,10 +10,9 @@ import isLoading from './isLoading'
 import snackbar from './snackbar'
 import user from './user'
 import cart from './cart'
+import toggle from './toggleReducer'
 
 const combindedReducer = combineReducers({
-    cartSidebar: cartSidebar,
-    loginDialog: loginDialog,
     categories: categories,
     brands: brands,
     banners: banners,
@@ -25,7 +22,8 @@ const combindedReducer = combineReducers({
     isLoading: isLoading,
     snackbar: snackbar,
     user: user,
-    cart: cart
+    cart: cart,
+    toggle: toggle
 })
 
 const rootReducer = (state, action) => {
