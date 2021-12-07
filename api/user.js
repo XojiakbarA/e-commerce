@@ -38,3 +38,7 @@ export const removeCart = async (id) => {
 export const deleteCart = async (id) => {
     return await user.delete('api/cart/' + id)
 }
+
+export const addReview = async (data) => {
+    return await user.post('api/reviews', data)
+}

@@ -16,7 +16,7 @@ const Product = ({product}) => {
                 <ProductInfo product={product} />
             </Grid>
             <Grid item lg={12}>
-                {/* <ProductTab description={product.description} reviews={product.reviews} /> */}
+                <ProductTab description={product.desc} reviews={product.reviews} />
             </Grid>
         </Grid>
     )

@@ -1,4 +1,4 @@
-import { login, logout, fetchUser, fetchCart, addCart, removeCart, deleteCart, register } from '../../../api/user'
+import { login, logout, fetchUser, fetchCart, addCart, removeCart, deleteCart, register, addReview } from '../../../api/user'
 import { setUser, setCart, setLoading, closeAccountMenu, setSnackbar, toggleLoginDialog, toggleRegisterDialog } from '..'
 
 export const getCart = () => {
@@ -113,6 +113,21 @@ export const userRegister = (data) => {
                 dispatch(setLoading(false))
                 dispatch(setSnackbar({isOpen: true, text: 'You are logged in!'}))
                 dispatch(toggleRegisterDialog())
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const userReview = (data) => {
+    return async (dispatch) => {
+        try {
+            dispatch(setLoading(true))
+            const res = await addReview(data)
+            if (res.status === 201) {
+                dispatch(setLoading(false))
+                dispatch(setSnackbar({isOpen: true, text: 'Review created successfully!'}))
             }
         } catch (e) {
             console.log(e)

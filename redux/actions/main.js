@@ -71,3 +71,8 @@ export const setSnackbar = (bool) => ({
     type: type.IS_OPEN_SNACKBAR,
     payload: bool
 })
+
+export const setReviews = (reviews) => ({
+    type: type.SET_REVIEWS,
+    payload: reviews
+})

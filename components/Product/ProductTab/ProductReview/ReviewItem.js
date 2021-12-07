@@ -6,8 +6,8 @@ const ReviewItem = ({review}) => {
             <Stack direction='row' spacing={2} alignItems='center' marginBottom={1}>
                 <Avatar></Avatar>
                 <Stack>
-                    <Typography variant='h6'>
-                        {review.username}
+                    <Typography variant='body1'>
+                        {review.name}
                     </Typography>
                     <Stack direction='row' alignItems='center' spacing={2}>
                         <Rating name='review' size='small' value={review.rating} readOnly />
