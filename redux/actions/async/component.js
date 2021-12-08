@@ -1,5 +1,5 @@
-import { fetchBanners, fetchBrands, fetchCategories, fetchNewProducts, fetchProduct, fetchReviews, fetchSearchResults } from '../../../api/api'
-import { setCats, setBrands, setBanners, setNewProducts, setProduct, setSearchProducts, setReviews } from '..'
+import { fetchBanners, fetchBrands, fetchCategories, fetchNewProducts, fetchProduct, fetchReviews, fetchSearchResults, fetchShops } from '../../../api/api'
+import { setCats, setBrands, setBanners, setNewProducts, setProduct, setSearchProducts, setReviews, setShops } from '..'
 
 export const getCategories = async (dispatch) => {
     try {
@@ -67,6 +67,19 @@ export const getReviews = (id) => {
             const res = await fetchReviews(id)
             if (res.status === 200) {
                 dispatch(setReviews(res.data))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const getShops = () => {
+    return async (dispatch) => {
+        try {
+            const res = await fetchShops()
+            if (res.status === 200) {
+                dispatch(setShops(res.data))
             }
         } catch (e) {
             console.log(e)

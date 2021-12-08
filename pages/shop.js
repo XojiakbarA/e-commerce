@@ -1,5 +1,8 @@
 import { Grid, Pagination } from "@mui/material"
 import ShopCard from '../components/shop/ShopCard'
+import { wrapper } from "../redux/store"
+import { getShops } from "../redux/actions"
+import { useSelector } from "react-redux"
 
 const shops = [
         {
@@ -77,6 +80,11 @@ const shops = [
 ]
 
 const Shop = () => {
+
+    const data = useSelector(state => state.shops)
+    const shops = data.data
+    const lastPage = data.meta.last_page
+
     return(
         <>
             <Grid container spacing={2}>
@@ -88,9 +96,18 @@ const Shop = () => {
                     ))
                 }
             </Grid>
-            <Pagination count={5} size='large' color='primary' sx={{my: 2}} />
+            {
+                lastPage < 1 &&
+                <Pagination count={5} size='large' color='primary' sx={{my: 2}} />
+            }
         </>
     )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(store => async () => {
+
+    await store.dispatch(getShops())
+
+})
 
 export default Shop

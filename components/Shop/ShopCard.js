@@ -2,15 +2,17 @@ import {Card, CardActions, CardContent,
         CardMedia, Typography, Rating,
         IconButton, Avatar} from '@mui/material'
 
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import { shopImageURL } from '../../utils/utils'
 
 const ShopCard = ({shop}) => {
+
     return (
         <Card sx={{position: 'relative', height: 200}}>
             <CardMedia
                 component="img"
                 height="200"
-                image={shop.background}
+                image={shopImageURL + shop.bg_image}
                 alt={shop.title}
                 sx={{position: 'absolute', zIndex: 0, top: 0, left: 0}}
             />
@@ -20,7 +22,8 @@ const ShopCard = ({shop}) => {
                     zIndex: 1,
                     backgroundColor: 'rgba(0, 0, 0, 0.5)',
                     height: '100%',
-                    color: 'white'
+                    color: 'white',
+                    width: '100%'
                 }}
             >
                 <Typography gutterBottom variant="h5" component="div">

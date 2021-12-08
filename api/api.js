@@ -36,3 +36,7 @@ export const fetchReviews = async (id) => {
         params: {product_id: id}
     })
 }
+
+export const fetchShops = async () => {
+    return await instance.get('shops')
+}

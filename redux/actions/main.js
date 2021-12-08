@@ -76,3 +76,8 @@ export const setReviews = (reviews) => ({
     type: type.SET_REVIEWS,
     payload: reviews
 })
+
+export const setShops = (shops) => ({
+    type: type.SET_SHOPS,
+    payload: shops
+})
