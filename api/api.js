@@ -40,3 +40,13 @@ export const fetchReviews = async (id) => {
 export const fetchShops = async () => {
     return await instance.get('shops')
 }
+
+export const fetchShop = async (id) => {
+    return await instance.get('shops/' + id)
+}
+
+export const fetchShopProducts = async (id, query) => {
+    return await instance.get(`shops/${id}/products`, {
+        params: query
+    })
+}

@@ -1,5 +1,5 @@
-import { fetchBanners, fetchBrands, fetchCategories, fetchNewProducts, fetchProduct, fetchReviews, fetchSearchResults, fetchShops } from '../../../api/api'
-import { setCats, setBrands, setBanners, setNewProducts, setProduct, setSearchProducts, setReviews, setShops } from '..'
+import { fetchBanners, fetchBrands, fetchCategories, fetchNewProducts, fetchProduct, fetchReviews, fetchSearchResults, fetchShop, fetchShopProducts, fetchShops } from '../../../api/api'
+import { setCats, setBrands, setBanners, setNewProducts, setProduct, setSearchProducts, setReviews, setShops, setShop, setShopProducts } from '..'
 
 export const getCategories = async (dispatch) => {
     try {
@@ -80,6 +80,32 @@ export const getShops = () => {
             const res = await fetchShops()
             if (res.status === 200) {
                 dispatch(setShops(res.data))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const getShop = (id) => {
+    return async (dispatch) => {
+        try {
+            const res = await fetchShop(id)
+            if (res.status === 200) {
+                dispatch(setShop(res.data))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const getShopProducts = (id, query) => {
+    return async (dispatch) => {
+        try {
+            const res = await fetchShopProducts(id, query)
+            if (res.status === 200) {
+                dispatch(setShopProducts(res.data))
             }
         } catch (e) {
             console.log(e)

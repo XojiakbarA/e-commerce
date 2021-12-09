@@ -17,7 +17,7 @@ const PriceRange = () => {
         setMaxValue(maxValue)
 
         router.push({
-            pathname: '/search',
+            pathname: router.pathname,
             query: { ...router.query, price_min: minValue, price_max: maxValue }
         }, null, {scroll: false})
     }

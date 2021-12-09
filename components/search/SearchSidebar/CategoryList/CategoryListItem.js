@@ -35,7 +35,7 @@ const CategoryListItem = ({ category }) => {
         }
 
         router.push({
-            pathname: '/search',
+            pathname: router.pathname,
             query: { ...query, page: 1 }
         })
     }

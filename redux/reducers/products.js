@@ -8,6 +8,8 @@ const products = (state = initialState, action) => {
             return action.payload
         case type.SET_SEARCH_PRODUCTS:
             return action.payload
+        case type.SET_SHOP_PRODUCTS:
+            return action.payload
         default:
             return state
     }

@@ -1,4 +1,6 @@
-import { Button, Rating, Stack, Typography } from "@mui/material"
+import { Breadcrumbs, Button, Rating, Link, Stack, Typography } from '@mui/material'
+import NavigateNextIcon from '@mui/icons-material/NavigateNext'
+import NextLink from '../../common/Link'
 
 const ProductInfo = ({product}) => {
     return(
@@ -6,9 +8,23 @@ const ProductInfo = ({product}) => {
             <Typography variant='h3'>
                 {product.title}
             </Typography>
-            <Typography variant='body1'>
-                Category: <b>{product.sub_category.title}</b>
-            </Typography>
+            <Stack direction='row' spacing={1}>
+                <Typography variant='body1'>
+                    Category:
+                </Typography>
+                <Breadcrumbs separator={<NavigateNextIcon fontSize='small' />}>
+                    <Link underline='hover'>
+                        <NextLink href='/'>
+                            <b>{product.category.title}</b>
+                        </NextLink>
+                    </Link>
+                    <Link underline='hover'>
+                        <NextLink href='/'>
+                            <b>{product.sub_category.title}</b>
+                        </NextLink>
+                    </Link>
+                </Breadcrumbs>
+            </Stack>
             <Typography variant='body1'>
                 Brand: <b>{product.brand.title}</b>
             </Typography>
@@ -28,7 +44,7 @@ const ProductInfo = ({product}) => {
             </Typography>
             <Button variant='contained'>Add To Cart</Button>
             <Typography>
-                Sold by: <b>{product.shop}</b>
+                Sold by: <b>{product.shop?.title || 'e-commerce'}</b>
             </Typography>
         </Stack>
     )

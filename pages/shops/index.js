@@ -1,7 +1,7 @@
 import { Grid, Pagination } from "@mui/material"
-import ShopCard from '../components/shop/ShopCard'
-import { wrapper } from "../redux/store"
-import { getShops } from "../redux/actions"
+import ShopCard from '../../components/shop/ShopCard'
+import { wrapper } from "../../redux/store"
+import { getShops } from "../../redux/actions"
 import { useSelector } from "react-redux"
 
 const shops = [
@@ -79,7 +79,7 @@ const shops = [
         }
 ]
 
-const Shop = () => {
+const Shops = () => {
 
     const data = useSelector(state => state.shops)
     const shops = data.data
@@ -110,4 +110,4 @@ export const getServerSideProps = wrapper.getServerSideProps(store => async () =
 
 })
 
-export default Shop
+export default Shops

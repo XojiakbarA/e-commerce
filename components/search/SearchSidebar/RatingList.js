@@ -22,7 +22,7 @@ const RatingList = () => {
         const strArr = newArray.toString()
 
         router.push({
-            pathname: '/search',
+            pathname: router.pathname,
             query: { ...router.query, rating: strArr, page: 1}
         }, null, {scroll: false})
     }

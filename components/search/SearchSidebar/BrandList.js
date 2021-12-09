@@ -22,7 +22,7 @@ const BrandList = () => {
         const strArr = newArray.toString()
         
         router.push({
-            pathname: '/search',
+            pathname: router.pathname,
             query: { ...router.query, brand_id: strArr, page: 1}
         }, null, {scroll: false})
     }

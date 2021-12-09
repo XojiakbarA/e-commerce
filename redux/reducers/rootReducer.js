@@ -13,6 +13,7 @@ import cart from './cart'
 import toggle from './toggleReducer'
 import reviews from './reviews'
 import shops from './shops'
+import shop from './shop'
 
 const combindedReducer = combineReducers({
     categories: categories,
@@ -27,7 +28,8 @@ const combindedReducer = combineReducers({
     cart: cart,
     toggle: toggle,
     reviews: reviews,
-    shops: shops
+    shops: shops,
+    shop: shop
 })
 
 const rootReducer = (state, action) => {
