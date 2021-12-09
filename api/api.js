@@ -17,15 +17,11 @@ export const fetchBanners = async () => {
     return await instance.get('banners')
 }
 
-export const fetchNewProducts = async () => {
-    return await instance.get('products?sort=new&count=8')
-}
-
 export const fetchProduct = async (id) => {
-    return await instance.get('products/' + id)
+    return await instance.get(`products/${id}`)
 }
 
-export const fetchSearchResults = async (query) => {
+export const fetchProducts = async (query) => {
     return await instance.get('products/', {
         params: query
     })
@@ -42,7 +38,7 @@ export const fetchShops = async () => {
 }
 
 export const fetchShop = async (id) => {
-    return await instance.get('shops/' + id)
+    return await instance.get(`shops/${id}`)
 }
 
 export const fetchShopProducts = async (id, query) => {

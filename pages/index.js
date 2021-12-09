@@ -1,13 +1,13 @@
 import { Typography, Grid } from "@mui/material"
 import Banner from "../components/index/Banner"
 import ProductCard from "../components/common/ProductCard"
-import { getBanners, getNewProducts } from "../redux/actions"
+import { getBanners, getProducts } from "../redux/actions"
 import { wrapper } from "../redux/store"
 import { useSelector } from "react-redux"
 
 const Index = () => {
 
-    const products = useSelector(state => state.products)
+    const products = useSelector(state => state.products.data)
 
     return(
         <>
@@ -28,10 +28,10 @@ const Index = () => {
     )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(store => async () => {
+export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => async () => {
 
-    await getBanners(store.dispatch)
-    await getNewProducts(store.dispatch)
+    await dispatch(getBanners())
+    await dispatch(getProducts({count: 8}))
 
 })
 

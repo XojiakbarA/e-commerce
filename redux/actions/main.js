@@ -25,13 +25,13 @@ export const setBanners = (banners) => ({
     payload: banners
 })
 
-export const setNewProducts = (products) => ({
-    type: type.SET_NEW_PRODUCTS,
+export const setSearchProducts = (products) => ({
+    type: type.SET_SEARCH_PRODUCTS,
     payload: products
 })
 
-export const setSearchProducts = (products) => ({
-    type: type.SET_SEARCH_PRODUCTS,
+export const setShopProducts = (products) => ({
+    type: type.SET_SHOP_PRODUCTS,
     payload: products
 })
 
@@ -85,9 +85,4 @@ export const setShops = (shops) => ({
 export const setShop = (shop) => ({
     type: type.SET_SHOP,
     payload: shop
-})
-
-export const setShopProducts = (products) => ({
-    type: type.SET_SHOP_PRODUCTS,
-    payload: products
 })

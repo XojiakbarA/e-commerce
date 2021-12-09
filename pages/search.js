@@ -4,19 +4,18 @@ import SearchPanel from "../components/search/SearchPanel"
 import SearchSidebar from "../components/search/SearchSidebar"
 import ProductCard from "../components/common/ProductCard"
 import { wrapper } from "../redux/store"
-import { getSearchResults } from "../redux/actions"
+import { getProducts } from "../redux/actions"
 import { useSelector } from "react-redux"
 import { useRouter } from "next/router"
 
 const Search = ({title}) => {
 
     const router = useRouter()
-    const data = useSelector(state => state.products)
-    const products = data.data
-    const meta = data.meta
-    const total = meta?.total
-    const currentPage = meta?.current_page
-    const lastPage = meta?.last_page
+    const productsData = useSelector(state => state.products)
+    const products = productsData.data
+    const total = productsData.meta?.total
+    const currentPage = productsData.meta?.current_page
+    const lastPage = productsData.meta?.last_page
 
     const [view, setView] = useState('grid')
     const [sidebar, setSidebar] = useState(false)
@@ -35,7 +34,6 @@ const Search = ({title}) => {
 
     function handlePageChange(e, p) {
         router.push({
-            pathname: '/search',
             query: { ...router.query, page: p }
         })
     }
@@ -102,21 +100,13 @@ const Search = ({title}) => {
     )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(store => async ({query}) => {
+export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => async ({query}) => {
 
-    const title = query.title
-
-    !query.sort ? query.sort = 'new' : null
-    
-    await getSearchResults(query, store.dispatch)
-
-    if (!title) {
-        return { props: { title: '' } }
-    }
+    await dispatch(getProducts(query))
 
     return {
         props: {
-            title,
+            title: query?.title || ''
         }
     }
 

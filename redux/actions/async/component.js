@@ -1,5 +1,5 @@
-import { fetchBanners, fetchBrands, fetchCategories, fetchNewProducts, fetchProduct, fetchReviews, fetchSearchResults, fetchShop, fetchShopProducts, fetchShops } from '../../../api/api'
-import { setCats, setBrands, setBanners, setNewProducts, setProduct, setSearchProducts, setReviews, setShops, setShop, setShopProducts } from '..'
+import { fetchBanners, fetchBrands, fetchCategories, fetchProduct, fetchReviews, fetchProducts, fetchShop, fetchShopProducts, fetchShops } from '../../../api/api'
+import { setCats, setBrands, setBanners, setProduct, setSearchProducts, setReviews, setShops, setShop, setShopProducts } from '..'
 
 export const getCategories = async (dispatch) => {
     try {
@@ -21,23 +21,15 @@ export const getBrands = async (dispatch) => {
     }
 }
 
-export const getBanners = async (dispatch) => {
-    try {
-        const res = await fetchBanners()
-        dispatch(setBanners(res.data.data))
-    } catch (e) {
-        dispatch(setBanners([{id: 1, title: 'server is offline', image: 'server is offline'}]))
-        console.log(e.errno, e.code)
-    }
-}
-
-export const getNewProducts = async (dispatch) => {
-    try {
-        const res = await fetchNewProducts()
-        dispatch(setNewProducts(res.data.data))
-    } catch (e) {
-        dispatch(setNewProducts([{id: 1, title: 'server is offline', price: 'server is offline'}]))
-        console.log(e.errno, e.code)
+export const getBanners = () => {
+    return async (dispatch) => {
+        try {
+            const res = await fetchBanners()
+            dispatch(setBanners(res.data.data))
+        } catch (e) {
+            dispatch(setBanners([{id: 1, title: 'server is offline', image: 'server is offline'}]))
+            console.log(e.errno, e.code)
+        }
     }
 }
 
@@ -51,13 +43,28 @@ export const getProduct = async (id, dispatch) => {
     }
 }
 
-export const getSearchResults = async (query, dispatch) => {
-    try {
-        const res = await fetchSearchResults(query)
-        dispatch(setSearchProducts(res.data))
-    } catch (e) {
-        dispatch(setSearchProducts({id: 1, title: 'server is offline', price: 'server is offline'}))
-        console.log(e.errno, e.code)
+export const getProducts = (query) => {
+    return async (dispatch) => {
+        try {
+            const res = await fetchProducts(query)
+            dispatch(setSearchProducts(res.data))
+        } catch (e) {
+            dispatch(setSearchProducts({id: 1, title: 'server is offline', price: 'server is offline'}))
+            console.log(e.errno, e.code)
+        }
+    }
+}
+
+export const getShopProducts = (id, query) => {
+    return async (dispatch) => {
+        try {
+            const res = await fetchShopProducts(id, query)
+            if (res.status === 200) {
+                dispatch(setShopProducts(res.data))
+            }
+        } catch (e) {
+            console.log(e)
+        }
     }
 }
 
@@ -100,15 +107,3 @@ export const getShop = (id) => {
     }
 }
 
-export const getShopProducts = (id, query) => {
-    return async (dispatch) => {
-        try {
-            const res = await fetchShopProducts(id, query)
-            if (res.status === 200) {
-                dispatch(setShopProducts(res.data))
-            }
-        } catch (e) {
-            console.log(e)
-        }
-    }
-}

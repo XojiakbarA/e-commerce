@@ -62,7 +62,6 @@ const InputSearch = () => {
             </SearchIconWrapper>
             <StyledInputBase
                 placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
                 onKeyUp={handleEnter}
             />
         </Search>
