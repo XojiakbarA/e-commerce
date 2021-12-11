@@ -50,7 +50,7 @@ export const getProducts = (query) => {
             dispatch(setSearchProducts(res.data))
         } catch (e) {
             dispatch(setSearchProducts({id: 1, title: 'server is offline', price: 'server is offline'}))
-            console.log(e.errno, e.code)
+            console.log(e.response.data)
         }
     }
 }

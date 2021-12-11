@@ -8,7 +8,7 @@ const CategoryListItem = ({ category }) => {
     const router = useRouter()
     const cat_id = router.query.cat_id
     const sub_cat_id = router.query.sub_cat_id
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(false || Boolean(category.sub_categories.find(sub => sub.id == sub_cat_id)));
     const [ripple, setRipple] = useState(false);
 
     const handleClick = (e) => {
@@ -57,7 +57,7 @@ const CategoryListItem = ({ category }) => {
                 </IconButton>
             </ListItemButton>
             { category.sub_categories &&
-                <Collapse in={open} timeout="auto" unmountOnExit>
+                <Collapse in={open} key={category.id} timeout="auto" unmountOnExit>
                     {
                         category.sub_categories.map(sub => (
                             <List

@@ -37,7 +37,7 @@ const SidebarProductCard = ({product}) => {
         <Card sx={{display: 'flex'}}>
             <CardActionArea disableRipple={ripple} component='div'>
                 <Link href={'/products/' + product.id}>
-                <a style={{display: 'flex', justifyContent: 'flex-start'}} onClick={ (e) => product.quantity == 1 ? e.preventDefault() : false }>
+                <a style={{display: 'flex', justifyContent: 'flex-start'}}>
                     <Stack
                         padding={1}
                         justifyContent='center'
@@ -51,7 +51,7 @@ const SidebarProductCard = ({product}) => {
                         <Typography variant='body1'>
                             {product.quantity}
                         </Typography>
-                        <Button disabled={product.quantity == 1} variant='outlined' sx={{padding: 0, minWidth: 0, marginLeft: 0}} onClick={ (e) => handleRemoveClick(e, product.id) }>
+                        <Button variant='outlined' sx={{padding: 0, minWidth: 0, marginLeft: 0}} onClick={ (e) => handleRemoveClick(e, product.id) }>
                             <RemoveIcon fontSize='small' />
                         </Button>
                     </Stack>
