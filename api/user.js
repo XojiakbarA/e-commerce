@@ -28,15 +28,31 @@ export const fetchCart = async () => {
 }
 
 export const addCart = async (id) => {
-    return await user.post('api/cart/' + id)
+    return await user.post(`api/cart/${id}`)
 }
 
 export const removeCart = async (id) => {
-    return await user.put('api/cart/' + id)
+    return await user.put(`api/cart/${id}`)
 }
 
 export const deleteCart = async (id) => {
-    return await user.delete('api/cart/' + id)
+    return await user.delete(`api/cart/${id}`)
+}
+
+export const fetchWishlist = async () => {
+    return await user.get('api/wishlist')
+}
+
+export const addWishlist = async (id) => {
+    return await user.post(`api/wishlist/${id}`)
+}
+
+export const deleteWishlist = async (id) => {
+    return await user.delete(`api/wishlist/${id}`)
+}
+
+export const fetchReviews = async (id) => {
+    return await user.get(`api/products/${id}/reviews`)
 }
 
 export const addReview = async (data) => {

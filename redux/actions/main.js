@@ -5,6 +5,11 @@ export const setCart = (cart) => ({
     payload: cart
 })
 
+export const setWishlist = (wishlist) => ({
+    type: type.SET_WISHLIST,
+    payload: wishlist
+})
+
 export const setUser = (user) => ({
     type: type.SET_USER,
     payload: user

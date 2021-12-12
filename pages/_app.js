@@ -2,7 +2,7 @@ import { CssBaseline, Backdrop, CircularProgress } from '@mui/material'
 import MainLayout from '../components/layout/MainLayout'
 import '../styles/globals.css'
 import { wrapper } from '../redux/store'
-import { getCategories, getBrands, getUser, getCart } from '../redux/actions'
+import { getCategories, getBrands, getUser, getCart, getWishlist } from '../redux/actions'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
@@ -34,6 +34,7 @@ const MyApp = ({Component, pageProps}) => {
     useEffect( () => {
         dispatch(getUser())
         dispatch(getCart())
+        dispatch(getWishlist())
     })
 
     return (

@@ -1,5 +1,5 @@
-import { login, logout, fetchUser, fetchCart, addCart, removeCart, deleteCart, register, addReview } from '../../../api/user'
-import { setUser, setCart, setLoading, closeAccountMenu, setSnackbar, toggleLoginDialog, toggleRegisterDialog } from '..'
+import { login, logout, fetchUser, fetchCart, addCart, removeCart, deleteCart, register, fetchReviews, addReview, addWishlist, fetchWishlist, deleteWishlist } from '../../../api/user'
+import { setUser, setCart, setLoading, closeAccountMenu, setSnackbar, toggleLoginDialog, toggleRegisterDialog, setReviews, setWishlist } from '..'
 
 export const getCart = () => {
     return async (dispatch) => {
@@ -46,6 +46,45 @@ export const deleteFromCart = (id) => {
             const res = await deleteCart(id)
             if (res.status === 200) {
                 dispatch(setCart(res.data.data))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const getWishlist = () => {
+    return async (dispatch) => {
+        try {
+            const res = await fetchWishlist()
+            if (res.status === 200) {
+                dispatch(setWishlist(res.data.data))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const addToWishlist = (id) => {
+    return async (dispatch) => {
+        try {
+            const res = await addWishlist(id)
+            if (res.status === 200) {
+                dispatch(setWishlist(res.data.data))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const deleteFromWishlist = (id) =>{
+    return async (dispatch) => {
+        try {
+            const res = await deleteWishlist(id)
+            if (res.status === 200) {
+                dispatch(setWishlist(res.data.data))
             }
         } catch (e) {
             console.log(e)
@@ -113,6 +152,19 @@ export const userRegister = (data) => {
                 dispatch(setLoading(false))
                 dispatch(setSnackbar({isOpen: true, text: 'You are logged in!'}))
                 dispatch(toggleRegisterDialog())
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const getReviews = (id) => {
+    return async (dispatch) => {
+        try {
+            const res = await fetchReviews(id)
+            if (res.status === 200) {
+                dispatch(setReviews(res.data.data))
             }
         } catch (e) {
             console.log(e)

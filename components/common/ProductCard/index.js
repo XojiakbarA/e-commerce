@@ -1,18 +1,13 @@
 import { useState } from 'react'
-import {Card, CardContent, CardMedia,
-        CardActionArea, Box, Typography,
-        IconButton, Tooltip, Rating} from '@mui/material'
-
+import {Card, CardContent, CardMedia, CardActionArea, Box, Typography, IconButton, Tooltip, Rating} from '@mui/material'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import VisibilityIcon from '@mui/icons-material/Visibility'
 import { productImageURL } from '../../../utils/utils'
 import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCart, deleteFromCart } from '../../../redux/actions'
+import { addToCart, addToWishlist, deleteFromCart, deleteFromWishlist } from '../../../redux/actions'
 
 const grid = {
     card: {boxShadow: 3, borderRadius: 2, position: 'relative'},
@@ -34,10 +29,14 @@ const ProductCard = ({product, view}) => {
 
     const dispatch = useDispatch()
     const cart = useSelector(state => state.cart)
+    const wishlist = useSelector(state => state.wishlist)
     const findInCart = cart.find(item => item.id == product.id)
     const hasInCart = Boolean(findInCart)
+    const findInWishlist = wishlist.find(item => item.id == product.id)
+    const hasInWishlist = Boolean(findInWishlist)
 
     const [ripple, setRipple] = useState(false)
+    const id = product.id
 
     function handleActionEnter(e) {
         setRipple(true)
@@ -45,11 +44,17 @@ const ProductCard = ({product, view}) => {
     function handleActionLeave(e) {
         setRipple(false)
     }
-    function handleAddCartClick(e, id) {
+    function handleAddCartClick() {
         dispatch(addToCart(id))
     }
-    function handleDeleteCartClick(e, id) {
+    function handleDeleteCartClick() {
         dispatch(deleteFromCart(id))
+    }
+    function handleAddWishlistClick() {
+        dispatch(addToWishlist(id))
+    }
+    function handleDeleteWishlistClick() {
+        dispatch(deleteFromWishlist(id))
     }
 
     return (
@@ -89,31 +94,36 @@ const ProductCard = ({product, view}) => {
                 onMouseEnter={ (e) => handleActionEnter(e) }
                 onMouseLeave={ (e) => handleActionLeave(e) }
             >
-                <IconButton>
-                    <Tooltip title='Add to wishlist' placement='right'>
-                        <FavoriteBorderIcon />
-                    </Tooltip>
-                </IconButton>
+                {
+                    hasInWishlist
+                    ?
+                    <IconButton onClick={ handleDeleteWishlistClick }>
+                        <Tooltip title='Remove from wishlist' placement='right' key={product.id}>
+                            <FavoriteIcon />
+                        </Tooltip>
+                    </IconButton>
+                    :
+                    <IconButton onClick={ handleAddWishlistClick }>
+                        <Tooltip title='Add to wishlist' placement='right'>
+                            <FavoriteBorderIcon />
+                        </Tooltip>
+                    </IconButton>
+                }
                 {
                     hasInCart
                     ?
-                    <IconButton onClick={ (e) => handleDeleteCartClick(e, product.id) }>
+                    <IconButton onClick={ handleDeleteCartClick }>
                         <Tooltip title='Remove from cart' placement='right' key={product.id}>
                             <ShoppingCartIcon />
                         </Tooltip>
                     </IconButton>
                     :
-                    <IconButton onClick={ (e) => handleAddCartClick(e, product.id) }>
+                    <IconButton onClick={ handleAddCartClick }>
                         <Tooltip title='Add to cart' placement='right'>
                             <ShoppingCartOutlinedIcon />
                         </Tooltip>
                     </IconButton>
                 }
-                <IconButton>
-                    <Tooltip title='View' placement='right'>
-                        <VisibilityOutlinedIcon />
-                    </Tooltip>
-                </IconButton>
             </Box>
         </Card>
     );
