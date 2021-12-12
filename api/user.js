@@ -40,5 +40,5 @@ export const deleteCart = async (id) => {
 }
 
 export const addReview = async (data) => {
-    return await user.post('api/reviews', data)
+    return await user.post(`api/products/${data.product_id}/reviews`, data)
 }

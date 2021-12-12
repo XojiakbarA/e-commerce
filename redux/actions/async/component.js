@@ -73,7 +73,7 @@ export const getReviews = (id) => {
         try {
             const res = await fetchReviews(id)
             if (res.status === 200) {
-                dispatch(setReviews(res.data))
+                dispatch(setReviews(res.data.data))
             }
         } catch (e) {
             console.log(e)
