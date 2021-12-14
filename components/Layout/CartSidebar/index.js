@@ -10,7 +10,7 @@ const CartSidebar = () => {
     const dispatch = useDispatch()
     const cart = useSelector(state => state.cart)
 
-    const closeSidebar = () => dispatch(toggleCartSidebar())
+    const closeSidebar = () => dispatch(toggleCartSidebar(false))
 
     return(
         <Box sx={{padding: 1, width: 350}}>

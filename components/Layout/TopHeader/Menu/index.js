@@ -19,7 +19,7 @@ const Menu = () => {
         if (user) {
             dispatch(openAccountMenu(e.currentTarget))
         } else {
-            dispatch(toggleLoginDialog())
+            dispatch(toggleLoginDialog(true))
         }
     }
 
@@ -31,7 +31,7 @@ const Menu = () => {
 
     const openSidebar = () => {
         if (cartCount) {
-            dispatch(toggleCartSidebar())
+            dispatch(toggleCartSidebar(true))
         }
     }
 

@@ -45,12 +45,14 @@ export const setProduct = (product) => ({
     payload: product
 })
 
-export const toggleCartSidebar = () => ({
-    type: type.TOGGLE_CART_SIDEBAR
+export const toggleCartSidebar = (bool) => ({
+    type: type.TOGGLE_CART_SIDEBAR,
+    payload: bool
 })
 
-export const toggleLoginDialog = () => ({
-    type: type.TOGGLE_LOGIN_DIALOG
+export const toggleLoginDialog = (bool) => ({
+    type: type.TOGGLE_LOGIN_DIALOG,
+    payload: bool
 })
 
 export const toggleRegisterDialog = (bool) => ({

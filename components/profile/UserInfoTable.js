@@ -1,6 +1,6 @@
 import { Paper, TableContainer, Table, TableHead, TableCell, TableBody, TableRow } from "@mui/material"
 
-const UserInfoTable = () => {
+const UserInfoTable = ({ user }) => {
     return (
         <TableContainer component={Paper}>
             <Table>
@@ -15,11 +15,11 @@ const UserInfoTable = () => {
                 </TableHead>
                 <TableBody>
                     <TableRow>
-                        <TableCell>13</TableCell>
-                        <TableCell>Xojiakbar</TableCell>
-                        <TableCell>Akramov</TableCell>
-                        <TableCell>xoji@mail.ru</TableCell>
-                        <TableCell>11.05.1995</TableCell>
+                        <TableCell>{user?.id}</TableCell>
+                        <TableCell>{user?.name}</TableCell>
+                        <TableCell>{user?.surname}</TableCell>
+                        <TableCell>{user?.email}</TableCell>
+                        <TableCell>{user?.birth_date}</TableCell>
                     </TableRow>
                 </TableBody>
             </Table>

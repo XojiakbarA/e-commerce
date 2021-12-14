@@ -17,7 +17,7 @@ const MainLayout = ({children}) => {
     const isOpenSnackbar = useSelector(state => state.snackbar.isOpen)
     const snackbarText = useSelector(state => state.snackbar.text)
 
-    const closeSidebar = () => dispatch(toggleCartSidebar())
+    const closeSidebar = () => dispatch(toggleCartSidebar(false))
     const handleCloseSnackbar = () => dispatch(setSnackbar(false))
 
     return(

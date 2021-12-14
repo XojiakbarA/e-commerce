@@ -100,7 +100,7 @@ export const getUser = () => {
                 dispatch(setUser(res.data))
             }
         } catch (e) {
-            console.log(e.response.statusText)
+            //console.log(e.response?.statusText)
         }
     }
 }
@@ -115,7 +115,7 @@ export const userLogin = (data) => {
                 dispatch(setUser(res2.data))
                 dispatch(setLoading(false))
                 dispatch(setSnackbar({isOpen: true, text: 'You are logged in!'}))
-                dispatch(toggleLoginDialog())
+                dispatch(toggleLoginDialog(false))
             }
         } catch (e) {
             console.log(e)
@@ -151,7 +151,7 @@ export const userRegister = (data) => {
                 dispatch(setUser(res2.data))
                 dispatch(setLoading(false))
                 dispatch(setSnackbar({isOpen: true, text: 'You are logged in!'}))
-                dispatch(toggleRegisterDialog())
+                dispatch(toggleRegisterDialog(false))
             }
         } catch (e) {
             console.log(e)

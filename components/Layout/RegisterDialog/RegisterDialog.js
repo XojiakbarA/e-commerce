@@ -4,18 +4,25 @@ import { useDispatch, useSelector } from "react-redux"
 import { useFormik } from "formik"
 import { registerValidationSchema } from "../../../utils/validate"
 import { toggleLoginDialog, toggleRegisterDialog, userRegister } from "../../../redux/actions"
+import { useRouter } from "next/router"
 
 
 const RegisterDialog = () => {
 
+    const router = useRouter()
     const dispatch = useDispatch()
     const registerDialog = useSelector(state => state.toggle.registerDialog)
-    const isLoading = useSelector(state => state.isLoading)
+    const isLoading = useSelector(state => state.toggle.isLoading)
+    const user = useSelector(state => state.user)
+    const isProfilePage = router.pathname.indexOf('/profile')
     
-    const closeRegisterDialog = () => dispatch(toggleRegisterDialog())
+    const closeRegisterDialog = () => {
+        dispatch(toggleRegisterDialog(false))
+        isProfilePage != -1 && user == null ? router.push('/') : null
+    }
     const openLoginDialog = () => {
-        dispatch(toggleRegisterDialog())
-        dispatch(toggleLoginDialog())
+        dispatch(toggleRegisterDialog(false))
+        dispatch(toggleLoginDialog(true))
     }
 
     const formik = useFormik({

@@ -1,27 +1,34 @@
-import { Stack, Button, Dialog, TextField, Typography, Box, IconButton, CircularProgress } from '@mui/material'
+import { Stack, Button, Dialog, TextField, Typography, Box, IconButton, CircularProgress, Checkbox, FormControlLabel } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useSelector, useDispatch } from 'react-redux'
+import { useRouter } from 'next/router'
 import { useFormik } from 'formik'
 import { loginValidationSchema } from '../../../utils/validate'
 import { toggleLoginDialog, toggleRegisterDialog, userLogin } from '../../../redux/actions'
 
 const LoginDialog = () => {
 
-    const loginDialog = useSelector(state => state.toggle.loginDialog)
-    const isLoading = useSelector(state => state.isLoading)
-
+    const router = useRouter()
     const dispatch = useDispatch()
+    const loginDialog = useSelector(state => state.toggle.loginDialog)
+    const isLoading = useSelector(state => state.toggle.isLoading)
+    const user = useSelector(state => state.user)
+    const isProfilePage = router.pathname.indexOf('/profile')
 
-    const closeLoginDialog = () => dispatch(toggleLoginDialog())
+    const closeLoginDialog = () => {
+        dispatch(toggleLoginDialog(false))
+        isProfilePage != -1 && user == null ? router.push('/') : null
+    }
     const openRegisterDialog = () => {
-        dispatch(toggleRegisterDialog())
-        dispatch(toggleLoginDialog())
+        dispatch(toggleRegisterDialog(true))
+        dispatch(toggleLoginDialog(false))
     }
 
     const formik = useFormik({
         initialValues: {
             email: '',
-            password: ''
+            password: '',
+            remember: false
         },
         validationSchema: loginValidationSchema,
         onSubmit: (data) => {
@@ -55,6 +62,7 @@ const LoginDialog = () => {
                             helperText={ formik.touched.password && formik.errors.password }
                             { ...formik.getFieldProps('password') }
                         />
+                        <FormControlLabel control={<Checkbox { ...formik.getFieldProps('remember') } />} label='Remember Me' />
                         <Button
                             variant='contained'
                             type='submit'

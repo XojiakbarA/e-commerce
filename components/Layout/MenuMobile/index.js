@@ -19,10 +19,10 @@ const MenuMobile = () => {
         if (localStorage.getItem('token')) {
             dispatch(openAccountMenu(e.currentTarget))
         } else {
-            dispatch(toggleLoginDialog())
+            dispatch(toggleLoginDialog(true))
         }
     }
-    const openSidebar = () => dispatch(toggleCartSidebar())
+    const openSidebar = () => dispatch(toggleCartSidebar(true))
 
     return (
         <Box sx={{marginTop: 2, pb: 7, display: {xs: 'block', sm: 'none'}}}>

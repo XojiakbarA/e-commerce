@@ -7,7 +7,7 @@ const AccountMenu = () => {
 
     const user = useSelector(state => state.user)
     const anchorEl = useSelector(state => state.accountMenu)
-    const isLoading = useSelector(state => state.isLoading)
+    const isLoading = useSelector(state => state.toggle.isLoading)
     const dispatch = useDispatch()
 
     const handleClose = () => dispatch(closeAccountMenu())

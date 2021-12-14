@@ -9,7 +9,7 @@ import { userReview, getReviews } from "../../../../redux/actions"
 const ReviewForm = () => {
 
     const dispatch = useDispatch()
-    const isLoading = useSelector(state => state.isLoading)
+    const isLoading = useSelector(state => state.toggle.isLoading)
     const productId = useSelector(state => state.product.id)
     const user = useSelector(state => state.user)
 

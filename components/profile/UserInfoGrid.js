@@ -1,6 +1,6 @@
 import { Grid, Paper, Stack, Typography, Avatar } from "@mui/material"
 
-const UserInfoGrid = () => {
+const UserInfoGrid = ({ user }) => {
     return (
         <Stack direction='row' spacing={2} alignItems='stretch'>
             <Grid item lg={6}>
@@ -9,7 +9,7 @@ const UserInfoGrid = () => {
                         <Avatar/>
                         <Stack>
                         <Typography variant='h5'>
-                            Xojiakbar Akramov
+                            {user?.name}
                         </Typography>
                         <Typography variant='body2'>
                             Balance: 500$
