@@ -28,7 +28,7 @@ const ProductCard = ({product, view}) => {
     }
 
     const dispatch = useDispatch()
-    const cart = useSelector(state => state.cart)
+    const cart = useSelector(state => state.cart.data) ?? []
     const wishlist = useSelector(state => state.wishlist)
     const findInCart = cart.find(item => item.id == product.id)
     const hasInCart = Boolean(findInCart)

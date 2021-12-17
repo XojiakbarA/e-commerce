@@ -1,9 +1,13 @@
-import { Grid, Stack } from "@mui/material"
+import { Grid, Stack, Typography } from "@mui/material"
 import ShoppingStep from "../components/shopping-pages/common/ShoppingStep"
 import CartProductCard from "../components/shopping-pages/cart/CartProductCard"
 import CartForm from "../components/shopping-pages/cart/CartForm"
+import { useSelector } from "react-redux"
 
 const Cart = () => {
+
+    const cart = useSelector(state => state.cart.data)
+
     return(
         <Grid container spacing={2}>
             <Grid item lg={8}>
@@ -11,10 +15,17 @@ const Cart = () => {
             </Grid>
             <Grid item lg={8}>
                 <Stack spacing={2}>
-                    <CartProductCard />
-                    <CartProductCard />
-                    <CartProductCard />
-                    <CartProductCard />
+                    {
+                        !cart?.length
+                        ?
+                        <Typography variant="h3">
+                            Cart is Empty
+                        </Typography>
+                        :
+                        cart.map(product => (
+                            <CartProductCard key={product.id} product={product}/>
+                        ))
+                    }
                 </Stack>
             </Grid>
             <Grid item lg={4}>

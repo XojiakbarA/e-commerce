@@ -1,9 +1,9 @@
 import Link from "next/link"
 
-const MyLink = ({ href, children }) => {
+const MyLink = ({ href, children, style }) => {
     return (
         <Link href={href}>
-        <a>{children}</a>
+        <a style={style}>{children}</a>
         </Link>
     )
 }

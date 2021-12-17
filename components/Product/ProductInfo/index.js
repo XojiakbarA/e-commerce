@@ -9,7 +9,7 @@ import { addToCart, removeFromCart } from '../../../redux/actions'
 const ProductInfo = ({product}) => {
 
     const dispatch = useDispatch()
-    const cart = useSelector(state => state.cart)
+    const cart = useSelector(state => state.cart.data) ?? []
     const productInCart = cart.find(item => item.id == product.id)
     const hasInCart = Boolean(productInCart)
 

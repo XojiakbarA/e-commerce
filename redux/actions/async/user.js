@@ -6,7 +6,7 @@ export const getCart = () => {
         try {
             const res = await fetchCart()
             if (res.status === 200) {
-                dispatch(setCart(res.data.data))
+                dispatch(setCart(res.data))
             }
         } catch (e) {
             console.log(e)
@@ -19,7 +19,7 @@ export const addToCart = (id) => {
         try {
             const res = await addCart(id)
             if (res.status === 200) {
-                dispatch(setCart(res.data.data))
+                dispatch(setCart(res.data))
             }
         } catch (e) {
             console.log(e)
@@ -32,7 +32,7 @@ export const removeFromCart = (id) => {
         try {
             const res = await removeCart(id)
             if (res.status === 200) {
-                dispatch(setCart(res.data.data))
+                dispatch(setCart(res.data))
             }
         } catch (e) {
             console.log(e)
@@ -45,7 +45,7 @@ export const deleteFromCart = (id) => {
         try {
             const res = await deleteCart(id)
             if (res.status === 200) {
-                dispatch(setCart(res.data.data))
+                dispatch(setCart(res.data))
             }
         } catch (e) {
             console.log(e)

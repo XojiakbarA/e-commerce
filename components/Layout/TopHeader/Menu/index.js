@@ -12,7 +12,7 @@ const Menu = () => {
     const dispatch = useDispatch()
     const router = useRouter()
     const user = useSelector(state => state.user)
-    const cartCount = useSelector(state => state.cart.length)
+    const cartCount = useSelector(state => state.cart.data?.length)
     const wishlistCount = useSelector(state => state.wishlist.length)
 
     const openDialog = (e) => {

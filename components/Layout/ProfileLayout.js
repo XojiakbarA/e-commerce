@@ -11,14 +11,16 @@ const ProfileLayout = ({children}) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        async function getUs() {
+        async function getUser() {
             try {
                 await fetchUser()
             } catch (e) {
-                dispatch(toggleLoginDialog(true))
+                if (e.response.status === 401) {
+                    dispatch(toggleLoginDialog(true))
+                }
             }
         }
-        getUs()
+        getUser()
     }, [dispatch, user])
 
     return (

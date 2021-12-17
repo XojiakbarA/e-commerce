@@ -7,7 +7,6 @@ import { useRouter } from "next/dist/client/router"
 
 const list = [
     {title: 'Orders', path: '/profile/orders', icon: (<ShoppingBagIcon/>)},
-    {title: 'Wishlist', path: '/wishlist', icon: (<FavoriteIcon/>)},
     {title: 'Support Tickets', path: '/profile/support-tickets', icon: (<HeadsetMicIcon/>)}
 ]
 
