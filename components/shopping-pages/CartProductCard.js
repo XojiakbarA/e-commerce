@@ -2,11 +2,11 @@ import { Button, IconButton, Typography, Card, CardActionArea, CardMedia, CardCo
 import CloseIcon from '@mui/icons-material/Close'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
-import NextLink from '../../../common/Link'
-import { productImageURL } from '../../../../utils/utils'
+import NextLink from '../common/Link'
+import { productImageURL } from '../../utils/utils'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { addToCart, deleteFromCart, removeFromCart } from '../../../../redux/actions'
+import { addToCart, deleteFromCart, removeFromCart } from '../../redux/actions'
 
 const CartProductCard = ({product}) => {
 

@@ -15,7 +15,9 @@ const SidebarButtons = () => {
             alignItems='center'
             sx={{position: 'sticky', right: 0, bottom: 0, padding: 1, backgroundColor: 'white'}}
         >
-            <Button variant='contained' fullWidth >Checkout Now</Button>
+            <NextLink href='/checkout' style={{width: '100%'}}>
+                <Button variant='contained' fullWidth onClick={handleCloseSidebar}>Checkout Now</Button>
+            </NextLink>
             <NextLink href='/cart' style={{width: '100%'}}>
                 <Button variant='outlined' fullWidth onClick={handleCloseSidebar}>View Cart</Button>
             </NextLink>

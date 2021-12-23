@@ -1,11 +1,10 @@
 import { Box, Step, StepButton, Stepper } from "@mui/material"
-import Link from 'next/link'
+import NextLink from '../../common/Link'
 import { useRouter } from 'next/router'
 
 const steps = [
     {path: '/cart', title: 'Cart'},
     {path: '/checkout', title: 'Checkout'},
-    {path: '/payment', title: 'Payment'},
     {path: '/review', title: 'Review'}
 ]
 
@@ -21,13 +20,11 @@ const ShoppingStep = () => {
                 {
                     steps.map((step, i) => (
                         <Step key={i}>
-                            <Link href={step.path}>
-                            <a>
+                            <NextLink href={step.path}>
                                 <StepButton color='inherit'>
                                     {step.title}
                                 </StepButton>
-                            </a>
-                            </Link>
+                            </NextLink>
                         </Step>
                     ))
                 }

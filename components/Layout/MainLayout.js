@@ -9,6 +9,7 @@ import AccountMenu from "./AccountMenu/AccountMenu"
 import LoginDialog from "./LoginDialog/LoginDialog"
 import CartSidebar from "./CartSidebar"
 import RegisterDialog from "./RegisterDialog/RegisterDialog"
+import OrderDialog from "./OrderDialog/OrderDialog"
 
 const MainLayout = ({children}) => {
 
@@ -33,6 +34,7 @@ const MainLayout = ({children}) => {
         <AccountMenu />
         <LoginDialog />
         <RegisterDialog />
+        <OrderDialog />
         <Drawer
             anchor='right'
             open={cartSidebar}

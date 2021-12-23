@@ -60,6 +60,11 @@ export const toggleRegisterDialog = (bool) => ({
     payload: bool
 })
 
+export const toggleOrderDialog = (bool) => ({
+    type: type.TOGGLE_ORDER_DIALOG,
+    payload: bool
+})
+
 export const openAccountMenu = (anchorEl) => ({
     type: type.OPEN_ACCOUNT_MENU,
     payload: anchorEl

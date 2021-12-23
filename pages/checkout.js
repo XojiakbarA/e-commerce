@@ -1,36 +1,76 @@
-import { Grid } from "@mui/material"
-import { useState } from "react"
+import { Button, CircularProgress, Grid, Stack } from "@mui/material"
+import { useState, useEffect } from "react"
+import { useRouter } from "next/router"
+import { useFormik } from "formik"
+import { useDispatch, useSelector } from "react-redux"
+import { clearAllCart, userOrder } from "../redux/actions"
+import { checkoutValidationSchema } from "../utils/validate"
+import CheckoutForm from "../components/shopping-pages/CheckoutForm"
+import ShoppingLayout from "../components/layout/ShoppingLayout/ShoppingLayout"
+import PaymentForm from "../components/shopping-pages/PaymentForm"
 
-import ShoppingInfo from "../components/shopping-pages/common/ShoppingInfo"
-import CheckoutForm from "../components/shopping-pages/checkout/CheckoutForm"
-import ShoppingStep from "../components/shopping-pages/common/ShoppingStep"
-import ShoppingLinks from "../components/shopping-pages/common/ShoppingLinks"
 
 const Checkout = () => {
 
-    const [ display, setDisplay ] = useState(true)
+    const router = useRouter()
+    const dispatch = useDispatch()
+    const isLoading = useSelector(state => state.toggle.isLoading)
+    const [initValues, setInitValues] = useState({
+        name: '',
+        phone: '',
+        email: '',
+        country: '',
+        address: '',
+        zip_code: '',
+        pay_mode: ''
+    })
 
-    function hideForm() {
-        setDisplay(!display)
-    }
+    useEffect(() => {
+        const data = JSON.parse(sessionStorage.getItem('checkout-form'))
+        if (data) {
+            setInitValues(data)
+        }
+    }, [])
+
+    const formik = useFormik({
+        initialValues: initValues,
+        validationSchema: checkoutValidationSchema,
+        onSubmit: async (data) => {
+            await dispatch(userOrder(data))
+            await dispatch(clearAllCart())
+        },
+        enableReinitialize: true
+    })
 
     return(
-        <Grid container spacing={2}>
+        <ShoppingLayout>
             <Grid item lg={8}>
-                <ShoppingStep />
+                <form onSubmit={formik.handleSubmit}>
+                    <CheckoutForm formik={formik}/>
+                    <PaymentForm formik={formik}/>
+                
+                    <Stack direction='row' spacing={4} justifyContent='center'>
+                        <Button fullWidth variant='outlined' onClick={() => router.push('/cart')}>Back to Cart</Button>
+                        <Button
+                            variant='contained'
+                            fullWidth
+                            type='submit'
+                            endIcon={ isLoading
+                                &&
+                                <CircularProgress
+                                    color='inherit'
+                                    size={20}
+                                    sx={{position: 'absolute', top: 8, right: 50}}
+                                />
+                            }
+                            disabled={isLoading}
+                        >
+                            Order
+                        </Button>
+                    </Stack>
+                </form>
             </Grid>
-            <Grid item lg={8}>
-                <CheckoutForm title='Shipping Address' display={true} />
-                <CheckoutForm title='Billing Address' display={display} hideForm={hideForm} />
-                <ShoppingLinks
-                    back={{ title: 'Back to Cart', path: '/cart' }}
-                    forward={{ title: 'Proceed to Payment', path: '/payment' }}
-                />
-            </Grid>
-            <Grid item lg={4}>
-                <ShoppingInfo />
-            </Grid>
-        </Grid>
+        </ShoppingLayout>
     )
 }
 

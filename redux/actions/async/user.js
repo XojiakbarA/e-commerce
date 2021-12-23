@@ -1,5 +1,5 @@
-import { login, logout, fetchUser, fetchCart, addCart, removeCart, deleteCart, register, fetchReviews, addReview, addWishlist, fetchWishlist, deleteWishlist } from '../../../api/user'
-import { setUser, setCart, setLoading, closeAccountMenu, setSnackbar, toggleLoginDialog, toggleRegisterDialog, setReviews, setWishlist } from '..'
+import { login, logout, fetchUser, fetchCart, addCart, removeCart, deleteCart, register, fetchReviews, addReview, addWishlist, fetchWishlist, deleteWishlist, order, clearCart } from '../../../api/user'
+import { setUser, setCart, setLoading, closeAccountMenu, setSnackbar, toggleLoginDialog, toggleRegisterDialog, setReviews, setWishlist, toggleOrderDialog } from '..'
 
 export const getCart = () => {
     return async (dispatch) => {
@@ -44,6 +44,19 @@ export const deleteFromCart = (id) => {
     return async (dispatch) => {
         try {
             const res = await deleteCart(id)
+            if (res.status === 200) {
+                dispatch(setCart(res.data))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const clearAllCart = () => {
+    return async (dispatch) => {
+        try {
+            const res = await clearCart()
             if (res.status === 200) {
                 dispatch(setCart(res.data))
             }
@@ -180,6 +193,21 @@ export const userReview = (data) => {
             if (res.status === 201) {
                 dispatch(setLoading(false))
                 dispatch(setSnackbar({isOpen: true, text: 'Review created successfully!'}))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const userOrder = (data) => {
+    return async (dispatch) => {
+        try {
+            dispatch(setLoading(true))
+            const res = await order(data)
+            if (res.status === 201) {
+                dispatch(setLoading(false))
+                dispatch(toggleOrderDialog(true))
             }
         } catch (e) {
             console.log(e)

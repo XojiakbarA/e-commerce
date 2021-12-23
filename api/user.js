@@ -39,6 +39,10 @@ export const deleteCart = async (id) => {
     return await user.delete(`api/cart/${id}`)
 }
 
+export const clearCart = async () => {
+    return await user.delete('api/cart')
+}
+
 export const fetchWishlist = async () => {
     return await user.get('api/wishlist')
 }
@@ -57,4 +61,8 @@ export const fetchReviews = async (id) => {
 
 export const addReview = async (data) => {
     return await user.post(`api/products/${data.product_id}/reviews`, data)
+}
+
+export const order = async (data) => {
+    return await user.post('api/orders', data)
 }
