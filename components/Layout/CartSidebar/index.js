@@ -17,7 +17,7 @@ const CartSidebar = () => {
             <Stack spacing={2} divider={<Divider orientation='horizontal' flexItem />} sx={{height: '100vh'}}>
                 <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
                     <Typography variant='h5'>
-                        {cart.length} items
+                        {cart?.length} items
                     </Typography>
                     <IconButton onClick={ closeSidebar }>
                         <ChevronRightIcon />
@@ -25,7 +25,7 @@ const CartSidebar = () => {
                 </Box>
                 
                 <Stack spacing={1}>
-                    { cart.length
+                    { cart?.length
                         ?
                         cart.map(product => (
                             <SidebarProductCard key={product.id} product={product} />
