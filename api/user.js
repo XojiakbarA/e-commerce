@@ -15,7 +15,7 @@ export const logout = async () => {
 }
 
 export const fetchUser = async () => {
-    return await user.get('api/user')
+    return await user.get('api/users')
 }
 
 export const register = async (data) => {
