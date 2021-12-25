@@ -1,6 +1,13 @@
 import { Grid, Paper, Stack, Typography, Avatar } from "@mui/material"
 
 const UserInfoGrid = ({ user }) => {
+
+    const name = user?.name
+    const allOrdersCount = user?.all_orders_count
+    const awaitingPaymentCount = user?.awaiting_payment_count
+    const awaitingShipmentCount = user?.awaiting_shipment_count
+    const awaitingDeliveryCount = user?.awaiting_delivery_count
+
     return (
         <Stack direction='row' spacing={2} alignItems='stretch'>
             <Grid item lg={6}>
@@ -9,7 +16,7 @@ const UserInfoGrid = ({ user }) => {
                         <Avatar/>
                         <Stack>
                         <Typography variant='h5'>
-                            {user?.name}
+                            {name}
                         </Typography>
                         <Typography variant='body2'>
                             Balance: 500$
@@ -21,7 +28,7 @@ const UserInfoGrid = ({ user }) => {
             <Stack spacing={2} direction='row'>
                 <Paper sx={{paddingX: 2, paddingY: 3}}>
                     <Typography variant='h6' textAlign='center'>
-                        16
+                        {allOrdersCount}
                     </Typography>
                     <Typography variant='body2' align='center'>
                         All Orders
@@ -29,7 +36,7 @@ const UserInfoGrid = ({ user }) => {
                 </Paper>
                 <Paper sx={{paddingX: 2, paddingY: 3}}>
                     <Typography variant='h6' textAlign='center'>
-                        2
+                        {awaitingPaymentCount}
                     </Typography>
                     <Typography variant='body2' align='center'>
                         Awaiting Payments
@@ -37,7 +44,7 @@ const UserInfoGrid = ({ user }) => {
                 </Paper>
                 <Paper sx={{paddingX: 2, paddingY: 3}}>
                     <Typography variant='h6' textAlign='center'>
-                        0
+                        {awaitingShipmentCount}
                     </Typography>
                     <Typography variant='body2' align='center'>
                         Awaiting Shipment
@@ -45,7 +52,7 @@ const UserInfoGrid = ({ user }) => {
                 </Paper>
                 <Paper sx={{paddingX: 2, paddingY: 3}}>
                     <Typography variant='h6' textAlign='center'>
-                        1
+                        {awaitingDeliveryCount}
                     </Typography>
                     <Typography variant='body2' align='center'>
                         Awaiting Delivery

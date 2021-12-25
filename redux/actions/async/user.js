@@ -110,7 +110,7 @@ export const getUser = () => {
         try {
             const res = await fetchUser()
             if (res.status === 200) {
-                dispatch(setUser(res.data))
+                dispatch(setUser(res.data.data))
             }
         } catch (e) {
             //console.log(e.response?.statusText)
