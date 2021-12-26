@@ -14,6 +14,7 @@ import reviews from './reviews'
 import shops from './shops'
 import shop from './shop'
 import wishlist from './wishlist'
+import orders from "./orders";
 
 const combindedReducer = combineReducers({
     categories: categories,
@@ -29,7 +30,8 @@ const combindedReducer = combineReducers({
     reviews: reviews,
     shops: shops,
     shop: shop,
-    wishlist: wishlist
+    wishlist: wishlist,
+    orders: orders
 })
 
 const rootReducer = (state, action) => {

@@ -1,8 +1,18 @@
+import ProfileLayout from "../../components/layout/ProfileLayout";
+import ProfileTitle from "../../components/profile/ProfileTitle";
 
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag'
+import OrderList from "../../components/profile/OrderList/OrderList";
 
 const Orders = () => {
     return (
-        <h1>orders</h1>
+        <ProfileLayout>
+            <ProfileTitle
+                title='My Orders'
+                titleIcon={<ShoppingBagIcon fontSize='large'/>}
+            />
+            <OrderList />
+        </ProfileLayout>
     )
 }
 

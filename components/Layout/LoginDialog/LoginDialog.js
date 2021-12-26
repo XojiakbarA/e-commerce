@@ -12,7 +12,7 @@ const LoginDialog = () => {
     const dispatch = useDispatch()
     const loginDialog = useSelector(state => state.toggle.loginDialog)
     const isLoading = useSelector(state => state.toggle.isLoading)
-    const user = useSelector(state => state.user)
+    const user = useSelector(state => state.user?.data)
     const isProfilePage = router.pathname.indexOf('/profile')
 
     const closeLoginDialog = () => {

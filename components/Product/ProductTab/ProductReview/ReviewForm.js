@@ -11,7 +11,7 @@ const ReviewForm = () => {
     const dispatch = useDispatch()
     const isLoading = useSelector(state => state.toggle.isLoading)
     const productId = useSelector(state => state.product.id)
-    const user = useSelector(state => state.user)
+    const user = useSelector(state => state.user?.data)
 
     const formik = useFormik({
         initialValues: {

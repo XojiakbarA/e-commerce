@@ -7,7 +7,7 @@ const ProfileTitle = ({title, titleIcon, buttonText, buttonIcon}) => {
                 {titleIcon}
                 <Typography variant='h4'>{title}</Typography>
             </Stack>
-            <Button variant='contained' startIcon={buttonIcon}>
+            <Button variant='contained' startIcon={buttonIcon} sx={{ display: buttonText ? 'inline-flex' : 'none' }}>
                 {buttonText}
             </Button>
         </Stack>

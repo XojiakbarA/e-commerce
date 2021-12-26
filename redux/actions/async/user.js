@@ -1,5 +1,34 @@
-import { login, logout, fetchUser, fetchCart, addCart, removeCart, deleteCart, register, fetchReviews, addReview, addWishlist, fetchWishlist, deleteWishlist, order, clearCart } from '../../../api/user'
-import { setUser, setCart, setLoading, closeAccountMenu, setSnackbar, toggleLoginDialog, toggleRegisterDialog, setReviews, setWishlist, toggleOrderDialog } from '..'
+import {
+    login,
+    logout,
+    fetchUser,
+    fetchCart,
+    addCart,
+    removeCart,
+    deleteCart,
+    register,
+    fetchReviews,
+    addReview,
+    addWishlist,
+    fetchWishlist,
+    deleteWishlist,
+    order,
+    clearCart,
+    fetchOrders
+} from '../../../api/user'
+import {
+    setUser,
+    setCart,
+    setLoading,
+    closeAccountMenu,
+    setSnackbar,
+    toggleLoginDialog,
+    toggleRegisterDialog,
+    setReviews,
+    setWishlist,
+    toggleOrderDialog,
+    setOrders
+} from '..'
 
 export const getCart = () => {
     return async (dispatch) => {
@@ -110,7 +139,7 @@ export const getUser = () => {
         try {
             const res = await fetchUser()
             if (res.status === 200) {
-                dispatch(setUser(res.data.data))
+                dispatch(setUser(res.data))
             }
         } catch (e) {
             //console.log(e.response?.statusText)
@@ -208,6 +237,19 @@ export const userOrder = (data) => {
             if (res.status === 201) {
                 dispatch(setLoading(false))
                 dispatch(toggleOrderDialog(true))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const getOrders = () => {
+    return async (dispatch) => {
+        try {
+            const res = await fetchOrders()
+            if (res.status === 200) {
+                dispatch(setOrders(res.data.data))
             }
         } catch (e) {
             console.log(e)

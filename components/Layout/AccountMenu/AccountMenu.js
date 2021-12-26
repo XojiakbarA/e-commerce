@@ -5,7 +5,7 @@ import { closeAccountMenu, userLogout } from "../../../redux/actions"
 
 const AccountMenu = () => {
 
-    const user = useSelector(state => state.user)
+    const user = useSelector(state => state.user?.data)
     const anchorEl = useSelector(state => state.accountMenu)
     const isLoading = useSelector(state => state.toggle.isLoading)
     const dispatch = useDispatch()

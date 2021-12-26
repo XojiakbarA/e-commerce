@@ -7,7 +7,7 @@ import { fetchUser } from "../../api/user"
 
 const ProfileLayout = ({children}) => {
 
-    const user = useSelector(state => state.user)
+    const user = useSelector(state => state.user?.data)
     const dispatch = useDispatch()
 
     useEffect(() => {

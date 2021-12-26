@@ -98,3 +98,8 @@ export const setShop = (shop) => ({
     type: type.SET_SHOP,
     payload: shop
 })
+
+export const setOrders = (orders) => ({
+    type: type.SET_ORDERS,
+    payload: orders
+})
