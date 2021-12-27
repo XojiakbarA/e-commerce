@@ -2,7 +2,7 @@ import { Stack, Typography, Button } from "@mui/material"
 
 const ProfileTitle = ({title, titleIcon, buttonText, buttonIcon}) => {
     return (
-        <Stack direction='row' justifyContent='space-between'>
+        <Stack direction='row' justifyContent='space-between' marginBottom={2}>
             <Stack direction='row'>
                 {titleIcon}
                 <Typography variant='h4'>{title}</Typography>

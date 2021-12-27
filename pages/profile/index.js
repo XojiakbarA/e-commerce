@@ -5,6 +5,7 @@ import UserInfoTable from "../../components/profile/UserInfoTable"
 import UserInfoGrid from "../../components/profile/UserInfoGrid"
 import ProfileTitle from "../../components/profile/ProfileTitle"
 import { useSelector } from "react-redux"
+import {Stack} from "@mui/material";
 
 const Profile = () => {
 
@@ -18,8 +19,10 @@ const Profile = () => {
                 buttonText='Edit Profile'
                 buttonIcon={<EditIcon />}
             />
-            <UserInfoGrid user={user} />
-            <UserInfoTable user={user} />
+            <Stack spacing={2}>
+                <UserInfoGrid user={user} />
+                <UserInfoTable user={user} />
+            </Stack>
         </ProfileLayout>
     )
 }

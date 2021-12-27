@@ -1,8 +1,8 @@
-import { Grid, Typography } from "@mui/material";
+import {Box, Grid, Typography} from "@mui/material";
 
 const OrderListHead = ({ styles }) => {
     return (
-        <Grid item xs={12} sx={styles}>
+        <Box sx={styles}>
             <Grid item lg={3}>
                 <Typography variant='button'>
                     Order ID
@@ -23,7 +23,7 @@ const OrderListHead = ({ styles }) => {
                     Total
                 </Typography>
             </Grid>
-        </Grid>
+        </Box>
     )
 }
 

@@ -1,4 +1,4 @@
-import { Grid, Stack } from "@mui/material"
+import { Grid } from "@mui/material"
 import ProfileSidebar from "../../components/profile/ProfileSidebar/ProfileSidebar"
 import { useSelector, useDispatch } from "react-redux"
 import { useEffect } from "react"
@@ -26,18 +26,16 @@ const ProfileLayout = ({children}) => {
     return (
         <>
             {
-                !user
+                user
                 ?
-                false
-                :
                 <Grid container spacing={2}>
                     <ProfileSidebar />
                     <Grid item lg={9}>
-                        <Stack spacing={3}>
-                            {children}
-                        </Stack>
+                        {children}
                     </Grid>
                 </Grid>
+                :
+                null
             }
         </>
     )

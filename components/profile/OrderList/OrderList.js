@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import {Grid} from "@mui/material";
 import OrderListHead from "./OrderListHead";
 import OrderListItem from "./OrderListItem";
 import {useDispatch, useSelector} from "react-redux";
@@ -9,26 +9,28 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
-    padding: 2,
-    marginBottom: 2
+    padding: 2
 }
 
 const OrderList = () => {
 
     const dispatch = useDispatch()
     const orders = useSelector(state => state.orders)
-    console.log(orders)
 
     useEffect(() => {
         dispatch(getOrders())
     }, [])
 
     return (
-        <Grid container>
-            <OrderListHead styles={styles} />
+        <Grid container spacing={2}>
+            <Grid item xs={12}>
+                <OrderListHead styles={styles} />
+            </Grid>
             {
                 orders.map(order => (
-                    <OrderListItem key={order.id} order={order} styles={styles}/>
+                    <Grid item xs={12} key={order.id}>
+                        <OrderListItem order={order} styles={styles}/>
+                    </Grid>
                 ))
             }
         </Grid>
