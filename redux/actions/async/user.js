@@ -14,7 +14,7 @@ import {
     deleteWishlist,
     order,
     clearCart,
-    fetchOrders
+    fetchOrders, fetchOrder
 } from '../../../api/user'
 import {
     setUser,
@@ -27,7 +27,7 @@ import {
     setReviews,
     setWishlist,
     toggleOrderDialog,
-    setOrders
+    setOrders, setOrder
 } from '..'
 
 export const getCart = () => {
@@ -250,6 +250,19 @@ export const getOrders = () => {
             const res = await fetchOrders()
             if (res.status === 200) {
                 dispatch(setOrders(res.data.data))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const getOrder = (id) => {
+    return async (dispatch) => {
+        try {
+            const res = await fetchOrder(id)
+            if (res.status === 200) {
+                dispatch(setOrder(res.data))
             }
         } catch (e) {
             console.log(e)

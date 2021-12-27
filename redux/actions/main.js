@@ -103,3 +103,8 @@ export const setOrders = (orders) => ({
     type: type.SET_ORDERS,
     payload: orders
 })
+
+export const setOrder = (order) => ({
+    type: type.SET_ORDER,
+    payload: order
+})

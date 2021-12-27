@@ -70,3 +70,7 @@ export const order = async (data) => {
 export const fetchOrders = async () => {
     return await user.get('api/orders')
 }
+
+export const fetchOrder = async (id) => {
+    return await user.get(`api/orders/${id}`)
+}

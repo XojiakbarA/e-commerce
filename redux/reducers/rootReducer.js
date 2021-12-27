@@ -15,6 +15,7 @@ import shops from './shops'
 import shop from './shop'
 import wishlist from './wishlist'
 import orders from "./orders";
+import order from "./order";
 
 const combindedReducer = combineReducers({
     categories: categories,
@@ -31,7 +32,8 @@ const combindedReducer = combineReducers({
     shops: shops,
     shop: shop,
     wishlist: wishlist,
-    orders: orders
+    orders: orders,
+    order: order
 })
 
 const rootReducer = (state, action) => {
