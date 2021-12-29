@@ -12,7 +12,7 @@ const ReviewItem = ({review}) => {
                     <Stack direction='row' alignItems='center' spacing={2}>
                         <Rating name='review' size='small' value={review.rating} readOnly />
                         <Typography variant='caption'>
-                            {review.date}
+                            {review.created_at}
                         </Typography>
                     </Stack>
                 </Stack>
