@@ -10,7 +10,7 @@ const OrderStatus = ({status}) => {
         {label: 'Pending', icon: (<PendingIcon fontSize='large' color={status == 'pending' ? 'primary' : 'disabled'}/>)},
         {label: 'Shipped', icon: (<LocalShippingIcon fontSize='large' color={status == 'shipped' ? 'primary' : 'disabled'}/>)},
         {label: 'Delivered', icon: (<CheckBoxIcon fontSize='large' color={status == 'delivered' ? 'primary' : 'disabled'}/>)},
-        {label: 'Cancelled', icon: (<CancelIcon fontSize='large' color={status == 'cancelled' ? 'primary' : 'disabled'}/>)}
+        {label: 'Cancelled', icon: (<CancelIcon fontSize='large' color={status == 'cancelled' ? 'error' : 'disabled'}/>)}
     ];
 
     return (

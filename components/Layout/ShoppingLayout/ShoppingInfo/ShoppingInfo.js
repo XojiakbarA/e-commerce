@@ -1,7 +1,7 @@
 import { Stack, Paper, Typography, Box, Divider, Button } from "@mui/material"
 import { useRouter } from "next/router"
 import { useSelector } from "react-redux"
-import VoucherForm from "../../../common/VoucherForm"
+import VoucherForm from "./VoucherForm"
 import ShoppingInfoItem from './ShoppingInfoItem'
 
 const ShoppingInfo = () => {

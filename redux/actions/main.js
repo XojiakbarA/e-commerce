@@ -65,6 +65,11 @@ export const toggleOrderDialog = (bool) => ({
     payload: bool
 })
 
+export const toggleConfirmDialog = (bool) => ({
+    type: type.TOGGLE_CONFIRM_DIALOG,
+    payload: bool
+})
+
 export const openAccountMenu = (anchorEl) => ({
     type: type.OPEN_ACCOUNT_MENU,
     payload: anchorEl
@@ -79,9 +84,9 @@ export const setLoading = (bool) => ({
     payload: bool
 })
 
-export const setSnackbar = (bool) => ({
+export const setSnackbar = (obj) => ({
     type: type.IS_OPEN_SNACKBAR,
-    payload: bool
+    payload: obj
 })
 
 export const setReviews = (reviews) => ({

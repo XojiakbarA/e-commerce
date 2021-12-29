@@ -10,6 +10,7 @@ import LoginDialog from "./LoginDialog/LoginDialog"
 import CartSidebar from "./CartSidebar"
 import RegisterDialog from "./RegisterDialog/RegisterDialog"
 import OrderDialog from "./OrderDialog/OrderDialog"
+import ConfirmDialog from "./ConfirmDialog/ConfirmDialog";
 
 const MainLayout = ({children}) => {
 
@@ -35,6 +36,7 @@ const MainLayout = ({children}) => {
         <LoginDialog />
         <RegisterDialog />
         <OrderDialog />
+        <ConfirmDialog />
         <Drawer
             anchor='right'
             open={cartSidebar}

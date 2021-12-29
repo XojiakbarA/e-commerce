@@ -5,6 +5,7 @@ const initialState = {
     loginDialog: false,
     registerDialog: false,
     orderDialog: false,
+    confirmDialog: false,
     cartSidebar: false
 }
 
@@ -18,6 +19,8 @@ const toggleReducer = (state = initialState, action) => {
             return { ...state, registerDialog: action.payload }
         case type.TOGGLE_ORDER_DIALOG:
             return { ...state, orderDialog: action.payload }
+        case type.TOGGLE_CONFIRM_DIALOG:
+            return { ...state, confirmDialog: action.payload }
         case type.TOGGLE_CART_SIDEBAR:
             return { ...state, cartSidebar: action.payload }
         default:

@@ -14,7 +14,7 @@ import {
     deleteWishlist,
     order,
     clearCart,
-    fetchOrders, fetchOrder
+    fetchOrders, fetchOrder, cancellationOrder
 } from '../../../api/user'
 import {
     setUser,
@@ -27,7 +27,7 @@ import {
     setReviews,
     setWishlist,
     toggleOrderDialog,
-    setOrders, setOrder
+    setOrders, setOrder, toggleConfirmDialog
 } from '..'
 
 export const getCart = () => {
@@ -263,6 +263,23 @@ export const getOrder = (id) => {
             const res = await fetchOrder(id)
             if (res.status === 200) {
                 dispatch(setOrder(res.data))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const cancelOrder = (id) => {
+    return async (dispatch) => {
+        try {
+            dispatch(setLoading(true))
+            const res = await cancellationOrder(id)
+            if (res.status === 200) {
+                dispatch(setOrder(res.data))
+                dispatch(setLoading(false))
+                dispatch(setSnackbar({isOpen: true, text: 'Order cancelled successfully!'}))
+                dispatch(toggleConfirmDialog(false))
             }
         } catch (e) {
             console.log(e)

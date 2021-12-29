@@ -3,7 +3,7 @@ import OrderListHead from "./OrderListHead";
 import OrderListItem from "./OrderListItem";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
-import {getOrders} from "../../../redux/actions";
+import {getOrders} from "../../../../redux/actions";
 
 const styles = {
     display: 'flex',

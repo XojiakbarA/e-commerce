@@ -3,14 +3,14 @@ import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import CancelIcon from '@mui/icons-material/Cancel';
 import ProfileTitle from "../../../components/profile/ProfileTitle";
 import ProfileLayout from "../../../components/layout/ProfileLayout";
-import OrderStatus from "../../../components/profile/OrderStatus";
-import OrderProductList from "../../../components/profile/OrderProductList/OrderProductList";
-import OrderShippingAddress from "../../../components/profile/OrderShippingAddress";
+import OrderStatus from "../../../components/profile/orders/OrderStatus";
+import OrderProductList from "../../../components/profile/orders/OrderProductList/OrderProductList";
+import OrderShippingAddress from "../../../components/profile/orders/OrderShippingAddress";
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {getOrder} from "../../../redux/actions";
+import {getOrder, toggleConfirmDialog} from "../../../redux/actions";
 import {useRouter} from "next/router";
-import OrderDetails from "../../../components/profile/OrderDetails";
+import OrderDetails from "../../../components/profile/orders/OrderDetails";
 
 const Order = () => {
 
@@ -23,13 +23,18 @@ const Order = () => {
         dispatch(getOrder(id))
     }, [id])
 
+    const handleCancel = () => {
+        dispatch(toggleConfirmDialog(true))
+    }
+
     return (
         <ProfileLayout>
             <ProfileTitle
                 title='Order Details'
                 titleIcon={<ShoppingBagIcon fontSize='large'/>}
-                buttonText='Cancel the Order'
+                buttonText={order?.status == 'cancelled' ? null : 'Cancel the Order'}
                 buttonIcon={<CancelIcon />}
+                onClick={handleCancel}
             />
             <OrderStatus status={order?.status} />
             <OrderProductList products={order?.order_products}/>

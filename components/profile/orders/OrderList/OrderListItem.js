@@ -1,12 +1,12 @@
 import {Avatar, AvatarGroup, Chip, Grid, Paper, Typography} from "@mui/material";
-import NextLink from '../../common/Link';
+import NextLink from '../../../common/Link';
 import Image from "next/image";
-import {productImageURL} from "../../../utils/utils";
+import {productImageURL} from "../../../../utils/utils";
 
 const OrderListItem = ({order, styles}) => {
-    console.log(order)
+
     return (
-        <NextLink href={'/profile/orders/' + order.id}>
+        <NextLink href={`/profile/orders/${order.id}`}>
             <Paper sx={styles}>
             <Grid item lg={3} display='flex' alignItems='center' justifyContent='space-between'>
                 <Typography variant='body2'>

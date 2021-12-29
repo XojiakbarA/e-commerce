@@ -1,7 +1,6 @@
 import { List, ListSubheader, ListItemButton, ListItemText, ListItemIcon } from "@mui/material"
 import Link from '../../common/Link'
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag'
-import FavoriteIcon from '@mui/icons-material/Favorite'
 import HeadsetMicIcon from '@mui/icons-material/HeadsetMic'
 import { useRouter } from "next/dist/client/router"
 
@@ -20,7 +19,14 @@ const Dashboard = () => {
             {
                 list.map((item, i) => (
                     <Link key={i} href={item.path}>
-                        <ListItemButton key={i} selected={item.path == router.pathname}>
+                        <ListItemButton
+                            key={i}
+                            selected={
+                                item.path == router.pathname
+                                ||
+                                item.path == '/profile/orders' && router.route == '/profile/orders/[id]'
+                            }
+                        >
                             <ListItemIcon>{item.icon}</ListItemIcon>
                             <ListItemText primary={item.title}/>
                         </ListItemButton>
