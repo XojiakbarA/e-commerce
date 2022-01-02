@@ -14,7 +14,7 @@ import {
     deleteWishlist,
     order,
     clearCart,
-    fetchOrders, fetchOrder, cancellationOrder
+    fetchOrders, fetchOrder, cancellationOrder, sendUserData
 } from '../../../api/user'
 import {
     setUser,
@@ -27,7 +27,7 @@ import {
     setReviews,
     setWishlist,
     toggleOrderDialog,
-    setOrders, setOrder, toggleConfirmDialog
+    setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog
 } from '..'
 
 export const getCart = () => {
@@ -143,6 +143,23 @@ export const getUser = () => {
             }
         } catch (e) {
             //console.log(e.response?.statusText)
+        }
+    }
+}
+
+export const editUser = (data, id) => {
+    return async (dispatch) => {
+        try {
+            dispatch(setLoading(true))
+            const res = await sendUserData(data, id)
+            if (res.status === 200) {
+                dispatch(setUser(res.data))
+                dispatch(setLoading(false))
+                dispatch(setSnackbar({isOpen: true, text: 'Сhanges completed successfully!'}))
+                dispatch(toggleEditProfileDialog(false))
+            }
+        } catch (e) {
+            console.log(e)
         }
     }
 }

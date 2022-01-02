@@ -33,7 +33,7 @@ const AccountMenu = () => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
         >
-            <ListItem divider>Hello, {user?.name}</ListItem>
+            <ListItem divider>Hello, {user?.first_name}</ListItem>
             <Link href='/profile'>
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
             </Link>

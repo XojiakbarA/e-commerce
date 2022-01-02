@@ -70,6 +70,11 @@ export const toggleConfirmDialog = (bool) => ({
     payload: bool
 })
 
+export const toggleEditProfileDialog = (bool) => ({
+    type: type.TOGGLE_EDIT_PROFILE_DIALOG,
+    payload: bool
+})
+
 export const openAccountMenu = (anchorEl) => ({
     type: type.OPEN_ACCOUNT_MENU,
     payload: anchorEl

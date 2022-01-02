@@ -2,7 +2,8 @@ import { Grid, Paper, Stack, Typography, Avatar } from "@mui/material"
 
 const UserInfoGrid = ({ user }) => {
 
-    const name = user?.name
+    const name = user?.first_name
+    const lastName =user?.last_name
     const allOrdersCount = user?.all_orders_count
     const awaitingPaymentCount = user?.awaiting_payment_count
     const awaitingShipmentCount = user?.awaiting_shipment_count
@@ -19,7 +20,7 @@ const UserInfoGrid = ({ user }) => {
                             {name}
                         </Typography>
                         <Typography variant='body2'>
-                            Balance: 500$
+                            {lastName}
                         </Typography>
                         </Stack>
                     </Stack>

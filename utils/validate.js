@@ -70,3 +70,16 @@ export const checkoutValidationSchema = yup.object({
         .string()
         .required('Choose Pay Mode')
 })
+
+export const editProfileValidationSchema = yup.object({
+    first_name: yup
+        .string('Enter Your First Name')
+        .required('First Name is required'),
+    email: yup
+        .string('Enter your Email')
+        .email('Enter a valid email')
+        .required('Email is required'),
+    phone: yup
+        .string('Enter your Phone')
+        .min(14, 'Phone should be of minimum 9 characters length')
+})
