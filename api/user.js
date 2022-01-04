@@ -19,7 +19,7 @@ export const fetchUser = async () => {
 }
 
 export const sendUserData = async (data, id) => {
-    return await user.put(`api/users/${id}`, data)
+    return await user.post(`api/users/${id}?_method=PUT`, data)
 }
 
 export const register = async (data) => {

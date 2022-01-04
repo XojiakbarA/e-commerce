@@ -1,5 +1,5 @@
 import {forwardRef} from "react";
-import {Box, Button, CircularProgress, Dialog, Stack, TextField, Typography} from "@mui/material";
+import { Avatar, Badge, Box, Button, CircularProgress, Dialog, IconButton, Input, Stack, TextField, Typography } from "@mui/material";
 import {DesktopDatePicker, LocalizationProvider} from "@mui/lab";
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import ruLocale from 'date-fns/locale/ru'
@@ -8,6 +8,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {editUser, toggleEditProfileDialog} from "../../../redux/actions";
 import {useFormik} from "formik";
 import {editProfileValidationSchema} from "../../../utils/validate";
+import {PhotoCamera} from "@mui/icons-material";
+import {appendToFormData} from "../../../utils/utils";
 
 const TextMaskCustom = forwardRef(function TextMaskCustom({onChange, name, ...other}, ref) {
     return (
@@ -21,6 +23,24 @@ const TextMaskCustom = forwardRef(function TextMaskCustom({onChange, name, ...ot
         />
     );
 });
+
+const UploadButton = ({setFieldValue}) => {
+    return (
+        <label htmlFor="icon-button-file">
+            <Input
+                accept="image/*"
+                id="icon-button-file"
+                type="file"
+                sx={{display: 'none'}}
+                name='image'
+                onChange={e => setFieldValue('image', e.target.files[0])}
+            />
+            <IconButton color="primary" aria-label="upload picture" component="span">
+                <PhotoCamera />
+            </IconButton>
+        </label>
+    )
+}
 
 const EditProfileDialog = () => {
 
@@ -39,11 +59,13 @@ const EditProfileDialog = () => {
             last_name: user?.last_name ?? '',
             email: user?.email,
             phone: user?.phone ?? '',
-            birth_date: user?.birth_date
+            birth_date: user?.birth_date,
+            image: null
         },
         validationSchema: editProfileValidationSchema,
         onSubmit: (data) => {
-            dispatch(editUser(data, user.id))
+            const formData = appendToFormData(data)
+            dispatch(editUser(formData, user.id))
         },
         enableReinitialize: true
     })
@@ -51,11 +73,19 @@ const EditProfileDialog = () => {
     return (
         <Dialog open={editProfileDialog} onClose={closeEditProfileDialog}>
             <Box sx={{marginX: {xs: 3, sm: 7}, marginY: {xs: 3, sm: 7}, width: {xs: 250, sm: 300}}}>
-                <Typography variant='h5' textAlign='center' paddingBottom={5}>
+                <Typography variant='h5' textAlign='center' paddingBottom={2}>
                     Edit Profile
                 </Typography>
-                <form onSubmit={formik.handleSubmit}>
+                <form onSubmit={formik.handleSubmit} encType='multipart/form-data'>
                     <Stack spacing={2}>
+                        <Box alignSelf='center' paddingBottom={2}>
+                            <Badge
+                                anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
+                                badgeContent={<UploadButton setFieldValue={formik.setFieldValue}/>}
+                            >
+                                <Avatar sx={{width: 70, height: 70}} />
+                            </Badge>
+                        </Box>
                         <TextField
                             label='First Name'
                             size='small'
