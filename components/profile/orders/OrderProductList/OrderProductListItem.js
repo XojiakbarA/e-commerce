@@ -9,9 +9,7 @@ const OrderProductListItem = ({product, styles}) => {
         <NextLink href={`/products/${product.id}`}>
             <Paper sx={styles}>
                 <Grid item lg={1}>
-                    <Avatar variant='rounded'>
-                    <Image src={productImageURL + product.image} width={50} height={50} alt={product.image}/>
-                    </Avatar>
+                    <Avatar src={productImageURL + product.image} alt={product.image} variant='rounded'/>
                 </Grid>
                 <Grid item lg={5}>
                     <Typography variant='body2'>

@@ -15,9 +15,7 @@ const OrderListItem = ({order, styles}) => {
                 <AvatarGroup max={3} spacing='small'>
                     {
                         order?.order_products.map(product => (
-                            <Avatar key={product.id}>
-                                <Image src={productImageURL + product.image} height={50} width={50} alt={product.image}/>
-                            </Avatar>
+                            <Avatar src={productImageURL + product.image} alt={product.image} key={product.id}/>
                         ))
                     }
                 </AvatarGroup>

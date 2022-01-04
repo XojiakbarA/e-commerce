@@ -1,5 +1,4 @@
 import { Grid, Paper, Stack, Typography, Avatar } from "@mui/material"
-import Image from "next/image"
 import { userImageURL } from "../../utils/utils"
 
 const UserInfoGrid = ({ user }) => {
@@ -9,9 +8,7 @@ const UserInfoGrid = ({ user }) => {
             <Grid item lg={6}>
                 <Paper sx={{paddingX: 2, height: '100%', alignItems: 'center', display: 'flex'}}>
                     <Stack direction='row' spacing={2} alignItems='center'>
-                        <Avatar sx={{width: 70, height: 70}}>
-                            <Image src={userImageURL + user?.image} height={70} width={70} alt={user?.image}/>
-                        </Avatar>
+                        <Avatar src={userImageURL + user?.image} alt={user?.image} sx={{width: 70, height: 70}}/>
                         <Stack>
                         <Typography variant='h5'>
                             {user?.first_name}
