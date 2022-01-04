@@ -1,6 +1,5 @@
-import {forwardRef} from "react";
+import {forwardRef, useEffect, useState} from "react";
 import { Avatar, Badge, Box, Button, CircularProgress, Dialog, IconButton, Input, Stack, TextField, Typography } from "@mui/material";
-import Image from "next/image";
 import {DesktopDatePicker, LocalizationProvider} from "@mui/lab";
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import ruLocale from 'date-fns/locale/ru'
@@ -49,9 +48,11 @@ const EditProfileDialog = () => {
     const editProfileDialog = useSelector(state => state.toggle.editProfileDialog)
     const user = useSelector(state => state.user?.data)
     const isLoading = useSelector(state => state.toggle.isLoading)
+    const [preview, setPreview] = useState(null)
 
     const closeEditProfileDialog = () => {
         dispatch(toggleEditProfileDialog(false))
+        setPreview(null)
     }
 
     const formik = useFormik({
@@ -71,6 +72,17 @@ const EditProfileDialog = () => {
         enableReinitialize: true
     })
 
+    useEffect(() => {
+        const image = formik.values.image
+        const reader = new FileReader()
+        if (image) {
+            reader.readAsDataURL(image)
+            reader.onload = () => {
+                setPreview(reader.result)
+            }
+        }
+    }, [formik.values.image])
+
     return (
         <Dialog open={editProfileDialog} onClose={closeEditProfileDialog}>
             <Box sx={{marginX: {xs: 3, sm: 7}, marginY: {xs: 3, sm: 7}, width: {xs: 250, sm: 300}}}>
@@ -84,9 +96,7 @@ const EditProfileDialog = () => {
                                 anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
                                 badgeContent={<UploadButton setFieldValue={formik.setFieldValue}/>}
                             >
-                                <Avatar sx={{width: 70, height: 70}}>
-                                    <Image src={userImageURL + user?.image} height={70} width={70} alt={user?.image}/>
-                                </Avatar>
+                                <Avatar src={preview ?? userImageURL + user?.image} sx={{height: 70, width: 70}} />
                             </Badge>
                         </Box>
                         <TextField
