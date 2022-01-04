@@ -1,26 +1,23 @@
 import { Grid, Paper, Stack, Typography, Avatar } from "@mui/material"
+import Image from "next/image"
+import { userImageURL } from "../../utils/utils"
 
 const UserInfoGrid = ({ user }) => {
-
-    const name = user?.first_name
-    const lastName =user?.last_name
-    const allOrdersCount = user?.all_orders_count
-    const awaitingPaymentCount = user?.awaiting_payment_count
-    const awaitingShipmentCount = user?.awaiting_shipment_count
-    const awaitingDeliveryCount = user?.awaiting_delivery_count
 
     return (
         <Stack direction='row' spacing={2} alignItems='stretch'>
             <Grid item lg={6}>
                 <Paper sx={{paddingX: 2, height: '100%', alignItems: 'center', display: 'flex'}}>
                     <Stack direction='row' spacing={2} alignItems='center'>
-                        <Avatar/>
+                        <Avatar sx={{width: 70, height: 70}}>
+                            <Image src={userImageURL + user?.image} height={70} width={70} alt={user?.image}/>
+                        </Avatar>
                         <Stack>
                         <Typography variant='h5'>
-                            {name}
+                            {user?.first_name}
                         </Typography>
                         <Typography variant='body2'>
-                            {lastName}
+                            {user?.last_name}
                         </Typography>
                         </Stack>
                     </Stack>
@@ -29,7 +26,7 @@ const UserInfoGrid = ({ user }) => {
             <Stack spacing={2} direction='row'>
                 <Paper sx={{paddingX: 2, paddingY: 3}}>
                     <Typography variant='h6' textAlign='center'>
-                        {allOrdersCount}
+                        {user?.all_orders_count}
                     </Typography>
                     <Typography variant='body2' align='center'>
                         All Orders
@@ -37,7 +34,7 @@ const UserInfoGrid = ({ user }) => {
                 </Paper>
                 <Paper sx={{paddingX: 2, paddingY: 3}}>
                     <Typography variant='h6' textAlign='center'>
-                        {awaitingPaymentCount}
+                        {user?.awaiting_payment_count}
                     </Typography>
                     <Typography variant='body2' align='center'>
                         Awaiting Payments
@@ -45,7 +42,7 @@ const UserInfoGrid = ({ user }) => {
                 </Paper>
                 <Paper sx={{paddingX: 2, paddingY: 3}}>
                     <Typography variant='h6' textAlign='center'>
-                        {awaitingShipmentCount}
+                        {user?.awaiting_shipment_count}
                     </Typography>
                     <Typography variant='body2' align='center'>
                         Awaiting Shipment
@@ -53,7 +50,7 @@ const UserInfoGrid = ({ user }) => {
                 </Paper>
                 <Paper sx={{paddingX: 2, paddingY: 3}}>
                     <Typography variant='h6' textAlign='center'>
-                        {awaitingDeliveryCount}
+                        {user?.awaiting_delivery_count}
                     </Typography>
                     <Typography variant='body2' align='center'>
                         Awaiting Delivery

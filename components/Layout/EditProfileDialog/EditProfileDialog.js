@@ -1,5 +1,6 @@
 import {forwardRef} from "react";
 import { Avatar, Badge, Box, Button, CircularProgress, Dialog, IconButton, Input, Stack, TextField, Typography } from "@mui/material";
+import Image from "next/image";
 import {DesktopDatePicker, LocalizationProvider} from "@mui/lab";
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import ruLocale from 'date-fns/locale/ru'
@@ -9,7 +10,7 @@ import {editUser, toggleEditProfileDialog} from "../../../redux/actions";
 import {useFormik} from "formik";
 import {editProfileValidationSchema} from "../../../utils/validate";
 import {PhotoCamera} from "@mui/icons-material";
-import {appendToFormData} from "../../../utils/utils";
+import {appendToFormData, userImageURL} from "../../../utils/utils";
 
 const TextMaskCustom = forwardRef(function TextMaskCustom({onChange, name, ...other}, ref) {
     return (
@@ -76,14 +77,16 @@ const EditProfileDialog = () => {
                 <Typography variant='h5' textAlign='center' paddingBottom={2}>
                     Edit Profile
                 </Typography>
-                <form onSubmit={formik.handleSubmit} encType='multipart/form-data'>
+                <form onSubmit={formik.handleSubmit}>
                     <Stack spacing={2}>
                         <Box alignSelf='center' paddingBottom={2}>
                             <Badge
                                 anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
                                 badgeContent={<UploadButton setFieldValue={formik.setFieldValue}/>}
                             >
-                                <Avatar sx={{width: 70, height: 70}} />
+                                <Avatar sx={{width: 70, height: 70}}>
+                                    <Image src={userImageURL + user?.image} height={70} width={70} alt={user?.image}/>
+                                </Avatar>
                             </Badge>
                         </Box>
                         <TextField
