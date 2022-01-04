@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material'
 import PaymentIcon from '@mui/icons-material/Payment'
 import AddIcon from '@mui/icons-material/Add'
-import ProfileLayout from '../../components/layout/ProfileLayout'
+import ProfileLayout from '../../components/layout/ProfileLayout/ProfileLayout'
 import ProfileTitle from '../../components/profile/ProfileTitle'
 import ProfileRowCard from '../../components/profile/ProfileRowCard'
 

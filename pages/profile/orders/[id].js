@@ -2,7 +2,7 @@ import {Grid} from "@mui/material";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import CancelIcon from '@mui/icons-material/Cancel';
 import ProfileTitle from "../../../components/profile/ProfileTitle";
-import ProfileLayout from "../../../components/layout/ProfileLayout";
+import ProfileLayout from "../../../components/layout/ProfileLayout/ProfileLayout";
 import OrderStatus from "../../../components/profile/orders/OrderStatus";
 import OrderProductList from "../../../components/profile/orders/OrderProductList/OrderProductList";
 import OrderShippingAddress from "../../../components/profile/orders/OrderShippingAddress";

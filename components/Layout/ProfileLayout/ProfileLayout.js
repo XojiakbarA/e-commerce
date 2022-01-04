@@ -1,9 +1,9 @@
 import { Grid } from "@mui/material"
-import ProfileSidebar from "../../components/profile/ProfileSidebar/ProfileSidebar"
+import ProfileSidebar from "./ProfileSidebar/ProfileSidebar"
 import { useSelector, useDispatch } from "react-redux"
 import { useEffect } from "react"
-import { toggleLoginDialog } from "../../redux/actions"
-import { fetchUser } from "../../api/user"
+import { toggleLoginDialog } from "../../../redux/actions"
+import { fetchUser } from "../../../api/user"
 
 const ProfileLayout = ({children}) => {
 

@@ -1,4 +1,4 @@
-import ProfileLayout from "../../../components/layout/ProfileLayout";
+import ProfileLayout from "../../../components/layout/ProfileLayout/ProfileLayout";
 import ProfileTitle from "../../../components/profile/ProfileTitle";
 
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag'
