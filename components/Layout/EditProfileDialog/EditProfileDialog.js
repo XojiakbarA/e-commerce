@@ -1,47 +1,15 @@
-import {forwardRef, useEffect, useState} from "react";
-import { Box, Button, CircularProgress, Dialog, IconButton, Input, Stack, TextField, Typography } from "@mui/material";
+import {useEffect, useState} from "react";
+import { Box, Button, CircularProgress, Dialog, Stack, TextField, Typography } from "@mui/material";
 import {DesktopDatePicker, LocalizationProvider} from "@mui/lab";
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import ruLocale from 'date-fns/locale/ru'
-import {IMaskInput} from "react-imask";
 import {useDispatch, useSelector} from "react-redux";
 import {editUser, toggleEditProfileDialog} from "../../../redux/actions";
 import {useFormik} from "formik";
 import {editProfileValidationSchema} from "../../../utils/validate";
-import {PhotoCamera} from "@mui/icons-material";
 import {appendToFormData, userImageURL} from "../../../utils/utils";
 import AvatarUpload from "../../common/AvatarUpload/AvatarUpload";
-
-const TextMaskCustom = forwardRef(function TextMaskCustom({onChange, name, ...other}, ref) {
-    return (
-        <IMaskInput
-            {...other}
-            mask="(00) 000-00-00"
-            name={name}
-            inputRef={ref}
-            onAccept={(value) => onChange({ target: { name, value } })}
-            overwrite
-        />
-    );
-});
-
-const UploadButton = ({setFieldValue}) => {
-    return (
-        <label htmlFor="icon-button-file">
-            <Input
-                accept="image/*"
-                id="icon-button-file"
-                type="file"
-                sx={{display: 'none'}}
-                name='image'
-                onChange={e => setFieldValue('image', e.target.files[0])}
-            />
-            <IconButton color="primary" aria-label="upload picture" component="span">
-                <PhotoCamera />
-            </IconButton>
-        </label>
-    )
-}
+import PhoneMask from "../../common/PhoneMask";
 
 const EditProfileDialog = () => {
 
@@ -95,6 +63,7 @@ const EditProfileDialog = () => {
                         <Box alignSelf='center' paddingBottom={2}>
                             <AvatarUpload
                                 setFieldValue={formik.setFieldValue}
+                                value='image'
                                 src={preview ?? userImageURL + user?.image}
                             />
                         </Box>
@@ -120,9 +89,9 @@ const EditProfileDialog = () => {
                             { ...formik.getFieldProps('email') }
                         />
                         <TextField
-                            label='Phone'
+                            label='Phone Number'
                             size='small'
-                            InputProps={{inputComponent: TextMaskCustom, inputProps: {name: 'phone'}}}
+                            InputProps={{inputComponent: PhoneMask, inputProps: {name: 'phone'}}}
                             error={ formik.touched.phone && Boolean(formik.errors.phone) }
                             helperText={ formik.touched.phone && formik.errors.phone }
                             { ...formik.getFieldProps('phone') }

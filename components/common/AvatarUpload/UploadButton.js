@@ -2,17 +2,17 @@ import { PhotoCamera } from "@mui/icons-material"
 import { IconButton, Input, Tooltip } from "@mui/material"
 import { Box } from "@mui/system"
 
-const UploadButton = ({setFieldValue, styles, title}) => {
+const UploadButton = ({setFieldValue, value, styles, title}) => {
     return (
         <Box sx={styles}>
-        <label htmlFor="icon-button-file">
+        <label htmlFor={value}>
             <Input
                 accept="image/*"
-                id="icon-button-file"
+                id={value}
                 type="file"
                 sx={{display: 'none'}}
-                name='image'
-                onChange={e => setFieldValue('image', e.target.files[0])}
+                name={value}
+                onChange={e => setFieldValue(value, e.target.files[0])}
             />
             <Tooltip title={title ?? ''}>
                 <IconButton color="primary" aria-label="upload picture" component="span">
