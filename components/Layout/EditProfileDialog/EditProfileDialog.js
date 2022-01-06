@@ -1,5 +1,5 @@
 import {forwardRef, useEffect, useState} from "react";
-import { Avatar, Badge, Box, Button, CircularProgress, Dialog, IconButton, Input, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Dialog, IconButton, Input, Stack, TextField, Typography } from "@mui/material";
 import {DesktopDatePicker, LocalizationProvider} from "@mui/lab";
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import ruLocale from 'date-fns/locale/ru'
@@ -10,6 +10,7 @@ import {useFormik} from "formik";
 import {editProfileValidationSchema} from "../../../utils/validate";
 import {PhotoCamera} from "@mui/icons-material";
 import {appendToFormData, userImageURL} from "../../../utils/utils";
+import AvatarUpload from "../../common/AvatarUpload/AvatarUpload";
 
 const TextMaskCustom = forwardRef(function TextMaskCustom({onChange, name, ...other}, ref) {
     return (
@@ -92,12 +93,10 @@ const EditProfileDialog = () => {
                 <form onSubmit={formik.handleSubmit}>
                     <Stack spacing={2}>
                         <Box alignSelf='center' paddingBottom={2}>
-                            <Badge
-                                anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
-                                badgeContent={<UploadButton setFieldValue={formik.setFieldValue}/>}
-                            >
-                                <Avatar src={preview ?? userImageURL + user?.image} sx={{height: 70, width: 70}} />
-                            </Badge>
+                            <AvatarUpload
+                                setFieldValue={formik.setFieldValue}
+                                src={preview ?? userImageURL + user?.image}
+                            />
                         </Box>
                         <TextField
                             label='First Name'
