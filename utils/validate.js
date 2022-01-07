@@ -83,3 +83,31 @@ export const editProfileValidationSchema = yup.object({
         .string('Enter your Phone')
         .min(14, 'Phone should be of minimum 9 characters length')
 })
+
+export const createShopValidationSchema = yup.object({
+    first_name: yup
+        .string('Enter Your First Name')
+        .required('First Name is required'),
+    last_name: yup
+        .string('Enter Your Last Name')
+        .required('Last Name is required'),
+    title: yup
+        .string('Enter Your Shop Title')
+        .required('Shop Title is required'),
+    region_id: yup
+        .number('Select Your Region')
+        .required('Region is required'),
+    district: yup
+        .string('Select Your District')
+        .required('District is required'),
+    street: yup
+        .string('Enter Your Street')
+        .required('Street is required'),
+    home: yup
+        .string('Enter Your Home Number')
+        .required('Home Number is required'),
+    phone: yup
+        .string('Enter your Phone Number')
+        .required('Phone Number is required')
+        .min(14, 'Phone Number should be of minimum 9 characters length')
+})
