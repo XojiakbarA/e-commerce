@@ -1,7 +1,7 @@
 import { Grid, Paper, Stack, Divider, List, ListSubheader, ListItemButton, ListItemText, ListItemIcon } from "@mui/material"
-import AddBusinessIcon from '@mui/icons-material/AddBusiness'
 import NextLink from '../../../common/Link'
 import { useRouter } from "next/dist/client/router"
+import UserShopList from "./UserShopList"
 
 const ProfileSidebar = ({menu}) => {
 
@@ -20,8 +20,8 @@ const ProfileSidebar = ({menu}) => {
                                         key={i}
                                         selected={
                                             item.path == router.pathname
-                                            // ||
-                                            // item.path == '/profile/orders' && router.route == '/profile/orders/[id]'
+                                            ||
+                                            item.path == '/profile/orders' && router.route == '/profile/orders/[id]'
                                         }
                                     >
                                         <ListItemIcon>{item.icon}</ListItemIcon>
@@ -30,17 +30,14 @@ const ProfileSidebar = ({menu}) => {
                                 </NextLink>
                             ))
                         }
-                        <NextLink href={'/profile/create-shop'}>
-                            <ListItemButton
-                                selected={router.pathname == '/profile/create-shop'}
-                            >
-                                <ListItemIcon>
-                                    <AddBusinessIcon/>
-                                </ListItemIcon>
-                                <ListItemText primary='Create Shop'/>
-                            </ListItemButton>
-                        </NextLink>
                     </List>
+                    {
+                        router.pathname.indexOf('/profile') == 0
+                        ?
+                        <UserShopList/>
+                        :
+                        null
+                    }
                 </Stack>
             </Paper>
         </Grid>
