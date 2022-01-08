@@ -97,8 +97,8 @@ export const createShopValidationSchema = yup.object({
     region_id: yup
         .number('Select Your Region')
         .required('Region is required'),
-    district: yup
-        .string('Select Your District')
+    district_id: yup
+        .number('Select Your District')
         .required('District is required'),
     street: yup
         .string('Enter Your Street')

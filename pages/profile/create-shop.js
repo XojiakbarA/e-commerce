@@ -1,27 +1,27 @@
 import AddBusinessIcon from '@mui/icons-material/AddBusiness'
-import { Autocomplete, Button, Card, CardContent, CardMedia, Grid, TextField } from '@mui/material'
+import { Button, Card, CardContent, CardMedia, Grid, TextField } from '@mui/material'
 import AvatarUpload from '../../components/common/AvatarUpload/AvatarUpload'
 import UploadButton from '../../components/common/AvatarUpload/UploadButton'
 import ProfileLayout from '../../components/layout/ProfileLayout/ProfileLayout'
 import ProfileTitle from '../../components/profile/ProfileTitle'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import { createShopValidationSchema } from '../../utils/validate'
 import PhoneMask from '../../components/common/PhoneMask'
-import { fetchRegions } from '../../api/user'
+import { fetchDistricts, fetchRegions } from '../../api/user'
 import AutocompleteAsync from '../../components/common/AutocompleteAsync/AutocompleteAsync'
-
-const districts = [
-    'Bektemir district', 'Chilanzar district', 'Hamza district',
-    'Mirobod district', 'Mirzo Ulugbek district', 'Sergeli district',
-    'Shaykhontohur district', 'Olmazar district', 'Uchtepa district',
-    'Yakkasaray district', 'Yunusabad district'
-]
 
 const CreateShop = () => {
 
     const [preview, setPreview] = useState({bg_image: null, av_image: null})
-    const [district, setDistrict] = useState(districts[0])
+
+    const [regions, setRegions] = useState([])
+    const [region, setRegion] = useState(null)
+    const regionsLoading = regions.length === 0
+
+    const [districts, setDistricts] = useState([])
+    const [district, setDistrict] = useState(null)
+    const districtsLoading = districts.length === 0
 
     const formik = useFormik({
         initialValues: {
@@ -29,7 +29,7 @@ const CreateShop = () => {
             last_name: '',
             title: '',
             region_id: '',
-            district: '',
+            district_id: '',
             street: '',
             home: '',
             phone: '',
@@ -41,6 +41,56 @@ const CreateShop = () => {
             console.log(data)
         }
     })
+
+    const getRegions = useCallback(async () => {
+        const regions = await fetchRegions()
+        regions = regions.data.data
+        setRegions(regions)
+        formik.setFieldValue('region_id', regions[0].id)
+        setRegion(regions[0])
+        return regions[0].id
+    }, [formik])
+
+    const getDistricts = useCallback(async (id) => {
+        setDistricts([])
+        setDistrict(null)
+        const districts = await fetchDistricts(id)
+        districts = districts.data.data
+        setDistricts(districts)
+        formik.setFieldValue('district_id', districts[0].id)
+        setDistrict(districts[0])
+    }, [formik])
+
+    useEffect(() => {
+        let active = true
+
+        if(!regionsLoading) {
+            return undefined
+        }
+
+        const getOptions = async () => {
+            const regionId = await getRegions()
+            await getDistricts(regionId)
+        }
+
+        if (active) {
+            getOptions()
+        }
+        return () => {
+            active = false
+        }
+    }, [regionsLoading, getRegions, getDistricts])
+
+    const handleRegionChange = async (e, value) => {
+        setRegion(value)
+        formik.setFieldValue('region_id', value?.id)
+        await getDistricts(value.id)
+    }
+
+    const handleDistrictChange = (e, value) => {
+        setDistrict(value)
+        formik.setFieldValue('district_id', value?.id)
+    }
 
     useEffect(() => {
         const bg_image = formik.values.bg_image
@@ -130,31 +180,26 @@ const CreateShop = () => {
                                     <AutocompleteAsync
                                         formikKey='region_id'
                                         fieldLabel='Region'
-                                        fetchOptions={fetchRegions}
                                         fieldError={formik.touched.region_id && Boolean(formik.errors.region_id)}
                                         fieldHelperText={formik.touched.region_id && formik.errors.region_id}
                                         handleBlur={formik.handleBlur}
-                                        setFormikValue={formik.setFieldValue}
+                                        options={regions}
+                                        option={region}
+                                        loading={regionsLoading}
+                                        handleChange={handleRegionChange}
                                     />
                                 </Grid>
                                 <Grid item lg={6}>
-                                    <Autocomplete
-                                        size='small'
+                                    <AutocompleteAsync
+                                        formikKey='district_id'
+                                        fieldLabel='District'
+                                        fieldError={formik.touched.district_id && Boolean(formik.errors.district_id)}
+                                        fieldHelperText={formik.touched.district_id && formik.errors.district_id}
+                                        handleBlur={formik.handleBlur}
                                         options={districts}
-                                        renderInput={params => (
-                                            <TextField
-                                                {...params}
-                                                label='District'
-                                                error={ formik.touched.district && Boolean(formik.errors.district) }
-                                                helperText={ formik.touched.district && formik.errors.district }
-                                                name="district"
-                                            />
-                                        )}
-                                        onBlur={formik.handleBlur}
-                                        value={district}
-                                        onChange={(e, newValue) => setDistrict(newValue)}
-                                        inputValue={formik.values.district}
-                                        onInputChange={(e, newValue) => formik.setValues({ ...formik.values, district: newValue })}
+                                        option={district}
+                                        loading={districtsLoading}
+                                        handleChange={handleDistrictChange}
                                     />
                                 </Grid>
                                 <Grid item lg={6}>
