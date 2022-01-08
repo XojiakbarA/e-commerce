@@ -1,5 +1,5 @@
 import AddBusinessIcon from '@mui/icons-material/AddBusiness'
-import { Button, Card, CardContent, CardMedia, Grid, TextField } from '@mui/material'
+import { Button, Card, CardContent, CardMedia, CircularProgress, Grid, TextField } from '@mui/material'
 import AvatarUpload from '../../components/common/AvatarUpload/AvatarUpload'
 import UploadButton from '../../components/common/AvatarUpload/UploadButton'
 import ProfileLayout from '../../components/layout/ProfileLayout/ProfileLayout'
@@ -10,9 +10,16 @@ import { createShopValidationSchema } from '../../utils/validate'
 import PhoneMask from '../../components/common/PhoneMask'
 import { fetchDistricts, fetchRegions } from '../../api/user'
 import AutocompleteAsync from '../../components/common/AutocompleteAsync/AutocompleteAsync'
+import { appendToFormData } from '../../utils/utils'
+import { useDispatch, useSelector } from 'react-redux'
+import { createShop } from '../../redux/actions'
+import { useRouter } from 'next/router'
 
 const CreateShop = () => {
 
+    const dispatch = useDispatch()
+    const router = useRouter()
+    const isLoading = useSelector(state => state.toggle.isLoading)
     const [preview, setPreview] = useState({bg_image: null, av_image: null})
 
     const [regions, setRegions] = useState([])
@@ -37,8 +44,12 @@ const CreateShop = () => {
             av_image: null
         },
         validationSchema: createShopValidationSchema,
-        onSubmit: (data) => {
-            console.log(data)
+        onSubmit: async (data) => {
+            const formData = appendToFormData(data)
+            await Promise.all([
+                dispatch(createShop(formData))
+            ])
+            router.push('/vendor')
         }
     })
 
@@ -236,9 +247,17 @@ const CreateShop = () => {
                                 </Grid>
                                 <Grid item lg={12}>
                                     <Button
+                                        sx={{float: 'right'}}
                                         variant='contained'
                                         type='submit'
-                                        sx={{float: 'right'}}
+                                        endIcon={ isLoading
+                                            &&
+                                            <CircularProgress
+                                                color='inherit'
+                                                size={20}
+                                            />
+                                        }
+                                        disabled={isLoading}
                                     >
                                         Create
                                     </Button>

@@ -13,6 +13,10 @@ export const fetchDistricts = async (id) => {
     return await user.get(`api/regions/${id}/districts`)
 }
 
+export const storeShop = async (data) => {
+    return await user.post('api/shops', data)
+}
+
 export const login = async (data) => {
     await user.get('sanctum/csrf-cookie')
     return await user.post('login', data)

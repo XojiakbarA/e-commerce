@@ -14,7 +14,7 @@ import {
     deleteWishlist,
     order,
     clearCart,
-    fetchOrders, fetchOrder, cancellationOrder, sendUserData
+    fetchOrders, fetchOrder, cancellationOrder, sendUserData, storeShop
 } from '../../../api/user'
 import {
     setUser,
@@ -297,6 +297,21 @@ export const cancelOrder = (id) => {
                 dispatch(setLoading(false))
                 dispatch(setSnackbar({isOpen: true, text: 'Order cancelled successfully!'}))
                 dispatch(toggleConfirmDialog(false))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const createShop = (data) => {
+    return async (dispatch) => {
+        try {
+            dispatch(setLoading(true))
+            const res = await storeShop(data)
+            if(res.status === 201) {
+                dispatch(setLoading(false))
+                dispatch(setSnackbar({isOpen: true, text: 'Shop created successfully!'}))
             }
         } catch (e) {
             console.log(e)
