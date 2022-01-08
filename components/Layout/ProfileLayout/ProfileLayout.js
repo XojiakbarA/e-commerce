@@ -9,6 +9,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard'
 import ListAltIcon from '@mui/icons-material/ListAlt'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import SettingsIcon from '@mui/icons-material/Settings'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ProfileSidebar from "./ProfileSidebar/ProfileSidebar"
 import { useSelector, useDispatch } from "react-redux"
 import { useEffect } from "react"
@@ -36,7 +37,8 @@ const ProfileLayout = ({children}) => {
         {title: 'Dashboard', path: `/vendor/${id}`, icon: (<DashboardIcon/>)},
         {title: 'Products', path: `/vendor/${id}/products`, icon: (<ListAltIcon/>)},
         {title: 'Orders', path: `/vendor/${id}/orders`, icon: (<ShoppingCartIcon/>)},
-        {title: 'Settings', path: `/vendor/${id}/settings`, icon: (<SettingsIcon/>)}
+        {title: 'Settings', path: `/vendor/${id}/settings`, icon: (<SettingsIcon/>)},
+        {title: 'Back To Profile', path: `/profile`, icon: (<ArrowBackIcon/>)}
     ]
 
     //it's for LoginDialog

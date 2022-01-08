@@ -2,40 +2,41 @@ import { Avatar, Chip, Grid, IconButton, Paper, Rating, Tooltip, Typography } fr
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import VisibilityIcon from '@mui/icons-material/Visibility'
+import { productImageURL } from "../../../utils/utils"
 
-const ProductListItem = ({  }) => {
+const ProductListItem = ({ product }) => {
 
     return (
         <Paper sx={{padding: 2}}>
             <Grid container alignItems='center'>
-                <Grid item xs={3} display='flex' justifyContent='center'>
+                <Grid item xs={3}>
                     <Typography
                         variant='body2'
                         whiteSpace='nowrap'
                         textOverflow='ellipsis'
                         overflow='hidden'
                     >
-                        ProductTitleProductTitleProductTitle
+                        {product.title}
                     </Typography>
                 </Grid>
                 <Grid item xs display='flex' justifyContent='center'>
-                    <Avatar variant="rounded"/>
+                    <Avatar variant="rounded" src={productImageURL + product.image.src}/>
                 </Grid>
                 <Grid item xs display='flex' justifyContent='center'>
                     <Chip label={1} size='small'/>
                 </Grid>
                 <Grid item xs display='flex' justifyContent='center'>
                     <Typography variant='body2'>
-                        $ 300
+                        $ {product.price}
                     </Typography>
                 </Grid>
                 <Grid item xs display='flex' justifyContent='center'>
                     <Typography variant='body2'>
-                        $ 210
+                        {product.sale_price === null ? '-' : `$ ${product.sale_price}`}
                     </Typography>
                 </Grid>
                 <Grid item xs display='flex' justifyContent='center'>
-                    <Rating value={1} readOnly size="small"/>
+                    <Rating value={product.rating} readOnly size="small"/>
                 </Grid>
                 <Grid item xs display='flex'>
                     <Tooltip title='Edit'>

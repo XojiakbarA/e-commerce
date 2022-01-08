@@ -19,7 +19,7 @@ const ProfileSidebar = ({menu}) => {
                                     <ListItemButton
                                         key={i}
                                         selected={
-                                            item.path == router.pathname
+                                            item.path == router.asPath
                                             ||
                                             item.path == '/profile/orders' && router.route == '/profile/orders/[id]'
                                         }

@@ -1,5 +1,5 @@
 import { fetchBanners, fetchBrands, fetchCategories, fetchProduct, fetchProducts, fetchShop, fetchShopProducts, fetchShops } from '../../../api/api'
-import { setCats, setBrands, setBanners, setProduct, setSearchProducts, setShops, setShop, setShopProducts } from '..'
+import { setCats, setBrands, setBanners, setProduct, setSearchProducts, setShops, setShop, setShopProducts, setLoading } from '..'
 
 export const getCategories = async (dispatch) => {
     try {
@@ -58,9 +58,11 @@ export const getProducts = (query) => {
 export const getShopProducts = (id, query) => {
     return async (dispatch) => {
         try {
+            dispatch(setLoading(true))
             const res = await fetchShopProducts(id, query)
             if (res.status === 200) {
                 dispatch(setShopProducts(res.data))
+                dispatch(setLoading(false))
             }
         } catch (e) {
             console.log(e)
