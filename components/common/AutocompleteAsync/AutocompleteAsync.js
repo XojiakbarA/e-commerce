@@ -2,16 +2,18 @@ import { Autocomplete, CircularProgress, TextField } from "@mui/material"
 
 const AutocompleteAsync = ({
     formikKey, fieldLabel, fieldError, fieldHelperText,
-    handleBlur, options, option, loading, handleChange
+    options, option, getOptionLabel, loading,
+    handleChange, handleBlur, disabled
 }) => {
     
     return (
         <Autocomplete
             size='small'
+            disabled={disabled}
             options={options}
             loading={loading}
-            isOptionEqualToValue={(option, value) => option.name === value.name}
-            getOptionLabel={option => option.name}
+            isOptionEqualToValue={(option, value) => option.id === value.id}
+            getOptionLabel={getOptionLabel}
             renderInput={params => (
                 <TextField
                     {...params}

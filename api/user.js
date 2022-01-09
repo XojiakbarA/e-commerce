@@ -94,3 +94,7 @@ export const fetchOrder = async (id) => {
 export const cancellationOrder = async (id) => {
     return await user.put(`api/orders/${id}`, {status: 'cancelled'})
 }
+
+export const storeProduct = async (data) => {
+    return await user.post('api/products', data)
+}

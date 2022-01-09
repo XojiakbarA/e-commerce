@@ -193,11 +193,12 @@ const CreateShop = () => {
                                         fieldLabel='Region'
                                         fieldError={formik.touched.region_id && Boolean(formik.errors.region_id)}
                                         fieldHelperText={formik.touched.region_id && formik.errors.region_id}
-                                        handleBlur={formik.handleBlur}
+                                        getOptionLabel={option => option.name}
                                         options={regions}
                                         option={region}
                                         loading={regionsLoading}
                                         handleChange={handleRegionChange}
+                                        handleBlur={formik.handleBlur}
                                     />
                                 </Grid>
                                 <Grid item lg={6}>
@@ -206,11 +207,12 @@ const CreateShop = () => {
                                         fieldLabel='District'
                                         fieldError={formik.touched.district_id && Boolean(formik.errors.district_id)}
                                         fieldHelperText={formik.touched.district_id && formik.errors.district_id}
-                                        handleBlur={formik.handleBlur}
+                                        getOptionLabel={option => option.name}
                                         options={districts}
                                         option={district}
                                         loading={districtsLoading}
                                         handleChange={handleDistrictChange}
+                                        handleBlur={formik.handleBlur}
                                     />
                                 </Grid>
                                 <Grid item lg={6}>
