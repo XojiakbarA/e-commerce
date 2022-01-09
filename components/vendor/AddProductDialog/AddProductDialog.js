@@ -1,14 +1,14 @@
-import { Avatar, Badge, Box, Button, Dialog, DialogContent, DialogTitle, Grid, IconButton, InputAdornment, Skeleton, Stack, TextField, Typography } from "@mui/material"
+import { Avatar, Badge, Box, Button, Dialog, DialogContent, DialogTitle, Grid, IconButton, InputAdornment, TextField, Typography } from "@mui/material"
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
 import { styled } from "@mui/material/styles"
 import CloseIcon from '@mui/icons-material/Close';
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
 import { useDispatch, useSelector } from "react-redux"
 import { createProduct, toggleAddProductDialog } from "../../../redux/actions"
 import { useFormik } from "formik"
 import { createProductValidationSchema } from "../../../utils/validate"
 import AutocompleteAsync from "../../common/AutocompleteAsync/AutocompleteAsync"
-import { useEffect, useState } from "react"
-import { appendToFormData } from "../../../utils/utils";
+import { useState } from "react"
+import { appendToFormData } from "../../../utils/utils"
 
 const Input = styled('input')({
     display: 'none'
@@ -23,23 +23,20 @@ const AddProductDialog = () => {
 
     const categories = useSelector(state => state.categories)
     const [category, setCategory] = useState(categories[0])
-    const categoriesLoading = categories.length === 0
 
     const [subCategories, setSubCategories] = useState(categories[0].sub_categories)
     const [subCategory, setSubCategory] = useState(subCategories[0])
     const [disabled, setDisabled] = useState(false)
-    const subCategoriesLoading = subCategories.length === 0
 
     const brands = useSelector(state => state.brands)
     const [brand, setBrand] = useState(brands[0])
-    const brandsLoading = brands.length === 0
 
     const formik = useFormik({
         initialValues: {
             title: '',
-            category_id: category.id,
-            sub_category_id: subCategory.id,
-            brand_id: brand.id,
+            category_id: category?.id,
+            sub_category_id: subCategory?.id,
+            brand_id: brand?.id,
             description: '',
             stock: '',
             price: '',
@@ -48,8 +45,9 @@ const AddProductDialog = () => {
         },
         validationSchema: createProductValidationSchema,
         onSubmit: (data) => {
-            const formData = appendToFormData(data)
-            dispatch(createProduct(formData))
+            // const formData = appendToFormData(data)
+            // dispatch(createProduct(formData))
+            console.log(data)
         }
     })
 
@@ -60,43 +58,53 @@ const AddProductDialog = () => {
     }
 
     const handleCategoriesChange = (e, value) => {
-        if (value === null) {
-            setDisabled(true)
-            setCategory({id: 1, title: ''})
-            formik.setFieldValue('category_id', 1)
-            setSubCategory({id: 1, title: ''})
-            setSubCategories([{id: 1, title: ''}])
-        } else {
-            setDisabled(false)
-            setCategory(value)
-            formik.setFieldValue('category_id', value?.id)
-            setSubCategories([])
-            setSubCategory(value.sub_categories[0])
-            setSubCategories(value.sub_categories)
-        }
+        setDisabled(value ? false : true)
+        setCategory(value)
+            setSubCategory(value?.sub_categories[0] ?? null)
+            setSubCategories(value?.sub_categories ?? [])
+            formik.setValues({
+                ...formik.values,
+                category_id: value?.id,
+                sub_category_id: value?.sub_categories[0]?.id
+            })
     }
 
     const handleSubCategoriesChange = (e, value) => {
         setSubCategory(value)
-        formik.setFieldValue('sub_category_id', value?.id)
+        formik.setValues({...formik.values, sub_category_id: value?.id})
     }
 
     const handleBrandsChange = (e, value) => {
         setBrand(value)
-        formik.setFieldValue('brand_id', value?.id)
+        formik.setValues({...formik.values, brand_id: value?.id})
+    }
+
+    const makeURLArray = (fileList) => {
+        const urls = []
+        for (let file of fileList) {
+            const url = URL.createObjectURL(file)
+            urls.push(url)
+        }
+        return urls
     }
 
     const handleUploadChange = (e) => {
-        const images = e.target.files
-        formik.setFieldValue('images', images)
-        if (images) {
-            const urls = []
-            for (let image of images) {
-                const url = URL.createObjectURL(image)
-                urls.push(url)
+        const prevImages = formik.values.images
+        const newImages = e.target.files
+
+        const dt = new DataTransfer()
+        if (prevImages) {
+            for (let image of prevImages) {
+                dt.items.add(image)
             }
-            setPreview(urls)
         }
+        for (let image of newImages) {
+            dt.items.add(image)
+        }
+        const images = dt.files
+
+        formik.setFieldValue('images', images)
+        setPreview(makeURLArray(images))
     }
 
     const handleImageClick = (i) => {
@@ -108,12 +116,7 @@ const AddProductDialog = () => {
         }
         images = dt.files
         formik.setFieldValue('images', images)
-        const urls = []
-            for (let image of images) {
-                const url = URL.createObjectURL(image)
-                urls.push(url)
-            }
-            setPreview(urls)
+        setPreview(makeURLArray(images))
     }
 
     const handleClearClick = () => {
@@ -124,7 +127,7 @@ const AddProductDialog = () => {
     return (
         <Dialog open={addProductDialog} onClose={closeAddProductDialog} fullWidth maxWidth='lg'>
             <DialogTitle sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                <Typography>
+                <Typography variant="button" fontSize={20}>
                     Add Product
                 </Typography>
                 <IconButton onClick={closeAddProductDialog}>
@@ -156,7 +159,6 @@ const AddProductDialog = () => {
                                         getOptionLabel={option => option.title}
                                         options={categories}
                                         option={category}
-                                        loading={categoriesLoading}
                                         handleChange={handleCategoriesChange}
                                         handleBlur={formik.handleBlur}
                                     />
@@ -170,7 +172,6 @@ const AddProductDialog = () => {
                                         getOptionLabel={option => option.title}
                                         options={subCategories}
                                         option={subCategory}
-                                        loading={subCategoriesLoading}
                                         handleChange={handleSubCategoriesChange}
                                         handleBlur={formik.handleBlur}
                                         disabled={disabled}
@@ -185,7 +186,6 @@ const AddProductDialog = () => {
                                         getOptionLabel={option => option.title}
                                         options={brands}
                                         option={brand}
-                                        loading={brandsLoading}
                                         handleChange={handleBrandsChange}
                                         handleBlur={formik.handleBlur}
                                     />
@@ -193,48 +193,70 @@ const AddProductDialog = () => {
                             </Grid>
                         </Grid>
                         <Grid item lg={12}>
-                            <label htmlFor="images">
-                                <Input
-                                    accept="image/*"
-                                    id="images"
-                                    multiple
-                                    type="file"
-                                    onChange={handleUploadChange}
-                                />
-                                <Button variant="contained" component="span">
-                                    Upload Images
-                                </Button>
-                            </label>
+                            <Box sx={{
+                                    border: '1px dashed black',
+                                    borderRadius: 1,
+                                    padding: 1,
+                                    minHeight: 200,
+                                    boxSizing: 'content-box'
+                                }}
+                            >
+                                <Grid container spacing={2}>
+                                    {
+                                        preview.map((url, i) => (
+                                            <Grid item key={url}>
+                                                <Badge
+                                                    anchorOrigin={{vertical: 'top', horizontal: 'right'}}
+                                                    badgeContent={
+                                                        <IconButton size="small" color='primary' onClick={() => handleImageClick(i)}>
+                                                            <CloseIcon fontSize='small'/>
+                                                        </IconButton>
+                                                    }
+                                                >
+                                                    <Avatar
+                                                        src={url}
+                                                        alt={url}
+                                                        variant="rounded"
+                                                        sx={{width: 200, height: 200}}
+                                                    />
+                                                </Badge>
+                                            </Grid>
+                                        ))
+                                    }
+                                    <Grid item>
+                                        <Box sx={{
+                                                width: 200,
+                                                height: 200,
+                                                display: formik.values.images?.length === 5 ? 'none' : 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center'
+                                            }}>
+                                            <label htmlFor="images">
+                                                <Input
+                                                    accept="image/*"
+                                                    id="images"
+                                                    multiple
+                                                    type="file"
+                                                    onChange={handleUploadChange}
+                                                />
+                                                <IconButton component='span'>
+                                                    <AddPhotoAlternateIcon fontSize="large"/>
+                                                </IconButton>
+                                            </label>
+                                        </Box>
+                                    </Grid>
+                                </Grid>
+                            </Box>
+                        </Grid>
+                        <Grid item lg={12}>
                             <Button
                                 variant="outlined"
                                 onClick={handleClearClick}
-                                sx={{marginLeft: 2, display: preview.length > 0 ? 'flex-block' : 'none'}}
-                            >Clear</Button>
-                        </Grid>
-                        <Grid item lg={12}>
-                            <Grid container spacing={2}>
-                                {
-                                    preview.map((url, i) => (
-                                        <Grid item key={url}>
-                                            <Badge
-                                                anchorOrigin={{vertical: 'top', horizontal: 'right'}}
-                                                badgeContent={
-                                                    <IconButton size="small" color='primary' onClick={() => handleImageClick(i)}>
-                                                        <CloseIcon fontSize='small'/>
-                                                    </IconButton>
-                                                }
-                                            >
-                                                <Avatar
-                                                    src={url ?? 'images/products/product1.png'}
-                                                    alt=""
-                                                    variant="rounded"
-                                                    sx={{width: 200, height: 200}}
-                                                />
-                                            </Badge>
-                                        </Grid>
-                                    ))
-                                }
-                            </Grid>
+                                disabled={preview.length === 0}
+                                sx={{float: 'right'}}
+                            >
+                                Clear
+                            </Button>
                         </Grid>
                         <Grid item lg={12}>
                             <TextField
