@@ -1,3 +1,4 @@
+import router from 'next/router'
 import {
     login,
     logout,
@@ -27,7 +28,7 @@ import {
     setReviews,
     setWishlist,
     toggleOrderDialog,
-    setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog, setShopProducts, toggleAddProductDialog
+    setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog, toggleAddProductDialog, getShopProducts
 } from '..'
 
 export const getCart = () => {
@@ -312,6 +313,7 @@ export const createShop = (data) => {
             if(res.status === 201) {
                 dispatch(setLoading(false))
                 dispatch(setSnackbar({isOpen: true, text: 'Shop created successfully!'}))
+                router.push(`/vendor/${res.data.data.id}`)
             }
         } catch (e) {
             console.log(e)
@@ -319,7 +321,7 @@ export const createShop = (data) => {
     }
 }
 
-export const createProduct = (data) => {
+export const createProduct = (data, resetForm) => {
     return async (dispatch) => {
         try {
             dispatch(setLoading(true))
@@ -328,6 +330,8 @@ export const createProduct = (data) => {
                 dispatch(setLoading(false))
                 dispatch(toggleAddProductDialog(false))
                 dispatch(setSnackbar({isOpen: true, text: 'Product created successfully!'}))
+                resetForm()
+                dispatch(getShopProducts(res.data.data.shop.id))
             }
         } catch (e) {
             console.log(e)

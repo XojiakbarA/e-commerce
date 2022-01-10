@@ -3,7 +3,7 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
 import { styled } from "@mui/material/styles"
 import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch, useSelector } from "react-redux"
-import { createProduct, getShopProducts, toggleAddProductDialog } from "../../../redux/actions"
+import { createProduct, toggleAddProductDialog } from "../../../redux/actions"
 import { useFormik } from "formik"
 import { createProductValidationSchema } from "../../../utils/validate"
 import AutocompleteAsync from "../../common/AutocompleteAsync/AutocompleteAsync"
@@ -51,19 +51,14 @@ const AddProductDialog = () => {
             shop_id: shop_id
         },
         validationSchema: createProductValidationSchema,
-        onSubmit: async (data) => {
+        onSubmit: (data, {resetForm}) => {
             const formData = appendToFormData(data)
-            await Promise.all([
-                dispatch(createProduct(formData))
-            ])
-            dispatch(getShopProducts(data.shop_id))
+            dispatch(createProduct(formData, resetForm))
         }
     })
 
     const closeAddProductDialog = () => {
         dispatch(toggleAddProductDialog(false))
-        setPreview([])
-        formik.setFieldValue('images', null)
     }
 
     const handleCategoriesChange = (e, value) => {

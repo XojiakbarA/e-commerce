@@ -13,12 +13,11 @@ import AutocompleteAsync from '../../components/common/AutocompleteAsync/Autocom
 import { appendToFormData } from '../../utils/utils'
 import { useDispatch, useSelector } from 'react-redux'
 import { createShop } from '../../redux/actions'
-import { useRouter } from 'next/router'
 
 const CreateShop = () => {
 
     const dispatch = useDispatch()
-    const router = useRouter()
+
     const isLoading = useSelector(state => state.toggle.isLoading)
     const [preview, setPreview] = useState({bg_image: null, av_image: null})
 
@@ -44,12 +43,9 @@ const CreateShop = () => {
             av_image: null
         },
         validationSchema: createShopValidationSchema,
-        onSubmit: async (data) => {
+        onSubmit: (data) => {
             const formData = appendToFormData(data)
-            await Promise.all([
-                dispatch(createShop(formData))
-            ])
-            router.push('/vendor')
+            dispatch(createShop(formData))
         }
     })
 
