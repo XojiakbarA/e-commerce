@@ -14,7 +14,7 @@ import {
     deleteWishlist,
     order,
     clearCart,
-    fetchOrders, fetchOrder, cancellationOrder, sendUserData, storeShop
+    fetchOrders, fetchOrder, cancellationOrder, sendUserData, storeShop, storeProduct
 } from '../../../api/user'
 import {
     setUser,
@@ -27,7 +27,7 @@ import {
     setReviews,
     setWishlist,
     toggleOrderDialog,
-    setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog
+    setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog, setShopProducts, toggleAddProductDialog
 } from '..'
 
 export const getCart = () => {
@@ -312,6 +312,22 @@ export const createShop = (data) => {
             if(res.status === 201) {
                 dispatch(setLoading(false))
                 dispatch(setSnackbar({isOpen: true, text: 'Shop created successfully!'}))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const createProduct = (data) => {
+    return async (dispatch) => {
+        try {
+            dispatch(setLoading(true))
+            const res = await storeProduct(data)
+            if (res.status === 201) {
+                dispatch(setLoading(false))
+                dispatch(toggleAddProductDialog(false))
+                dispatch(setSnackbar({isOpen: true, text: 'Product created successfully!'}))
             }
         } catch (e) {
             console.log(e)

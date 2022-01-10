@@ -71,17 +71,6 @@ export const getShopProducts = (id, query) => {
     }
 }
 
-export const createProduct = (data) => {
-    return async (dispatch) => {
-        try {
-            const res = await storeProduct(data)
-            console.log(res)
-        } catch (e) {
-            console.log(e)
-        }
-    }
-}
-
 export const getShops = () => {
     return async (dispatch) => {
         try {
