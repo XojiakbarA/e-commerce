@@ -1,5 +1,5 @@
 import { Button, IconButton, Typography, Card, CardActionArea, CardMedia, CardContent, Stack } from '@mui/material'
-import Link from 'next/link'
+import NextLink from '../../common/Link'
 import CloseIcon from '@mui/icons-material/Close'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
@@ -36,8 +36,7 @@ const SidebarProductCard = ({product}) => {
     return(
         <Card sx={{display: 'flex'}}>
             <CardActionArea disableRipple={ripple} component='div'>
-                <Link href={'/products/' + product.id}>
-                <a style={{display: 'flex', justifyContent: 'flex-start'}}>
+                <NextLink href={'/products/' + product.id} style={{display: 'flex'}}>
                     <Stack
                         padding={1}
                         justifyContent='center'
@@ -69,6 +68,7 @@ const SidebarProductCard = ({product}) => {
                         </Typography>
                     </CardContent>
                     <Stack
+                        marginLeft='auto'
                         alignSelf='flex-start'
                         onMouseEnter={ (e) => handleActionEnter(e) }
                         onMouseLeave={ (e) => handleActionLeave(e) }
@@ -77,8 +77,7 @@ const SidebarProductCard = ({product}) => {
                             <CloseIcon fontSize='small' />
                         </IconButton>
                     </Stack>
-                </a>
-                </Link>
+                </NextLink>
             </CardActionArea>
         </Card>
     )
