@@ -1,13 +1,14 @@
-import { Avatar, Badge, Box, Button, Dialog, DialogContent, DialogTitle, Grid, IconButton, InputAdornment, TextField, Typography } from "@mui/material"
+import { Avatar, Badge, Box, Button, CircularProgress, Dialog, DialogContent, DialogTitle, Grid, IconButton, InputAdornment, TextField, Typography } from "@mui/material"
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
 import { styled } from "@mui/material/styles"
 import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch, useSelector } from "react-redux"
-import { createProduct, toggleAddProductDialog } from "../../../redux/actions"
+import { createProduct, getShopProducts, toggleAddProductDialog } from "../../../redux/actions"
 import { useFormik } from "formik"
 import { createProductValidationSchema } from "../../../utils/validate"
 import AutocompleteAsync from "../../common/AutocompleteAsync/AutocompleteAsync"
 import { useState } from "react"
+import { useRouter } from 'next/router'
 import { appendToFormData } from "../../../utils/utils"
 
 const Input = styled('input')({
@@ -17,6 +18,9 @@ const Input = styled('input')({
 const AddProductDialog = () => {
 
     const dispatch = useDispatch()
+    const router = useRouter()
+
+    const isLoading = useSelector(state => state.toggle.isLoading)
     const addProductDialog = useSelector(state => state.toggle.addProductDialog)
 
     const [preview, setPreview] = useState([])
@@ -31,6 +35,8 @@ const AddProductDialog = () => {
     const brands = useSelector(state => state.brands)
     const [brand, setBrand] = useState(brands[0])
 
+    const shop_id = router.query.id
+
     const formik = useFormik({
         initialValues: {
             title: '',
@@ -41,13 +47,16 @@ const AddProductDialog = () => {
             stock: '',
             price: '',
             sale_price: '',
-            images: null
+            images: null,
+            shop_id: shop_id
         },
         validationSchema: createProductValidationSchema,
-        onSubmit: (data) => {
-            // const formData = appendToFormData(data)
-            // dispatch(createProduct(formData))
-            console.log(data)
+        onSubmit: async (data) => {
+            const formData = appendToFormData(data)
+            await Promise.all([
+                dispatch(createProduct(formData))
+            ])
+            dispatch(getShopProducts(data.shop_id))
         }
     })
 
@@ -305,7 +314,21 @@ const AddProductDialog = () => {
                             />
                         </Grid>
                         <Grid item lg={12}>
-                            <Button type='submit' variant='contained' sx={{float: 'right'}}>Create</Button>
+                            <Button
+                            type='submit'
+                            variant='contained'
+                            sx={{float: 'right'}}
+                            endIcon={ isLoading
+                                &&
+                                <CircularProgress
+                                    color='inherit'
+                                    size={20}
+                                />
+                            }
+                            disabled={isLoading}
+                        >
+                            Create
+                        </Button>
                         </Grid>
                     </Grid>
                     </form>
