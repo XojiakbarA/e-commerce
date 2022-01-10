@@ -34,13 +34,14 @@ export const getBanners = () => {
     }
 }
 
-export const getProduct = async (id, dispatch) => {
-    try {
-        const res = await fetchProduct(id)
-        dispatch(setProduct(res.data.data))
-    } catch (e) {
-        dispatch(setProduct({id: 1, title: 'server is offline', price: 'server is offline'}))
-        console.log(e.errno, e.code)
+export const getProduct = (id) => {
+    return async (dispatch) => {
+        try {
+            const res = await fetchProduct(id)
+            dispatch(setProduct(res.data.data))
+        } catch (e) {
+            console.log(e)
+        }
     }
 }
 
