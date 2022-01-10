@@ -54,7 +54,7 @@ const ProductInfo = ({product}) => {
             </Typography>
             <Typography variant='body2'>
                 {
-                    product.avail ? 'Stock in available' : 'Unavailable'
+                    product.stock ? 'Stock in available' : 'Unavailable'
                 }
             </Typography>
             {

@@ -1,22 +1,48 @@
 import Button from '@mui/material/Button'
 import ButtonGroup from '@mui/material/ButtonGroup'
 import Image from 'next/image'
-import { imageLoader } from '../../../utils/utils'
+import { productImageURL } from '../../../utils/utils'
 
-const GalleryButtons = ({images, handleClick}) => {
+const GalleryButtons = ({state, images, handleClick}) => {
+
+    const hover = {
+        padding: 0,
+        '&:hover': {
+            transform: 'scale(1.05)',
+            zIndex: 10
+        },
+        transition: '0.2s ease',
+    }
+
+    const active = {
+        transform: 'scale(1.05)',
+        zIndex: 10
+    }
 
     return (
         <ButtonGroup>
             {
                 images.map((image) => (
-                    <Button key={image.id} sx={{padding: 0}}>
+                    <Button
+                        key={image.id}
+                        sx={{
+                            padding: 0.1,
+                            '&:hover': {
+                                transform: 'scale(1.08)',
+                                zIndex: 100
+                            },
+                            transform: state === image.src ? 'scale(1.08)' : 'scale(1)',
+                            zIndex: state === image.src ? 10 : 0,
+                            transition: '0.2s ease'
+                        }}
+                        variant='contained'
+                    >
                         <Image
-                            loader={imageLoader}
-                            src={'products/' + image.src}
+                            src={productImageURL + image.src}
                             alt={image.src}
                             width={100}
                             height={125}
-                            onClick={handleClick}
+                            onClick={ () => handleClick(image.src) }
                         />
                     </Button>
                 ))

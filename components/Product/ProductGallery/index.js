@@ -1,8 +1,8 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Box } from "@mui/material"
 import Image from 'next/image'
 import GalleryButtons from "./GalleryButtons"
-import { imageLoader } from "../../../utils/utils"
+import { productImageURL } from "../../../utils/utils"
 
 const ProductGallery = ({images}) => {
 
@@ -10,22 +10,30 @@ const ProductGallery = ({images}) => {
         images = [{id: null, src: 'no_images.jpeg'}]
     }
 
-    const [src, setSrc] = useState(images[0].src)
+    const [src, setSrc] = useState(null)
 
-    const handleClick = (e) => {
-        setSrc(e.target.alt)
+    useEffect(() => {
+        setSrc(images[0].src)
+
+        return () => {
+            setSrc(null)
+        }
+    }, [setSrc, images])
+
+    const handleClick = (src) => {
+        setSrc(src)
+        console.log(src)
     }
 
     return(
         <Box>
             <Image
-                loader={imageLoader}
-                src={'products/' + src}
+                src={productImageURL + src}
                 alt={src}
                 width={500}
                 height={625}
             />
-            <GalleryButtons images={images} handleClick={handleClick} />
+            <GalleryButtons state={src} images={images} handleClick={handleClick} />
         </Box>
     )
 }
