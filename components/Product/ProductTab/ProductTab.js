@@ -19,7 +19,7 @@ const ProductTab = ({description}) => {
 
     const dispatch = useDispatch()
     const productId = useSelector(state => state.product.id)
-    const reviews = useSelector(state => state.reviews)
+    const reviews = useSelector(state => state.reviews.data)
     const reviewTitle = `Review (${reviews.length})`
 
     const [value, setValue] = useState(0);

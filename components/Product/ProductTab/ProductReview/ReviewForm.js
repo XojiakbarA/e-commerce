@@ -16,14 +16,16 @@ const ReviewForm = () => {
     const formik = useFormik({
         initialValues: {
             rating: '0',
-            name: user ? user.name : '',
+            name: user ? user.first_name : '',
             text: '',
             product_id: productId
         },
         validationSchema: reviewValidationSchema,
         onSubmit: async (data, {resetForm}) => {
-            await dispatch(userReview(data))
-            await dispatch(getReviews(productId))
+            await Promise.all([
+                dispatch(userReview(data)),
+                dispatch(getReviews(productId))
+            ])
             resetForm()
         }
     })

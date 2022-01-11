@@ -5,13 +5,16 @@ import RemoveIcon from '@mui/icons-material/Remove'
 import NextLink from '../../common/Link'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart, removeFromCart } from '../../../redux/actions'
+import { useRouter } from 'next/router'
 
 const ProductInfo = ({product}) => {
 
+    const router = useRouter()
     const dispatch = useDispatch()
     const cart = useSelector(state => state.cart.data) ?? []
     const productInCart = cart.find(item => item.id == product.id)
     const hasInCart = Boolean(productInCart)
+    const isProductsPage = router.pathname.indexOf('/products') === 0
 
     function handleAddClick(e, id) {
         e.preventDefault()
@@ -31,14 +34,23 @@ const ProductInfo = ({product}) => {
                 <Typography variant='body1'>
                     Category:
                 </Typography>
-                <Breadcrumbs separator={<NavigateNextIcon fontSize='small' />}>
-                    <NextLink href={'/search?cat_id=' + product.category.id}>
+                {
+                    isProductsPage
+                    ?
+                    <Breadcrumbs separator={<NavigateNextIcon fontSize='small'/>}>
+                        <NextLink href={'/search?cat_id=' + product.category.id}>
+                            <b>{product.category.title}</b>
+                        </NextLink>
+                        <NextLink href={'/search?sub_cat_id=' + product.sub_category.id}>
+                            <b>{product.sub_category.title}</b>
+                        </NextLink>
+                    </Breadcrumbs>
+                    :
+                    <Breadcrumbs separator={<NavigateNextIcon fontSize='small' />}>
                         <b>{product.category.title}</b>
-                    </NextLink>
-                    <NextLink href={'/search?sub_cat_id=' + product.sub_category.id}>
                         <b>{product.sub_category.title}</b>
-                    </NextLink>
-                </Breadcrumbs>
+                    </Breadcrumbs>
+                }
             </Stack>
             <Typography variant='body1'>
                 Brand: <b>{product.brand.title}</b>
@@ -49,44 +61,60 @@ const ProductInfo = ({product}) => {
                 </Typography>
                 <Rating name="read-only" value={product.rating} readOnly />
             </Stack>
-            <Typography variant='h4' color='primary'>
-                $ {product.price}
-            </Typography>
+            <Stack direction='row' spacing={2}>
+                <Typography
+                    variant='h4'
+                    color={product.sale_price ? 'gray' : 'primary'}
+                    sx={{textDecoration: product.sale_price ? 'line-through' : 'none'}}
+                >
+                    $ {product.price}
+                </Typography>
+                {
+                    product.sale_price
+                    &&
+                    <Typography variant='h4' color='primary'>
+                        $ {product.sale_price}
+                    </Typography>
+                }
+            </Stack>
             <Typography variant='body2'>
                 {
                     product.stock ? 'Stock in available' : 'Unavailable'
                 }
             </Typography>
             {
-                hasInCart
+                isProductsPage
                 ?
-                <Stack direction='row' spacing={2} alignItems='center'>
-                    <Button variant='outlined' sx={{padding: 1, minWidth: 0}} onClick={ (e) => handleAddClick(e, product.id) }>
-                        <AddIcon />
-                    </Button>
-                    <Typography variant='h6'>
-                        {productInCart.quantity}
-                    </Typography>
-                    <Button variant='outlined' sx={{padding: 1, minWidth: 0}} onClick={ (e) => handleRemoveClick(e, product.id)}>
-                        <RemoveIcon />
-                    </Button>
-                </Stack>
+                    hasInCart
+                    ?
+                    <Stack direction='row' spacing={2} alignItems='center'>
+                        <Button variant='outlined' sx={{padding: 1, minWidth: 0}} onClick={ (e) => handleAddClick(e, product.id) }>
+                            <AddIcon />
+                        </Button>
+                        <Typography variant='h6'>
+                            {productInCart.quantity}
+                        </Typography>
+                        <Button variant='outlined' sx={{padding: 1, minWidth: 0}} onClick={ (e) => handleRemoveClick(e, product.id)}>
+                            <RemoveIcon />
+                        </Button>
+                    </Stack>
+                    :
+                    <Button variant='contained' onClick={ (e) => handleAddClick(e, product.id) }>Add To Cart</Button>
                 :
-                <Button variant='contained' onClick={ (e) => handleAddClick(e, product.id) }>Add To Cart</Button>
+                null
             }
-
             <Stack direction='row' spacing={2}>
                 <Typography>
-                    Sold by: <b>{!product.shop ? 'e-commerce' : null}</b>
+                    Sold by:
                 </Typography>
                 {
-                    product.shop
+                    isProductsPage
                     ?
                     <NextLink href={`/shops/${product.shop.id}/products`}>
                         <b>{product.shop.title}</b>
                     </NextLink>
                     :
-                    null
+                    <b>{product.shop.title}</b>
                 }
             </Stack>
         </Stack>

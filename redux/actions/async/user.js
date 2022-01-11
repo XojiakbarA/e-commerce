@@ -28,7 +28,7 @@ import {
     setReviews,
     setWishlist,
     toggleOrderDialog,
-    setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog, toggleAddProductDialog, getShopProducts
+    setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog, toggleAddProductDialog, getShopProducts, setReviewsLoading
 } from '..'
 
 export const getCart = () => {
@@ -222,9 +222,11 @@ export const userRegister = (data) => {
 export const getReviews = (id) => {
     return async (dispatch) => {
         try {
+            dispatch(setReviewsLoading(true))
             const res = await fetchReviews(id)
             if (res.status === 200) {
                 dispatch(setReviews(res.data.data))
+                dispatch(setReviewsLoading(false))
             }
         } catch (e) {
             console.log(e)

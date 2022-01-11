@@ -3,8 +3,19 @@ import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import { productImageURL } from "../../../utils/utils"
+import { useRouter } from "next/router"
+import { useDispatch } from "react-redux"
+import { getProduct, toggleViewProductDialog } from "../../../redux/actions"
 
 const ProductListItem = ({ product }) => {
+
+    const router = useRouter()
+    const dispatch = useDispatch()
+
+    const handleViewClick = () => {
+        dispatch(getProduct(product.id))
+        dispatch(toggleViewProductDialog(true))
+    }
 
     return (
         <Paper sx={{padding: 2}}>
@@ -50,7 +61,7 @@ const ProductListItem = ({ product }) => {
                         </IconButton>
                     </Tooltip>
                     <Tooltip title='View'>
-                        <IconButton>
+                        <IconButton onClick={handleViewClick}>
                             <VisibilityIcon fontSize="small"/>
                         </IconButton>
                     </Tooltip>

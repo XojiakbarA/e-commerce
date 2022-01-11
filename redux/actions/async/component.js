@@ -1,6 +1,5 @@
 import { fetchBanners, fetchBrands, fetchCategories, fetchProduct, fetchProducts, fetchShop, fetchShopProducts, fetchShops } from '../../../api/api'
 import { setCats, setBrands, setBanners, setProduct, setSearchProducts, setShops, setShop, setShopProducts, setLoading } from '..'
-import { storeProduct } from '../../../api/user'
 
 export const getCategories = async (dispatch) => {
     try {
@@ -37,8 +36,10 @@ export const getBanners = () => {
 export const getProduct = (id) => {
     return async (dispatch) => {
         try {
+            dispatch(setLoading(true))
             const res = await fetchProduct(id)
             dispatch(setProduct(res.data.data))
+            dispatch(setLoading(false))
         } catch (e) {
             console.log(e)
         }
