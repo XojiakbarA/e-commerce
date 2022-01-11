@@ -1,14 +1,15 @@
 import ListAltIcon from '@mui/icons-material/ListAlt'
 import AddIcon from '@mui/icons-material/Add'
-import ProfileLayout from "../../../../components/layout/ProfileLayout/ProfileLayout"
-import ProfileTitle from "../../../../components/profile/ProfileTitle"
-import ProductList from '../../../../components/vendor/ProductList/ProductList'
+import ProfileLayout from "../../../components/layout/ProfileLayout/ProfileLayout"
+import ProfileTitle from "../../../components/profile/ProfileTitle"
+import ProductList from '../../../components/vendor/ProductList/ProductList'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getShopProducts, toggleAddProductDialog } from '../../../../redux/actions'
+import { getShopProducts, toggleAddProductDialog } from '../../../redux/actions'
 import { useRouter } from 'next/router'
 import { CircularProgress } from '@mui/material'
-import AddProductDialog from '../../../../components/vendor/AddProductDialog/AddProductDialog'
+import AddProductDialog from '../../../components/vendor/AddProductDialog/AddProductDialog'
+import ViewProductDialog from '../../../components/vendor/ViewProductDialog/ViewProductDialog'
 
 const labels = [ 'Title', 'Image', 'Stock', 'Price', 'Sale Price', 'Rating', '' ]
 
@@ -45,6 +46,7 @@ const Products = () => {
                 <ProductList labels={labels} products={products}/>
             }
             <AddProductDialog/>
+            <ViewProductDialog/>
         </ProfileLayout>
     )
 }
