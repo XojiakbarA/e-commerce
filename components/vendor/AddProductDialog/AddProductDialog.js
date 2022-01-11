@@ -156,10 +156,10 @@ const AddProductDialog = () => {
                             <Grid container spacing={2}>
                                 <Grid item lg={4}>
                                     <AutocompleteAsync
-                                        formikKey='category_id'
-                                        fieldLabel='Category'
-                                        fieldError={formik.touched.category_id && Boolean(formik.errors.category_id)}
-                                        fieldHelperText={formik.touched.category_id && formik.errors.category_id}
+                                        name='category_id'
+                                        label='Category'
+                                        error={formik.touched.category_id && Boolean(formik.errors.category_id)}
+                                        helperText={formik.touched.category_id && formik.errors.category_id}
                                         getOptionLabel={option => option.title}
                                         options={categories}
                                         option={category}
@@ -169,10 +169,10 @@ const AddProductDialog = () => {
                                 </Grid>
                                 <Grid item lg={4}>
                                     <AutocompleteAsync
-                                        formikKey='sub_category_id'
-                                        fieldLabel='Sub Category'
-                                        fieldError={formik.touched.sub_category_id && Boolean(formik.errors.sub_category_id)}
-                                        fieldHelperText={formik.touched.sub_category_id && formik.errors.sub_category_id}
+                                        name='sub_category_id'
+                                        label='Sub Category'
+                                        error={formik.touched.sub_category_id && Boolean(formik.errors.sub_category_id)}
+                                        helperText={formik.touched.sub_category_id && formik.errors.sub_category_id}
                                         getOptionLabel={option => option.title}
                                         options={subCategories}
                                         option={subCategory}
@@ -183,10 +183,10 @@ const AddProductDialog = () => {
                                 </Grid>
                                 <Grid item lg={4}>
                                     <AutocompleteAsync
-                                        formikKey='brand_id'
-                                        fieldLabel='Brand'
-                                        fieldError={formik.touched.brand_id && Boolean(formik.errors.brand_id)}
-                                        fieldHelperText={formik.touched.brand_id && formik.errors.brand_id}
+                                        name='brand_id'
+                                        label='Brand'
+                                        error={formik.touched.brand_id && Boolean(formik.errors.brand_id)}
+                                        helperText={formik.touched.brand_id && formik.errors.brand_id}
                                         getOptionLabel={option => option.title}
                                         options={brands}
                                         option={brand}

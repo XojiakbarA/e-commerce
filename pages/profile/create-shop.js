@@ -185,10 +185,10 @@ const CreateShop = () => {
                                 </Grid>
                                 <Grid item lg={6}>
                                     <AutocompleteAsync
-                                        formikKey='region_id'
-                                        fieldLabel='Region'
-                                        fieldError={formik.touched.region_id && Boolean(formik.errors.region_id)}
-                                        fieldHelperText={formik.touched.region_id && formik.errors.region_id}
+                                        name='region_id'
+                                        label='Region'
+                                        error={formik.touched.region_id && Boolean(formik.errors.region_id)}
+                                        helperText={formik.touched.region_id && formik.errors.region_id}
                                         getOptionLabel={option => option.name}
                                         options={regions}
                                         option={region}
@@ -199,10 +199,10 @@ const CreateShop = () => {
                                 </Grid>
                                 <Grid item lg={6}>
                                     <AutocompleteAsync
-                                        formikKey='district_id'
-                                        fieldLabel='District'
-                                        fieldError={formik.touched.district_id && Boolean(formik.errors.district_id)}
-                                        fieldHelperText={formik.touched.district_id && formik.errors.district_id}
+                                        name='district_id'
+                                        label='District'
+                                        error={formik.touched.district_id && Boolean(formik.errors.district_id)}
+                                        helperText={formik.touched.district_id && formik.errors.district_id}
                                         getOptionLabel={option => option.name}
                                         options={districts}
                                         option={district}

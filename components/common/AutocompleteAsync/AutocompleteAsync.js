@@ -1,7 +1,7 @@
 import { Autocomplete, CircularProgress, TextField } from "@mui/material"
 
 const AutocompleteAsync = ({
-    formikKey, fieldLabel, fieldError, fieldHelperText,
+    name, label, error, helperText,
     options, option, getOptionLabel, loading,
     handleChange, handleBlur, disabled
 }) => {
@@ -17,10 +17,10 @@ const AutocompleteAsync = ({
             renderInput={params => (
                 <TextField
                     {...params}
-                    label={fieldLabel}
-                    error={fieldError}
-                    helperText={fieldHelperText}
-                    name={formikKey}
+                    label={label}
+                    error={error}
+                    helperText={helperText}
+                    name={name}
                     InputProps={{
                         ...params.InputProps,
                         startAdornment: (
