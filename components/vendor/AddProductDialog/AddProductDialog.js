@@ -5,11 +5,12 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch, useSelector } from "react-redux"
 import { createProduct, toggleAddProductDialog } from "../../../redux/actions"
 import { useFormik } from "formik"
-import { createProductValidationSchema } from "../../../utils/validate"
+import { productValidationSchema } from "../../../utils/validate"
 import AutocompleteAsync from "../../common/AutocompleteAsync/AutocompleteAsync"
 import { useState } from "react"
 import { useRouter } from 'next/router'
 import { appendToFormData } from "../../../utils/utils"
+import { makeURLArray } from "../../../utils/utils";
 
 const Input = styled('input')({
     display: 'none'
@@ -50,7 +51,7 @@ const AddProductDialog = () => {
             images: null,
             shop_id: shop_id
         },
-        validationSchema: createProductValidationSchema,
+        validationSchema: productValidationSchema,
         onSubmit: (data, {resetForm}) => {
             const formData = appendToFormData(data)
             dispatch(createProduct(formData, resetForm))
@@ -81,15 +82,6 @@ const AddProductDialog = () => {
     const handleBrandsChange = (e, value) => {
         setBrand(value)
         formik.setValues({...formik.values, brand_id: value?.id})
-    }
-
-    const makeURLArray = (fileList) => {
-        const urls = []
-        for (let file of fileList) {
-            const url = URL.createObjectURL(file)
-            urls.push(url)
-        }
-        return urls
     }
 
     const handleUploadChange = (e) => {
@@ -212,7 +204,11 @@ const AddProductDialog = () => {
                                                 <Badge
                                                     anchorOrigin={{vertical: 'top', horizontal: 'right'}}
                                                     badgeContent={
-                                                        <IconButton size="small" color='primary' onClick={() => handleImageClick(i)}>
+                                                        <IconButton
+                                                            size="small"
+                                                            color='primary'
+                                                            onClick={() => handleImageClick(i)}
+                                                        >
                                                             <CloseIcon fontSize='small'/>
                                                         </IconButton>
                                                     }
@@ -231,7 +227,7 @@ const AddProductDialog = () => {
                                         <Box sx={{
                                                 width: 200,
                                                 height: 200,
-                                                display: formik.values.images?.length === 5 ? 'none' : 'flex',
+                                                display: formik.values.images?.length >= 5 ? 'none' : 'flex',
                                                 justifyContent: 'center',
                                                 alignItems: 'center'
                                             }}>
