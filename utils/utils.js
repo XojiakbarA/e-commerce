@@ -28,3 +28,12 @@ export const appendToFormData = (data) => {
     }
     return formData
 }
+
+export const makeURLArray = (fileList) => {
+    const urls = []
+    for (let file of fileList) {
+        const url = URL.createObjectURL(file)
+        urls.push(url)
+    }
+    return urls
+}
