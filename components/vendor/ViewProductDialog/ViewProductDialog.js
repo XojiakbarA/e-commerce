@@ -22,8 +22,10 @@ const ViewProductDialog = () => {
     }
 
     useEffect(() => {
-        dispatch(getReviews(product.id))
-    }, [dispatch, product.id])
+        if (viewProductDialog, product.id) {
+            dispatch(getReviews(product.id))
+        }
+    }, [dispatch, product.id, viewProductDialog])
 
     return (
         <Dialog open={viewProductDialog} onClose={closeViewProductDialog} fullWidth maxWidth='lg'>
