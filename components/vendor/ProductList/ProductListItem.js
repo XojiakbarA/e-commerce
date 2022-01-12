@@ -35,7 +35,10 @@ const ProductListItem = ({ product }) => {
                     </Typography>
                 </Grid>
                 <Grid item xs display='flex' justifyContent='center'>
-                    <Avatar variant="rounded" src={productImageURL + product.image.src}/>
+                    <Avatar
+                        variant="rounded"
+                        src={product.image ? productImageURL + product.image.src : undefined}
+                    />
                 </Grid>
                 <Grid item xs display='flex' justifyContent='center'>
                     <Chip label={product.stock} color={product.stock < 6 ? 'warning' : 'info'} size='small' variant='outlined'/>
