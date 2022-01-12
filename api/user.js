@@ -99,6 +99,10 @@ export const storeProduct = async (data) => {
     return await user.post('api/products', data)
 }
 
+export const updateProduct = async (id, data) => {
+    return await user.post(`api/products/${id}?_method=PUT`, data)
+}
+
 export const destroyProductImage = async (product_id, image_id) => {
     return await user.delete(`api/products/${product_id}/product-images/${image_id}`)
 }

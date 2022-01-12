@@ -15,7 +15,7 @@ import {
     deleteWishlist,
     order,
     clearCart,
-    fetchOrders, fetchOrder, cancellationOrder, sendUserData, storeShop, storeProduct, destroyProductImage
+    fetchOrders, fetchOrder, cancellationOrder, sendUserData, storeShop, storeProduct, destroyProductImage, updateProduct
 } from '../../../api/user'
 import {
     setUser,
@@ -28,7 +28,7 @@ import {
     setReviews,
     setWishlist,
     toggleOrderDialog,
-    setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog, toggleAddProductDialog, getShopProducts, setReviewsLoading, setProduct
+    setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog, toggleAddProductDialog, getShopProducts, setReviewsLoading, setProduct, toggleEditProductDialog
 } from '..'
 
 export const getCart = () => {
@@ -333,6 +333,25 @@ export const createProduct = (data, resetForm) => {
                 dispatch(toggleAddProductDialog(false))
                 dispatch(setSnackbar({isOpen: true, text: 'Product created successfully!'}))
                 resetForm()
+                dispatch(getShopProducts(res.data.data.shop.id))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const editProduct = (id, data, resetForm, setPreview) => {
+    return async (dispatch) => {
+        try {
+            dispatch(setLoading(true))
+            const res = await updateProduct(id, data)
+            if (res.status === 200) {
+                dispatch(setLoading(false))
+                dispatch(toggleEditProductDialog(false))
+                dispatch(setSnackbar({isOpen: true, text: 'Product updated successfully!'}))
+                resetForm()
+                setPreview([])
                 dispatch(getShopProducts(res.data.data.shop.id))
             }
         } catch (e) {

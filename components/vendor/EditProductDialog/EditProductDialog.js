@@ -7,8 +7,8 @@ import { productValidationSchema } from "../../../utils/validate"
 import AutocompleteAsync from "../../common/AutocompleteAsync/AutocompleteAsync"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
-import { deleteProductImage, getShopProducts, setProduct, toggleEditProductDialog } from "../../../redux/actions"
-import { productImageURL } from "../../../utils/utils"
+import { deleteProductImage, editProduct, getShopProducts, setProduct, toggleEditProductDialog } from "../../../redux/actions"
+import { appendToFormData, productImageURL } from "../../../utils/utils"
 import { useRouter } from "next/router"
 import { makeURLArray } from "../../../utils/utils"
 
@@ -52,8 +52,9 @@ const EditProductDialog = () => {
             images_count: product.images?.length ?? null,
         },
         validationSchema: productValidationSchema,
-        onSubmit: (data) => {
-            console.log(data)
+        onSubmit: (data, {resetForm}) => {
+            const formData = appendToFormData(data)
+            dispatch(editProduct(product.id, formData, resetForm, setPreview))
         },
         enableReinitialize: true
     })
@@ -61,6 +62,7 @@ const EditProductDialog = () => {
     const closeEditProductDialog = () => {
         dispatch(toggleEditProductDialog(false))
         dispatch(setProduct({}))
+        setPreview([])
     }
 
     const handleCategoriesChange = (e, value) => {
