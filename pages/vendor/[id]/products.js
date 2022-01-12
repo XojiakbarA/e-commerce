@@ -10,6 +10,7 @@ import { useRouter } from 'next/router'
 import { CircularProgress } from '@mui/material'
 import AddProductDialog from '../../../components/vendor/AddProductDialog/AddProductDialog'
 import ViewProductDialog from '../../../components/vendor/ViewProductDialog/ViewProductDialog'
+import EditProductDialog from '../../../components/vendor/EditProductDialog/EditProductDialog'
 
 const labels = [ 'Title', 'Image', 'Stock', 'Price', 'Sale Price', 'Rating', '' ]
 
@@ -47,6 +48,7 @@ const Products = () => {
             }
             <AddProductDialog/>
             <ViewProductDialog/>
+            <EditProductDialog/>
         </ProfileLayout>
     )
 }

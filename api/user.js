@@ -98,3 +98,7 @@ export const cancellationOrder = async (id) => {
 export const storeProduct = async (data) => {
     return await user.post('api/products', data)
 }
+
+export const destroyProductImage = async (product_id, image_id) => {
+    return await user.delete(`api/products/${product_id}/product-images/${image_id}`)
+}

@@ -5,7 +5,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility'
 import { productImageURL } from "../../../utils/utils"
 import { useRouter } from "next/router"
 import { useDispatch } from "react-redux"
-import { getProduct, toggleViewProductDialog } from "../../../redux/actions"
+import { getProduct, toggleEditProductDialog, toggleViewProductDialog } from "../../../redux/actions"
 
 const ProductListItem = ({ product }) => {
 
@@ -15,6 +15,10 @@ const ProductListItem = ({ product }) => {
     const handleViewClick = () => {
         dispatch(getProduct(product.id))
         dispatch(toggleViewProductDialog(true))
+    }
+    const handleEditClick = () => {
+        dispatch(getProduct(product.id))
+        dispatch(toggleEditProductDialog(true))
     }
 
     return (
@@ -51,7 +55,7 @@ const ProductListItem = ({ product }) => {
                 </Grid>
                 <Grid item xs display='flex'>
                     <Tooltip title='Edit'>
-                        <IconButton>
+                        <IconButton onClick={handleEditClick}>
                             <EditIcon fontSize="small"/>
                         </IconButton>
                     </Tooltip>

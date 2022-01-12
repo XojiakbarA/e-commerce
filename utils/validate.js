@@ -112,7 +112,7 @@ export const createShopValidationSchema = yup.object({
         .min(14, 'Phone Number should be of minimum 9 characters length')
 })
 
-export const createProductValidationSchema = yup.object({
+export const productValidationSchema = yup.object({
     title: yup
         .string('Enter Product Title')
         .required('Product Title is required'),
@@ -134,4 +134,7 @@ export const createProductValidationSchema = yup.object({
     price: yup
         .number('Enter Price')
         .required('Price is required'),
+    images_count: yup
+        .number('Image Count')
+        .max(5, 'Images should be maximum 5 items')
 })
