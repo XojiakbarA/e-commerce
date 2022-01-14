@@ -11,6 +11,7 @@ import { CircularProgress } from '@mui/material'
 import AddProductDialog from '../../../components/vendor/AddProductDialog/AddProductDialog'
 import ViewProductDialog from '../../../components/vendor/ViewProductDialog/ViewProductDialog'
 import EditProductDialog from '../../../components/vendor/EditProductDialog/EditProductDialog'
+import DeleteProductDialog from '../../../components/vendor/DeleteProductDialog/DeleteProductDialog'
 
 const labels = [ 'Title', 'Image', 'Stock', 'Price', 'Sale Price', 'Rating', '' ]
 
@@ -49,6 +50,7 @@ const Products = () => {
             <AddProductDialog/>
             <ViewProductDialog/>
             <EditProductDialog/>
+            <DeleteProductDialog/>
         </ProfileLayout>
     )
 }

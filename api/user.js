@@ -106,3 +106,7 @@ export const updateProduct = async (id, data) => {
 export const destroyProductImage = async (product_id, image_id) => {
     return await user.delete(`api/products/${product_id}/product-images/${image_id}`)
 }
+
+export const destroyProduct = async (shop_id, product_id) => {
+    return await user.delete(`api/shops/${shop_id}/products/${product_id}`)
+}

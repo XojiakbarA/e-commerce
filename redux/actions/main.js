@@ -90,6 +90,11 @@ export const toggleEditProductDialog = (bool) => ({
     payload: bool
 })
 
+export const toggleDeleteProductDialog = (bool) => ({
+    type: type.TOGGLE_DELETE_PRODUCT_DIALOG,
+    payload: bool
+})
+
 export const openAccountMenu = (anchorEl) => ({
     type: type.OPEN_ACCOUNT_MENU,
     payload: anchorEl

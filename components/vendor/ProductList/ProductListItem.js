@@ -5,7 +5,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility'
 import { productImageURL } from "../../../utils/utils"
 import { useRouter } from "next/router"
 import { useDispatch } from "react-redux"
-import { getProduct, toggleEditProductDialog, toggleViewProductDialog } from "../../../redux/actions"
+import { getProduct, setProduct, toggleDeleteProductDialog, toggleEditProductDialog, toggleViewProductDialog } from "../../../redux/actions"
 
 const ProductListItem = ({ product }) => {
 
@@ -19,6 +19,10 @@ const ProductListItem = ({ product }) => {
     const handleEditClick = () => {
         dispatch(getProduct(product.id))
         dispatch(toggleEditProductDialog(true))
+    }
+    const handleDeleteClick = () => {
+        dispatch(setProduct(product))
+        dispatch(toggleDeleteProductDialog(true))
     }
 
     return (
@@ -63,7 +67,7 @@ const ProductListItem = ({ product }) => {
                         </IconButton>
                     </Tooltip>
                     <Tooltip title='Delete'>
-                        <IconButton>
+                        <IconButton onClick={handleDeleteClick}>
                             <DeleteIcon fontSize="small"/>
                         </IconButton>
                     </Tooltip>

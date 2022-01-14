@@ -15,7 +15,7 @@ import {
     deleteWishlist,
     order,
     clearCart,
-    fetchOrders, fetchOrder, cancellationOrder, sendUserData, storeShop, storeProduct, destroyProductImage, updateProduct
+    fetchOrders, fetchOrder, cancellationOrder, sendUserData, storeShop, storeProduct, destroyProductImage, updateProduct, destroyProduct
 } from '../../../api/user'
 import {
     setUser,
@@ -28,7 +28,7 @@ import {
     setReviews,
     setWishlist,
     toggleOrderDialog,
-    setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog, toggleAddProductDialog, getShopProducts, setReviewsLoading, setProduct, toggleEditProductDialog
+    setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog, toggleAddProductDialog, getShopProducts, setReviewsLoading, setProduct, toggleEditProductDialog, toggleDeleteProductDialog
 } from '..'
 
 export const getCart = () => {
@@ -360,13 +360,27 @@ export const editProduct = (id, data, resetForm, setPreview) => {
     }
 }
 
+export const deleteProduct = (shop_id, product_id) => {
+    return async (dispatch) => {
+        try {
+            dispatch(setLoading(true))
+            const res = await destroyProduct(shop_id, product_id)
+            dispatch(setLoading(false))
+            dispatch(toggleDeleteProductDialog(false))
+            dispatch(setSnackbar({isOpen: true, text: 'Product deleted successfully!'}))
+            dispatch(getShopProducts(res.data.data.id))
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
 export const deleteProductImage = (product_id, image_id) => {
     return async (dispatch) => {
         try {
             dispatch(setLoading(true))
             const res = await destroyProductImage(product_id, image_id)
             if (res.status === 200) {
-                console.log(res)
                 dispatch(setProduct(res.data.data))
                 dispatch(setLoading(false))
             }
