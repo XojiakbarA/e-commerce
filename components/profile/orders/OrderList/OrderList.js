@@ -19,7 +19,7 @@ const OrderList = () => {
 
     useEffect(() => {
         dispatch(getOrders())
-    }, [])
+    }, [dispatch])
 
     return (
         <Grid container spacing={2}>
