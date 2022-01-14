@@ -1,6 +1,7 @@
 export const productImageURL = 'http://127.0.0.1:8888/e-commerce-api/public/storage/images/products/'
 export const shopImageURL = 'http://127.0.0.1:8888/e-commerce-api/public/storage/images/shops/'
 export const userImageURL = 'http://127.0.0.1:8888/e-commerce-api/public/storage/images/users/'
+export const bannerImageURL = 'http://127.0.0.1:8888/e-commerce-api/public/storage/images/banners/'
 
 export const imageLoader = ({src}) => {
     return 'http://127.0.0.1:8888/e-commerce-api/public/storage/images/' + src
