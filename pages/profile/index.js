@@ -2,12 +2,13 @@ import { Grid, Stack } from "@mui/material"
 import Person from "@mui/icons-material/Person"
 import EditIcon from '@mui/icons-material/Edit'
 import ProfileLayout from "../../components/layout/ProfileLayout/ProfileLayout"
-import UserInfoTable from "../../components/profile/UserInfoTable"
+import UserInfoTable from "../../components/profile/index/UserInfoTable"
 import ProfileTitle from "../../components/profile/ProfileTitle"
 import {useDispatch, useSelector} from "react-redux"
 import {toggleEditProfileDialog} from "../../redux/actions"
 import OrderCountCard from "../../components/profile/index/OrderCountCard"
 import UserCard from "../../components/profile/index/UserCard"
+import EditProfileDialog from "../../components/profile/index/EditProfileDialog"
 
 const Profile = () => {
 
@@ -53,6 +54,7 @@ const Profile = () => {
                 </Stack>
                 <UserInfoTable user={user} />
             </Stack>
+            <EditProfileDialog/>
         </ProfileLayout>
     )
 }

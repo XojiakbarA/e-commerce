@@ -2,10 +2,12 @@ import { Grid, Paper, Stack, Divider, List, ListSubheader, ListItemButton, ListI
 import NextLink from '../../../common/Link'
 import { useRouter } from "next/dist/client/router"
 import UserShopList from "./UserShopList"
+import { useSelector } from "react-redux"
 
 const ProfileSidebar = ({menu}) => {
 
     const router = useRouter()
+    const shops = useSelector(state => state?.user.data.shops)
 
     return (
         <Grid item lg={3}>
@@ -32,9 +34,9 @@ const ProfileSidebar = ({menu}) => {
                         }
                     </List>
                     {
-                        router.pathname.indexOf('/profile') == 0
+                        router.pathname.indexOf('/profile') == 0 && shops.length > 0
                         ?
-                        <UserShopList/>
+                        <UserShopList shops={shops}/>
                         :
                         null
                     }

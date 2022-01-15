@@ -1,11 +1,8 @@
 import { List, ListItemButton, ListItemIcon, ListItemText, ListSubheader } from "@mui/material"
 import StoreMallDirectoryIcon from '@mui/icons-material/StoreMallDirectory'
 import NextLink from '../../../common/Link'
-import { useSelector } from "react-redux"
 
-const UserShopList = () => {
-
-    const shops = useSelector(state => state?.user.data.shops)
+const UserShopList = ({shops}) => {
 
     return (
         <List>

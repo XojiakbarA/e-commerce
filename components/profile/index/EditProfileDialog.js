@@ -1,7 +1,9 @@
 import {useEffect, useState} from "react";
-import { Box, Button, CircularProgress, Dialog, Stack, TextField, Typography } from "@mui/material";
+import { Badge, Box, Button, CircularProgress, Dialog, DialogContent, DialogTitle, IconButton, Stack, TextField, Typography } from "@mui/material";
 import {DesktopDatePicker, LocalizationProvider} from "@mui/lab";
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import CloseIcon from '@mui/icons-material/Close';
+import RemoveIcon from '@mui/icons-material/Remove';
 import ruLocale from 'date-fns/locale/ru'
 import {useDispatch, useSelector} from "react-redux";
 import {editUser, toggleEditProfileDialog} from "../../../redux/actions";
@@ -18,11 +20,6 @@ const EditProfileDialog = () => {
     const user = useSelector(state => state.user?.data)
     const isLoading = useSelector(state => state.toggle.isLoading)
     const [preview, setPreview] = useState(null)
-
-    const closeEditProfileDialog = () => {
-        dispatch(toggleEditProfileDialog(false))
-        setPreview(null)
-    }
 
     const formik = useFormik({
         initialValues: {
@@ -41,6 +38,12 @@ const EditProfileDialog = () => {
         enableReinitialize: true
     })
 
+    const closeEditProfileDialog = () => {
+        dispatch(toggleEditProfileDialog(false))
+        setPreview(null)
+        formik.setFieldValue('image', null)
+    }
+
     useEffect(() => {
         const image = formik.values.image
         const reader = new FileReader()
@@ -54,17 +57,22 @@ const EditProfileDialog = () => {
 
     return (
         <Dialog open={editProfileDialog} onClose={closeEditProfileDialog}>
-            <Box sx={{marginX: {xs: 3, sm: 7}, marginY: {xs: 3, sm: 7}, width: {xs: 250, sm: 300}}}>
-                <Typography variant='h5' textAlign='center' paddingBottom={2}>
+            <DialogTitle sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                <Typography variant="button" fontSize={20}>
                     Edit Profile
                 </Typography>
+                <IconButton onClick={closeEditProfileDialog}>
+                    <CloseIcon/>
+                </IconButton>
+            </DialogTitle>
+            <DialogContent sx={{marginX: 5, width: 300}}>
                 <form onSubmit={formik.handleSubmit}>
                     <Stack spacing={2}>
                         <Box alignSelf='center' paddingBottom={2}>
                             <AvatarUpload
                                 setFieldValue={formik.setFieldValue}
                                 value='image'
-                                src={preview ?? userImageURL + user?.image}
+                                src={preview ?? user.image ? userImageURL + user.image : undefined}
                             />
                         </Box>
                         <TextField
@@ -126,7 +134,7 @@ const EditProfileDialog = () => {
                         <Button size='small' variant='outlined' onClick={closeEditProfileDialog}>Cancel</Button>
                     </Stack>
                 </form>
-            </Box>
+            </DialogContent>
         </Dialog>
     )
 }
