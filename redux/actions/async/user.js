@@ -15,7 +15,7 @@ import {
     deleteWishlist,
     order,
     clearCart,
-    fetchOrders, fetchOrder, cancellationOrder, sendUserData, storeShop, storeProduct, destroyProductImage, updateProduct, destroyProduct
+    fetchOrders, fetchOrder, cancellationOrder, sendUserData, storeShop, storeProduct, destroyProductImage, updateProduct, destroyProduct, storeReview
 } from '../../../api/user'
 import {
     setUser,
@@ -234,14 +234,16 @@ export const getReviews = (id) => {
     }
 }
 
-export const userReview = (data) => {
+export const createReview = (id, data, resetForm) => {
     return async (dispatch) => {
         try {
             dispatch(setLoading(true))
-            const res = await addReview(data)
-            if (res.status === 201) {
+            const res = await storeReview(id, data)
+            if (res.status === 200) {
+                dispatch(setReviews(res.data.data))
                 dispatch(setLoading(false))
                 dispatch(setSnackbar({isOpen: true, text: 'Review created successfully!'}))
+                resetForm()
             }
         } catch (e) {
             console.log(e)

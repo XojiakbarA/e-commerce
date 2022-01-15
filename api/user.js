@@ -75,8 +75,8 @@ export const fetchReviews = async (id) => {
     return await user.get(`api/products/${id}/reviews`)
 }
 
-export const addReview = async (data) => {
-    return await user.post(`api/products/${data.product_id}/reviews`, data)
+export const storeReview = async (id, data) => {
+    return await user.post(`api/products/${id}/reviews`, data)
 }
 
 export const order = async (data) => {

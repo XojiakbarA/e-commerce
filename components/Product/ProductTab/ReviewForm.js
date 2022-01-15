@@ -1,33 +1,29 @@
 import { Grid, Rating, Typography, TextField, Button, CircularProgress } from "@mui/material"
 import SendIcon from '@mui/icons-material/Send'
-import { reviewValidationSchema } from '../../../../utils/validate'
+import { reviewValidationSchema } from '../../../utils/validate'
 import { useFormik } from "formik"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
-import { userReview, getReviews } from "../../../../redux/actions"
+import { createReview } from "../../../redux/actions"
 
 const ReviewForm = () => {
 
     const dispatch = useDispatch()
     const isLoading = useSelector(state => state.toggle.isLoading)
-    const productId = useSelector(state => state.product.id)
+    const id = useSelector(state => state.product.id)
     const user = useSelector(state => state.user?.data)
 
     const formik = useFormik({
         initialValues: {
-            rating: '0',
-            name: user ? user.first_name : '',
-            text: '',
-            product_id: productId
+            rating: 0,
+            name: user?.first_name ?? '',
+            text: ''
         },
         validationSchema: reviewValidationSchema,
-        onSubmit: async (data, {resetForm}) => {
-            await Promise.all([
-                dispatch(userReview(data)),
-                dispatch(getReviews(productId))
-            ])
-            resetForm()
-        }
+        onSubmit: (data, {resetForm}) => {
+            dispatch(createReview(id, data, resetForm))
+        },
+        enableReinitialize: true
     })
 
     return(

@@ -39,16 +39,24 @@ const ProductInfo = ({product}) => {
                     ?
                     <Breadcrumbs separator={<NavigateNextIcon fontSize='small'/>}>
                         <NextLink href={'/search?cat_id=' + product.category.id}>
-                            <b>{product.category.title}</b>
+                            <Typography fontWeight='bold' color='text.primary'>
+                                {product.category.title}
+                            </Typography>
                         </NextLink>
                         <NextLink href={'/search?sub_cat_id=' + product.sub_category.id}>
-                            <b>{product.sub_category.title}</b>
+                            <Typography fontWeight='bold' color='text.primary'>
+                                {product.sub_category.title}
+                            </Typography>
                         </NextLink>
                     </Breadcrumbs>
                     :
-                    <Breadcrumbs separator={<NavigateNextIcon fontSize='small' />}>
-                        <b>{product.category.title}</b>
-                        <b>{product.sub_category.title}</b>
+                    <Breadcrumbs separator={<NavigateNextIcon fontSize='small'/>}>
+                        <Typography fontWeight='bold' color='text.primary'>
+                            {product.category.title}
+                        </Typography>
+                        <Typography fontWeight='bold' color='text.primary'>
+                            {product.sub_category.title}
+                        </Typography>
                     </Breadcrumbs>
                 }
             </Stack>
@@ -111,10 +119,14 @@ const ProductInfo = ({product}) => {
                     isProductsPage
                     ?
                     <NextLink href={`/shops/${product.shop.id}/products`}>
-                        <b>{product.shop.title}</b>
+                        <Typography fontWeight='bold' color='text.primary'>
+                            {product.shop.title}
+                        </Typography>
                     </NextLink>
                     :
-                    <b>{product.shop.title}</b>
+                    <Typography fontWeight='bold' color='text.primary'>
+                        {product.shop.title}
+                    </Typography>
                 }
             </Stack>
         </Stack>

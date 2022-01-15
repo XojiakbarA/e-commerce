@@ -19,7 +19,7 @@ const Product = () => {
                 <ProductInfo product={product} />
             </Grid>
             <Grid item lg={12}>
-                <ProductTab description={product.description} reviews={product.reviews} />
+                <ProductTab description={product.description}/>
             </Grid>
         </Grid>
     )

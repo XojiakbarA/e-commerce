@@ -5,20 +5,6 @@ import { productImageURL } from '../../../utils/utils'
 
 const GalleryButtons = ({state, images, handleClick}) => {
 
-    const hover = {
-        padding: 0,
-        '&:hover': {
-            transform: 'scale(1.05)',
-            zIndex: 10
-        },
-        transition: '0.2s ease',
-    }
-
-    const active = {
-        transform: 'scale(1.05)',
-        zIndex: 10
-    }
-
     return (
         <ButtonGroup>
             {
@@ -29,10 +15,10 @@ const GalleryButtons = ({state, images, handleClick}) => {
                             padding: 0.1,
                             '&:hover': {
                                 transform: 'scale(1.08)',
-                                zIndex: 100
+                                zIndex: 1
                             },
                             transform: state === image.src ? 'scale(1.08)' : 'scale(1)',
-                            zIndex: state === image.src ? 10 : 0,
+                            zIndex: state === image.src ? 1 : 0,
                             transition: '0.2s ease'
                         }}
                         variant='contained'
