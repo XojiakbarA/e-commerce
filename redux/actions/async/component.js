@@ -73,10 +73,10 @@ export const getShopProducts = (id, query) => {
     }
 }
 
-export const getShops = () => {
+export const getShops = (query) => {
     return async (dispatch) => {
         try {
-            const res = await fetchShops()
+            const res = await fetchShops(query)
             if (res.status === 200) {
                 dispatch(setShops(res.data))
             }
