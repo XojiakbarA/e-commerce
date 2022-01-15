@@ -1,13 +1,9 @@
 import { useState } from 'react'
-import {Card, CardContent, CardMedia, CardActionArea, Box, Typography, IconButton, Tooltip, Rating} from '@mui/material'
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
-import FavoriteIcon from '@mui/icons-material/Favorite'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import {Card, CardContent, CardMedia, CardActionArea, Typography, Rating, Stack} from '@mui/material'
 import { productImageURL } from '../../../utils/utils'
-import Link from 'next/link'
-import { useDispatch, useSelector } from 'react-redux'
-import { addToCart, addToWishlist, deleteFromCart, deleteFromWishlist } from '../../../redux/actions'
+import NextLink from '../Link'
+import { useSelector } from 'react-redux'
+import ProductCardButtons from './ProductCardButtons'
 
 const grid = {
     card: {boxShadow: 3, borderRadius: 2, position: 'relative'},
@@ -23,52 +19,33 @@ const list = {
 
 const ProductCard = ({product, view}) => {
 
-    if (!product.image) {
-        product.image = {id: null, src: 'no_image.jpeg'}
-    }
-
-    const dispatch = useDispatch()
     const cart = useSelector(state => state.cart.data) ?? []
     const wishlist = useSelector(state => state.wishlist)
-    const findInCart = cart.find(item => item.id == product.id)
-    const hasInCart = Boolean(findInCart)
-    const findInWishlist = wishlist.find(item => item.id == product.id)
-    const hasInWishlist = Boolean(findInWishlist)
+    const hasInCart = Boolean(cart.find(item => item.id == product.id))
+    const hasInWishlist = Boolean(wishlist.find(item => item.id == product.id))
 
     const [ripple, setRipple] = useState(false)
-    const id = product.id
 
-    function handleActionEnter(e) {
+    function handleEnter() {
         setRipple(true)
     }
-    function handleActionLeave(e) {
+    function handleLeave() {
         setRipple(false)
-    }
-    function handleAddCartClick() {
-        dispatch(addToCart(id))
-    }
-    function handleDeleteCartClick() {
-        dispatch(deleteFromCart(id))
-    }
-    function handleAddWishlistClick() {
-        dispatch(addToWishlist(id))
-    }
-    function handleDeleteWishlistClick() {
-        dispatch(deleteFromWishlist(id))
     }
 
     return (
         <Card sx={ view == 'grid' || view == undefined ? grid.card : list.card }>
             <CardActionArea disableRipple={ripple}>
-                <Link href={'/products/' + product.id}>
-                <a style={ view == 'grid' || view == undefined ? grid.cardActionArea : list.cardActionArea }>
+                <NextLink
+                    href={`/products/${product.id}`}
+                    style={view == 'grid' || view == undefined ? grid.cardActionArea : list.cardActionArea}
+                >
                     <CardMedia
                         component="img"
+                        image={productImageURL + (product.image?.src ?? 'no_image.jpeg')}
                         sx={ view == 'grid' || view == undefined ? grid.cardMedia : list.cardMedia }
-                        image={productImageURL + product.image.src}
                         alt={product.title}
-                    >
-                    </CardMedia>
+                    />
                     <CardContent>
                         <Typography gutterBottom
                             variant="h6"
@@ -82,49 +59,31 @@ const ProductCard = ({product, view}) => {
 
                         <Rating value={product.rating} size='small' readOnly/>
                         
-                        <Typography variant="h6" color="text.secondary">
-                            $ {product.price}
-                        </Typography>
+                        <Stack direction='row' spacing={2}>
+                            <Typography
+                                variant="h6"
+                                color={product.sale_price ? 'text.secondary' : 'text.primary'}
+                                sx={{textDecoration: product.sale_price ? 'line-through' : 'none'}}
+                            >
+                                $ {product.price}
+                            </Typography>
+                            {
+                                product.sale_price &&
+                                <Typography variant="h6" color="text.primary">
+                                    $ {product.price}
+                                </Typography>
+                            }
+                        </Stack>
                     </CardContent>
-                </a>
-                </Link>
+                </NextLink>
             </CardActionArea>
-            <Box
-                sx={{display: 'flex', flexDirection: 'column', position: 'absolute', top: 0, right: 0}}
-                onMouseEnter={ (e) => handleActionEnter(e) }
-                onMouseLeave={ (e) => handleActionLeave(e) }
-            >
-                {
-                    hasInWishlist
-                    ?
-                    <IconButton onClick={ handleDeleteWishlistClick }>
-                        <Tooltip title='Remove from wishlist' placement='right' key={product.id}>
-                            <FavoriteIcon />
-                        </Tooltip>
-                    </IconButton>
-                    :
-                    <IconButton onClick={ handleAddWishlistClick }>
-                        <Tooltip title='Add to wishlist' placement='right'>
-                            <FavoriteBorderIcon />
-                        </Tooltip>
-                    </IconButton>
-                }
-                {
-                    hasInCart
-                    ?
-                    <IconButton onClick={ handleDeleteCartClick }>
-                        <Tooltip title='Remove from cart' placement='right' key={product.id}>
-                            <ShoppingCartIcon />
-                        </Tooltip>
-                    </IconButton>
-                    :
-                    <IconButton onClick={ handleAddCartClick }>
-                        <Tooltip title='Add to cart' placement='right'>
-                            <ShoppingCartOutlinedIcon />
-                        </Tooltip>
-                    </IconButton>
-                }
-            </Box>
+            <ProductCardButtons
+                hasInCart={hasInCart}
+                hasInWishlist={hasInWishlist}
+                handleEnter={handleEnter}
+                handleLeave={handleLeave}
+                id={product.id}
+            />
         </Card>
     );
 }
