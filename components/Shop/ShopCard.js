@@ -55,7 +55,7 @@ const ShopCard = ({shop}) => {
             <CardActions sx={styles.cardActions}>
                 <Avatar
                     src={shop.av_image ? shopImageURL + shop.av_image : undefined}
-                    alt={shop.title}
+                    alt={shop.av_image}
                 />
                 <NextLink href={`/shops/${shop.id}/products`}>
                     <IconButton>

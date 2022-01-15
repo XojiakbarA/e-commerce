@@ -7,15 +7,15 @@ const ShopBigCard = ({shop}) => {
             <CardMedia
                 component="img"
                 height="200"
-                image={shopImageURL + shop.bg_image}
-                alt={shop.title}
+                image={shop.bg_image ? shopImageURL + shop.bg_image : undefined}
+                alt={shop.bg_image}
                 
             />
             <CardContent>
                 <Stack direction='row' spacing={5}>
                     <Avatar
-                        src={shopImageURL + shop.av_image}
-                        alt={shop.title}
+                        src={shop.av_image ? shopImageURL + shop.av_image : undefined}
+                        alt={shop.av_image}
                         sx={{
                             width: 80,
                             height: 80,
@@ -29,7 +29,7 @@ const ShopBigCard = ({shop}) => {
                         </Typography>
                         <Rating name="read-only" value={shop.rating} readOnly />
                         <Typography variant="body2">
-                            {shop.address}
+                            {`${shop.region.name}, ${shop.district.name}, ${shop.street}, ${shop.home}`}
                         </Typography>
                     </Box>
                 </Stack>

@@ -61,11 +61,11 @@ const Shop = () => {
     )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(store => async ({query}) => {
+export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => async ({query}) => {
 
     const id = query.id
-    await store.dispatch(getShop(id))
-    await store.dispatch(getShopProducts(id, query))
+    await dispatch(getShop(id))
+    await dispatch(getShopProducts(id, query))
 
 })
 
