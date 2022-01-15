@@ -35,9 +35,8 @@ const CategoryListItem = ({ category }) => {
         }
 
         router.push({
-            pathname: router.pathname,
-            query: { ...query, page: 1 }
-        })
+            query: { ...query, page: 1 },
+        }, null, {scroll: false})
     }
 
     return(
