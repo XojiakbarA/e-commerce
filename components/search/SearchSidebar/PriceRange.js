@@ -1,45 +1,52 @@
 import {useState} from 'react'
 import { useRouter } from 'next/router'
-import { TextField, Box, Slider, Stack, ListSubheader } from '@mui/material'
+import { TextField, Box, Slider, Stack, ListSubheader, InputAdornment } from '@mui/material'
 
 const PriceRange = () => {
 
     const router = useRouter()
-    const initMinValue = Number(router.query.price_min) || 0
-    const initMaxValue = Number(router.query.price_max) || 0
-    const [minValue, setMinValue] = useState(initMinValue)
-    const [maxValue, setMaxValue] = useState(initMaxValue)
+    
+    const initValue = [
+        Number(router.query.price_min) || 0,
+        Number(router.query.price_max) || 0
+    ]
+    const [value, setValue] = useState(initValue)
 
     const handleSliderChange = (event, newValue) => {
-        const minValue = newValue[0]
-        const maxValue = newValue[1]
-        setMinValue(minValue)
-        setMaxValue(maxValue)
-
+        setValue(newValue)
+    }
+    const handleSliderChangeCommitted = () => {
         router.push({
-            pathname: router.pathname,
-            query: { ...router.query, price_min: minValue, price_max: maxValue }
+            query: {
+                ...router.query,
+                price_min: value[0],
+                price_max: value[1]
+            }
         }, null, {scroll: false})
     }
 
     const handleMinChange = (event) => {
         const minValue = Number(event.target.value)
-        setMinValue(minValue)
+        setValue(prevState => [ minValue, prevState[1] ])
 
         router.push({
-            pathname: '/search',
-            query: { ...router.query, price_min: minValue }
+            query: {
+                ...router.query,
+                price_min: minValue
+            }
         }, null, {scroll: false})
-    };
+    }
     const handleMaxChange = (event) => {
         const maxValue = Number(event.target.value)
-        setMaxValue(maxValue)
+        setValue(prevState => [ prevState[0], maxValue ])
 
         router.push({
-            pathname: '/search',
-            query: { ...router.query, price_max: maxValue }
+            query: {
+                ...router.query,
+                price_max: maxValue
+            }
         }, null, {scroll: false})
-    };
+    }
 
     return (
         <Box>
@@ -47,18 +54,33 @@ const PriceRange = () => {
                 Price Range
             </ListSubheader>
             <Slider
-                getAriaLabel={() => 'Temperature range'}
-                value={[minValue, maxValue]}
+                getAriaLabel={() => 'Price range'}
+                value={value}
                 onChange={handleSliderChange}
+                onChangeCommitted={handleSliderChangeCommitted}
                 valueLabelDisplay="auto"
                 min={0}
                 max={1500}
                 step={5}
             />
             <Stack direction='row' spacing={1} alignItems='center' marginBottom={2}>
-                <TextField variant='outlined' label='Min' value={minValue} onChange={handleMinChange} size='small' />
+                <TextField
+                    variant='outlined'
+                    size='small'
+                    label='Min'
+                    value={value[0]}
+                    onChange={handleMinChange}
+                    InputProps={{startAdornment: <InputAdornment position="start">$</InputAdornment>}}
+                />
                 <p>-</p>
-                <TextField variant='outlined' label='Max' value={maxValue} onChange={handleMaxChange} size='small' />
+                <TextField
+                    variant='outlined'
+                    size='small'
+                    label='Max'
+                    value={value[1]}
+                    onChange={handleMaxChange}
+                    InputProps={{startAdornment: <InputAdornment position="start">$</InputAdornment>}}
+                />
             </Stack>
         </Box>
     );
