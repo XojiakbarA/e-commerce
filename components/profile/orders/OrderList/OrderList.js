@@ -1,4 +1,4 @@
-import {CircularProgress, Grid, Pagination} from "@mui/material";
+import {Grid, Pagination} from "@mui/material";
 import OrderListHead from "./OrderListHead";
 import OrderListItem from "./OrderListItem";
 
@@ -9,7 +9,7 @@ const styles = {
     padding: 2
 }
 
-const OrderList = ({ isFetching, orders, meta, handlePageChange }) => {
+const OrderList = ({ orders, meta, handlePageChange }) => {
 
     return (
         <Grid container spacing={2}>
@@ -17,10 +17,6 @@ const OrderList = ({ isFetching, orders, meta, handlePageChange }) => {
                 <OrderListHead styles={styles} />
             </Grid>
             {
-                isFetching
-                ?
-                <CircularProgress/>
-                :
                 orders.map(order => (
                     <Grid item xs={12} key={order.id}>
                         <OrderListItem order={order} styles={styles}/>

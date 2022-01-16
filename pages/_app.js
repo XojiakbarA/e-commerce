@@ -4,13 +4,11 @@ import '../styles/globals.css'
 import { wrapper } from '../redux/store'
 import { getCategories, getBrands, getUser, getCart, getWishlist } from '../redux/actions'
 import { useRouter } from 'next/router'
-import { useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 
 const MyApp = ({Component, pageProps}) => {
 
     const router = useRouter()
-    const dispatch = useDispatch()
     const [routing, setRouting] = useState(false)
     
     useEffect(() => {
@@ -31,12 +29,6 @@ const MyApp = ({Component, pageProps}) => {
         }
     })
 
-    useEffect( () => {
-        dispatch(getUser())
-        dispatch(getCart())
-        dispatch(getWishlist())
-    })
-
     return (
             <>
             <Backdrop
@@ -54,10 +46,15 @@ const MyApp = ({Component, pageProps}) => {
 }
 
 MyApp.getInitialProps = wrapper.getInitialAppProps(store => async ({Component, ctx}) => {
-    
-    await getCategories(store.dispatch)
-    await getBrands(store.dispatch)
-    
+
+    const {dispatch} = store
+
+    await dispatch(getCategories())
+    await dispatch(getBrands())
+    await dispatch(getUser(ctx.req?.headers.cookie))
+    await dispatch(getCart(ctx.req?.headers.cookie))
+    await dispatch(getWishlist(ctx.req?.headers.cookie))
+
     return {
         pageProps: {
             ...(Component.getInitialProps ? await Component.getInitialProps({...ctx, store}) : {}),

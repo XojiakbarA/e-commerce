@@ -31,11 +31,11 @@ import {
     setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog, toggleAddProductDialog, getShopProducts, setReviewsLoading, setProduct, toggleEditProductDialog, toggleDeleteProductDialog, setOrdersFetching, setCartFetching
 } from '..'
 
-export const getCart = () => {
+export const getCart = (cookie) => {
     return async (dispatch) => {
         try {
             dispatch(setCartFetching(true))
-            const res = await fetchCart()
+            const res = await fetchCart(cookie)
             if (res.status === 200) {
                 dispatch(setCart(res.data))
                 dispatch(setCartFetching(false))
@@ -106,10 +106,10 @@ export const clearAllCart = () => {
     }
 }
 
-export const getWishlist = () => {
+export const getWishlist = (cookie) => {
     return async (dispatch) => {
         try {
-            const res = await fetchWishlist()
+            const res = await fetchWishlist(cookie)
             if (res.status === 200) {
                 dispatch(setWishlist(res.data.data))
             }
@@ -145,15 +145,15 @@ export const deleteFromWishlist = (id) =>{
     }
 }
 
-export const getUser = () => {
+export const getUser = (cookie) => {
     return async (dispatch) => {
         try {
-            const res = await fetchUser()
+            const res = await fetchUser(cookie)
             if (res.status === 200) {
                 dispatch(setUser(res.data))
             }
         } catch (e) {
-            //console.log(e.response?.statusText)
+            console.log(e.response)
         }
     }
 }
@@ -276,14 +276,12 @@ export const userOrder = (data) => {
     }
 }
 
-export const getOrders = (query) => {
+export const getOrders = (query, cookie) => {
     return async (dispatch) => {
         try {
-            dispatch(setOrdersFetching(true))
-            const res = await fetchOrders(query)
+            const res = await fetchOrders(query, cookie)
             if (res.status === 200) {
                 dispatch(setOrders(res.data))
-                dispatch(setOrdersFetching(false))
             }
         } catch (e) {
             console.log(e)
@@ -291,10 +289,10 @@ export const getOrders = (query) => {
     }
 }
 
-export const getOrder = (id) => {
+export const getOrder = (id, cookie) => {
     return async (dispatch) => {
         try {
-            const res = await fetchOrder(id)
+            const res = await fetchOrder(id, cookie)
             if (res.status === 200) {
                 dispatch(setOrder(res.data))
             }

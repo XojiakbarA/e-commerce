@@ -14,7 +14,6 @@ import ProfileSidebar from "./ProfileSidebar/ProfileSidebar"
 import { useSelector, useDispatch } from "react-redux"
 import { useEffect } from "react"
 import { toggleLoginDialog } from "../../../redux/actions"
-import { fetchUser } from "../../../api/user"
 import { useRouter } from "next/router"
 
 const ProfileLayout = ({children}) => {
@@ -23,6 +22,7 @@ const ProfileLayout = ({children}) => {
     const user = useSelector(state => state.user?.data)
     const dispatch = useDispatch()
     const id = router.query?.id
+    const isVendorPage = router.route.indexOf('/vendor') == 0
 
     const userMenu = [
         {title: 'Profile Info', path: '/profile', icon: (<PersonIcon/>)},
@@ -41,33 +41,22 @@ const ProfileLayout = ({children}) => {
         {title: 'Back To Profile', path: `/profile`, icon: (<ArrowBackIcon/>)}
     ]
 
-    //it's for LoginDialog
     useEffect(() => {
-        async function getUser() {
-            try {
-                await fetchUser()
-            } catch (e) {
-                if (e.response.status === 401) {
-                    dispatch(toggleLoginDialog(true))
-                }
-            }
+        if (!user) {
+            dispatch(toggleLoginDialog(true))
         }
-        getUser()
     }, [dispatch, user])
 
     return (
         <>
             {
-                user
-                ?
+                user &&
                 <Grid container spacing={2}>
-                    <ProfileSidebar menu={router.route.indexOf('/vendor') == 0 ? vendorMenu : userMenu}/>
+                    <ProfileSidebar menu={isVendorPage ? vendorMenu : userMenu}/>
                     <Grid item lg={9}>
                         {children}
                     </Grid>
                 </Grid>
-                :
-                null
             }
         </>
     )

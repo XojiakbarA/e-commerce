@@ -13,23 +13,23 @@ import EditProfileDialog from "../../components/profile/index/EditProfileDialog"
 const Profile = () => {
 
     const dispatch = useDispatch()
-    const user = useSelector(state => state.user?.data)
+    const user = useSelector(state => state.user.data)
 
     const openEditProfileDialog = () => {
         dispatch(toggleEditProfileDialog(true))
     }
 
     const orders = [
-        { title: 'All Orders', count: user?.all_orders_count },
-        { title: 'Awaiting Payments', count: user?.awaiting_payment_count },
-        { title: 'Awaiting Shipment', count: user?.awaiting_shipment_count },
-        { title: 'Awaiting Delivery', count: user?.awaiting_delivery_count }
+        { title: 'All Orders', count: user.all_orders_count },
+        { title: 'Awaiting Payments', count: user.awaiting_payment_count },
+        { title: 'Awaiting Shipment', count: user.awaiting_shipment_count },
+        { title: 'Awaiting Delivery', count: user.awaiting_delivery_count }
     ]
 
     return (
         <ProfileLayout>
             <ProfileTitle
-                title={user?.first_name}
+                title={user.first_name}
                 titleIcon={<Person fontSize='large' />}
                 buttonText='Edit Profile'
                 buttonIcon={<EditIcon />}
@@ -39,9 +39,9 @@ const Profile = () => {
                 <Stack direction='row' spacing={2} alignItems='stretch'>
                     <Grid item lg={6}>
                         <UserCard
-                            image={user?.image}
-                            firstName={user?.first_name}
-                            lastName={user?.last_name}
+                            image={user.image}
+                            firstName={user.first_name}
+                            lastName={user.last_name}
                         />
                     </Grid>
                     <Stack spacing={2} direction='row'>

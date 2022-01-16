@@ -3,23 +3,17 @@ import ProfileTitle from "../../../components/profile/ProfileTitle";
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag'
 import OrderList from "../../../components/profile/orders/OrderList/OrderList";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Typography } from "@mui/material";
 import { getOrders } from "../../../redux/actions";
+import { wrapper } from "../../../redux/store"
 
 const Orders = () => {
 
     const router = useRouter()
-    const dispatch = useDispatch()
 
     const orders = useSelector(state => state.orders.data)
     const meta = useSelector(state => state.orders.meta)
-    const isFetching = useSelector(state => state.orders.isFetching)
-
-    useEffect(() => {
-        dispatch(getOrders(router.query))
-    }, [dispatch, router.query])
 
     const handlePageChange = (e, p) => {
         router.push({
@@ -34,10 +28,9 @@ const Orders = () => {
                 titleIcon={<ShoppingBagIcon fontSize='large'/>}
             />
             {
-                orders && orders.length > 0
+                orders.length > 0
                 ?
                 <OrderList
-                    isFetching={isFetching}
                     orders={orders}
                     meta={meta}
                     handlePageChange={handlePageChange}
@@ -50,5 +43,11 @@ const Orders = () => {
         </ProfileLayout>
     )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => async ({query, req}) => {
+
+    await dispatch(getOrders(query, req.headers.cookie))
+
+})
 
 export default Orders

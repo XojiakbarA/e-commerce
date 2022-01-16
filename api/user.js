@@ -2,7 +2,10 @@ import axios from 'axios'
 
 const user = axios.create({
     withCredentials: true,
-    baseURL: 'http://localhost:8000/'
+    baseURL: 'http://localhost:8000/',
+    headers: {
+        'Referer': 'http://localhost:3000/'
+    }
 })
 
 export const fetchRegions = async () => {
@@ -26,8 +29,12 @@ export const logout = async () => {
     return await user.post('logout')
 }
 
-export const fetchUser = async () => {
-    return await user.get('api/users')
+export const fetchUser = async (cookie) => {
+    return await user.get('api/users', {
+        headers: {
+            'Cookie': cookie
+        }
+    })
 }
 
 export const sendUserData = async (data, id) => {
@@ -39,8 +46,12 @@ export const register = async (data) => {
     return await user.post('register', data)
 }
 
-export const fetchCart = async () => {
-    return await user.get('api/cart')
+export const fetchCart = async (cookie) => {
+    return await user.get('api/cart', {
+        headers: {
+            'Cookie': cookie
+        }
+    })
 }
 
 export const addCart = async (id) => {
@@ -59,8 +70,12 @@ export const clearCart = async () => {
     return await user.delete('api/cart')
 }
 
-export const fetchWishlist = async () => {
-    return await user.get('api/wishlist')
+export const fetchWishlist = async (cookie) => {
+    return await user.get('api/wishlist', {
+        headers: {
+            'Cookie': cookie
+        }
+    })
 }
 
 export const addWishlist = async (id) => {
@@ -83,14 +98,21 @@ export const order = async (data) => {
     return await user.post('api/orders', data)
 }
 
-export const fetchOrders = async (query) => {
+export const fetchOrders = async (query, cookie) => {
     return await user.get('api/orders', {
-        params: query
+        params: query,
+        headers: {
+            'Cookie': cookie
+        }
     })
 }
 
-export const fetchOrder = async (id) => {
-    return await user.get(`api/orders/${id}`)
+export const fetchOrder = async (id, cookie) => {
+    return await user.get(`api/orders/${id}`, {
+        headers: {
+            'Cookie': cookie
+        }
+    })
 }
 
 export const cancellationOrder = async (id) => {
