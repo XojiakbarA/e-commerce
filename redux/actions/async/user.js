@@ -28,7 +28,7 @@ import {
     setReviews,
     setWishlist,
     toggleOrderDialog,
-    setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog, toggleAddProductDialog, getShopProducts, setReviewsLoading, setProduct, toggleEditProductDialog, toggleDeleteProductDialog
+    setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog, toggleAddProductDialog, getShopProducts, setReviewsLoading, setProduct, toggleEditProductDialog, toggleDeleteProductDialog, setOrdersFetching
 } from '..'
 
 export const getCart = () => {
@@ -266,12 +266,14 @@ export const userOrder = (data) => {
     }
 }
 
-export const getOrders = () => {
+export const getOrders = (query) => {
     return async (dispatch) => {
         try {
-            const res = await fetchOrders()
+            dispatch(setOrdersFetching(true))
+            const res = await fetchOrders(query)
             if (res.status === 200) {
-                dispatch(setOrders(res.data.data))
+                dispatch(setOrders(res.data))
+                dispatch(setOrdersFetching(false))
             }
         } catch (e) {
             console.log(e)

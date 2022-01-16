@@ -139,6 +139,11 @@ export const setOrders = (orders) => ({
     payload: orders
 })
 
+export const setOrdersFetching = (bool) => ({
+    type: type.SET_ORDERS_FETCHING,
+    payload: bool
+})
+
 export const setOrder = (order) => ({
     type: type.SET_ORDER,
     payload: order

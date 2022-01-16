@@ -83,8 +83,10 @@ export const order = async (data) => {
     return await user.post('api/orders', data)
 }
 
-export const fetchOrders = async () => {
-    return await user.get('api/orders')
+export const fetchOrders = async (query) => {
+    return await user.get('api/orders', {
+        params: query
+    })
 }
 
 export const fetchOrder = async (id) => {
