@@ -15,7 +15,7 @@ const Checkout = () => {
     const router = useRouter()
     const dispatch = useDispatch()
     const isLoading = useSelector(state => state.toggle.isLoading)
-    const user = useSelector(state => state.user?.data)
+    const user = useSelector(state => state.user)
 
     useEffect(() => {
         if (!user) {

@@ -150,7 +150,7 @@ export const getUser = (cookie) => {
         try {
             const res = await fetchUser(cookie)
             if (res.status === 200) {
-                dispatch(setUser(res.data))
+                dispatch(setUser(res.data.data))
             }
         } catch (e) {
             console.log(e.response)
@@ -164,7 +164,7 @@ export const editUser = (data, id) => {
             dispatch(setLoading(true))
             const res = await sendUserData(data, id)
             if (res.status === 200) {
-                dispatch(setUser(res.data))
+                dispatch(setUser(res.data.data))
                 dispatch(setLoading(false))
                 dispatch(setSnackbar({isOpen: true, text: 'Сhanges completed successfully!'}))
                 dispatch(toggleEditProfileDialog(false))
@@ -182,7 +182,7 @@ export const userLogin = (data) => {
             const res1 = await login(data)
             const res2 = await fetchUser()
             if (res1.status === 204 && res2.status === 200) {
-                dispatch(setUser(res2.data))
+                dispatch(setUser(res2.data.data))
                 dispatch(setLoading(false))
                 dispatch(setSnackbar({isOpen: true, text: 'You are logged in!'}))
                 dispatch(toggleLoginDialog(false))
@@ -218,7 +218,7 @@ export const userRegister = (data) => {
             const res1 = await register(data)
             const res2 = await fetchUser()
             if (res1.status === 201 && res2.status === 200) {
-                dispatch(setUser(res2.data))
+                dispatch(setUser(res2.data.data))
                 dispatch(setLoading(false))
                 dispatch(setSnackbar({isOpen: true, text: 'You are logged in!'}))
                 dispatch(toggleRegisterDialog(false))

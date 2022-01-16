@@ -7,7 +7,7 @@ import { useSelector } from "react-redux"
 const ProfileSidebar = ({menu}) => {
 
     const router = useRouter()
-    const shops = useSelector(state => state?.user.data.shops)
+    const shops = useSelector(state => state.user.shops)
 
     return (
         <Grid item lg={3}>

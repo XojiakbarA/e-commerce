@@ -12,7 +12,7 @@ const LoginDialog = () => {
     const dispatch = useDispatch()
     const loginDialog = useSelector(state => state.toggle.loginDialog)
     const isLoading = useSelector(state => state.toggle.isLoading)
-    const user = useSelector(state => state.user?.data)
+    const user = useSelector(state => state.user)
     let isProtectedPage =   router.pathname.indexOf('/profile') &&
                             router.pathname.indexOf('/checkout') &&
                             router.pathname.indexOf('/vendor')

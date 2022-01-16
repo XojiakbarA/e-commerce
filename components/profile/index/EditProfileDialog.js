@@ -17,7 +17,7 @@ const EditProfileDialog = () => {
 
     const dispatch = useDispatch()
     const editProfileDialog = useSelector(state => state.toggle.editProfileDialog)
-    const user = useSelector(state => state.user?.data)
+    const user = useSelector(state => state.user)
     const isLoading = useSelector(state => state.toggle.isLoading)
     const [preview, setPreview] = useState(null)
 

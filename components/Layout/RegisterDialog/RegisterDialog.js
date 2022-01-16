@@ -13,7 +13,7 @@ const RegisterDialog = () => {
     const dispatch = useDispatch()
     const registerDialog = useSelector(state => state.toggle.registerDialog)
     const isLoading = useSelector(state => state.toggle.isLoading)
-    const user = useSelector(state => state.user?.data)
+    const user = useSelector(state => state.user)
     const isProfilePage = router.pathname.indexOf('/profile')
     
     const closeRegisterDialog = () => {

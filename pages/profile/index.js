@@ -14,7 +14,7 @@ import { wrapper } from "../../redux/store"
 const Profile = () => {
 
     const dispatch = useDispatch()
-    const user = useSelector(state => state.user.data)
+    const user = useSelector(state => state.user)
 
     const openEditProfileDialog = () => {
         dispatch(toggleEditProfileDialog(true))

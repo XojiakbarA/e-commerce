@@ -19,7 +19,7 @@ import { useRouter } from "next/router"
 const ProfileLayout = ({children}) => {
 
     const router = useRouter()
-    const user = useSelector(state => state.user?.data)
+    const user = useSelector(state => state.user)
     const dispatch = useDispatch()
     const id = router.query?.id
     const isVendorPage = router.route.indexOf('/vendor') == 0
