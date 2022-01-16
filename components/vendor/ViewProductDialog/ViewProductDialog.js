@@ -5,7 +5,7 @@ import ProductInfo from "../../product/ProductInfo"
 import { useDispatch, useSelector } from "react-redux"
 import { getReviews, toggleViewProductDialog } from "../../../redux/actions"
 import { useEffect } from "react"
-import ReviewItem from "../../product/ProductTab/ProductReview/ReviewItem"
+import ReviewItem from "../../product/ProductTab/ReviewItem"
 
 const ViewProductDialog = () => {
 
