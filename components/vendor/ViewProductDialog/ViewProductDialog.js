@@ -13,7 +13,7 @@ const ViewProductDialog = () => {
 
     const viewProductDialog = useSelector(state => state.toggle.viewProductDialog)
     const product = useSelector(state => state.product)
-    const reviews = useSelector(state => state.reviews.data)
+    const reviews = useSelector(state => state.reviews)
     const reviewsLoading = useSelector(state => state.reviews.isLoading)
     const isLoading = useSelector(state => state.toggle.isLoading)
 

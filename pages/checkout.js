@@ -8,8 +8,7 @@ import { checkoutValidationSchema } from "../utils/validate"
 import CheckoutForm from "../components/shopping-pages/CheckoutForm"
 import ShoppingLayout from "../components/layout/ShoppingLayout/ShoppingLayout"
 import PaymentForm from "../components/shopping-pages/PaymentForm"
-import {fetchUser} from "../api/user"
-
+import { wrapper } from '../redux/store'
 
 const Checkout = () => {
 
@@ -19,16 +18,9 @@ const Checkout = () => {
     const user = useSelector(state => state.user?.data)
 
     useEffect(() => {
-        async function getUser() {
-            try {
-                await fetchUser()
-            } catch (e) {
-                if (e.response.status === 401) {
-                    dispatch(toggleLoginDialog(true))
-                }
-            }
+        if (!user) {
+            dispatch(toggleLoginDialog(true))
         }
-        getUser()
     }, [dispatch, user])
 
     const formik = useFormik({
@@ -88,5 +80,11 @@ const Checkout = () => {
         </>
     )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => async () => {
+
+    
+
+})
 
 export default Checkout

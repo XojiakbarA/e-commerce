@@ -2,10 +2,7 @@ import axios from 'axios'
 
 const user = axios.create({
     withCredentials: true,
-    baseURL: 'http://localhost:8000/',
-    headers: {
-        'Referer': 'http://localhost:3000/'
-    }
+    baseURL: 'http://localhost:8000/'
 })
 
 export const fetchRegions = async () => {
@@ -30,9 +27,10 @@ export const logout = async () => {
 }
 
 export const fetchUser = async (cookie) => {
-    return await user.get('api/users', {
+    return await user.get('api/users', cookie && {
         headers: {
-            'Cookie': cookie
+            'Cookie': cookie,
+            'Referer': 'http://localhost:3000/'
         }
     })
 }
@@ -49,7 +47,8 @@ export const register = async (data) => {
 export const fetchCart = async (cookie) => {
     return await user.get('api/cart', {
         headers: {
-            'Cookie': cookie
+            'Cookie': cookie,
+            'Referer': 'http://localhost:3000/'
         }
     })
 }
@@ -73,7 +72,8 @@ export const clearCart = async () => {
 export const fetchWishlist = async (cookie) => {
     return await user.get('api/wishlist', {
         headers: {
-            'Cookie': cookie
+            'Cookie': cookie,
+            'Referer': 'http://localhost:3000/'
         }
     })
 }
@@ -102,7 +102,8 @@ export const fetchOrders = async (query, cookie) => {
     return await user.get('api/orders', {
         params: query,
         headers: {
-            'Cookie': cookie
+            'Cookie': cookie,
+            'Referer': 'http://localhost:3000/'
         }
     })
 }
@@ -110,7 +111,8 @@ export const fetchOrders = async (query, cookie) => {
 export const fetchOrder = async (id, cookie) => {
     return await user.get(`api/orders/${id}`, {
         headers: {
-            'Cookie': cookie
+            'Cookie': cookie,
+            'Referer': 'http://localhost:3000/'
         }
     })
 }

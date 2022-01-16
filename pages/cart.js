@@ -2,6 +2,7 @@ import { CircularProgress, Grid, Stack, Typography } from "@mui/material"
 import CartProductCard from "../components/shopping-pages/CartProductCard"
 import { useSelector } from "react-redux"
 import ShoppingLayout from "../components/layout/ShoppingLayout/ShoppingLayout"
+import { wrapper } from '../redux/store'
 
 const Cart = () => {
 
@@ -32,5 +33,11 @@ const Cart = () => {
         </Typography>
     )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => async () => {
+
+    
+
+})
 
 export default Cart

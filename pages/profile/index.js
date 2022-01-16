@@ -9,6 +9,7 @@ import {toggleEditProfileDialog} from "../../redux/actions"
 import OrderCountCard from "../../components/profile/index/OrderCountCard"
 import UserCard from "../../components/profile/index/UserCard"
 import EditProfileDialog from "../../components/profile/index/EditProfileDialog"
+import { wrapper } from "../../redux/store"
 
 const Profile = () => {
 
@@ -58,5 +59,11 @@ const Profile = () => {
         </ProfileLayout>
     )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => async () => {
+
+    
+
+})
 
 export default Profile
