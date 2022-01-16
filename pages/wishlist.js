@@ -9,17 +9,17 @@ const Wishlist = () => {
     return (
         <Grid container spacing={2}>
             {
-                wishlist.length == 0
+                wishlist.length > 0
                 ?
-                <Typography variant='h3'>
-                    Wishlist is empty
-                </Typography>
-                :
                 wishlist.map(product => (
                     <Grid item  xs={12} lg={3}  key={product.id}>
                         <ProductCard product={product} />
                     </Grid>
                 ))
+                :
+                <Typography variant='h4'>
+                    Wishlist is empty
+                </Typography>
             }
         </Grid>
     )

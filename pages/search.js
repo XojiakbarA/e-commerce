@@ -1,5 +1,5 @@
 import { useState } from "react"
-import {Grid, Paper, Drawer, Pagination, PaginationItem, Typography} from "@mui/material"
+import {Grid, Paper, Drawer, Pagination, Typography} from "@mui/material"
 import SearchPanel from "../components/search/SearchPanel"
 import SearchSidebar from "../components/search/SearchSidebar"
 import ProductCard from "../components/common/ProductCard"
@@ -11,11 +11,8 @@ import { useRouter } from "next/router"
 const Search = ({title}) => {
 
     const router = useRouter()
-    const productsData = useSelector(state => state.products)
-    const products = productsData.data
-    const total = productsData.meta?.total
-    const currentPage = productsData.meta?.current_page
-    const lastPage = productsData.meta?.last_page
+    const products = useSelector(state => state.products.data)
+    const meta = useSelector(state => state.products.meta)
 
     const [view, setView] = useState('grid')
     const [sidebar, setSidebar] = useState(false)
@@ -47,7 +44,7 @@ const Search = ({title}) => {
                         handleViewClick={handleViewClick}
                         handleSidebarClick={handleSidebarClick}
                         title={title}
-                        total={total}
+                        total={meta.total}
                     />
                 </Grid>
                 <Grid item lg={3} display={{xs: 'none', sm: 'block'}}>
@@ -57,36 +54,34 @@ const Search = ({title}) => {
                 </Grid>
                 <Grid item lg={9}>
                     <Grid container spacing={2}>
-                    {!products.length
+                    {
+                        products.length > 0
                         ?
-                            <Grid item>
-                                <Typography variant='h2'>
-                                    Not found products
-                                </Typography>
-                            </Grid>
-                        :
                         products.map((product) => (
                             <Grid item xs={12} lg={view == 'grid' ? 4 : 12} key={product.id}>
                                 <ProductCard product={product} view={view} />
                             </Grid>
                         ))
+                        :
+                        <Grid item xs={12}>
+                            <Typography variant='h4'>
+                                Not found products
+                            </Typography>
+                        </Grid>
+                    }
+                    {
+                        meta.last_page > 1 &&
+                        <Grid item xs={12}>
+                            <Pagination
+                                color='primary'
+                                sx={{my: 2}}
+                                page={meta.current_page}
+                                count={meta.last_page}
+                                onChange={ (e, p) => handlePageChange(e, p) }
+                            />
+                        </Grid>
                     }
                     </Grid>
-                    {lastPage == 1 ? null :
-                        <Pagination
-                            size='large' 
-                            color='primary'
-                            sx={{my: 2}}
-                            page={currentPage}
-                            count={lastPage}
-                            onChange={ (e, p) => handlePageChange(e, p) }
-                            renderItem={item => (    
-                                <PaginationItem
-                                    {...item}
-                                />
-                            )}
-                        />
-                        }
                 </Grid>
             </Grid>
             <Drawer
@@ -106,7 +101,7 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => asy
 
     return {
         props: {
-            title: query?.title || ''
+            title: query.title ?? ''
         }
     }
 

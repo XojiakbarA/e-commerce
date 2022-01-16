@@ -28,15 +28,17 @@ import {
     setReviews,
     setWishlist,
     toggleOrderDialog,
-    setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog, toggleAddProductDialog, getShopProducts, setReviewsLoading, setProduct, toggleEditProductDialog, toggleDeleteProductDialog, setOrdersFetching
+    setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog, toggleAddProductDialog, getShopProducts, setReviewsLoading, setProduct, toggleEditProductDialog, toggleDeleteProductDialog, setOrdersFetching, setCartFetching
 } from '..'
 
 export const getCart = () => {
     return async (dispatch) => {
         try {
+            dispatch(setCartFetching(true))
             const res = await fetchCart()
             if (res.status === 200) {
                 dispatch(setCart(res.data))
+                dispatch(setCartFetching(false))
             }
         } catch (e) {
             console.log(e)
@@ -47,9 +49,11 @@ export const getCart = () => {
 export const addToCart = (id) => {
     return async (dispatch) => {
         try {
+            dispatch(setCartFetching(true))
             const res = await addCart(id)
             if (res.status === 200) {
                 dispatch(setCart(res.data))
+                dispatch(setCartFetching(false))
             }
         } catch (e) {
             console.log(e)
@@ -60,9 +64,11 @@ export const addToCart = (id) => {
 export const removeFromCart = (id) => {
     return async (dispatch) => {
         try {
+            dispatch(setCartFetching(true))
             const res = await removeCart(id)
             if (res.status === 200) {
                 dispatch(setCart(res.data))
+                dispatch(setCartFetching(false))
             }
         } catch (e) {
             console.log(e)
@@ -73,9 +79,11 @@ export const removeFromCart = (id) => {
 export const deleteFromCart = (id) => {
     return async (dispatch) => {
         try {
+            dispatch(setCartFetching(true))
             const res = await deleteCart(id)
             if (res.status === 200) {
                 dispatch(setCart(res.data))
+                dispatch(setCartFetching(false))
             }
         } catch (e) {
             console.log(e)
@@ -86,9 +94,11 @@ export const deleteFromCart = (id) => {
 export const clearAllCart = () => {
     return async (dispatch) => {
         try {
+            dispatch(setCartFetching(true))
             const res = await clearCart()
             if (res.status === 200) {
                 dispatch(setCart(res.data))
+                dispatch(setCartFetching(false))
             }
         } catch (e) {
             console.log(e)

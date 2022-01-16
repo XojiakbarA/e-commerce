@@ -1,4 +1,4 @@
-import { Grid, Stack, Typography } from "@mui/material"
+import { CircularProgress, Grid, Stack, Typography } from "@mui/material"
 import CartProductCard from "../components/shopping-pages/CartProductCard"
 import { useSelector } from "react-redux"
 import ShoppingLayout from "../components/layout/ShoppingLayout/ShoppingLayout"
@@ -6,15 +6,19 @@ import ShoppingLayout from "../components/layout/ShoppingLayout/ShoppingLayout"
 const Cart = () => {
 
     const cart = useSelector(state => state.cart.data)
-    const cartCount = cart?.length
+    const isFetching = useSelector(state => state.cart.isFetching)
 
     return(
-        cartCount
+        cart?.length > 0
         ?
         <ShoppingLayout>
             <Grid item lg={8}>
                 <Stack spacing={2}>
                     {
+                        isFetching
+                        ?
+                        <CircularProgress/>
+                        :
                         cart.map(product => (
                             <CartProductCard key={product.id} product={product}/>
                         ))
@@ -26,7 +30,6 @@ const Cart = () => {
         <Typography variant="h3">
             Cart is Empty
         </Typography>
-        
     )
 }
 

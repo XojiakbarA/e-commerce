@@ -40,16 +40,28 @@ const CartProductCard = ({product}) => {
                 <NextLink href={`/products/${id}`} style={{display: 'flex', justifyContent: 'space-between', height: '100%'}}>
                 <CardMedia
                     component='img'
-                    image={productImageURL + product.image.src}
+                    image={product.image ? productImageURL + product.image.src : undefined}
                     sx={{width: 120}}
                 />
                 <CardContent sx={{flex: 1}}>
                     <Typography variant='body1'>
                         {product.title}
                     </Typography>
-                    <Typography variant='body2'>
-                        $ {product.price}
-                    </Typography>
+                    <Stack direction='row' spacing={1}>
+                        <Typography
+                            variant='body2'
+                            color={product.sale_price ? 'text.secondary' : 'text.primary'}
+                            sx={{textDecoration: product.sale_price ? 'line-through' : 'none'}}
+                        >
+                            $ {product.price}
+                        </Typography>
+                        {
+                            product.sale_price &&
+                            <Typography variant='body2'>
+                                $ {product.sale_price}
+                            </Typography>
+                        }
+                    </Stack>
                 </CardContent>
                 <Stack
                     justifyContent='space-between'

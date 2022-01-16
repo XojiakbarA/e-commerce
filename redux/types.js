@@ -1,4 +1,5 @@
 export const SET_CART = 'SET_CART'
+export const SET_CART_FETCHING = 'SET_CART_FETCHING'
 export const SET_WISHLIST = 'SET_WISHLIST'
 export const SET_USER = 'SET_USER'
 export const SET_CATS = 'SET_CATS'

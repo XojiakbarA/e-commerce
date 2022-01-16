@@ -5,6 +5,11 @@ export const setCart = (cart) => ({
     payload: cart
 })
 
+export const setCartFetching = (bool) => ({
+    type: type.SET_CART_FETCHING,
+    payload: bool
+})
+
 export const setWishlist = (wishlist) => ({
     type: type.SET_WISHLIST,
     payload: wishlist

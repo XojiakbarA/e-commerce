@@ -27,17 +27,17 @@ const OrderList = ({ isFetching, orders, meta, handlePageChange }) => {
                     </Grid>
                 ))
             }
-            <Grid item xs={12}>
-                {
-                    meta && meta.last_page > 1 &&
+            {
+                meta && meta.last_page > 1 &&
+                <Grid item xs={12}>
                     <Pagination
                         color="primary"
                         page={meta.current_page}
                         count={meta.last_page}
                         onChange={handlePageChange}
                     />
-                }
-            </Grid>
+                </Grid>
+            }
         </Grid>
     )
 }
