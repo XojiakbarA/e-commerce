@@ -124,11 +124,6 @@ export const setReviews = (reviews) => ({
     payload: reviews
 })
 
-export const setReviewsLoading = (bool) => ({
-    type: type.SET_REVIEWS_LOADING,
-    payload: bool
-})
-
 export const setShops = (shops) => ({
     type: type.SET_SHOPS,
     payload: shops

@@ -3,12 +3,13 @@ import { useSelector } from "react-redux"
 import ProductGallery from "../../components/product/ProductGallery"
 import ProductInfo from '../../components/product/ProductInfo'
 import ProductTab from "../../components/product/ProductTab/ProductTab"
-import { getProduct } from "../../redux/actions"
+import { getProduct, getReviews } from "../../redux/actions"
 import { wrapper } from "../../redux/store"
 
 const Product = () => {
 
     const product = useSelector(state => state.product)
+    const reviews = useSelector(state => state.reviews)
 
     return(
         <Grid container spacing={2}>
@@ -19,7 +20,7 @@ const Product = () => {
                 <ProductInfo product={product} />
             </Grid>
             <Grid item lg={12}>
-                <ProductTab description={product.description}/>
+                <ProductTab description={product.description} reviews={reviews}/>
             </Grid>
         </Grid>
     )
@@ -28,6 +29,7 @@ const Product = () => {
 export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => async ({params}) => {
 
     await dispatch(getProduct(params.id))
+    await dispatch(getReviews(params.id))
 
 })
 
