@@ -14,23 +14,23 @@ const SidebarProductCard = ({product}) => {
 
     const [ripple, setRipple] = useState(false)
 
-    function handleActionEnter(e) {
+    function handleActionEnter() {
         setRipple(true)
     }
-    function handleActionLeave(e) {
+    function handleActionLeave() {
         setRipple(false)
     }
-    function handleDeleteCartClick(e, id) {
+    function handleDeleteCartClick(e) {
         e.preventDefault()
-        dispatch(deleteFromCart(id))
+        dispatch(deleteFromCart(product.id))
     }
-    function handleAddClick(e, id) {
+    function handleAddClick(e) {
         e.preventDefault()
-        dispatch(addToCart(id))
+        dispatch(addToCart(product.id))
     }
-    function handleRemoveClick(e, id) {
+    function handleRemoveClick(e) {
         e.preventDefault()
-        dispatch(removeFromCart(id))
+        dispatch(removeFromCart(product.id))
     }
 
     return(
@@ -41,22 +41,22 @@ const SidebarProductCard = ({product}) => {
                         padding={1}
                         justifyContent='center'
                         alignItems='center'
-                        onMouseEnter={ (e) => handleActionEnter(e) }
-                        onMouseLeave={ (e) => handleActionLeave(e) }
+                        onMouseEnter={ handleActionEnter }
+                        onMouseLeave={ handleActionLeave }
                     >
-                        <Button variant='outlined' sx={{padding: 0, minWidth: 0}} onClick={ (e) => handleAddClick(e, product.id) }>
+                        <Button variant='outlined' sx={{padding: 0, minWidth: 0}} onClick={ handleAddClick }>
                             <AddIcon fontSize='small' />
                         </Button>
                         <Typography variant='body1'>
                             {product.quantity}
                         </Typography>
-                        <Button variant='outlined' sx={{padding: 0, minWidth: 0, marginLeft: 0}} onClick={ (e) => handleRemoveClick(e, product.id) }>
+                        <Button variant='outlined' sx={{padding: 0, minWidth: 0, marginLeft: 0}} onClick={ handleRemoveClick }>
                             <RemoveIcon fontSize='small' />
                         </Button>
                     </Stack>
                     <CardMedia
                         component='img'
-                        image={productImageURL + product.image.src}
+                        image={product.image ? productImageURL + product.image.src : undefined}
                         sx={{width: 100}}
                     />
                     <CardContent>
@@ -70,10 +70,10 @@ const SidebarProductCard = ({product}) => {
                     <Stack
                         marginLeft='auto'
                         alignSelf='flex-start'
-                        onMouseEnter={ (e) => handleActionEnter(e) }
-                        onMouseLeave={ (e) => handleActionLeave(e) }
+                        onMouseEnter={ handleActionEnter }
+                        onMouseLeave={ handleActionLeave }
                     >
-                        <IconButton onClick={ (e) => handleDeleteCartClick(e, product.id) }>
+                        <IconButton onClick={ handleDeleteCartClick }>
                             <CloseIcon fontSize='small' />
                         </IconButton>
                     </Stack>

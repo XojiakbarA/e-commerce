@@ -1,23 +1,25 @@
 import { fetchBanners, fetchBrands, fetchCategories, fetchProduct, fetchProducts, fetchShop, fetchShopProducts, fetchShops } from '../../../api/api'
 import { setCats, setBrands, setBanners, setProduct, setSearchProducts, setShops, setShop, setShopProducts, setLoading } from '..'
 
-export const getCategories = async (dispatch) => {
-    try {
-        const res = await fetchCategories()
-        dispatch(setCats(res.data.data))
-    } catch (e) {
-        dispatch(setCats([{id: 1, title: 'server is offline'}]))
-        console.log(e.errno, e.code)
+export const getCategories = () => {
+    return async (dispatch) => {
+        try {
+            const res = await fetchCategories()
+            dispatch(setCats(res.data.data))
+        } catch (e) {
+            console.log(e)
+        }
     }
 }
 
-export const getBrands = async (dispatch) => {
-    try {
-        const res = await fetchBrands()
-        dispatch(setBrands(res.data.data))
-    } catch (e) {
-        dispatch(setBrands([{id: 1, title: 'server is offline'}]))
-        console.log(e.errno, e.code)
+export const getBrands = () => {
+    return async (dispatch) => {
+        try {
+            const res = await fetchBrands()
+            dispatch(setBrands(res.data.data))
+        } catch (e) {
+            console.log(e)
+        }
     }
 }
 

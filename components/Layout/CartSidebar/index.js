@@ -25,7 +25,8 @@ const CartSidebar = () => {
                 </Box>
                 
                 <Stack spacing={1}>
-                    { cart?.length
+                    {
+                        cart?.length > 0
                         ?
                         cart.map(product => (
                             <SidebarProductCard key={product.id} product={product} />
