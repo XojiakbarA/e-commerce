@@ -14,15 +14,15 @@ const Search = ({title}) => {
     const products = useSelector(state => state.products.data)
     const meta = useSelector(state => state.products.meta)
 
-    const [view, setView] = useState('grid')
+    const [listView, setListView] = useState(false)
     const [sidebar, setSidebar] = useState(false)
 
-    function handleViewClick(e, newView) {
-        setView(newView)
+    function handleViewClick(bool) {
+        setListView(bool)
     }
 
     function handleSidebarClick() {
-        setSidebar(!sidebar)
+        setSidebar(prevState => !prevState)
     }
 
     function handleSidebarClose() {
@@ -40,7 +40,7 @@ const Search = ({title}) => {
             <Grid container spacing={2}>
                 <Grid item lg={12} xs={12}>
                     <SearchPanel
-                        view={view}
+                        listView={listView}
                         handleViewClick={handleViewClick}
                         handleSidebarClick={handleSidebarClick}
                         title={title}
@@ -58,8 +58,8 @@ const Search = ({title}) => {
                         products.length > 0
                         ?
                         products.map((product) => (
-                            <Grid item xs={12} lg={view == 'grid' ? 4 : 12} key={product.id}>
-                                <ProductCard product={product} view={view} />
+                            <Grid item xs={12} lg={listView ? 12 : 4} key={product.id}>
+                                <ProductCard product={product} listView={listView} />
                             </Grid>
                         ))
                         :

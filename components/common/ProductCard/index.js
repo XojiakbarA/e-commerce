@@ -1,25 +1,15 @@
 import { useState } from 'react'
-import {Card, CardContent, CardMedia, CardActionArea, Typography, Rating, Stack} from '@mui/material'
+import {Card, CardContent, CardMedia, CardActionArea, Typography, Rating, Stack, Box} from '@mui/material'
 import { productImageURL } from '../../../utils/utils'
 import NextLink from '../Link'
+import Image from 'next/image'
 import { useSelector } from 'react-redux'
 import ProductCardButtons from './ProductCardButtons'
+import { noImageUrl } from '../../../utils/utils'
 
-const grid = {
-    card: {boxShadow: 3, borderRadius: 2, position: 'relative'},
-    cardActionArea: null,
-    cardMedia: null
-}
+const ProductCard = ({product, listView}) => {
 
-const list = {
-    card: {boxShadow: 3, borderRadius: 2, display: 'flex', justifyContent: 'flex-start', position: 'relative'},
-    cardActionArea: {display: 'flex', justifyContent: 'flex-start'},
-    cardMedia: {width: 200, alignSelf: 'start'}
-}
-
-const ProductCard = ({product, view}) => {
-
-    const cart = useSelector(state => state.cart.data) ?? []
+    const cart = useSelector(state => state.cart.data)
     const wishlist = useSelector(state => state.wishlist)
     const hasInCart = Boolean(cart.find(item => item.id == product.id))
     const hasInWishlist = Boolean(wishlist.find(item => item.id == product.id))
@@ -33,19 +23,26 @@ const ProductCard = ({product, view}) => {
         setRipple(false)
     }
 
+    const style = {
+        list: {display: 'flex', justifyContent: 'flex-start'},
+        card: {boxShadow: 3, borderRadius: 2, position: 'relative'},
+        cardMedia: {position: 'relative', width: listView ? 150 : '100%', height: listView ? 150 : 276}
+    }
+
     return (
-        <Card sx={ view == 'grid' || view == undefined ? grid.card : list.card }>
+        <Card sx={style.card}>
             <CardActionArea disableRipple={ripple}>
                 <NextLink
                     href={`/products/${product.id}`}
-                    style={view == 'grid' || view == undefined ? grid.cardActionArea : list.cardActionArea}
+                    style={listView ? style.list : null}
                 >
-                    <CardMedia
-                        component="img"
-                        image={productImageURL + (product.image?.src ?? 'no_image.jpeg')}
-                        sx={ view == 'grid' || view == undefined ? grid.cardMedia : list.cardMedia }
-                        alt={product.title}
-                    />
+                    <CardMedia sx={style.cardMedia}>
+                        <Image
+                            src={product.image ? productImageURL + product.image.src : noImageUrl}
+                            alt={product.image}
+                            layout='fill'
+                        />
+                    </CardMedia>
                     <CardContent>
                         <Typography gutterBottom
                             variant="h6"

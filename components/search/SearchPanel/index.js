@@ -7,7 +7,7 @@ import AppsIcon from '@mui/icons-material/Apps'
 import ViewListIcon from '@mui/icons-material/ViewList'
 import ViewSidebarIcon from '@mui/icons-material/ViewSidebar'
 
-const SearchPanel = ({view, handleViewClick, handleSidebarClick, title, total}) => {
+const SearchPanel = ({listView, handleViewClick, handleSidebarClick, title, total}) => {
 
     const router = useRouter()
     const initSort = router.query.sort || 'new'
@@ -18,7 +18,6 @@ const SearchPanel = ({view, handleViewClick, handleSidebarClick, title, total}) 
         setSort(sort)
 
         router.push({
-            pathname: '/search',
             query: { ...router.query, sort: sort, page: 1 }
         })
     }
@@ -55,10 +54,10 @@ const SearchPanel = ({view, handleViewClick, handleSidebarClick, title, total}) 
                             <Typography variant='body2'>
                                 View:
                             </Typography>
-                            <IconButton color={view == 'grid' ? 'primary' : 'default'} onClick={(e) => handleViewClick(e, 'grid')}>
+                            <IconButton color={!listView ? 'primary' : 'default'} onClick={(e) => handleViewClick(false)}>
                                 <AppsIcon />
                             </IconButton>
-                            <IconButton color={view == 'list' ? 'primary' : 'default'} onClick={(e) => handleViewClick(e, 'list')}>
+                            <IconButton color={listView ? 'primary' : 'default'} onClick={(e) => handleViewClick(true)}>
                                 <ViewListIcon />
                             </IconButton>
                             <IconButton sx={{display: {xs: 'flex', sm: 'none'}}} onClick={handleSidebarClick}>
