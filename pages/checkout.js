@@ -1,9 +1,9 @@
 import { Button, CircularProgress, Grid, Stack } from "@mui/material"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { useFormik } from "formik"
 import { useDispatch, useSelector } from "react-redux"
-import {clearAllCart, toggleLoginDialog, userOrder} from "../redux/actions"
+import {getDistricts, getRegions, setDistricts, toggleLoginDialog, createOrder} from "../redux/actions"
 import { checkoutValidationSchema } from "../utils/validate"
 import CheckoutForm from "../components/shopping-pages/CheckoutForm"
 import ShoppingLayout from "../components/layout/ShoppingLayout/ShoppingLayout"
@@ -14,8 +14,16 @@ const Checkout = () => {
 
     const router = useRouter()
     const dispatch = useDispatch()
+
     const isLoading = useSelector(state => state.toggle.isLoading)
     const user = useSelector(state => state.user)
+
+    const regions = useSelector(state => state.regions)
+    const districts = useSelector(state => state.districts.data)
+    const isFetching = useSelector(state => state.districts.isFetching)
+
+    const [region, setRegion] = useState(null)
+    const [district, setDistrict] = useState(null)
 
     useEffect(() => {
         if (!user) {
@@ -25,21 +33,40 @@ const Checkout = () => {
 
     const formik = useFormik({
         initialValues: {
-            name: '',
-            phone: '',
-            email: '',
-            country: '',
-            address: '',
-            zip_code: '',
+            name: user.first_name ?? '',
+            phone: user.phone ?? '',
+            email: user.email ?? '',
+            region_id: '',
+            district_id: '',
+            street: '',
+            home: '',
             pay_mode: ''
         },
         validationSchema: checkoutValidationSchema,
-        onSubmit: async (data) => {
-            await dispatch(userOrder(data))
-            await dispatch(clearAllCart())
+        onSubmit: (data) => {
+            dispatch(createOrder(data))
         },
         enableReinitialize: true
     })
+
+    const handleRegionChange = (e, value) => {
+        setDistrict(null)
+        formik.setFieldValue('district_id', '')
+        dispatch(setDistricts([]))
+        if (value) {
+            setRegion(value)
+            formik.setFieldValue('region_id', value.id)
+            dispatch(getDistricts(value.id))
+        } else {
+            setRegion(null)
+            formik.setFieldValue('region_id', '')
+            dispatch(setDistricts([]))
+        }
+    }
+    const handleDistrictChange = (e, value) => {
+        setDistrict(value)
+        formik.setFieldValue('district_id', value?.id)
+    }
 
     return(
         <>
@@ -49,7 +76,16 @@ const Checkout = () => {
             <ShoppingLayout>
                 <Grid item lg={8}>
                     <form onSubmit={formik.handleSubmit}>
-                        <CheckoutForm formik={formik}/>
+                        <CheckoutForm
+                            formik={formik}
+                            regions={regions}
+                            region={region}
+                            handleRegionChange={handleRegionChange}
+                            districts={districts}
+                            district={district}
+                            handleDistrictChange={handleDistrictChange}
+                            loading={isFetching}
+                        />
                         <PaymentForm formik={formik}/>
 
                         <Stack direction='row' spacing={4} justifyContent='center'>
@@ -83,7 +119,7 @@ const Checkout = () => {
 
 export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => async () => {
 
-    
+    await dispatch(getRegions())
 
 })
 

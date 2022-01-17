@@ -42,3 +42,11 @@ export const fetchShopProducts = async (id, query) => {
         params: query
     })
 }
+
+export const fetchRegions = async () => {
+    return await instance.get('regions')
+}
+
+export const fetchDistricts = async (id) => {
+    return await instance.get(`regions/${id}/districts`)
+}

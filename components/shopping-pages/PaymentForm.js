@@ -4,10 +4,15 @@ const PaymentForm = ({formik}) => {
 
     return (
         <Paper sx={{ padding: 3, marginBottom: 3 }}>
-            <Typography variant='body1' gutterBottom>
+            <Typography
+                variant='body1'
+                color={formik.touched.pay_mode && Boolean(formik.errors.pay_mode) ? '#d32f2f' : 'inherit'}
+                gutterBottom
+            >
                 Payment Mode
             </Typography>
-            <FormControl fullWidth error={ formik.touched.pay_mode && Boolean(formik.errors.pay_mode) }>
+            <FormControl
+                fullWidth error={ formik.touched.pay_mode && Boolean(formik.errors.pay_mode) }>
                 <RadioGroup
                     value={formik.values.pay_mode}
                     onChange={formik.handleChange}

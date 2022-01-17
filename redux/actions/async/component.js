@@ -1,5 +1,5 @@
-import { fetchBanners, fetchBrands, fetchCategories, fetchProduct, fetchProducts, fetchShop, fetchShopProducts, fetchShops } from '../../../api/api'
-import { setCats, setBrands, setBanners, setProduct, setSearchProducts, setShops, setShop, setShopProducts, setLoading } from '..'
+import { fetchBanners, fetchBrands, fetchCategories, fetchDistricts, fetchProduct, fetchProducts, fetchRegions, fetchShop, fetchShopProducts, fetchShops } from '../../../api/api'
+import { setCats, setBrands, setBanners, setProduct, setSearchProducts, setShops, setShop, setShopProducts, setLoading, setRegions, setDistricts, setDistrictFetching } from '..'
 
 export const getCategories = () => {
     return async (dispatch) => {
@@ -101,3 +101,30 @@ export const getShop = (id) => {
     }
 }
 
+export const getRegions = () => {
+    return async (dispatch) => {
+        try {
+            const res = await fetchRegions()
+            if (res.status === 200) {
+                dispatch(setRegions(res.data.data))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const getDistricts = (id) => {
+    return async (dispatch) => {
+        try {
+            dispatch(setDistrictFetching(true))
+            const res = await fetchDistricts(id)
+            if (res.status === 200) {
+                dispatch(setDistricts(res.data.data))
+                dispatch(setDistrictFetching(false))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}

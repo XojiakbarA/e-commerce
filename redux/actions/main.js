@@ -143,3 +143,18 @@ export const setOrder = (order) => ({
     type: type.SET_ORDER,
     payload: order
 })
+
+export const setRegions = (regions) => ({
+    type: type.SET_REGIONS,
+    payload: regions
+})
+
+export const setDistricts = (regions) => ({
+    type: type.SET_DISTRICTS,
+    payload: regions
+})
+
+export const setDistrictFetching = (bool) => ({
+    type: type.SET_DISTRICTS_FETCHING,
+    payload: bool
+})

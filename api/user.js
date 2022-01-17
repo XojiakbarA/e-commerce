@@ -65,10 +65,6 @@ export const deleteCart = async (id) => {
     return await user.delete(`api/cart/${id}`)
 }
 
-export const clearCart = async () => {
-    return await user.delete('api/cart')
-}
-
 export const fetchWishlist = async (cookie) => {
     return await user.get('api/wishlist', {
         headers: {
@@ -94,7 +90,7 @@ export const storeReview = async (id, data) => {
     return await user.post(`api/products/${id}/reviews`, data)
 }
 
-export const order = async (data) => {
+export const storeOrder = async (data) => {
     return await user.post('api/orders', data)
 }
 

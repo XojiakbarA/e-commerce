@@ -13,7 +13,7 @@ import {
     addWishlist,
     fetchWishlist,
     deleteWishlist,
-    order,
+    storeOrder,
     clearCart,
     fetchOrders, fetchOrder, cancellationOrder, sendUserData, storeShop, storeProduct, destroyProductImage, updateProduct, destroyProduct, storeReview
 } from '../../../api/user'
@@ -81,21 +81,6 @@ export const deleteFromCart = (id) => {
         try {
             dispatch(setCartFetching(true))
             const res = await deleteCart(id)
-            if (res.status === 200) {
-                dispatch(setCart(res.data))
-                dispatch(setCartFetching(false))
-            }
-        } catch (e) {
-            console.log(e)
-        }
-    }
-}
-
-export const clearAllCart = () => {
-    return async (dispatch) => {
-        try {
-            dispatch(setCartFetching(true))
-            const res = await clearCart()
             if (res.status === 200) {
                 dispatch(setCart(res.data))
                 dispatch(setCartFetching(false))
@@ -259,11 +244,11 @@ export const createReview = (id, data, resetForm) => {
     }
 }
 
-export const userOrder = (data) => {
+export const createOrder = (data) => {
     return async (dispatch) => {
         try {
             dispatch(setLoading(true))
-            const res = await order(data)
+            const res = await storeOrder(data)
             if (res.status === 201) {
                 dispatch(setLoading(false))
                 dispatch(toggleOrderDialog(true))
