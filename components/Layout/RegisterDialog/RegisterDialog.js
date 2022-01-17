@@ -1,4 +1,4 @@
-import { Dialog, Box, IconButton, Typography, Stack, TextField, Button, CircularProgress } from "@mui/material"
+import { Dialog, Box, IconButton, Typography, Stack, TextField, Button, CircularProgress, DialogContent, DialogTitle } from "@mui/material"
 import CloseIcon from '@mui/icons-material/Close'
 import { useDispatch, useSelector } from "react-redux"
 import { useFormik } from "formik"
@@ -40,13 +40,15 @@ const RegisterDialog = () => {
 
     return (
         <Dialog open={registerDialog} onClose={ closeRegisterDialog }>
-            <Box sx={{marginX: {xs: 3, sm: 10}, marginY: {xs: 3, sm: 7}, width: {xs: 250, sm: 300}}}>
-                <IconButton sx={{ position: 'absolute', top: 8, right: 8 }} onClick={ closeRegisterDialog }>
-                    <CloseIcon />
-                </IconButton>
-                <Typography variant='h5' textAlign='center' paddingBottom={5}>
-                    Create Your Account
+            <DialogTitle sx={{display: 'flex', alignItems: 'end', justifyContent: 'space-between'}}>
+                <Typography variant="button" fontSize={20}>
+                    Register
                 </Typography>
+                <IconButton onClick={closeRegisterDialog}>
+                    <CloseIcon/>
+                </IconButton>
+            </DialogTitle>
+            <DialogContent sx={{marginX: 7, marginY: 3, width: 300}}>
                 <form onSubmit={formik.handleSubmit}>
                     <Stack spacing={3}>
                         <TextField
@@ -98,7 +100,7 @@ const RegisterDialog = () => {
                         </Typography>
                     </Stack>
                 </form>
-            </Box>
+                </DialogContent>
         </Dialog>
     )
 }

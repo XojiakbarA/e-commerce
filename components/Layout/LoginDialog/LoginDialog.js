@@ -1,4 +1,4 @@
-import { Stack, Button, Dialog, TextField, Typography, Box, IconButton, CircularProgress, Checkbox, FormControlLabel } from '@mui/material'
+import { Stack, Button, Dialog, TextField, Typography, Box, IconButton, CircularProgress, Checkbox, FormControlLabel, DialogTitle, DialogContent } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useSelector, useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
@@ -40,15 +40,17 @@ const LoginDialog = () => {
 
     return(
         <Dialog open={loginDialog} onClose={ closeLoginDialog }>
-            <Box sx={{marginX: {xs: 3, sm: 10}, marginY: {xs: 3, sm: 7}, width: {xs: 250, sm: 300}}}>
-                <IconButton sx={{ position: 'absolute', top: 8, right: 8 }} onClick={ closeLoginDialog }>
-                    <CloseIcon />
-                </IconButton>
-                <Typography variant='h5' textAlign='center' paddingBottom={5}>
-                    Welcome to e-commerce
+            <DialogTitle sx={{display: 'flex', alignItems: 'end', justifyContent: 'space-between'}}>
+                <Typography variant="button" fontSize={20}>
+                    Login
                 </Typography>
-                <form onSubmit={formik.handleSubmit} >
-                    <Stack spacing={3}>
+                <IconButton onClick={closeLoginDialog}>
+                    <CloseIcon/>
+                </IconButton>
+            </DialogTitle>
+                <DialogContent sx={{marginX: 7, marginY: 3, width: 300}}>
+                <form onSubmit={formik.handleSubmit}>
+                    <Stack spacing={3} marginTop={1}>
                         <TextField
                             label='Email'
                             size='small'
@@ -88,7 +90,7 @@ const LoginDialog = () => {
                         </Typography>
                     </Stack>
                 </form>
-            </Box>
+                </DialogContent>
         </Dialog>
     )
 }

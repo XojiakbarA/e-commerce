@@ -1,9 +1,8 @@
 import {useEffect, useState} from "react";
-import { Badge, Box, Button, CircularProgress, Dialog, DialogContent, DialogTitle, IconButton, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Dialog, DialogContent, DialogTitle, IconButton, Stack, TextField, Typography } from "@mui/material";
 import {DesktopDatePicker, LocalizationProvider} from "@mui/lab";
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import CloseIcon from '@mui/icons-material/Close';
-import RemoveIcon from '@mui/icons-material/Remove';
 import ruLocale from 'date-fns/locale/ru'
 import {useDispatch, useSelector} from "react-redux";
 import {editUser, toggleEditProfileDialog} from "../../../redux/actions";
@@ -57,7 +56,7 @@ const EditProfileDialog = () => {
 
     return (
         <Dialog open={editProfileDialog} onClose={closeEditProfileDialog}>
-            <DialogTitle sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+            <DialogTitle sx={{display: 'flex', alignItems: 'end', justifyContent: 'space-between'}}>
                 <Typography variant="button" fontSize={20}>
                     Edit Profile
                 </Typography>
@@ -65,7 +64,7 @@ const EditProfileDialog = () => {
                     <CloseIcon/>
                 </IconButton>
             </DialogTitle>
-            <DialogContent sx={{marginX: 5, width: 300}}>
+            <DialogContent sx={{marginX: 7, marginY: 3, width: 300}}>
                 <form onSubmit={formik.handleSubmit}>
                     <Stack spacing={2}>
                         <Box alignSelf='center' paddingBottom={2}>
