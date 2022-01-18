@@ -1,6 +1,6 @@
-import {Grid, List, ListItem, ListItemText, ListSubheader, Paper, Stack} from "@mui/material";
+import {List, ListItem, ListItemText, ListSubheader, Paper, Stack} from "@mui/material";
 
-const labels = ['Name:', 'Phone:', 'Country:', 'Address:', 'Zip Code:']
+const labels = ['Name:', 'Phone:', 'Region:', 'District:', 'Street:', 'Home:']
 
 const OrderShippingAddress = ({order}) => {
     return (
@@ -18,19 +18,22 @@ const OrderShippingAddress = ({order}) => {
                 </List>
                 <List>
                 <ListItem>
-                    <ListItemText>{order?.name}</ListItemText>
+                    <ListItemText>{order.name}</ListItemText>
                 </ListItem>
                 <ListItem>
-                    <ListItemText>{order?.phone}</ListItemText>
+                    <ListItemText>{order.phone}</ListItemText>
                 </ListItem>
                 <ListItem>
-                    <ListItemText>{order?.country}</ListItemText>
+                    <ListItemText>{order.region.name}</ListItemText>
                 </ListItem>
                 <ListItem>
-                    <ListItemText>{order?.address}</ListItemText>
+                    <ListItemText>{order.district.name}</ListItemText>
                 </ListItem>
                 <ListItem>
-                    <ListItemText>{order?.zip_code}</ListItemText>
+                    <ListItemText>{order.street}</ListItemText>
+                </ListItem>
+                <ListItem>
+                    <ListItemText>{order.home}</ListItemText>
                 </ListItem>
             </List>
             </Stack>

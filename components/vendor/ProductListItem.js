@@ -3,9 +3,9 @@ import Image from 'next/image'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import VisibilityIcon from '@mui/icons-material/Visibility'
-import { productImageURL, noImageUrl } from "../../../utils/utils"
+import { productImageURL, noImageUrl } from "../../utils/utils"
 import { useDispatch } from "react-redux"
-import { getProduct, setProduct, toggleDeleteProductDialog, toggleEditProductDialog, toggleViewProductDialog } from "../../../redux/actions"
+import { getProduct, setProduct, toggleDeleteProductDialog, toggleEditProductDialog, toggleViewProductDialog } from "../../redux/actions"
 
 const ProductListItem = ({ product }) => {
 

@@ -2,16 +2,17 @@ import ListAltIcon from '@mui/icons-material/ListAlt'
 import AddIcon from '@mui/icons-material/Add'
 import ProfileLayout from "../../../components/layout/ProfileLayout/ProfileLayout"
 import ProfileTitle from "../../../components/profile/ProfileTitle"
-import ProductList from '../../../components/vendor/ProductList/ProductList'
 import { useDispatch, useSelector } from 'react-redux'
 import { getShopProducts, toggleAddProductDialog } from '../../../redux/actions'
-import { Typography } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import AddProductDialog from '../../../components/vendor/AddProductDialog/AddProductDialog'
 import ViewProductDialog from '../../../components/vendor/ViewProductDialog/ViewProductDialog'
 import EditProductDialog from '../../../components/vendor/EditProductDialog/EditProductDialog'
 import DeleteProductDialog from '../../../components/vendor/DeleteProductDialog/DeleteProductDialog'
 import { wrapper } from "../../../redux/store"
 import { useRouter } from 'next/router'
+import ProductList from '../../../components/common/List/List'
+import ProductListItem from '../../../components/vendor/ProductListItem'
 
 const labels = [ 'Title', 'Image', 'Stock', 'Price', 'Sale Price', 'Rating', '' ]
 
@@ -45,12 +46,15 @@ const Products = () => {
             {
                 products.length > 0
                 ?
-                <ProductList
-                    labels={labels}
-                    products={products}
-                    meta={meta}
-                    handlePageChange={handlePageChange}
-                />
+                <ProductList labels={labels} meta={meta} onChange={handlePageChange}>
+                    {
+                        products.map(product => (
+                            <Grid item xs={12} key={product.id}>
+                                <ProductListItem product={product}/>
+                            </Grid>
+                        ))
+                    }
+                </ProductList>
                 :
                 <Typography variant='h4'>
                     No products yet

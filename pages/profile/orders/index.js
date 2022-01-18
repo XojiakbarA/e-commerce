@@ -1,12 +1,15 @@
 import ProfileLayout from "../../../components/layout/ProfileLayout/ProfileLayout";
 import ProfileTitle from "../../../components/profile/ProfileTitle";
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag'
-import OrderList from "../../../components/profile/orders/OrderList/OrderList";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { getOrders } from "../../../redux/actions";
 import { wrapper } from "../../../redux/store"
+import OrderList from "../../../components/common/List/List";
+import OrderListItem from "../../../components/profile/orders/OrderListItem";
+
+const labels = ['Order ID', 'Products', 'Status', 'Date purchased', 'Total']
 
 const Orders = () => {
 
@@ -30,11 +33,15 @@ const Orders = () => {
             {
                 orders.length > 0
                 ?
-                <OrderList
-                    orders={orders}
-                    meta={meta}
-                    handlePageChange={handlePageChange}
-                />
+                <OrderList labels={labels} meta={meta} onChange={handlePageChange}>
+                    {
+                        orders.map(order => (
+                            <Grid item xs={12} key={order.id}>
+                                <OrderListItem order={order}/>
+                            </Grid>
+                        ))
+                    }
+                </OrderList>
                 :
                 <Typography variant="h4">
                     No orders yet
