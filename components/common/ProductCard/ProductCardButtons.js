@@ -5,17 +5,14 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { addToCart, addToWishlist, deleteFromCart, deleteFromWishlist } from '../../../redux/actions'
 import { useDispatch } from 'react-redux'
+import { useCart } from '../../../app/hooks/useCart'
 
 const ProductCardButtons = ({ hasInCart, hasInWishlist, id }) => {
 
     const dispatch = useDispatch()
 
-    const handleAddCartClick = () => {
-        dispatch(addToCart(id))
-    }
-    const handleDeleteCartClick = () => {
-        dispatch(deleteFromCart(id))
-    }
+    const [addProductCart, deleteProductCart] = useCart(id)
+
     const handleAddWishlistClick = () => {
         dispatch(addToWishlist(id))
     }
@@ -45,13 +42,13 @@ const ProductCardButtons = ({ hasInCart, hasInWishlist, id }) => {
             {
                 hasInCart
                 ?
-                <IconButton onClick={ handleDeleteCartClick }>
+                <IconButton onClick={ deleteProductCart }>
                     <Tooltip title='Remove from cart' placement='right' key={id}>
                         <ShoppingCartIcon />
                     </Tooltip>
                 </IconButton>
                 :
-                <IconButton onClick={ handleAddCartClick }>
+                <IconButton onClick={ addProductCart }>
                     <Tooltip title='Add to cart' placement='right'>
                         <ShoppingCartOutlinedIcon />
                     </Tooltip>

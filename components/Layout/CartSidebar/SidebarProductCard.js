@@ -5,28 +5,14 @@ import CloseIcon from '@mui/icons-material/Close'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import { noImageUrl, productImageURL } from '../../../utils/utils'
-import { addToCart, deleteFromCart, removeFromCart } from '../../../redux/actions'
-import { useDispatch } from 'react-redux'
 import { useRipple } from '../../../app/hooks/useRipple'
+import { useCart } from '../../../app/hooks/useCart'
 
 const SidebarProductCard = ({product}) => {
 
-    const dispatch = useDispatch()
-
     const [ripple, events] = useRipple()
 
-    function handleDeleteCartClick(e) {
-        e.preventDefault()
-        dispatch(deleteFromCart(product.id))
-    }
-    function handleAddClick(e) {
-        e.preventDefault()
-        dispatch(addToCart(product.id))
-    }
-    function handleRemoveClick(e) {
-        e.preventDefault()
-        dispatch(removeFromCart(product.id))
-    }
+    const [addProductCart, removeProductCart, deleteProductCart] = useCart(product.id)
 
     return(
         <Card sx={{display: 'flex'}}>
@@ -36,16 +22,23 @@ const SidebarProductCard = ({product}) => {
                         padding={1}
                         justifyContent='center'
                         alignItems='center'
-                        onMouseEnter={ handleActionEnter }
-                        onMouseLeave={ handleActionLeave }
+                        { ...events }
                     >
-                        <Button variant='outlined' sx={{padding: 0, minWidth: 0}} onClick={ handleAddClick }>
+                        <Button
+                            variant='outlined'
+                            sx={{padding: 0, minWidth: 0}}
+                            onClick={ addProductCart }
+                        >
                             <AddIcon fontSize='small' />
                         </Button>
                         <Typography variant='body1'>
                             {product.quantity}
                         </Typography>
-                        <Button variant='outlined' sx={{padding: 0, minWidth: 0, marginLeft: 0}} onClick={ handleRemoveClick }>
+                        <Button
+                            variant='outlined'
+                            sx={{padding: 0, minWidth: 0, marginLeft: 0}}
+                            onClick={ removeProductCart }
+                        >
                             <RemoveIcon fontSize='small' />
                         </Button>
                     </Stack>
@@ -87,7 +80,7 @@ const SidebarProductCard = ({product}) => {
                         sx={{position: 'absolute', top: 0, right: 0}}
                         { ...events }
                     >
-                        <IconButton onClick={ handleDeleteCartClick }>
+                        <IconButton onClick={ deleteProductCart }>
                             <CloseIcon fontSize='small' />
                         </IconButton>
                     </Stack>

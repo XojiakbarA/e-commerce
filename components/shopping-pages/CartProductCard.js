@@ -5,32 +5,16 @@ import RemoveIcon from '@mui/icons-material/Remove'
 import Image from 'next/image'
 import NextLink from '../common/Link'
 import { noImageUrl, productImageURL } from '../../utils/utils'
-import { useDispatch } from 'react-redux'
-import { addToCart, deleteFromCart, removeFromCart } from '../../redux/actions'
+import { useCart } from '../../app/hooks/useCart'
 
 const CartProductCard = ({product}) => {
 
-    const dispatch = useDispatch()
-
-    const id = product.id
-
-    function handleDeleteCartClick(e) {
-        e.preventDefault()
-        dispatch(deleteFromCart(id))
-    }
-    function handleAddClick(e) {
-        e.preventDefault()
-        dispatch(addToCart(id))
-    }
-    function handleRemoveClick(e) {
-        e.preventDefault()
-        dispatch(removeFromCart(id))
-    }
+    const [addProductCart, removeProductCart, deleteProductCart] = useCart(product.id)
 
     return(
         <Card sx={{display: 'flex', position: 'relative'}}>
             <CardActionArea component='div'>
-                <NextLink href={`/products/${id}`} style={{display: 'flex', justifyContent: 'space-between', height: '100%'}}>
+                <NextLink href={`/products/${product.id}`} style={{display: 'flex', justifyContent: 'space-between', height: '100%'}}>
                 <CardMedia sx={{width: 120, height: 120, position: 'relative'}}>
                     <Image
                         src={product.image ? productImageURL + product.image.src : noImageUrl}
@@ -68,17 +52,25 @@ const CartProductCard = ({product}) => {
                 padding={1}
                 sx={{position: 'absolute', top: 0, right: 0, height: '100%'}}
             >
-                <IconButton onClick={ handleDeleteCartClick }>
+                <IconButton onClick={ deleteProductCart }>
                     <CloseIcon fontSize='small' />
                 </IconButton>
                 <Stack direction='row' spacing={1}>
-                    <Button variant='outlined' sx={{padding: 0, minWidth: 0}} onClick={ handleAddClick }>
+                    <Button
+                        variant='outlined'
+                        sx={{padding: 0, minWidth: 0}}
+                        onClick={ addProductCart }
+                    >
                         <AddIcon fontSize='small' />
                     </Button>
                     <Typography variant='body1'>
                         {product.quantity}
                     </Typography>
-                    <Button variant='outlined' sx={{padding: 0, minWidth: 0, marginLeft: 0}} onClick={ handleRemoveClick }>
+                    <Button
+                        variant='outlined'
+                        sx={{padding: 0, minWidth: 0, marginLeft: 0}}
+                        onClick={ removeProductCart }
+                    >
                         <RemoveIcon fontSize='small' />
                     </Button>
                 </Stack>

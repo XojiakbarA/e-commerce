@@ -3,27 +3,19 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import NextLink from '../../common/Link'
-import { useDispatch, useSelector } from 'react-redux'
-import { addToCart, removeFromCart } from '../../../redux/actions'
+import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
+import { useCart } from '../../../app/hooks/useCart'
 
 const ProductInfo = ({product}) => {
 
     const router = useRouter()
-    const dispatch = useDispatch()
-    const cart = useSelector(state => state.cart.data) ?? []
+    const cart = useSelector(state => state.cart.data)
+    const [addProductCart, removeProductCart] = useCart(product.id)
+
     const productInCart = cart.find(item => item.id == product.id)
     const hasInCart = Boolean(productInCart)
     const isProductsPage = router.pathname.indexOf('/products') === 0
-
-    function handleAddClick(e, id) {
-        e.preventDefault()
-        dispatch(addToCart(id))
-    }
-    function handleRemoveClick(e, id) {
-        e.preventDefault()
-        dispatch(removeFromCart(id))
-    }
 
     return(
         <Stack spacing={3} sx={{marginTop: 5}} alignItems='flex-start'>
@@ -96,18 +88,26 @@ const ProductInfo = ({product}) => {
                     hasInCart
                     ?
                     <Stack direction='row' spacing={2} alignItems='center'>
-                        <Button variant='outlined' sx={{padding: 1, minWidth: 0}} onClick={ (e) => handleAddClick(e, product.id) }>
+                        <Button
+                            variant='outlined'
+                            sx={{padding: 1, minWidth: 0}}
+                            onClick={ addProductCart }
+                        >
                             <AddIcon />
                         </Button>
                         <Typography variant='h6'>
                             {productInCart.quantity}
                         </Typography>
-                        <Button variant='outlined' sx={{padding: 1, minWidth: 0}} onClick={ (e) => handleRemoveClick(e, product.id)}>
+                        <Button
+                            variant='outlined'
+                            sx={{padding: 1, minWidth: 0, marginLeft: 0}}
+                            onClick={ removeProductCart }
+                        >
                             <RemoveIcon />
                         </Button>
                     </Stack>
                     :
-                    <Button variant='contained' onClick={ (e) => handleAddClick(e, product.id) }>Add To Cart</Button>
+                    <Button variant='contained' onClick={ addProductCart }>Add To Cart</Button>
                 :
                 null
             }
