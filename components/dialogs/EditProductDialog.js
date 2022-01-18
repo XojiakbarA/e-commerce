@@ -3,14 +3,14 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
 import CloseIcon from '@mui/icons-material/Close'
 import { styled } from "@mui/material/styles"
 import { useFormik } from "formik"
-import { productValidationSchema } from "../../../utils/validate"
-import AutocompleteAsync from "../../common/AutocompleteAsync/AutocompleteAsync"
+import { productValidationSchema } from "../../utils/validate"
+import AutocompleteAsync from "../common/AutocompleteAsync/AutocompleteAsync"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
-import { deleteProductImage, editProduct, getShopProducts, setProduct, toggleEditProductDialog } from "../../../redux/actions"
-import { appendToFormData, productImageURL } from "../../../utils/utils"
+import { deleteProductImage, editProduct, getShopProducts, setProduct, toggleEditProductDialog } from "../../redux/actions"
+import { appendToFormData, productImageURL } from "../../utils/utils"
 import { useRouter } from "next/router"
-import { makeURLArray } from "../../../utils/utils"
+import { makeURLArray } from "../../utils/utils"
 
 const Input = styled('input')({
     display: 'none'

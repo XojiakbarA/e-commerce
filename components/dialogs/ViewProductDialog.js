@@ -1,11 +1,11 @@
 import { Box, Dialog, DialogContent, DialogTitle, Grid, IconButton, Typography } from "@mui/material"
 import CloseIcon from '@mui/icons-material/Close'
-import ProductGallery from "../../product/ProductGallery"
-import ProductInfo from "../../product/ProductInfo"
+import ProductGallery from "../product/ProductGallery"
+import ProductInfo from "../product/ProductInfo"
 import { useDispatch, useSelector } from "react-redux"
-import { getReviews, toggleViewProductDialog } from "../../../redux/actions"
+import { getReviews, toggleViewProductDialog } from "../../redux/actions"
 import { useEffect } from "react"
-import ReviewItem from "../../product/ProductTab/ReviewItem"
+import ReviewItem from "../product/ProductTab/ReviewItem"
 
 const ViewProductDialog = () => {
 

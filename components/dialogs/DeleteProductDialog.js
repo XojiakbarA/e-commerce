@@ -1,7 +1,7 @@
 import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Stack, Typography } from "@mui/material"
 import CloseIcon from '@mui/icons-material/Close'
 import { useDispatch, useSelector } from "react-redux"
-import { deleteProduct, getShopProducts, setProduct, toggleDeleteProductDialog } from "../../../redux/actions"
+import { deleteProduct, getShopProducts, setProduct, toggleDeleteProductDialog } from "../../redux/actions"
 
 
 const DeleteProductDialog = () => {

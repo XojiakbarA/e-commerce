@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {toggleEditProfileDialog} from "../../redux/actions"
 import OrderCountCard from "../../components/profile/index/OrderCountCard"
 import UserCard from "../../components/profile/index/UserCard"
-import EditProfileDialog from "../../components/profile/index/EditProfileDialog"
+import EditProfileDialog from "../../components/dialogs/EditProfileDialog"
 import { wrapper } from "../../redux/store"
 
 const Profile = () => {

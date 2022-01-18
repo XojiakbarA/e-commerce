@@ -5,12 +5,12 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import CloseIcon from '@mui/icons-material/Close';
 import ruLocale from 'date-fns/locale/ru'
 import {useDispatch, useSelector} from "react-redux";
-import {editUser, toggleEditProfileDialog} from "../../../redux/actions";
+import {editUser, toggleEditProfileDialog} from "../../redux/actions";
 import {useFormik} from "formik";
-import {editProfileValidationSchema} from "../../../utils/validate";
-import {appendToFormData, userImageURL} from "../../../utils/utils";
-import AvatarUpload from "../../common/AvatarUpload/AvatarUpload";
-import PhoneMask from "../../common/PhoneMask";
+import {editProfileValidationSchema} from "../../utils/validate";
+import {appendToFormData, userImageURL} from "../../utils/utils";
+import AvatarUpload from "../common/AvatarUpload/AvatarUpload";
+import PhoneMask from "../common/PhoneMask";
 
 const EditProfileDialog = () => {
 
