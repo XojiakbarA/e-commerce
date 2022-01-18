@@ -1,15 +1,14 @@
 import { Avatar, Chip, Grid, IconButton, Paper, Rating, Tooltip, Typography } from "@mui/material"
+import Image from 'next/image'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import VisibilityIcon from '@mui/icons-material/Visibility'
-import { productImageURL } from "../../../utils/utils"
-import { useRouter } from "next/router"
+import { productImageURL, noImageUrl } from "../../../utils/utils"
 import { useDispatch } from "react-redux"
 import { getProduct, setProduct, toggleDeleteProductDialog, toggleEditProductDialog, toggleViewProductDialog } from "../../../redux/actions"
 
 const ProductListItem = ({ product }) => {
 
-    const router = useRouter()
     const dispatch = useDispatch()
 
     const handleViewClick = () => {
@@ -39,10 +38,14 @@ const ProductListItem = ({ product }) => {
                     </Typography>
                 </Grid>
                 <Grid item xs display='flex' justifyContent='center'>
-                    <Avatar
-                        variant="rounded"
-                        src={product.image ? productImageURL + product.image.src : undefined}
-                    />
+                    <Avatar variant="rounded">
+                        <Image
+                            src={product.image ? productImageURL + product.image.src : noImageUrl}
+                            alt={product.title}
+                            layout='fill'
+                            objectFit='cover'
+                        />
+                    </Avatar>
                 </Grid>
                 <Grid item xs display='flex' justifyContent='center'>
                     <Chip label={product.stock} color={product.stock < 6 ? 'warning' : 'info'} size='small' variant='outlined'/>

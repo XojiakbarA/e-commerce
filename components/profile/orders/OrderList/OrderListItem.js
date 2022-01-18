@@ -1,7 +1,7 @@
 import {Avatar, AvatarGroup, Chip, Grid, Paper, Typography} from "@mui/material";
 import NextLink from '../../../common/Link';
 import Image from "next/image";
-import {productImageURL} from "../../../../utils/utils";
+import {productImageURL, noImageUrl} from "../../../../utils/utils";
 
 const OrderListItem = ({order, styles}) => {
 
@@ -15,11 +15,14 @@ const OrderListItem = ({order, styles}) => {
                 <AvatarGroup max={3} spacing='small'>
                     {
                         order?.order_products.map(product => (
-                            <Avatar
-                                key={product.id}
-                                src={product.image ? productImageURL + product.image.src : undefined}
-                                alt={product.image?.src}
-                            />
+                            <Avatar key={product.id}>
+                                <Image
+                                    src={product.image ? productImageURL + product.image.src : noImageUrl}
+                                    alt={product.image?.src}
+                                    layout='fill'
+                                    objectFit='cover'
+                                />
+                            </Avatar>
                         ))
                     }
                 </AvatarGroup>

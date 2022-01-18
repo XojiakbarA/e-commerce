@@ -11,17 +11,26 @@ import ViewProductDialog from '../../../components/vendor/ViewProductDialog/View
 import EditProductDialog from '../../../components/vendor/EditProductDialog/EditProductDialog'
 import DeleteProductDialog from '../../../components/vendor/DeleteProductDialog/DeleteProductDialog'
 import { wrapper } from "../../../redux/store"
+import { useRouter } from 'next/router'
 
 const labels = [ 'Title', 'Image', 'Stock', 'Price', 'Sale Price', 'Rating', '' ]
 
 const Products = () => {
 
+    const router = useRouter()
     const dispatch = useDispatch()
 
     const products = useSelector(state => state.products.data)
+    const meta = useSelector(state => state.products.meta)
 
     const openAddProductDialog = () => {
         dispatch(toggleAddProductDialog(true))
+    }
+
+    const handlePageChange = (e, p) => {
+        router.push({
+            query: { ...router.query, page: p }
+        })
     }
 
     return (
@@ -36,7 +45,12 @@ const Products = () => {
             {
                 products.length > 0
                 ?
-                <ProductList labels={labels} products={products}/>
+                <ProductList
+                    labels={labels}
+                    products={products}
+                    meta={meta}
+                    handlePageChange={handlePageChange}
+                />
                 :
                 <Typography variant='h4'>
                     No products yet
@@ -50,9 +64,11 @@ const Products = () => {
     )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => async ({params}) => {
+export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => async ({params, query}) => {
 
-    await dispatch(getShopProducts(params.id))
+    query.count = query.count ?? 5
+
+    await dispatch(getShopProducts(params.id, query))
 
 })
 

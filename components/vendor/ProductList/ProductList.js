@@ -1,17 +1,9 @@
-import { Box, Grid, Typography } from "@mui/material"
+import { Box, Grid, Pagination, Typography } from "@mui/material"
 import ProductListItem from "./ProductListItem"
 
-const ProductList = ({ labels, products }) => {
+const ProductList = ({ labels, products, meta, handlePageChange }) => {
 
     return (
-        <>
-        {
-            products?.length === 0
-            ?
-            <Typography variant="h4">
-                No products yet
-            </Typography>
-            :
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <Box sx={{padding: 2}}>
@@ -40,9 +32,18 @@ const ProductList = ({ labels, products }) => {
                         </Grid>
                     ))
                 }
+                {
+                    meta && meta.last_page > 1 &&
+                    <Grid item xs={12}>
+                        <Pagination
+                            color="primary"
+                            page={meta.current_page}
+                            count={meta.last_page}
+                            onChange={handlePageChange}
+                        />
+                    </Grid>
+                }
             </Grid>
-        }
-        </>
     )
 }
 
