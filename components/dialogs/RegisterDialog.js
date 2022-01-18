@@ -2,8 +2,8 @@ import { Dialog, Box, IconButton, Typography, Stack, TextField, Button, Circular
 import CloseIcon from '@mui/icons-material/Close'
 import { useDispatch, useSelector } from "react-redux"
 import { useFormik } from "formik"
-import { registerValidationSchema } from "../../../utils/validate"
-import { toggleLoginDialog, toggleRegisterDialog, userRegister } from "../../../redux/actions"
+import { registerValidationSchema } from "../../utils/validate"
+import { toggleLoginDialog, toggleRegisterDialog, userRegister } from "../../redux/actions"
 import { useRouter } from "next/router"
 
 

@@ -6,11 +6,9 @@ import BottomHeader from "./BottomHeader"
 import Footer from './Footer'
 import MenuMobile from "./MenuMobile"
 import AccountMenu from "./AccountMenu/AccountMenu"
-import LoginDialog from "./LoginDialog/LoginDialog"
+import LoginDialog from "../dialogs/LoginDialog"
 import CartSidebar from "./CartSidebar"
-import RegisterDialog from "./RegisterDialog/RegisterDialog"
-import OrderDialog from "./OrderDialog/OrderDialog"
-import ConfirmDialog from "./ConfirmDialog/ConfirmDialog"
+import RegisterDialog from "../dialogs/RegisterDialog"
 
 const MainLayout = ({children}) => {
 
@@ -35,8 +33,6 @@ const MainLayout = ({children}) => {
         <AccountMenu />
         <LoginDialog />
         <RegisterDialog />
-        <OrderDialog />
-        <ConfirmDialog />
         <Drawer
             anchor='right'
             open={cartSidebar}

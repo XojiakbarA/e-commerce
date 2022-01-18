@@ -11,6 +11,7 @@ import OrderDetails from "../../../components/profile/orders/OrderDetails";
 import { wrapper } from "../../../redux/store"
 import OrderProductList from '../../../components/common/List/List'
 import OrderProductListItem from "../../../components/profile/orders/OrderProductListItem";
+import ConfirmDialog from "../../../components/dialogs/ConfirmDialog";
 
 const labels = ['Product', 'Title', 'Price', 'Brand', 'Shop']
 
@@ -58,6 +59,7 @@ const Order = () => {
                     </Grid>
                 </Grid>
             </Grid>
+            <ConfirmDialog/>
         </ProfileLayout>
     )
 }

@@ -1,16 +1,7 @@
-import {
-    Box,
-    Button,
-    CircularProgress,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle
-} from "@mui/material";
-import {useDispatch, useSelector} from "react-redux";
-import {cancelOrder, toggleConfirmDialog} from "../../../redux/actions";
-import {useRouter} from "next/router";
+import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material"
+import {useDispatch, useSelector} from "react-redux"
+import {cancelOrder, toggleConfirmDialog} from "../../redux/actions"
+import {useRouter} from "next/router"
 
 const ConfirmDialog = () => {
 

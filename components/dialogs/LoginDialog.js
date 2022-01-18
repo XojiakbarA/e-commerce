@@ -3,8 +3,8 @@ import CloseIcon from '@mui/icons-material/Close'
 import { useSelector, useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
 import { useFormik } from 'formik'
-import { loginValidationSchema } from '../../../utils/validate'
-import { toggleLoginDialog, toggleRegisterDialog, userLogin } from '../../../redux/actions'
+import { loginValidationSchema } from '../../utils/validate'
+import { toggleLoginDialog, toggleRegisterDialog, userLogin } from '../../redux/actions'
 
 const LoginDialog = () => {
 

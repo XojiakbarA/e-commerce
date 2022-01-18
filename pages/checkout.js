@@ -9,6 +9,7 @@ import CheckoutForm from "../components/shopping-pages/CheckoutForm"
 import ShoppingLayout from "../components/layout/ShoppingLayout/ShoppingLayout"
 import PaymentForm from "../components/shopping-pages/PaymentForm"
 import { wrapper } from '../redux/store'
+import OrderDialog from "../components/dialogs/OrderDialog"
 
 const Checkout = () => {
 
@@ -109,6 +110,7 @@ const Checkout = () => {
                         </Stack>
                     </form>
                 </Grid>
+                <OrderDialog/>
             </ShoppingLayout>
             :
             null
