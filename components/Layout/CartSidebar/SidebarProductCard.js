@@ -1,9 +1,10 @@
-import { Button, IconButton, Typography, Card, CardActionArea, CardMedia, CardContent, Stack } from '@mui/material'
+import { Button, IconButton, Typography, Card, CardActionArea, CardMedia, CardContent, Stack, Box } from '@mui/material'
 import NextLink from '../../common/Link'
+import Image from 'next/image'
 import CloseIcon from '@mui/icons-material/Close'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
-import { productImageURL } from '../../../utils/utils'
+import { noImageUrl, productImageURL } from '../../../utils/utils'
 import { addToCart, deleteFromCart, removeFromCart } from '../../../redux/actions'
 import { useDispatch } from 'react-redux'
 import { useState } from 'react'
@@ -54,24 +55,44 @@ const SidebarProductCard = ({product}) => {
                             <RemoveIcon fontSize='small' />
                         </Button>
                     </Stack>
-                    <CardMedia
-                        component='img'
-                        image={product.image ? productImageURL + product.image.src : undefined}
-                        sx={{width: 100}}
-                    />
+                    <CardMedia>
+                        <Box sx={{position: 'relative', width: 100, height: 100}}>
+                            <Image
+                                src={product.image ? productImageURL + product.image.src : noImageUrl}
+                                alt={product.title}
+                                layout='fill'
+                                objectFit='cover'
+                            />
+                        </Box>
+                    </CardMedia>
                     <CardContent>
-                        <Typography variant='body1'>
+                        <Typography
+                            variant='body2'
+                            noWrap
+                            sx={{maxWidth: 150}}
+                        >
                             {product.title}
                         </Typography>
-                        <Typography variant='body2'>
-                            $ {product.price}
-                        </Typography>
+                        <Stack direction='row' spacing={1}>
+                            <Typography
+                                variant='body2'
+                                color={product.sale_price ? 'text.secondary' : 'text.primary'}
+                                sx={{textDecoration: product.sale_price ? 'line-through' : 'none'}}
+                            >
+                                $ {product.price} {!product.sale_price && ` x ${product.quantity}`} 
+                            </Typography>
+                            {
+                                product.sale_price &&
+                                <Typography variant='body2'>
+                                    $ {product.sale_price} x {product.quantity}
+                                </Typography>
+                            }
+                        </Stack>
                     </CardContent>
                     <Stack
-                        marginLeft='auto'
-                        alignSelf='flex-start'
                         onMouseEnter={ handleActionEnter }
                         onMouseLeave={ handleActionLeave }
+                        sx={{position: 'absolute', top: 0, right: 0}}
                     >
                         <IconButton onClick={ handleDeleteCartClick }>
                             <CloseIcon fontSize='small' />

@@ -2,8 +2,9 @@ import { Button, IconButton, Typography, Card, CardActionArea, CardMedia, CardCo
 import CloseIcon from '@mui/icons-material/Close'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
+import Image from 'next/image'
 import NextLink from '../common/Link'
-import { productImageURL } from '../../utils/utils'
+import { noImageUrl, productImageURL } from '../../utils/utils'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { addToCart, deleteFromCart, removeFromCart } from '../../redux/actions'
@@ -38,11 +39,14 @@ const CartProductCard = ({product}) => {
         <Card sx={{display: 'flex'}}>
             <CardActionArea disableRipple={ripple} component='div'>
                 <NextLink href={`/products/${id}`} style={{display: 'flex', justifyContent: 'space-between', height: '100%'}}>
-                <CardMedia
-                    component='img'
-                    image={product.image ? productImageURL + product.image.src : undefined}
-                    sx={{width: 120}}
-                />
+                <CardMedia sx={{width: 120, height: 120, position: 'relative'}}>
+                    <Image
+                        src={product.image ? productImageURL + product.image.src : noImageUrl}
+                        alt={product.title}
+                        layout='fill'
+                        objectFit='cover'
+                    />
+                </CardMedia>
                 <CardContent sx={{flex: 1}}>
                     <Typography variant='body1'>
                         {product.title}
@@ -53,12 +57,12 @@ const CartProductCard = ({product}) => {
                             color={product.sale_price ? 'text.secondary' : 'text.primary'}
                             sx={{textDecoration: product.sale_price ? 'line-through' : 'none'}}
                         >
-                            $ {product.price}
+                            $ {product.price} {!product.sale_price && ` x ${product.quantity}`} 
                         </Typography>
                         {
                             product.sale_price &&
                             <Typography variant='body2'>
-                                $ {product.sale_price}
+                                $ {product.sale_price} x {product.quantity}
                             </Typography>
                         }
                     </Stack>
