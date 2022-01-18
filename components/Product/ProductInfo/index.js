@@ -1,24 +1,48 @@
-import { Breadcrumbs, Button, Rating, Stack, Typography } from '@mui/material'
+import { Breadcrumbs, Button, IconButton, Rating, Stack, Typography } from '@mui/material'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
+import FavoriteIcon from '@mui/icons-material/Favorite'
 import NextLink from '../../common/Link'
-import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { useCart } from '../../../app/hooks/useCart'
+import { useWIshlist } from '../../../app/hooks/useWIshlist'
 
 const ProductInfo = ({product}) => {
 
     const router = useRouter()
-    const cart = useSelector(state => state.cart.data)
-    const [addProductCart, removeProductCart] = useCart(product.id)
 
-    const productInCart = cart.find(item => item.id == product.id)
+    const { productInCart, addProductCart, removeProductCart} = useCart(product.id)
+    const { productInWishlist, addProductWishlist, deleteProductWishlist } = useWIshlist(product.id)
+
     const hasInCart = Boolean(productInCart)
+    const hasInWishlist = Boolean(productInWishlist)
+    
+
     const isProductsPage = router.pathname.indexOf('/products') === 0
 
     return(
-        <Stack spacing={3} sx={{marginTop: 5}} alignItems='flex-start'>
+        <Stack spacing={3} sx={{marginTop: 5, paddingTop: 2, position: 'relative'}} alignItems='flex-start'>
+            {
+                hasInWishlist
+                ?
+                <IconButton
+                    size='large'
+                    sx={{position: 'absolute', top: 0, right: 0}}
+                    onClick={deleteProductWishlist}
+                >
+                    <FavoriteIcon fontSize='large'/>
+                </IconButton>
+                :
+                <IconButton
+                    size='large'
+                    sx={{position: 'absolute', top: 0, right: 0}}
+                    onClick={addProductWishlist}
+                >
+                    <FavoriteBorderIcon fontSize='large'/>
+                </IconButton>
+            }
             <Typography variant='h3'>
                 {product.title}
             </Typography>

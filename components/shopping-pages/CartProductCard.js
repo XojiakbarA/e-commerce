@@ -9,7 +9,7 @@ import { useCart } from '../../app/hooks/useCart'
 
 const CartProductCard = ({product}) => {
 
-    const [addProductCart, removeProductCart, deleteProductCart] = useCart(product.id)
+    const { addProductCart, removeProductCart, deleteProductCart } = useCart(product.id)
 
     return(
         <Card sx={{display: 'flex', position: 'relative'}}>

@@ -3,22 +3,16 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import { addToCart, addToWishlist, deleteFromCart, deleteFromWishlist } from '../../../redux/actions'
-import { useDispatch } from 'react-redux'
 import { useCart } from '../../../app/hooks/useCart'
+import { useWIshlist } from '../../../app/hooks/useWIshlist'
 
-const ProductCardButtons = ({ hasInCart, hasInWishlist, id }) => {
+const ProductCardButtons = ({ id }) => {
 
-    const dispatch = useDispatch()
+    const { productInCart, addProductCart, deleteProductCart} = useCart(id)
+    const { productInWishlist, addProductWishlist, deleteProductWishlist } = useWIshlist(id)
 
-    const [addProductCart, deleteProductCart] = useCart(id)
-
-    const handleAddWishlistClick = () => {
-        dispatch(addToWishlist(id))
-    }
-    const handleDeleteWishlistClick = () => {
-        dispatch(deleteFromWishlist(id))
-    }
+    const hasInCart = Boolean(productInCart)
+    const hasInWishlist = Boolean(productInWishlist)
 
     return (
         <Box
@@ -27,13 +21,13 @@ const ProductCardButtons = ({ hasInCart, hasInWishlist, id }) => {
             {
                 hasInWishlist
                 ?
-                <IconButton onClick={ handleDeleteWishlistClick }>
+                <IconButton onClick={ deleteProductWishlist }>
                     <Tooltip title='Remove from wishlist' placement='right' key={id}>
                         <FavoriteIcon />
                     </Tooltip>
                 </IconButton>
                 :
-                <IconButton onClick={ handleAddWishlistClick }>
+                <IconButton onClick={ addProductWishlist }>
                     <Tooltip title='Add to wishlist' placement='right'>
                         <FavoriteBorderIcon />
                     </Tooltip>

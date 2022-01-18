@@ -1,9 +1,13 @@
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { addToCart, deleteFromCart, removeFromCart } from "../../redux/actions"
 
 export const useCart = (id) => {
 
     const dispatch = useDispatch()
+
+    const cart = useSelector(state => state.cart.data)
+
+    const productInCart = cart.find(item => item.id === id)
 
     const addProductCart = (e) => {
         e.preventDefault()
@@ -20,5 +24,10 @@ export const useCart = (id) => {
         dispatch(deleteFromCart(id))
     }
 
-    return [addProductCart, removeProductCart, deleteProductCart]
+    return {
+        productInCart,
+        addProductCart,
+        removeProductCart,
+        deleteProductCart
+    }
 }

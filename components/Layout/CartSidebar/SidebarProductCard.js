@@ -12,7 +12,7 @@ const SidebarProductCard = ({product}) => {
 
     const [ripple, events] = useRipple()
 
-    const [addProductCart, removeProductCart, deleteProductCart] = useCart(product.id)
+    const { addProductCart, removeProductCart, deleteProductCart} = useCart(product.id)
 
     return(
         <Card sx={{display: 'flex'}}>

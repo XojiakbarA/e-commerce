@@ -2,16 +2,10 @@ import {Card, CardContent, CardMedia, CardActionArea, Typography, Rating, Stack}
 import { productImageURL } from '../../../utils/utils'
 import NextLink from '../Link'
 import Image from 'next/image'
-import { useSelector } from 'react-redux'
 import ProductCardButtons from './ProductCardButtons'
 import { noImageUrl } from '../../../utils/utils'
 
 const ProductCard = ({product, listView}) => {
-
-    const cart = useSelector(state => state.cart.data)
-    const wishlist = useSelector(state => state.wishlist)
-    const hasInCart = Boolean(cart.find(item => item.id == product.id))
-    const hasInWishlist = Boolean(wishlist.find(item => item.id == product.id))
 
     const style = {
         list: {display: 'flex', justifyContent: 'flex-start'},
@@ -65,11 +59,7 @@ const ProductCard = ({product, listView}) => {
                     </CardContent>
                 </NextLink>
             </CardActionArea>
-            <ProductCardButtons
-                hasInCart={hasInCart}
-                hasInWishlist={hasInWishlist}
-                id={product.id}
-            />
+            <ProductCardButtons id={product.id}/>
         </Card>
     );
 }
