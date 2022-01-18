@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { IconButton, List, ListItemButton, ListItemText, Collapse } from '@mui/material'
 import {ExpandLess, ExpandMore} from '@mui/icons-material'
 import { useRouter } from 'next/router'
+import { useRipple } from '../../../../app/hooks/useRipple'
 
 const CategoryListItem = ({ category }) => {
 
@@ -9,24 +10,18 @@ const CategoryListItem = ({ category }) => {
     const cat_id = router.query.cat_id
     const sub_cat_id = router.query.sub_cat_id
     const [open, setOpen] = useState(false || Boolean(category.sub_categories.find(sub => sub.id == sub_cat_id)));
-    const [ripple, setRipple] = useState(false);
+
+    const [ripple, events] = useRipple();
 
     const handleClick = (e) => {
         e.stopPropagation()
         setOpen(!open);
     };
 
-    function handleEnter() {
-        setRipple(true)
-    }
-    function handleLeave() {
-        setRipple(false)
-    }
-
-    function handleCatClick(id, value = 'cat') {
+    function handleCatClick(id, isCat) {
         const query = router.query
 
-        if (value == 'cat') {
+        if (isCat) {
             query.sub_cat_id ? delete query.sub_cat_id : null
             query.cat_id = id
         } else {
@@ -44,13 +39,12 @@ const CategoryListItem = ({ category }) => {
             <ListItemButton
                 selected={cat_id == category.id}
                 disableRipple={ripple}
-                onClick={ () => handleCatClick(category.id) }
+                onClick={ () => handleCatClick(category.id, true) }
             >
                 <ListItemText primary={category.title} />
                 <IconButton
                     onClick={handleClick}
-                    onMouseEnter={handleEnter}
-                    onMouseLeave={handleLeave}
+                    { ...events }
                 >
                     { category.sub_categories && (open ? <ExpandLess /> : <ExpandMore />) }
                 </IconButton>
@@ -63,7 +57,7 @@ const CategoryListItem = ({ category }) => {
                                 component="div"
                                 disablePadding
                                 key={sub.id}
-                                onClick={ () => handleCatClick(sub.id, 'sub') }
+                                onClick={ () => handleCatClick(sub.id) }
                             >
                                 <ListItemButton selected={sub_cat_id == sub.id} sx={{ pl: 4 }}>
                                     <ListItemText primary={sub.title} />

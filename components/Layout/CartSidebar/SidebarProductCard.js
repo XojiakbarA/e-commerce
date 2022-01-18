@@ -7,20 +7,14 @@ import RemoveIcon from '@mui/icons-material/Remove'
 import { noImageUrl, productImageURL } from '../../../utils/utils'
 import { addToCart, deleteFromCart, removeFromCart } from '../../../redux/actions'
 import { useDispatch } from 'react-redux'
-import { useState } from 'react'
+import { useRipple } from '../../../app/hooks/useRipple'
 
 const SidebarProductCard = ({product}) => {
 
     const dispatch = useDispatch()
 
-    const [ripple, setRipple] = useState(false)
+    const [ripple, events] = useRipple()
 
-    function handleActionEnter() {
-        setRipple(true)
-    }
-    function handleActionLeave() {
-        setRipple(false)
-    }
     function handleDeleteCartClick(e) {
         e.preventDefault()
         dispatch(deleteFromCart(product.id))
@@ -90,9 +84,8 @@ const SidebarProductCard = ({product}) => {
                         </Stack>
                     </CardContent>
                     <Stack
-                        onMouseEnter={ handleActionEnter }
-                        onMouseLeave={ handleActionLeave }
                         sx={{position: 'absolute', top: 0, right: 0}}
+                        { ...events }
                     >
                         <IconButton onClick={ handleDeleteCartClick }>
                             <CloseIcon fontSize='small' />

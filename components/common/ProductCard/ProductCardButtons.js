@@ -6,7 +6,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { addToCart, addToWishlist, deleteFromCart, deleteFromWishlist } from '../../../redux/actions'
 import { useDispatch } from 'react-redux'
 
-const ProductCardButtons = ({ hasInCart, hasInWishlist, handleEnter, handleLeave, id }) => {
+const ProductCardButtons = ({ hasInCart, hasInWishlist, id }) => {
 
     const dispatch = useDispatch()
 
@@ -26,8 +26,6 @@ const ProductCardButtons = ({ hasInCart, hasInWishlist, handleEnter, handleLeave
     return (
         <Box
             sx={{display: 'flex', flexDirection: 'column', position: 'absolute', top: 0, right: 0}}
-            onMouseEnter={ handleEnter }
-            onMouseLeave={ handleLeave }
         >
             {
                 hasInWishlist

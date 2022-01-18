@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import {Card, CardContent, CardMedia, CardActionArea, Typography, Rating, Stack, Box} from '@mui/material'
+import {Card, CardContent, CardMedia, CardActionArea, Typography, Rating, Stack} from '@mui/material'
 import { productImageURL } from '../../../utils/utils'
 import NextLink from '../Link'
 import Image from 'next/image'
@@ -14,15 +13,6 @@ const ProductCard = ({product, listView}) => {
     const hasInCart = Boolean(cart.find(item => item.id == product.id))
     const hasInWishlist = Boolean(wishlist.find(item => item.id == product.id))
 
-    const [ripple, setRipple] = useState(false)
-
-    function handleEnter() {
-        setRipple(true)
-    }
-    function handleLeave() {
-        setRipple(false)
-    }
-
     const style = {
         list: {display: 'flex', justifyContent: 'flex-start'},
         card: {boxShadow: 3, borderRadius: 2, position: 'relative'},
@@ -31,7 +21,7 @@ const ProductCard = ({product, listView}) => {
 
     return (
         <Card sx={style.card}>
-            <CardActionArea disableRipple={ripple}>
+            <CardActionArea>
                 <NextLink
                     href={`/products/${product.id}`}
                     style={listView ? style.list : null}
@@ -78,8 +68,6 @@ const ProductCard = ({product, listView}) => {
             <ProductCardButtons
                 hasInCart={hasInCart}
                 hasInWishlist={hasInWishlist}
-                handleEnter={handleEnter}
-                handleLeave={handleLeave}
                 id={product.id}
             />
         </Card>
