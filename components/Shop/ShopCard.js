@@ -1,10 +1,8 @@
-import {Card, CardActions, CardContent,
-        CardMedia, Typography, Rating,
-        IconButton, Avatar} from '@mui/material'
-
+import {Card, CardActions, CardContent, CardMedia, Typography, Rating, IconButton, Avatar, Box} from '@mui/material'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import NextLink from '../common/Link'
-import { shopImageURL } from '../../utils/utils'
+import Image from 'next/image'
+import { shopImageURL, noBgImageUrl, noAvImageUrl } from '../../utils/utils'
 
 const styles = {
     card: {
@@ -15,7 +13,9 @@ const styles = {
         position: 'absolute',
         zIndex: 0,
         top: 0,
-        left: 0
+        left: 0,
+        width: '100%',
+        height: 200
     },
     cardContent: {
         position: 'absolute',
@@ -36,13 +36,17 @@ const ShopCard = ({shop}) => {
 
     return (
         <Card sx={styles.card}>
-            <CardMedia
-                component="img"
-                height="200"
-                image={shop.bg_image ? shopImageURL + shop.bg_image : undefined}
-                alt={shop.bg_image}
-                sx={styles.cardMedia}
-            />
+            <CardMedia sx={styles.cardMedia}>
+                <Box sx={{position: 'relative', width: '100%', height: '100%'}}>
+                <Image
+                    src={shop.bg_image_small ? shopImageURL + shop.bg_image_small.src : noBgImageUrl}
+                    alt={shop.title}
+                    layout='fill'
+                    priority
+                    objectFit='cover'
+                />
+                </Box>
+            </CardMedia>
             <CardContent sx={styles.cardContent}>
                 <Typography gutterBottom variant="h5" component="div">
                     {shop.title}
@@ -53,10 +57,13 @@ const ShopCard = ({shop}) => {
                 </Typography>
             </CardContent>
             <CardActions sx={styles.cardActions}>
-                <Avatar
-                    src={shop.av_image ? shopImageURL + shop.av_image : undefined}
-                    alt={shop.av_image}
-                />
+                <Avatar>
+                    <Image
+                        src={shop.av_image ? shopImageURL + shop.av_image.src : noAvImageUrl}
+                        alt={shop.title}
+                        layout='fill'
+                    />
+                </Avatar>
                 <NextLink href={`/shops/${shop.id}/products`}>
                     <IconButton>
                             <ChevronRightIcon sx={{color: 'white'}} />

@@ -41,6 +41,7 @@ const ProductCard = ({product, listView}) => {
                             src={product.image ? productImageURL + product.image.src : noImageUrl}
                             alt={product.image}
                             layout='fill'
+                            objectFit='cover'
                         />
                     </CardMedia>
                     <CardContent>

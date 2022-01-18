@@ -4,6 +4,8 @@ export const userImageURL = 'http://127.0.0.1:8888/e-commerce-api/public/storage
 export const bannerImageURL = 'http://127.0.0.1:8888/e-commerce-api/public/storage/images/banners/'
 
 export const noImageUrl = '/images/products/no_image.jpeg'
+export const noBgImageUrl = '/images/products/no-bg.jpeg'
+export const noAvImageUrl = '/images/products/no-av.jpeg'
 
 export const imageLoader = ({src}) => {
     return 'http://127.0.0.1:8888/e-commerce-api/public/storage/images/' + src
