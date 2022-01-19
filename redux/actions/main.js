@@ -100,13 +100,9 @@ export const toggleDeleteProductDialog = (bool) => ({
     payload: bool
 })
 
-export const openAccountMenu = (anchorEl) => ({
-    type: type.OPEN_ACCOUNT_MENU,
+export const toggleAccountMenu = (anchorEl) => ({
+    type: type.TOGGLE_ACCOUNT_MENU,
     payload: anchorEl
-})
-
-export const closeAccountMenu = () => ({
-    type: type.CLOSE_ACCOUNT_MENU
 })
 
 export const setLoading = (bool) => ({

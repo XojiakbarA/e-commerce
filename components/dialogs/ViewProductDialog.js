@@ -3,23 +3,21 @@ import CloseIcon from '@mui/icons-material/Close'
 import ProductGallery from "../product/ProductGallery"
 import ProductInfo from "../product/ProductInfo"
 import { useDispatch, useSelector } from "react-redux"
-import { getReviews, toggleViewProductDialog } from "../../redux/actions"
+import { getReviews } from "../../redux/actions"
 import { useEffect } from "react"
 import ReviewItem from "../product/ProductTab/ReviewItem"
+import { useToggle } from "../../app/hooks/useToggle"
 
 const ViewProductDialog = () => {
 
     const dispatch = useDispatch()
 
-    const viewProductDialog = useSelector(state => state.toggle.viewProductDialog)
     const product = useSelector(state => state.product)
     const reviews = useSelector(state => state.reviews)
     const reviewsLoading = useSelector(state => state.reviews.isLoading)
     const isLoading = useSelector(state => state.toggle.isLoading)
 
-    const closeViewProductDialog = () => {
-        dispatch(toggleViewProductDialog(false))
-    }
+    const { viewProductDialog, closeViewProductDialog } = useToggle()
 
     useEffect(() => {
         if (viewProductDialog, product.id) {
@@ -30,8 +28,8 @@ const ViewProductDialog = () => {
     return (
         <Dialog open={viewProductDialog} onClose={closeViewProductDialog} fullWidth maxWidth='lg'>
             <DialogTitle sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                <Typography variant="button" fontSize={20}>
-                    {product.title}
+                <Typography variant="button">
+                    View Product
                 </Typography>
                 <IconButton onClick={closeViewProductDialog}>
                     <CloseIcon/>

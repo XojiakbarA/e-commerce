@@ -2,8 +2,7 @@ import { Badge, Box, BottomNavigation, BottomNavigationAction, Paper } from '@mu
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import AccountCircle from '@mui/icons-material/AccountCircle'
-import { toggleCartSidebar, toggleLoginDialog, openAccountMenu } from '../../../redux/actions'
-import { useDispatch } from 'react-redux'
+import { useToggle } from '../../../app/hooks/useToggle'
 
 const {account, wishlist, cart} = {
     account: { id: 1, badge: 0, title: 'Account' },
@@ -13,16 +12,7 @@ const {account, wishlist, cart} = {
 
 const MenuMobile = () => {
 
-    const dispatch = useDispatch()
-
-    const openDialog = (e) => {
-        if (localStorage.getItem('token')) {
-            dispatch(openAccountMenu(e.currentTarget))
-        } else {
-            dispatch(toggleLoginDialog(true))
-        }
-    }
-    const openSidebar = () => dispatch(toggleCartSidebar(true))
+    const { handleAccount, openSidebar } = useToggle()
 
     return (
         <Box sx={{marginTop: 2, pb: 7, display: {xs: 'block', sm: 'none'}}}>
@@ -35,7 +25,7 @@ const MenuMobile = () => {
                                 <AccountCircle/>
                             </Badge>
                         }
-                        onClick={ openDialog }
+                        onClick={ handleAccount }
                     />
                     <BottomNavigationAction
                         label={wishlist.title}

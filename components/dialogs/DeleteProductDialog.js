@@ -1,58 +1,36 @@
-import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Stack, Typography } from "@mui/material"
-import CloseIcon from '@mui/icons-material/Close'
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material"
 import { useDispatch, useSelector } from "react-redux"
-import { deleteProduct, getShopProducts, setProduct, toggleDeleteProductDialog } from "../../redux/actions"
+import { useToggle } from "../../app/hooks/useToggle"
+import { deleteProduct } from "../../redux/actions"
 
 
 const DeleteProductDialog = () => {
 
     const dispatch = useDispatch()
     const isLoading = useSelector(state => state.toggle.isLoading)
-    const deleteProductDialog = useSelector(state => state.toggle.deleteProductDialog)
     const product = useSelector(state => state.product)
 
-    const closeDeleteProductDialog = () => {
-        dispatch(toggleDeleteProductDialog(false))
-    }
+    const { deleteProductDialog, closeDeleteProductDialog } = useToggle()
+
     const handleDeleteClick = () => {
         dispatch(deleteProduct(product.shop.id, product.id))
     }
 
     return (
         <Dialog open={deleteProductDialog} onClose={closeDeleteProductDialog}>
-            <DialogTitle sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                <Typography variant="button" fontSize={20}>
+            <DialogTitle>
+                <Typography variant="button">
                     Delete Product
                 </Typography>
-                <IconButton onClick={closeDeleteProductDialog}>
-                    <CloseIcon/>
-                </IconButton>
+                {isLoading && <CircularProgress size={25} sx={{position: 'absolute', top: 15, right: 20}}/>}
             </DialogTitle>
             <DialogContent>
-                <Stack spacing={4}>
-                    <Typography>
-                        {`Do you really want to delete the ${product.title}?`}
-                    </Typography>
-                    <Stack direction='row' spacing={1} justifyContent='end'>
-                        <Button variant="outlined" size="small" onClick={closeDeleteProductDialog}>Cancel</Button>
-                        <Button
-                            variant="contained"
-                            size="small"
-                            onClick={handleDeleteClick}
-                            endIcon={ isLoading
-                                &&
-                                <CircularProgress
-                                    color='inherit'
-                                    size={20}
-                                />
-                            }
-                            disabled={isLoading}
-                        >
-                            Delete
-                        </Button>
-                    </Stack>
-                </Stack>
+                {`Do you really want to delete the ${product.title}?`}
             </DialogContent>
+            <DialogActions>
+                <Button onClick={closeDeleteProductDialog} disabled={isLoading}>No</Button>
+                <Button onClick={handleDeleteClick} disabled={isLoading}>Yes</Button>
+            </DialogActions>
         </Dialog>
     )
 }

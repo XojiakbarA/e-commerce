@@ -3,7 +3,7 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
 import { styled } from "@mui/material/styles"
 import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch, useSelector } from "react-redux"
-import { createProduct, toggleAddProductDialog } from "../../redux/actions"
+import { createProduct } from "../../redux/actions"
 import { useFormik } from "formik"
 import { productValidationSchema } from "../../utils/validate"
 import AutocompleteAsync from "../common/AutocompleteAsync/AutocompleteAsync"
@@ -11,6 +11,7 @@ import { useState } from "react"
 import { useRouter } from 'next/router'
 import { appendToFormData } from "../../utils/utils"
 import { makeURLArray } from "../../utils/utils";
+import { useToggle } from "../../app/hooks/useToggle";
 
 const Input = styled('input')({
     display: 'none'
@@ -22,7 +23,8 @@ const AddProductDialog = () => {
     const router = useRouter()
 
     const isLoading = useSelector(state => state.toggle.isLoading)
-    const addProductDialog = useSelector(state => state.toggle.addProductDialog)
+
+    const { addProductDialog, closeAddProductDialog } = useToggle()
 
     const [preview, setPreview] = useState([])
 
@@ -57,10 +59,6 @@ const AddProductDialog = () => {
             dispatch(createProduct(formData, resetForm))
         }
     })
-
-    const closeAddProductDialog = () => {
-        dispatch(toggleAddProductDialog(false))
-    }
 
     const handleCategoriesChange = (e, value) => {
         setDisabled(value ? false : true)

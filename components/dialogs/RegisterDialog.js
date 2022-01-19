@@ -3,27 +3,16 @@ import CloseIcon from '@mui/icons-material/Close'
 import { useDispatch, useSelector } from "react-redux"
 import { useFormik } from "formik"
 import { registerValidationSchema } from "../../utils/validate"
-import { toggleLoginDialog, toggleRegisterDialog, userRegister } from "../../redux/actions"
-import { useRouter } from "next/router"
+import { userRegister } from "../../redux/actions"
+import { useToggle } from "../../app/hooks/useToggle"
 
 
 const RegisterDialog = () => {
 
-    const router = useRouter()
     const dispatch = useDispatch()
-    const registerDialog = useSelector(state => state.toggle.registerDialog)
     const isLoading = useSelector(state => state.toggle.isLoading)
-    const user = useSelector(state => state.user)
-    const isProfilePage = router.pathname.indexOf('/profile')
     
-    const closeRegisterDialog = () => {
-        dispatch(toggleRegisterDialog(false))
-        isProfilePage != -1 && user == null ? router.push('/') : null
-    }
-    const openLoginDialog = () => {
-        dispatch(toggleRegisterDialog(false))
-        dispatch(toggleLoginDialog(true))
-    }
+    const { registerDialog, closeRegisterDialog, openLoginDialog } = useToggle()
 
     const formik = useFormik({
         initialValues: {

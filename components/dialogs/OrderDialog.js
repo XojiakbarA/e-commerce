@@ -1,35 +1,28 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material"
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from "@mui/material"
 import Image from "next/image"
-import { useRouter } from "next/router"
-import { useSelector } from "react-redux"
+import { useToggle } from "../../app/hooks/useToggle"
 
 
 const OrderDialog = () => {
 
-    const router = useRouter()
-    const orderDialog = useSelector(state => state.toggle.orderDialog)
-
-    const handlePay = () => {
-        router.push('/')
-    }
-    const handleBrowse = () => {
-        router.push('/')
-    }
+    const { orderDialog, closeOrderDialog } = useToggle()
 
     return (
         <Dialog open={ orderDialog }>
             <DialogTitle>
-                Your order is completed
+                <Typography variant="button">
+                    Your order is completed
+                </Typography>
             </DialogTitle>
             <DialogContent sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                <Image src='/images/logo/checked.png' width={100} height={100} alt="complete" />
+                <Image src='/images/logo/checked.png' width={70} height={70} alt="complete" />
                 <DialogContentText width={350} textAlign='center'>
                     You can track the status of your order in your personal account.
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={handlePay} variant="contained">Pay</Button>
-                <Button onClick={handleBrowse}>Browse Products</Button>
+                <Button onClick={closeOrderDialog}>Pay</Button>
+                <Button onClick={closeOrderDialog}>Browse Products</Button>
             </DialogActions>
         </Dialog>
     )

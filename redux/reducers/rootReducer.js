@@ -5,7 +5,6 @@ import brands from './brands'
 import banners from './banners'
 import products from './products'
 import product from './product'
-import accountMenu from './accountMenu'
 import snackbar from './snackbar'
 import user from './user'
 import cart from './cart'
@@ -25,7 +24,6 @@ const combindedReducer = combineReducers({
     banners: banners,
     products: products,
     product: product,
-    accountMenu: accountMenu,
     snackbar: snackbar,
     user: user,
     cart: cart,

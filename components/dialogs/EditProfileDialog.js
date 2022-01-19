@@ -5,20 +5,22 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import CloseIcon from '@mui/icons-material/Close';
 import ruLocale from 'date-fns/locale/ru'
 import {useDispatch, useSelector} from "react-redux";
-import {editUser, toggleEditProfileDialog} from "../../redux/actions";
+import {editUser} from "../../redux/actions";
 import {useFormik} from "formik";
 import {editProfileValidationSchema} from "../../utils/validate";
 import {appendToFormData, userImageURL} from "../../utils/utils";
 import PhoneMask from "../common/PhoneMask";
 import AvatarMenu from "../common/AvatarMenu";
+import { useToggle } from "../../app/hooks/useToggle";
 
 const EditProfileDialog = () => {
 
     const dispatch = useDispatch()
-    const editProfileDialog = useSelector(state => state.toggle.editProfileDialog)
     const user = useSelector(state => state.user)
     const isLoading = useSelector(state => state.toggle.isLoading)
     const [preview, setPreview] = useState(null)
+
+    const { editProfileDialog, closeEditProfileDialog } = useToggle()
 
     const formik = useFormik({
         initialValues: {
@@ -37,12 +39,6 @@ const EditProfileDialog = () => {
         enableReinitialize: true
     })
 
-    const closeEditProfileDialog = () => {
-        dispatch(toggleEditProfileDialog(false))
-        setPreview(null)
-        formik.setFieldValue('image', null)
-    }
-
     useEffect(() => {
         const image = formik.values.image
         const reader = new FileReader()
@@ -55,12 +51,12 @@ const EditProfileDialog = () => {
     }, [formik.values.image])
 
     return (
-        <Dialog open={editProfileDialog} onClose={closeEditProfileDialog}>
+        <Dialog open={editProfileDialog} onClose={e => closeEditProfileDialog(setPreview, formik.setFieldValue)}>
             <DialogTitle sx={{display: 'flex', alignItems: 'end', justifyContent: 'space-between'}}>
-                <Typography variant="button" fontSize={20}>
+                <Typography variant="button">
                     Edit Profile
                 </Typography>
-                <IconButton onClick={closeEditProfileDialog}>
+                <IconButton onClick={e => closeEditProfileDialog(setPreview, formik.setFieldValue)}>
                     <CloseIcon/>
                 </IconButton>
             </DialogTitle>
@@ -131,7 +127,13 @@ const EditProfileDialog = () => {
                         >
                             Save
                         </Button>
-                        <Button size='small' variant='outlined' onClick={closeEditProfileDialog}>Cancel</Button>
+                        <Button
+                            size='small'
+                            variant='outlined'
+                            onClick={e => closeEditProfileDialog(setPreview, formik.setFieldValue)}
+                        >
+                            Cancel
+                        </Button>
                     </Stack>
                 </form>
             </DialogContent>

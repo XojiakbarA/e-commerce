@@ -4,21 +4,18 @@ import EditIcon from '@mui/icons-material/Edit'
 import ProfileLayout from "../../components/layout/ProfileLayout/ProfileLayout"
 import UserInfoTable from "../../components/profile/index/UserInfoTable"
 import ProfileTitle from "../../components/profile/ProfileTitle"
-import {useDispatch, useSelector} from "react-redux"
-import {toggleEditProfileDialog} from "../../redux/actions"
+import {useSelector} from "react-redux"
 import OrderCountCard from "../../components/profile/index/OrderCountCard"
 import UserCard from "../../components/profile/index/UserCard"
 import EditProfileDialog from "../../components/dialogs/EditProfileDialog"
 import { wrapper } from "../../redux/store"
+import { useToggle } from "../../app/hooks/useToggle"
 
 const Profile = () => {
 
-    const dispatch = useDispatch()
     const user = useSelector(state => state.user)
 
-    const openEditProfileDialog = () => {
-        dispatch(toggleEditProfileDialog(true))
-    }
+    const { openEditProfileDialog } = useToggle()
 
     const orders = [
         { title: 'All Orders', count: user.all_orders_count },

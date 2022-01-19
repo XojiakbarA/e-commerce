@@ -1,30 +1,17 @@
 import { Stack, Button, Dialog, TextField, Typography, Box, IconButton, CircularProgress, Checkbox, FormControlLabel, DialogTitle, DialogContent } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import { useSelector, useDispatch } from 'react-redux'
-import { useRouter } from 'next/router'
 import { useFormik } from 'formik'
 import { loginValidationSchema } from '../../utils/validate'
-import { toggleLoginDialog, toggleRegisterDialog, userLogin } from '../../redux/actions'
+import { userLogin } from '../../redux/actions'
+import { useToggle } from '../../app/hooks/useToggle'
 
 const LoginDialog = () => {
 
-    const router = useRouter()
     const dispatch = useDispatch()
-    const loginDialog = useSelector(state => state.toggle.loginDialog)
     const isLoading = useSelector(state => state.toggle.isLoading)
-    const user = useSelector(state => state.user)
-    let isProtectedPage =   router.pathname.indexOf('/profile') &&
-                            router.pathname.indexOf('/checkout') &&
-                            router.pathname.indexOf('/vendor')
 
-    const closeLoginDialog = () => {
-        dispatch(toggleLoginDialog(false))
-        isProtectedPage != -1 && !user ? router.push('/') : null
-    }
-    const openRegisterDialog = () => {
-        dispatch(toggleRegisterDialog(true))
-        dispatch(toggleLoginDialog(false))
-    }
+    const { loginDialog, closeLoginDialog, openRegisterDialog } = useToggle()
 
     const formik = useFormik({
         initialValues: {
@@ -40,8 +27,8 @@ const LoginDialog = () => {
 
     return(
         <Dialog open={loginDialog} onClose={ closeLoginDialog }>
-            <DialogTitle sx={{display: 'flex', alignItems: 'end', justifyContent: 'space-between'}}>
-                <Typography variant="button" fontSize={20}>
+            <DialogTitle sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                <Typography variant="button">
                     Login
                 </Typography>
                 <IconButton onClick={closeLoginDialog}>

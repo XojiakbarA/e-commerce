@@ -11,7 +11,8 @@ const initialState = {
     viewProductDialog: false,
     editProductDialog: false,
     deleteProductDialog: false,
-    cartSidebar: false
+    cartSidebar: false,
+    accountMenu: null
 }
 
 const toggleReducer = (state = initialState, action) => {
@@ -38,6 +39,8 @@ const toggleReducer = (state = initialState, action) => {
             return { ...state, deleteProductDialog: action.payload }
         case type.TOGGLE_CART_SIDEBAR:
             return { ...state, cartSidebar: action.payload }
+        case type.TOGGLE_ACCOUNT_MENU:
+            return { ...state, accountMenu: action.payload }
         default:
             return state
     }

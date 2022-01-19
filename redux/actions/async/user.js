@@ -28,7 +28,7 @@ import {
     setReviews,
     setWishlist,
     toggleOrderDialog,
-    setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog, toggleAddProductDialog, getShopProducts, setReviewsLoading, setProduct, toggleEditProductDialog, toggleDeleteProductDialog, setOrdersFetching, setCartFetching
+    setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog, toggleAddProductDialog, getShopProducts, setReviewsLoading, setProduct, toggleEditProductDialog, toggleDeleteProductDialog, setOrdersFetching, setCartFetching, toggleAccountMenu
 } from '..'
 
 export const getCart = (cookie) => {
@@ -186,7 +186,7 @@ export const userLogout = () => {
             const res = await logout()
             if (res.status === 204) {
                 dispatch(setLoading(false))
-                dispatch(closeAccountMenu())
+                dispatch(toggleAccountMenu(null))
                 dispatch(setUser(null))
                 dispatch(setCart([]))
                 dispatch(setSnackbar({isOpen: true, text: 'You are logged out!'}))

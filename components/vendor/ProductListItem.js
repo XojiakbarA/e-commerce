@@ -4,25 +4,11 @@ import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import { productImageURL, noImageUrl } from "../../utils/utils"
-import { useDispatch } from "react-redux"
-import { getProduct, setProduct, toggleDeleteProductDialog, toggleEditProductDialog, toggleViewProductDialog } from "../../redux/actions"
+import { useToggle } from "../../app/hooks/useToggle"
 
 const ProductListItem = ({ product }) => {
 
-    const dispatch = useDispatch()
-
-    const handleViewClick = () => {
-        dispatch(getProduct(product.id))
-        dispatch(toggleViewProductDialog(true))
-    }
-    const handleEditClick = () => {
-        dispatch(getProduct(product.id))
-        dispatch(toggleEditProductDialog(true))
-    }
-    const handleDeleteClick = () => {
-        dispatch(setProduct(product))
-        dispatch(toggleDeleteProductDialog(true))
-    }
+    const { openEditProductDialog, openDeleteProductDialog, openViewProductDialog } = useToggle()
 
     return (
         <Paper sx={{padding: 2}}>
@@ -65,17 +51,17 @@ const ProductListItem = ({ product }) => {
                 </Grid>
                 <Grid item xs display='flex'>
                     <Tooltip title='Edit'>
-                        <IconButton onClick={handleEditClick}>
+                        <IconButton onClick={e => openEditProductDialog(product)}>
                             <EditIcon fontSize="small"/>
                         </IconButton>
                     </Tooltip>
                     <Tooltip title='Delete'>
-                        <IconButton onClick={handleDeleteClick}>
+                        <IconButton onClick={e => openDeleteProductDialog(product)}>
                             <DeleteIcon fontSize="small"/>
                         </IconButton>
                     </Tooltip>
                     <Tooltip title='View'>
-                        <IconButton onClick={handleViewClick}>
+                        <IconButton onClick={e => openViewProductDialog(product)}>
                             <VisibilityIcon fontSize="small"/>
                         </IconButton>
                     </Tooltip>

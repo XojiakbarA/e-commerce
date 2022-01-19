@@ -2,16 +2,14 @@ import { Box, Typography, Stack, Divider, IconButton, Drawer } from '@mui/materi
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import SidebarButtons from './SidebarButtons'
 import SidebarProductCard from './SidebarProductCard'
-import { toggleCartSidebar } from '../../../redux/actions'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
+import { useToggle } from '../../../app/hooks/useToggle'
 
 const CartSidebar = () => {
 
-    const dispatch = useDispatch()
     const cart = useSelector(state => state.cart.data)
-    const cartSidebar = useSelector(state => state.toggle.cartSidebar)
 
-    const closeSidebar = () => dispatch(toggleCartSidebar(false))
+    const { cartSidebar, closeSidebar } = useToggle()
 
     return(
         <Drawer anchor='right' open={cartSidebar} onClose={closeSidebar}>

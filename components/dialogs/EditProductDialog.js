@@ -7,10 +7,11 @@ import { productValidationSchema } from "../../utils/validate"
 import AutocompleteAsync from "../common/AutocompleteAsync/AutocompleteAsync"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
-import { deleteProductImage, editProduct, getShopProducts, setProduct, toggleEditProductDialog } from "../../redux/actions"
+import { deleteProductImage, editProduct, getShopProducts } from "../../redux/actions"
 import { appendToFormData, productImageURL } from "../../utils/utils"
 import { useRouter } from "next/router"
 import { makeURLArray } from "../../utils/utils"
+import { useToggle } from "../../app/hooks/useToggle"
 
 const Input = styled('input')({
     display: 'none'
@@ -21,7 +22,7 @@ const EditProductDialog = () => {
     const router = useRouter()
     const dispatch = useDispatch()
 
-    const editProductDialog = useSelector(state => state.toggle.editProductDialog)
+    const { editProductDialog, closeEditProductDialog } = useToggle()
 
     const [preview, setPreview] = useState([])
 
@@ -58,12 +59,6 @@ const EditProductDialog = () => {
         },
         enableReinitialize: true
     })
-
-    const closeEditProductDialog = () => {
-        dispatch(toggleEditProductDialog(false))
-        dispatch(setProduct({}))
-        setPreview([])
-    }
 
     const handleCategoriesChange = (e, value) => {
         setDisabled(value ? false : true)
@@ -148,12 +143,12 @@ const EditProductDialog = () => {
     }, [product, categories])
 
     return (
-        <Dialog open={editProductDialog} onClose={closeEditProductDialog} fullWidth maxWidth='lg'>
+        <Dialog open={editProductDialog} onClose={e => closeEditProductDialog(setPreview)} fullWidth maxWidth='lg'>
             <DialogTitle sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                <Typography variant="button" fontSize={20}>
-                    product.title
+                <Typography variant="button">
+                    Edit Product
                 </Typography>
-                <IconButton onClick={closeEditProductDialog}>
+                <IconButton onClick={e => closeEditProductDialog(setPreview)}>
                     <CloseIcon/>
                 </IconButton>
             </DialogTitle>

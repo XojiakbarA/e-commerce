@@ -2,8 +2,8 @@ import ListAltIcon from '@mui/icons-material/ListAlt'
 import AddIcon from '@mui/icons-material/Add'
 import ProfileLayout from "../../../components/layout/ProfileLayout/ProfileLayout"
 import ProfileTitle from "../../../components/profile/ProfileTitle"
-import { useDispatch, useSelector } from 'react-redux'
-import { getShopProducts, toggleAddProductDialog } from '../../../redux/actions'
+import { useSelector } from 'react-redux'
+import { getShopProducts } from '../../../redux/actions'
 import { Grid, Typography } from '@mui/material'
 import AddProductDialog from '../../../components/dialogs/AddProductDialog'
 import ViewProductDialog from '../../../components/dialogs/ViewProductDialog'
@@ -13,20 +13,18 @@ import { wrapper } from "../../../redux/store"
 import { useRouter } from 'next/router'
 import ProductList from '../../../components/common/List/List'
 import ProductListItem from '../../../components/vendor/ProductListItem'
+import { useToggle } from '../../../app/hooks/useToggle'
 
 const labels = [ 'Title', 'Image', 'Stock', 'Price', 'Sale Price', 'Rating', '' ]
 
 const Products = () => {
 
     const router = useRouter()
-    const dispatch = useDispatch()
 
     const products = useSelector(state => state.products.data)
     const meta = useSelector(state => state.products.meta)
 
-    const openAddProductDialog = () => {
-        dispatch(toggleAddProductDialog(true))
-    }
+    const { openAddProductDialog } = useToggle()
 
     const handlePageChange = (e, p) => {
         router.push({
