@@ -132,3 +132,7 @@ export const destroyProductImage = async (product_id, image_id) => {
 export const destroyProduct = async (shop_id, product_id) => {
     return await user.delete(`api/shops/${shop_id}/products/${product_id}`)
 }
+
+export const destroyUserImage = async (user_id, image_id) => {
+    return await user.delete(`api/users/${user_id}/user-images/${image_id}`)
+}

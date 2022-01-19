@@ -9,8 +9,8 @@ import {editUser, toggleEditProfileDialog} from "../../redux/actions";
 import {useFormik} from "formik";
 import {editProfileValidationSchema} from "../../utils/validate";
 import {appendToFormData, userImageURL} from "../../utils/utils";
-import AvatarUpload from "../common/AvatarUpload/AvatarUpload";
 import PhoneMask from "../common/PhoneMask";
+import AvatarMenu from "../common/AvatarMenu";
 
 const EditProfileDialog = () => {
 
@@ -32,7 +32,7 @@ const EditProfileDialog = () => {
         validationSchema: editProfileValidationSchema,
         onSubmit: (data) => {
             const formData = appendToFormData(data)
-            dispatch(editUser(formData, user.id))
+            dispatch(editUser(formData, user.id, setPreview))
         },
         enableReinitialize: true
     })
@@ -68,10 +68,11 @@ const EditProfileDialog = () => {
                 <form onSubmit={formik.handleSubmit}>
                     <Stack spacing={2}>
                         <Box alignSelf='center' paddingBottom={2}>
-                            <AvatarUpload
+                            <AvatarMenu
                                 setFieldValue={formik.setFieldValue}
+                                setPreview={setPreview}
                                 value='image'
-                                src={preview ?? user.image ? userImageURL + user.image : undefined}
+                                src={preview ?? (user.image ? userImageURL + user.image.src : undefined)}
                             />
                         </Box>
                         <TextField

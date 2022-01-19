@@ -1,7 +1,8 @@
 import * as type from '../types'
 
 const initialState = {
-    isFetching: false
+    isFetching: false,
+    data: []
 }
 
 const cart = (state = initialState, action) => {

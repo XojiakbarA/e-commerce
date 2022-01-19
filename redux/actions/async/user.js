@@ -15,7 +15,7 @@ import {
     deleteWishlist,
     storeOrder,
     clearCart,
-    fetchOrders, fetchOrder, cancellationOrder, sendUserData, storeShop, storeProduct, destroyProductImage, updateProduct, destroyProduct, storeReview
+    fetchOrders, fetchOrder, cancellationOrder, sendUserData, storeShop, storeProduct, destroyProductImage, updateProduct, destroyProduct, storeReview, destroyUserImage
 } from '../../../api/user'
 import {
     setUser,
@@ -143,7 +143,7 @@ export const getUser = (cookie) => {
     }
 }
 
-export const editUser = (data, id) => {
+export const editUser = (data, id, setPreview) => {
     return async (dispatch) => {
         try {
             dispatch(setLoading(true))
@@ -153,6 +153,7 @@ export const editUser = (data, id) => {
                 dispatch(setLoading(false))
                 dispatch(setSnackbar({isOpen: true, text: 'Сhanges completed successfully!'}))
                 dispatch(toggleEditProfileDialog(false))
+                setPreview(null)
             }
         } catch (e) {
             console.log(e)
@@ -378,6 +379,23 @@ export const deleteProductImage = (product_id, image_id) => {
             if (res.status === 200) {
                 dispatch(setProduct(res.data.data))
                 dispatch(setLoading(false))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const deleteUserImage = (user_id, image_id, setPreview) => {
+    return async (dispatch) => {
+        try {
+            dispatch(setLoading(true))
+            const res = await destroyUserImage(user_id, image_id)
+            if (res.status === 200) {
+                dispatch(setUser(res.data.data))
+                dispatch(setLoading(false))
+                dispatch(setSnackbar({isOpen: true, text: 'Image deleted'}))
+                setPreview(null)
             }
         } catch (e) {
             console.log(e)

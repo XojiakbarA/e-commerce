@@ -9,7 +9,7 @@ const UserCard = ({image, firstName, lastName}) => {
             <Stack direction='row' spacing={2} alignItems='center'>
                 <Avatar sx={{width: 70, height: 70}}>
                     <Image
-                        src={image ? userImageURL + image : noAvImageUrl}
+                        src={image ? userImageURL + image.src : noAvImageUrl}
                         alt={firstName}
                         layout='fill'
                         objectFit='cover'
