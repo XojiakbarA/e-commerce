@@ -48,12 +48,16 @@ const MyApp = ({Component, pageProps}) => {
 MyApp.getInitialProps = wrapper.getInitialAppProps(store => async ({Component, ctx}) => {
 
     const {dispatch} = store
+    const cookie = ctx.req.headers.cookie
 
     await dispatch(getCategories())
     await dispatch(getBrands())
-    await dispatch(getUser(ctx.req?.headers.cookie))
-    await dispatch(getCart(ctx.req?.headers.cookie))
-    await dispatch(getWishlist(ctx.req?.headers.cookie))
+
+    if (cookie) {
+        await dispatch(getUser(cookie))
+        await dispatch(getCart(cookie))
+        await dispatch(getWishlist(cookie))
+    }
 
     return {
         pageProps: {
