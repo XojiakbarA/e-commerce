@@ -25,23 +25,27 @@ const ProductInfo = ({product}) => {
     return(
         <Stack spacing={3} sx={{marginTop: 5, paddingTop: 2, position: 'relative'}} alignItems='flex-start'>
             {
-                hasInWishlist
+                isProductsPage
                 ?
-                <IconButton
-                    size='large'
-                    sx={{position: 'absolute', top: 0, right: 0}}
-                    onClick={deleteProductWishlist}
-                >
-                    <FavoriteIcon fontSize='large'/>
-                </IconButton>
+                    hasInWishlist
+                    ?
+                    <IconButton
+                        size='large'
+                        sx={{position: 'absolute', top: 0, right: 0}}
+                        onClick={deleteProductWishlist}
+                    >
+                        <FavoriteIcon fontSize='large'/>
+                    </IconButton>
+                    :
+                    <IconButton
+                        size='large'
+                        sx={{position: 'absolute', top: 0, right: 0}}
+                        onClick={addProductWishlist}
+                    >
+                        <FavoriteBorderIcon fontSize='large'/>
+                    </IconButton>
                 :
-                <IconButton
-                    size='large'
-                    sx={{position: 'absolute', top: 0, right: 0}}
-                    onClick={addProductWishlist}
-                >
-                    <FavoriteBorderIcon fontSize='large'/>
-                </IconButton>
+                null
             }
             <Typography variant='h3'>
                 {product.title}
