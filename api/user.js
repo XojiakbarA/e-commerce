@@ -5,6 +5,10 @@ const user = axios.create({
     baseURL: 'http://localhost:8000/'
 })
 
+export const setToken = async () => {
+    await user.get('sanctum/csrf-cookie')
+}
+
 export const fetchRegions = async () => {
     return await user.get('api/regions')
 }
@@ -35,7 +39,7 @@ export const fetchUser = async (cookie) => {
     })
 }
 
-export const sendUserData = async (data, id) => {
+export const updateUser = async (data, id) => {
     return await user.post(`api/users/${id}?_method=PUT`, data)
 }
 

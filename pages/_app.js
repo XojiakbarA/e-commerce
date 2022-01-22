@@ -5,6 +5,7 @@ import { wrapper } from '../redux/store'
 import { getCategories, getBrands, getUser, getCart, getWishlist } from '../redux/actions'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { setToken } from '../api/user'
 
 const MyApp = ({Component, pageProps}) => {
 
@@ -28,6 +29,10 @@ const MyApp = ({Component, pageProps}) => {
             })
         }
     })
+
+    useEffect(() => {
+        setToken()
+    }, [])
 
     return (
             <>
