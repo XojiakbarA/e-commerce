@@ -29,11 +29,11 @@ const toggleReducer = (state = initialState, action) => {
             return { ...state, confirmDialog: action.payload }
         case type.TOGGLE_EDIT_PROFILE_DIALOG:
             return { ...state, editProfileDialog: action.payload }
-        case type.TOOGLE_ADD_PRODUCT_DIALOG:
+        case type.TOGGLE_ADD_PRODUCT_DIALOG:
             return { ...state, addProductDialog: action.payload }
-        case type.TOOGLE_VIEW_PRODUCT_DIALOG:
+        case type.TOGGLE_VIEW_PRODUCT_DIALOG:
             return { ...state, viewProductDialog: action.payload }
-        case type.TOOGLE_EDIT_PRODUCT_DIALOG:
+        case type.TOGGLE_EDIT_PRODUCT_DIALOG:
             return { ...state, editProductDialog: action.payload }
         case type.TOGGLE_DELETE_PRODUCT_DIALOG:
             return { ...state, deleteProductDialog: action.payload }

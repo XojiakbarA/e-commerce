@@ -81,17 +81,17 @@ export const toggleEditProfileDialog = (bool) => ({
 })
 
 export const toggleAddProductDialog = (bool) => ({
-    type: type.TOOGLE_ADD_PRODUCT_DIALOG,
+    type: type.TOGGLE_ADD_PRODUCT_DIALOG,
     payload: bool
 })
 
 export const toggleViewProductDialog = (bool) => ({
-    type: type.TOOGLE_VIEW_PRODUCT_DIALOG,
+    type: type.TOGGLE_VIEW_PRODUCT_DIALOG,
     payload: bool
 })
 
 export const toggleEditProductDialog = (bool) => ({
-    type: type.TOOGLE_EDIT_PRODUCT_DIALOG,
+    type: type.TOGGLE_EDIT_PRODUCT_DIALOG,
     payload: bool
 })
 
