@@ -1,33 +1,19 @@
 import { Grid, Rating, Typography, TextField, Button, CircularProgress } from "@mui/material"
 import SendIcon from '@mui/icons-material/Send'
-import { reviewValidationSchema } from '../../../utils/validate'
-import { useFormik } from "formik"
 import { useSelector } from "react-redux"
-import { useDispatch } from "react-redux"
-import { createReview } from "../../../redux/actions"
+import { useReview } from "../../../app/hooks/useFormik/useReview"
 
 const ReviewForm = () => {
 
-    const dispatch = useDispatch()
-    const isLoading = useSelector(state => state.toggle.isLoading)
-    const id = useSelector(state => state.product.id)
     const user = useSelector(state => state.user)
 
-    const formik = useFormik({
-        initialValues: {
-            rating: 0,
-            name: user?.first_name ?? '',
-            text: ''
-        },
-        validationSchema: reviewValidationSchema,
-        onSubmit: (data, {resetForm}) => {
-            dispatch(createReview(id, data, resetForm))
-        },
-        enableReinitialize: true
-    })
+    const {
+        handleSubmit, handleChange, handleBlur, getFieldProps,
+        values, touched, errors, isSubmitting
+    } = useReview()
 
     return(
-        <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
             <Grid item lg={12}>
                 <Typography variant='h4'>
@@ -40,23 +26,20 @@ const ReviewForm = () => {
                 </Typography>
                 <Rating
                     name='rating'
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={Number(formik.values.rating)}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={Number(values.rating)}
                 />
             </Grid>
             {
-                user
-                ?
-                null
-                :
+                !user &&
                 <Grid item lg={12}>
                     <TextField
                         label='Name'
                         size='small'
-                        error={ formik.touched.name && Boolean(formik.errors.name) }
-                        helperText={ formik.touched.name && formik.errors.name }
-                        { ...formik.getFieldProps('name') }
+                        error={ touched.name && Boolean(errors.name) }
+                        helperText={ touched.name && errors.name }
+                        { ...getFieldProps('name') }
                     />
                 </Grid>
             }
@@ -66,22 +49,22 @@ const ReviewForm = () => {
                     multiline
                     rows={5}
                     fullWidth
-                    error={ formik.touched.text && Boolean(formik.errors.text) }
-                    helperText={ formik.touched.text && formik.errors.text }
-                    { ...formik.getFieldProps('text') }
+                    error={ touched.text && Boolean(errors.text) }
+                    helperText={ touched.text && errors.text }
+                    { ...getFieldProps('text') }
                 />
                 <Button
                     variant='contained'
                     sx={{my: 2}}
                     type='submit'
                     endIcon={
-                        isLoading
+                        isSubmitting
                         ?
                         <CircularProgress color='inherit' size={20} />
                         :
                         <SendIcon />
                     }
-                    disabled={isLoading}
+                    disabled={isSubmitting}
                 >
                     Submit
                 </Button>

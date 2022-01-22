@@ -1,29 +1,13 @@
-import { Stack, Button, Dialog, TextField, Typography, Box, IconButton, CircularProgress, Checkbox, FormControlLabel, DialogTitle, DialogContent } from '@mui/material'
+import { Stack, Button, Dialog, TextField, Typography, IconButton, CircularProgress, Checkbox, FormControlLabel, DialogTitle, DialogContent } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import { useSelector, useDispatch } from 'react-redux'
-import { useFormik } from 'formik'
-import { loginValidationSchema } from '../../utils/validate'
-import { userLogin } from '../../redux/actions'
 import { useToggle } from '../../app/hooks/useToggle'
+import { useLogin } from '../../app/hooks/useFormik/useLogin'
 
 const LoginDialog = () => {
 
-    const dispatch = useDispatch()
-    const isLoading = useSelector(state => state.toggle.isLoading)
-
     const { loginDialog, closeLoginDialog, openRegisterDialog } = useToggle()
 
-    const formik = useFormik({
-        initialValues: {
-            email: '',
-            password: '',
-            remember: false
-        },
-        validationSchema: loginValidationSchema,
-        onSubmit: (data) => {
-            dispatch(userLogin(data))
-        }
-    })
+    const { handleSubmit, getFieldProps, touched, errors, isSubmitting } = useLogin()
 
     return(
         <Dialog open={loginDialog} onClose={ closeLoginDialog }>
@@ -36,28 +20,33 @@ const LoginDialog = () => {
                 </IconButton>
             </DialogTitle>
                 <DialogContent sx={{marginX: 7, marginY: 3, width: 300}}>
-                <form onSubmit={formik.handleSubmit}>
+                <form onSubmit={handleSubmit}>
                     <Stack spacing={3} marginTop={1}>
                         <TextField
                             label='Email'
                             size='small'
-                            error={ formik.touched.email && Boolean(formik.errors.email) }
-                            helperText={ formik.touched.email && formik.errors.email }
-                            { ...formik.getFieldProps('email') }
+                            error={ touched.email && Boolean(errors.email) }
+                            helperText={ touched.email && errors.email }
+                            { ...getFieldProps('email') }
                         />
                         <TextField
                             label='Password'
                             size='small'
                             type='password'
-                            error={ formik.touched.password && Boolean(formik.errors.password) }
-                            helperText={ formik.touched.password && formik.errors.password }
-                            { ...formik.getFieldProps('password') }
+                            error={ touched.password && Boolean(errors.password) }
+                            helperText={ touched.password && errors.password }
+                            { ...getFieldProps('password') }
                         />
-                        <FormControlLabel control={<Checkbox { ...formik.getFieldProps('remember') } />} label='Remember Me' />
+                        <FormControlLabel
+                            control={
+                                <Checkbox { ...getFieldProps('remember') }/>
+                                }
+                            label='Remember Me'
+                        />
                         <Button
                             variant='contained'
                             type='submit'
-                            endIcon={ isLoading
+                            endIcon={ isSubmitting
                                 &&
                                 <CircularProgress
                                     color='inherit'
@@ -65,7 +54,7 @@ const LoginDialog = () => {
                                     sx={{position: 'absolute', top: 8, right: 50}}
                                 />
                             }
-                            disabled={isLoading}
+                            disabled={isSubmitting}
                         >
                             Login
                         </Button>

@@ -1,0 +1,23 @@
+import { useFormik } from "formik"
+import { useDispatch } from "react-redux"
+import { userLogin } from "../../../redux/actions"
+import { loginValidationSchema } from "./validate"
+
+export const useLogin = () => {
+
+    const dispatch = useDispatch()
+
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+            remember_me: false
+        },
+        validationSchema: loginValidationSchema,
+        onSubmit: (data) => {
+            dispatch(userLogin(data, formik.setSubmitting))
+        }
+    })
+
+    return { ...formik }
+}

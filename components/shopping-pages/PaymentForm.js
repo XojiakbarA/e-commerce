@@ -1,21 +1,21 @@
 import { RadioGroup, FormControlLabel, Paper, Stack, Radio, Divider, FormControl, FormHelperText, Typography } from "@mui/material"
 
-const PaymentForm = ({formik}) => {
+const PaymentForm = ({touched, errors, values, handleChange}) => {
 
     return (
         <Paper sx={{ padding: 3, marginBottom: 3 }}>
             <Typography
                 variant='body1'
-                color={formik.touched.pay_mode && Boolean(formik.errors.pay_mode) ? '#d32f2f' : 'inherit'}
+                color={touched.pay_mode && Boolean(errors.pay_mode) ? '#d32f2f' : 'inherit'}
                 gutterBottom
             >
                 Payment Mode
             </Typography>
             <FormControl
-                fullWidth error={ formik.touched.pay_mode && Boolean(formik.errors.pay_mode) }>
+                fullWidth error={ touched.pay_mode && Boolean(errors.pay_mode) }>
                 <RadioGroup
-                    value={formik.values.pay_mode}
-                    onChange={formik.handleChange}
+                    value={values.pay_mode}
+                    onChange={handleChange}
                     row
                 >
                     <Stack spacing={2} direction='row' divider={<Divider orientation='vertical'/>}>
@@ -46,7 +46,7 @@ const PaymentForm = ({formik}) => {
                         />
                     </Stack>
                 </RadioGroup>
-                <FormHelperText>{formik.touched.pay_mode && formik.errors.pay_mode}</FormHelperText>
+                <FormHelperText>{touched.pay_mode && errors.pay_mode}</FormHelperText>
             </FormControl>
         </Paper>
     )

@@ -1,71 +1,42 @@
-import {useEffect, useState} from "react";
 import { Box, Button, CircularProgress, Dialog, DialogContent, DialogTitle, IconButton, Stack, TextField, Typography } from "@mui/material";
 import {DesktopDatePicker, LocalizationProvider} from "@mui/lab";
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import CloseIcon from '@mui/icons-material/Close';
 import ruLocale from 'date-fns/locale/ru'
-import {useDispatch, useSelector} from "react-redux";
-import {editUser} from "../../redux/actions";
-import {useFormik} from "formik";
-import {editProfileValidationSchema} from "../../utils/validate";
-import {appendToFormData, userImageURL} from "../../utils/utils";
+import {useSelector} from "react-redux";
+import {userImageURL} from "../../utils/utils";
 import PhoneMask from "../common/PhoneMask";
 import AvatarMenu from "../common/AvatarMenu";
 import { useToggle } from "../../app/hooks/useToggle";
+import { useEditProfile } from "../../app/hooks/useFormik/useEditProfile";
 
 const EditProfileDialog = () => {
 
-    const dispatch = useDispatch()
     const user = useSelector(state => state.user)
-    const isLoading = useSelector(state => state.toggle.isLoading)
-    const [preview, setPreview] = useState(null)
 
     const { editProfileDialog, closeEditProfileDialog } = useToggle()
 
-    const formik = useFormik({
-        initialValues: {
-            first_name: user?.first_name,
-            last_name: user?.last_name ?? '',
-            email: user?.email,
-            phone: user?.phone ?? '',
-            birth_date: user?.birth_date,
-            image: null
-        },
-        validationSchema: editProfileValidationSchema,
-        onSubmit: (data) => {
-            const formData = appendToFormData(data)
-            dispatch(editUser(formData, user.id, setPreview))
-        },
-        enableReinitialize: true
-    })
-
-    useEffect(() => {
-        const image = formik.values.image
-        const reader = new FileReader()
-        if (image) {
-            reader.readAsDataURL(image)
-            reader.onload = () => {
-                setPreview(reader.result)
-            }
-        }
-    }, [formik.values.image])
+    const {
+        handleSubmit, getFieldProps, setFieldValue, setPreview,
+        values, touched, errors, isSubmitting, preview
+    } = useEditProfile()
 
     return (
-        <Dialog open={editProfileDialog} onClose={e => closeEditProfileDialog(setPreview, formik.setFieldValue)}>
+        <Dialog open={editProfileDialog} onClose={e => closeEditProfileDialog(setPreview, setFieldValue)}>
             <DialogTitle sx={{display: 'flex', alignItems: 'end', justifyContent: 'space-between'}}>
                 <Typography variant="button">
                     Edit Profile
                 </Typography>
-                <IconButton onClick={e => closeEditProfileDialog(setPreview, formik.setFieldValue)}>
+                <IconButton onClick={e => closeEditProfileDialog(setPreview, setFieldValue)}>
                     <CloseIcon/>
                 </IconButton>
             </DialogTitle>
             <DialogContent sx={{marginX: 7, marginY: 3, width: 300}}>
-                <form onSubmit={formik.handleSubmit}>
+                <form onSubmit={handleSubmit}>
                     <Stack spacing={2}>
                         <Box alignSelf='center' paddingBottom={2}>
                             <AvatarMenu
-                                setFieldValue={formik.setFieldValue}
+                                setFieldValue={setFieldValue}
                                 setPreview={setPreview}
                                 value='image'
                                 src={preview ?? (user.image ? userImageURL + user.image.src : undefined)}
@@ -74,31 +45,31 @@ const EditProfileDialog = () => {
                         <TextField
                             label='First Name'
                             size='small'
-                            error={ formik.touched.first_name && Boolean(formik.errors.first_name) }
-                            helperText={ formik.touched.first_name && formik.errors.first_name }
-                            { ...formik.getFieldProps('first_name') }
+                            error={ touched.first_name && Boolean(errors.first_name) }
+                            helperText={ touched.first_name && errors.first_name }
+                            { ...getFieldProps('first_name') }
                         />
                         <TextField
                             label='Last Name'
                             size='small'
-                            error={ formik.touched.last_name && Boolean(formik.errors.last_name) }
-                            helperText={ formik.touched.last_name && formik.errors.last_name }
-                            { ...formik.getFieldProps('last_name') }
+                            error={ touched.last_name && Boolean(errors.last_name) }
+                            helperText={ touched.last_name && errors.last_name }
+                            { ...getFieldProps('last_name') }
                         />
                         <TextField
                             label='Email'
                             size='small'
-                            error={ formik.touched.email && Boolean(formik.errors.email) }
-                            helperText={ formik.touched.email && formik.errors.email }
-                            { ...formik.getFieldProps('email') }
+                            error={ touched.email && Boolean(errors.email) }
+                            helperText={ touched.email && errors.email }
+                            { ...getFieldProps('email') }
                         />
                         <TextField
                             label='Phone Number'
                             size='small'
                             InputProps={{inputComponent: PhoneMask, inputProps: {name: 'phone'}}}
-                            error={ formik.touched.phone && Boolean(formik.errors.phone) }
-                            helperText={ formik.touched.phone && formik.errors.phone }
-                            { ...formik.getFieldProps('phone') }
+                            error={ touched.phone && Boolean(errors.phone) }
+                            helperText={ touched.phone && errors.phone }
+                            { ...getFieldProps('phone') }
                             placeholder='(00) 000-00-00'
                         />
                         <LocalizationProvider dateAdapter={AdapterDateFns} locale={ruLocale}>
@@ -107,15 +78,15 @@ const EditProfileDialog = () => {
                                 mask='__.__.____'
                                 label="Birth Date"
                                 name='birth_date'
-                                value={formik.values.birth_date}
-                                onChange={(value) => formik.setFieldValue('birth_date', value)}
+                                value={values.birth_date}
+                                onChange={(value) => setFieldValue('birth_date', value)}
                             />
                         </LocalizationProvider>
                         <Button
                             size='small'
                             variant='contained'
                             type='submit'
-                            endIcon={ isLoading
+                            endIcon={ isSubmitting
                                 &&
                                 <CircularProgress
                                     color='inherit'
@@ -123,14 +94,14 @@ const EditProfileDialog = () => {
                                     sx={{position: 'absolute', top: 8, right: 50}}
                                 />
                             }
-                            disabled={isLoading}
+                            disabled={isSubmitting}
                         >
                             Save
                         </Button>
                         <Button
                             size='small'
                             variant='outlined'
-                            onClick={e => closeEditProfileDialog(setPreview, formik.setFieldValue)}
+                            onClick={e => closeEditProfileDialog(setPreview, setFieldValue)}
                         >
                             Cancel
                         </Button>

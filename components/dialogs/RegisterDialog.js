@@ -1,31 +1,14 @@
-import { Dialog, Box, IconButton, Typography, Stack, TextField, Button, CircularProgress, DialogContent, DialogTitle } from "@mui/material"
+import { Dialog, IconButton, Typography, Stack, TextField, Button, CircularProgress, DialogContent, DialogTitle } from "@mui/material"
 import CloseIcon from '@mui/icons-material/Close'
-import { useDispatch, useSelector } from "react-redux"
-import { useFormik } from "formik"
-import { registerValidationSchema } from "../../utils/validate"
-import { userRegister } from "../../redux/actions"
 import { useToggle } from "../../app/hooks/useToggle"
+import { useRegister } from "../../app/hooks/useFormik/useRegister"
 
 
 const RegisterDialog = () => {
 
-    const dispatch = useDispatch()
-    const isLoading = useSelector(state => state.toggle.isLoading)
-    
     const { registerDialog, closeRegisterDialog, openLoginDialog } = useToggle()
 
-    const formik = useFormik({
-        initialValues: {
-            name: '',
-            email: '',
-            password: '',
-            password_confirmation: ''
-        },
-        validationSchema: registerValidationSchema,
-        onSubmit: (data) => {
-            dispatch(userRegister(data))
-        }
-    })
+    const { handleSubmit, getFieldProps, touched, errors, isSubmitting } = useRegister()
 
     return (
         <Dialog open={registerDialog} onClose={ closeRegisterDialog }>
@@ -38,49 +21,49 @@ const RegisterDialog = () => {
                 </IconButton>
             </DialogTitle>
             <DialogContent sx={{marginX: 7, marginY: 3, width: 300}}>
-                <form onSubmit={formik.handleSubmit}>
+                <form onSubmit={handleSubmit}>
                     <Stack spacing={3}>
                         <TextField
-                            label='Name'
+                            label='First Name'
                             size='small'
-                            error={ formik.touched.name && Boolean(formik.errors.name) }
-                            helperText={ formik.touched.name && formik.errors.name }
-                            { ...formik.getFieldProps('name') }
+                            error={ touched.name && Boolean(errors.name) }
+                            helperText={ touched.name && errors.name }
+                            { ...getFieldProps('name') }
                         />
                         <TextField
                             label='Email'
                             size='small'
-                            error={ formik.touched.email && Boolean(formik.errors.email) }
-                            helperText={ formik.touched.email && formik.errors.email }
-                            { ...formik.getFieldProps('email') }
+                            error={ touched.email && Boolean(errors.email) }
+                            helperText={ touched.email && errors.email }
+                            { ...getFieldProps('email') }
                         />
                         <TextField
                             label='Password'
                             size='small'
                             type='password'
-                            error={ formik.touched.password && Boolean(formik.errors.password) }
-                            helperText={ formik.touched.password && formik.errors.password }
-                            { ...formik.getFieldProps('password') }
+                            error={ touched.password && Boolean(errors.password) }
+                            helperText={ touched.password && errors.password }
+                            { ...getFieldProps('password') }
                         />
                         <TextField
                             label='Confirm Password'
                             size='small'
                             type='password'
-                            error={ formik.touched.password_confirmation && Boolean(formik.errors.password_confirmation) }
-                            helperText={ formik.touched.password_confirmation && formik.errors.password_confirmation }
-                            { ...formik.getFieldProps('password_confirmation') }
+                            error={ touched.password_confirmation && Boolean(errors.password_confirmation) }
+                            helperText={ touched.password_confirmation && errors.password_confirmation }
+                            { ...getFieldProps('password_confirmation') }
                         />
                         <Button
                             variant='contained'
                             type='submit'
-                            endIcon={ isLoading &&
+                            endIcon={ isSubmitting &&
                                 <CircularProgress
                                     color='inherit'
                                     size={20}
                                     sx={{position: 'absolute', top: 8, right: 50}}
                                 />
                             }
-                            disabled={isLoading}
+                            disabled={isSubmitting}
                         >
                             Register
                         </Button>

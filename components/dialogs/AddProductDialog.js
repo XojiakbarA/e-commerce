@@ -2,16 +2,9 @@ import { Avatar, Badge, Box, Button, CircularProgress, Dialog, DialogContent, Di
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
 import { styled } from "@mui/material/styles"
 import CloseIcon from '@mui/icons-material/Close';
-import { useDispatch, useSelector } from "react-redux"
-import { createProduct } from "../../redux/actions"
-import { useFormik } from "formik"
-import { productValidationSchema } from "../../utils/validate"
 import AutocompleteAsync from "../common/AutocompleteAsync/AutocompleteAsync"
-import { useState } from "react"
-import { useRouter } from 'next/router'
-import { appendToFormData } from "../../utils/utils"
-import { makeURLArray } from "../../utils/utils";
 import { useToggle } from "../../app/hooks/useToggle";
+import { useAddProduct } from "../../app/hooks/useFormik/useAddProduct";
 
 const Input = styled('input')({
     display: 'none'
@@ -19,104 +12,15 @@ const Input = styled('input')({
 
 const AddProductDialog = () => {
 
-    const dispatch = useDispatch()
-    const router = useRouter()
-
-    const isLoading = useSelector(state => state.toggle.isLoading)
-
     const { addProductDialog, closeAddProductDialog } = useToggle()
 
-    const [preview, setPreview] = useState([])
-
-    const categories = useSelector(state => state.categories)
-    const [category, setCategory] = useState(categories[0])
-
-    const [subCategories, setSubCategories] = useState(categories[0].sub_categories)
-    const [subCategory, setSubCategory] = useState(subCategories[0])
-    const [disabled, setDisabled] = useState(false)
-
-    const brands = useSelector(state => state.brands)
-    const [brand, setBrand] = useState(brands[0])
-
-    const shop_id = router.query.id
-
-    const formik = useFormik({
-        initialValues: {
-            title: '',
-            category_id: category?.id,
-            sub_category_id: subCategory?.id,
-            brand_id: brand?.id,
-            description: '',
-            stock: '',
-            price: '',
-            sale_price: '',
-            images: null,
-            shop_id: shop_id
-        },
-        validationSchema: productValidationSchema,
-        onSubmit: (data, {resetForm}) => {
-            const formData = appendToFormData(data)
-            dispatch(createProduct(formData, resetForm))
-        }
-    })
-
-    const handleCategoriesChange = (e, value) => {
-        setDisabled(value ? false : true)
-        setCategory(value)
-            setSubCategory(value?.sub_categories[0] ?? null)
-            setSubCategories(value?.sub_categories ?? [])
-            formik.setValues({
-                ...formik.values,
-                category_id: value?.id,
-                sub_category_id: value?.sub_categories[0]?.id
-            })
-    }
-
-    const handleSubCategoriesChange = (e, value) => {
-        setSubCategory(value)
-        formik.setValues({...formik.values, sub_category_id: value?.id})
-    }
-
-    const handleBrandsChange = (e, value) => {
-        setBrand(value)
-        formik.setValues({...formik.values, brand_id: value?.id})
-    }
-
-    const handleUploadChange = (e) => {
-        const prevImages = formik.values.images
-        const newImages = e.target.files
-
-        const dt = new DataTransfer()
-        if (prevImages) {
-            for (let image of prevImages) {
-                dt.items.add(image)
-            }
-        }
-        for (let image of newImages) {
-            dt.items.add(image)
-        }
-        const images = dt.files
-
-        formik.setFieldValue('images', images)
-        setPreview(makeURLArray(images))
-    }
-
-    const handleImageClick = (i) => {
-        const images = { ...formik.values.images }
-        delete images[i]
-        const dt = new DataTransfer()
-        for (let key in images) {
-            dt.items.add(images[key])
-        }
-        images = dt.files
-        formik.setFieldValue('images', images)
-        setPreview(makeURLArray(images))
-    }
-
-    const handleClearClick = () => {
-        formik.setFieldValue('images', null)
-        setPreview([])
-    }
+    const {
+        handleSubmit, getFieldProps, handleBlur,
+        handleCategoriesChange, handleSubCategoriesChange, handleBrandsChange,
+        handlePreviewImageClick, handleUploadChange, handleClearClick,
+        values, touched, errors, isSubmitting, preview, categories, brands,
+        category, subCategory, subCategories, brand
+    } = useAddProduct()
 
     return (
         <Dialog open={addProductDialog} onClose={closeAddProductDialog} fullWidth maxWidth='lg'>
@@ -130,16 +34,16 @@ const AddProductDialog = () => {
             </DialogTitle>
             <DialogContent>
                 <Box sx={{marginY: 2}}>
-                    <form onSubmit={formik.handleSubmit}>
+                    <form onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item lg={4}>
                             <TextField
                                 label='Title'
                                 size='small'
                                 fullWidth
-                                error={ formik.touched.title && Boolean(formik.errors.title) }
-                                helperText={ formik.touched.title && formik.errors.title }
-                                { ...formik.getFieldProps('title') }
+                                error={ touched.title && Boolean(errors.title) }
+                                helperText={ touched.title && errors.title }
+                                { ...getFieldProps('title') }
                             />
                         </Grid>
                         <Grid item lg={12}>
@@ -148,40 +52,39 @@ const AddProductDialog = () => {
                                     <AutocompleteAsync
                                         name='category_id'
                                         label='Category'
-                                        error={formik.touched.category_id && Boolean(formik.errors.category_id)}
-                                        helperText={formik.touched.category_id && formik.errors.category_id}
+                                        error={touched.category_id && Boolean(errors.category_id)}
+                                        helperText={touched.category_id && errors.category_id}
                                         getOptionLabel={option => option.title}
                                         options={categories}
                                         option={category}
                                         handleChange={handleCategoriesChange}
-                                        handleBlur={formik.handleBlur}
+                                        handleBlur={handleBlur}
                                     />
                                 </Grid>
                                 <Grid item lg={4}>
                                     <AutocompleteAsync
                                         name='sub_category_id'
                                         label='Sub Category'
-                                        error={formik.touched.sub_category_id && Boolean(formik.errors.sub_category_id)}
-                                        helperText={formik.touched.sub_category_id && formik.errors.sub_category_id}
+                                        error={touched.sub_category_id && Boolean(errors.sub_category_id)}
+                                        helperText={touched.sub_category_id && errors.sub_category_id}
                                         getOptionLabel={option => option.title}
                                         options={subCategories}
                                         option={subCategory}
                                         handleChange={handleSubCategoriesChange}
-                                        handleBlur={formik.handleBlur}
-                                        disabled={disabled}
+                                        handleBlur={handleBlur}
                                     />
                                 </Grid>
                                 <Grid item lg={4}>
                                     <AutocompleteAsync
                                         name='brand_id'
                                         label='Brand'
-                                        error={formik.touched.brand_id && Boolean(formik.errors.brand_id)}
-                                        helperText={formik.touched.brand_id && formik.errors.brand_id}
+                                        error={touched.brand_id && Boolean(errors.brand_id)}
+                                        helperText={touched.brand_id && errors.brand_id}
                                         getOptionLabel={option => option.title}
                                         options={brands}
                                         option={brand}
                                         handleChange={handleBrandsChange}
-                                        handleBlur={formik.handleBlur}
+                                        handleBlur={handleBlur}
                                     />
                                 </Grid>
                             </Grid>
@@ -205,7 +108,7 @@ const AddProductDialog = () => {
                                                         <IconButton
                                                             size="small"
                                                             color='primary'
-                                                            onClick={() => handleImageClick(i)}
+                                                            onClick={() => handlePreviewImageClick(i)}
                                                         >
                                                             <CloseIcon fontSize='small'/>
                                                         </IconButton>
@@ -225,7 +128,7 @@ const AddProductDialog = () => {
                                         <Box sx={{
                                                 width: 200,
                                                 height: 200,
-                                                display: formik.values.images?.length >= 5 ? 'none' : 'flex',
+                                                display: values.images?.length >= 5 ? 'none' : 'flex',
                                                 justifyContent: 'center',
                                                 alignItems: 'center'
                                             }}>
@@ -263,9 +166,9 @@ const AddProductDialog = () => {
                                 multiline
                                 rows={5}
                                 fullWidth
-                                error={ formik.touched.description && Boolean(formik.errors.description) }
-                                helperText={ formik.touched.description && formik.errors.description }
-                                { ...formik.getFieldProps('description') }
+                                error={ touched.description && Boolean(errors.description) }
+                                helperText={ touched.description && errors.description }
+                                { ...getFieldProps('description') }
                             />
                         </Grid>
                         <Grid item lg={4}>
@@ -275,9 +178,9 @@ const AddProductDialog = () => {
                                 size='small'
                                 fullWidth
                                 InputProps={{inputProps: {min: 0}}}
-                                error={ formik.touched.stock && Boolean(formik.errors.stock) }
-                                helperText={ formik.touched.stock && formik.errors.stock }
-                                { ...formik.getFieldProps('stock') }
+                                error={ touched.stock && Boolean(errors.stock) }
+                                helperText={ touched.stock && errors.stock }
+                                { ...getFieldProps('stock') }
                             />
                         </Grid>
                         <Grid item lg={4}>
@@ -286,9 +189,9 @@ const AddProductDialog = () => {
                                 size='small'
                                 fullWidth
                                 InputProps={{startAdornment: <InputAdornment position="start">$</InputAdornment>}}
-                                error={ formik.touched.price && Boolean(formik.errors.price) }
-                                helperText={ formik.touched.price && formik.errors.price }
-                                { ...formik.getFieldProps('price') }
+                                error={ touched.price && Boolean(errors.price) }
+                                helperText={ touched.price && errors.price }
+                                { ...getFieldProps('price') }
                             />
                         </Grid>
                         <Grid item lg={4}>
@@ -297,9 +200,9 @@ const AddProductDialog = () => {
                                 size='small'
                                 fullWidth
                                 InputProps={{startAdornment: <InputAdornment position="start">$</InputAdornment>}}
-                                error={ formik.touched.sale_price && Boolean(formik.errors.sale_price) }
-                                helperText={ formik.touched.sale_price && formik.errors.sale_price }
-                                { ...formik.getFieldProps('sale_price') }
+                                error={ touched.sale_price && Boolean(errors.sale_price) }
+                                helperText={ touched.sale_price && errors.sale_price }
+                                { ...getFieldProps('sale_price') }
                             />
                         </Grid>
                         <Grid item lg={12}>
@@ -307,14 +210,14 @@ const AddProductDialog = () => {
                             type='submit'
                             variant='contained'
                             sx={{float: 'right'}}
-                            endIcon={ isLoading
+                            endIcon={ isSubmitting
                                 &&
                                 <CircularProgress
                                     color='inherit'
                                     size={20}
                                 />
                             }
-                            disabled={isLoading}
+                            disabled={isSubmitting}
                         >
                             Create
                         </Button>

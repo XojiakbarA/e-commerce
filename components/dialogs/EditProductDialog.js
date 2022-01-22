@@ -2,16 +2,10 @@ import { Avatar, Badge, Box, Button, CircularProgress, Dialog, DialogContent, Di
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
 import CloseIcon from '@mui/icons-material/Close'
 import { styled } from "@mui/material/styles"
-import { useFormik } from "formik"
-import { productValidationSchema } from "../../utils/validate"
 import AutocompleteAsync from "../common/AutocompleteAsync/AutocompleteAsync"
-import { useDispatch, useSelector } from "react-redux"
-import { useEffect, useState } from "react"
-import { deleteProductImage, editProduct, getShopProducts } from "../../redux/actions"
-import { appendToFormData, productImageURL } from "../../utils/utils"
-import { useRouter } from "next/router"
-import { makeURLArray } from "../../utils/utils"
+import { productImageURL } from "../../utils/utils"
 import { useToggle } from "../../app/hooks/useToggle"
+import { useEditProduct } from "../../app/hooks/useFormik/useEditProduct"
 
 const Input = styled('input')({
     display: 'none'
@@ -19,128 +13,15 @@ const Input = styled('input')({
 
 const EditProductDialog = () => {
 
-    const router = useRouter()
-    const dispatch = useDispatch()
-
     const { editProductDialog, closeEditProductDialog } = useToggle()
 
-    const [preview, setPreview] = useState([])
-
-    const product = useSelector(state => state.product)
-
-    const categories = useSelector(state => state.categories)
-    const [category, setCategory] = useState(categories[0])
-
-    const [subCategories, setSubCategories] = useState(categories[0].sub_categories)
-    const [subCategory, setSubCategory] = useState(subCategories[0])
-    const [disabled, setDisabled] = useState(false)
-
-    const brands = useSelector(state => state.brands)
-    const [brand, setBrand] = useState(brands[0])
-
-    const formik = useFormik({
-        initialValues: {
-            title: product.title ?? '',
-            category_id: product.category?.id ?? '',
-            sub_category_id: product.sub_category?.id ?? '',
-            brand_id: product.brand?.id ?? '',
-            shop_id: product.shop?.id ?? '',
-            description: product.description ?? '',
-            stock: product.stock ?? '',
-            price: product.price ?? '',
-            sale_price: product.sale_price ?? '',
-            images: null,
-            images_count: product.images?.length ?? null,
-        },
-        validationSchema: productValidationSchema,
-        onSubmit: (data, {resetForm}) => {
-            const formData = appendToFormData(data)
-            dispatch(editProduct(product.id, formData, resetForm, setPreview))
-        },
-        enableReinitialize: true
-    })
-
-    const handleCategoriesChange = (e, value) => {
-        setDisabled(value ? false : true)
-        setCategory(value)
-            setSubCategory(value?.sub_categories[0] ?? null)
-            setSubCategories(value?.sub_categories ?? [])
-            formik.setValues({
-                ...formik.values,
-                category_id: value?.id,
-                sub_category_id: value?.sub_categories[0]?.id
-            })
-    }
-
-    const handleSubCategoriesChange = (e, value) => {
-        setSubCategory(value)
-        formik.setValues({...formik.values, sub_category_id: value?.id})
-    }
-
-    const handleBrandsChange = (e, value) => {
-        setBrand(value)
-        formik.setValues({...formik.values, brand_id: value?.id})
-    }
-
-    const handleProductImageClick = (image_id) => {
-        dispatch(deleteProductImage(product.id, image_id))
-        dispatch(getShopProducts(router.query.id))
-    }
-
-    const handlePreviewImageClick = (i) => {
-        const images = { ...formik.values.images }
-        delete images[i]
-
-        const dt = new DataTransfer()
-        for (let key in images) {
-            dt.items.add(images[key])
-        }
-        images = dt.files
-
-        formik.setValues({
-            ...formik.values,
-            images_count: formik.values.images_count - 1,
-            images: images
-        })
-        setPreview(makeURLArray(images))
-    }
-
-    const handleUploadChange = (e) => {
-        const prevImages = formik.values.images
-        const newImages = e.target.files
-
-        const countPrevImages = product.images.length
-        const countNewImages = newImages.length
-
-        const dt = new DataTransfer()
-        if (prevImages) {
-            for (let image of prevImages) {
-                dt.items.add(image)
-            }
-        }
-        for (let image of newImages) {
-            dt.items.add(image)
-        }
-        const images = dt.files
-
-        formik.setValues({ 
-            ...formik.values,
-            images_count: countPrevImages + countNewImages,
-            images: newImages
-        })
-
-        setPreview(makeURLArray(images))
-    }
-
-    useEffect(() => {
-        if (product?.category) {
-            setCategory(product.category)
-            const category = categories.find(item => item.id === product.category.id)
-            setSubCategories(category.sub_categories)
-            setSubCategory(product.sub_category)
-            setBrand(product.brand)
-        }
-    }, [product, categories])
+    const {
+        handleSubmit, getFieldProps, handleBlur, setPreview,
+        handleCategoriesChange, handleSubCategoriesChange, handleBrandsChange,
+        handleProductImageClick, handlePreviewImageClick, handleUploadChange,
+        touched, errors, isSubmitting, product, preview, categories, brands,
+        category, subCategory, subCategories, brand
+    } = useEditProduct()
 
     return (
         <Dialog open={editProductDialog} onClose={e => closeEditProductDialog(setPreview)} fullWidth maxWidth='lg'>
@@ -154,16 +35,16 @@ const EditProductDialog = () => {
             </DialogTitle>
             <DialogContent>
                 <Box sx={{marginY: 2}}>
-                    <form onSubmit={formik.handleSubmit}>
+                    <form onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item lg={4}>
                             <TextField
                                 label='Title'
                                 size='small'
                                 fullWidth
-                                error={ formik.touched.title && Boolean(formik.errors.title) }
-                                helperText={ formik.touched.title && formik.errors.title }
-                                { ...formik.getFieldProps('title') }
+                                error={ touched.title && Boolean(errors.title) }
+                                helperText={ touched.title && errors.title }
+                                { ...getFieldProps('title') }
                             />
                         </Grid>
                         <Grid item lg={12}>
@@ -172,40 +53,39 @@ const EditProductDialog = () => {
                                     <AutocompleteAsync
                                         name='category_id'
                                         label='Category'
-                                        error={formik.touched.category_id && Boolean(formik.errors.category_id)}
-                                        helperText={formik.touched.category_id && formik.errors.category_id}
+                                        error={touched.category_id && Boolean(errors.category_id)}
+                                        helperText={touched.category_id && errors.category_id}
                                         getOptionLabel={option => option.title}
                                         options={categories}
                                         option={category}
                                         handleChange={handleCategoriesChange}
-                                        handleBlur={formik.handleBlur}
+                                        handleBlur={handleBlur}
                                     />
                                 </Grid>
                                 <Grid item lg={4}>
                                     <AutocompleteAsync
                                         name='sub_category_id'
                                         label='Sub Category'
-                                        error={formik.touched.sub_category_id && Boolean(formik.errors.sub_category_id)}
-                                        helperText={formik.touched.sub_category_id && formik.errors.sub_category_id}
+                                        error={touched.sub_category_id && Boolean(errors.sub_category_id)}
+                                        helperText={touched.sub_category_id && errors.sub_category_id}
                                         getOptionLabel={option => option.title}
                                         options={subCategories}
                                         option={subCategory}
                                         handleChange={handleSubCategoriesChange}
-                                        handleBlur={formik.handleBlur}
-                                        disabled={disabled}
+                                        handleBlur={handleBlur}
                                     />
                                 </Grid>
                                 <Grid item lg={4}>
                                     <AutocompleteAsync
                                         name='brand_id'
                                         label='Brand'
-                                        error={formik.touched.brand_id && Boolean(formik.errors.brand_id)}
-                                        helperText={formik.touched.brand_id && formik.errors.brand_id}
+                                        error={touched.brand_id && Boolean(errors.brand_id)}
+                                        helperText={touched.brand_id && errors.brand_id}
                                         getOptionLabel={option => option.title}
                                         options={brands}
                                         option={brand}
                                         handleChange={handleBrandsChange}
-                                        handleBlur={formik.handleBlur}
+                                        handleBlur={handleBlur}
                                     />
                                 </Grid>
                             </Grid>
@@ -213,7 +93,7 @@ const EditProductDialog = () => {
                         <Grid item lg={12}>
                             <Box sx={{
                                     border: '1px dashed',
-                                    borderColor: Boolean(formik.errors.images_count) ? 'red' : 'black',
+                                    borderColor: Boolean(errors.images_count) ? 'red' : 'black',
                                     borderRadius: 1,
                                     padding: 1,
                                     minHeight: 200,
@@ -302,7 +182,7 @@ const EditProductDialog = () => {
                         </Grid>
                         <Grid item lg={12} display='flex' justifyContent='space-between'>
                             <FormHelperText error={true}>
-                                {formik.errors.images_count}
+                                {errors.images_count}
                             </FormHelperText>
                             <Button
                                 variant="outlined"
@@ -320,9 +200,9 @@ const EditProductDialog = () => {
                                 multiline
                                 rows={5}
                                 fullWidth
-                                error={ formik.touched.description && Boolean(formik.errors.description) }
-                                helperText={ formik.touched.description && formik.errors.description }
-                                { ...formik.getFieldProps('description') }
+                                error={ touched.description && Boolean(errors.description) }
+                                helperText={ touched.description && errors.description }
+                                { ...getFieldProps('description') }
                             />
                         </Grid>
                         <Grid item lg={4}>
@@ -332,9 +212,9 @@ const EditProductDialog = () => {
                                 size='small'
                                 fullWidth
                                 InputProps={{inputProps: {min: 0}}}
-                                error={ formik.touched.stock && Boolean(formik.errors.stock) }
-                                helperText={ formik.touched.stock && formik.errors.stock }
-                                { ...formik.getFieldProps('stock') }
+                                error={ touched.stock && Boolean(errors.stock) }
+                                helperText={ touched.stock && errors.stock }
+                                { ...getFieldProps('stock') }
                             />
                         </Grid>
                         <Grid item lg={4}>
@@ -343,9 +223,9 @@ const EditProductDialog = () => {
                                 size='small'
                                 fullWidth
                                 InputProps={{startAdornment: <InputAdornment position="start">$</InputAdornment>}}
-                                error={ formik.touched.price && Boolean(formik.errors.price) }
-                                helperText={ formik.touched.price && formik.errors.price }
-                                { ...formik.getFieldProps('price') }
+                                error={ touched.price && Boolean(errors.price) }
+                                helperText={ touched.price && errors.price }
+                                { ...getFieldProps('price') }
                             />
                         </Grid>
                         <Grid item lg={4}>
@@ -354,9 +234,9 @@ const EditProductDialog = () => {
                                 size='small'
                                 fullWidth
                                 InputProps={{startAdornment: <InputAdornment position="start">$</InputAdornment>}}
-                                error={ formik.touched.sale_price && Boolean(formik.errors.sale_price) }
-                                helperText={ formik.touched.sale_price && formik.errors.sale_price }
-                                { ...formik.getFieldProps('sale_price') }
+                                error={ touched.sale_price && Boolean(errors.sale_price) }
+                                helperText={ touched.sale_price && errors.sale_price }
+                                { ...getFieldProps('sale_price') }
                             />
                         </Grid>
                         <Grid item lg={12}>
@@ -364,6 +244,15 @@ const EditProductDialog = () => {
                                 type='submit'
                                 variant='contained'
                                 sx={{float: 'right'}}
+                                endIcon={ isSubmitting
+                                    &&
+                                    <CircularProgress
+                                        color='inherit'
+                                        size={20}
+                                        sx={{position: 'absolute', top: 8, right: 50}}
+                                    />
+                                }
+                                disabled={isSubmitting}
                             >
                                 Edit
                             </Button>

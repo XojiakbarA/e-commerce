@@ -9,26 +9,23 @@ import {
     deleteCart,
     register,
     fetchReviews,
-    addReview,
     addWishlist,
     fetchWishlist,
     deleteWishlist,
     storeOrder,
-    clearCart,
-    fetchOrders, fetchOrder, cancellationOrder, sendUserData, storeShop, storeProduct, destroyProductImage, updateProduct, destroyProduct, storeReview, destroyUserImage
+    fetchOrders, fetchOrder, cancellationOrder, storeShop, storeProduct, destroyProductImage, updateProduct, destroyProduct, storeReview, destroyUserImage, updateUser
 } from '../../../api/user'
 import {
     setUser,
     setCart,
     setLoading,
-    closeAccountMenu,
     setSnackbar,
     toggleLoginDialog,
     toggleRegisterDialog,
     setReviews,
     setWishlist,
     toggleOrderDialog,
-    setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog, toggleAddProductDialog, getShopProducts, setReviewsLoading, setProduct, toggleEditProductDialog, toggleDeleteProductDialog, setOrdersFetching, setCartFetching, toggleAccountMenu
+    setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog, toggleAddProductDialog, getShopProducts, setProduct, toggleEditProductDialog, toggleDeleteProductDialog, setCartFetching, toggleAccountMenu
 } from '..'
 
 export const getCart = (cookie) => {
@@ -143,14 +140,13 @@ export const getUser = (cookie) => {
     }
 }
 
-export const editUser = (data, id, setPreview) => {
+export const editUser = (data, id, setPreview, setSubmitting) => {
     return async (dispatch) => {
         try {
-            dispatch(setLoading(true))
-            const res = await sendUserData(data, id)
+            const res = await updateUser(data, id)
             if (res.status === 200) {
                 dispatch(setUser(res.data.data))
-                dispatch(setLoading(false))
+                setSubmitting(false)
                 dispatch(setSnackbar({isOpen: true, text: 'Сhanges completed successfully!'}))
                 dispatch(toggleEditProfileDialog(false))
                 setPreview(null)
@@ -161,15 +157,14 @@ export const editUser = (data, id, setPreview) => {
     }
 }
 
-export const userLogin = (data) => {
+export const userLogin = (data, setSubmitting) => {
     return async (dispatch) => {
         try {
-            dispatch(setLoading(true))
             const res1 = await login(data)
             const res2 = await fetchUser()
             if (res1.status === 204 && res2.status === 200) {
                 dispatch(setUser(res2.data.data))
-                dispatch(setLoading(false))
+                setSubmitting(false)
                 dispatch(setSnackbar({isOpen: true, text: 'You are logged in!'}))
                 dispatch(toggleLoginDialog(false))
             }
@@ -197,15 +192,14 @@ export const userLogout = () => {
     }
 }
 
-export const userRegister = (data) => {
+export const userRegister = (data, setSubmitting) => {
     return async (dispatch) => {
         try {
-            dispatch(setLoading(true))
             const res1 = await register(data)
             const res2 = await fetchUser()
             if (res1.status === 201 && res2.status === 200) {
                 dispatch(setUser(res2.data.data))
-                dispatch(setLoading(false))
+                setSubmitting(false)
                 dispatch(setSnackbar({isOpen: true, text: 'You are logged in!'}))
                 dispatch(toggleRegisterDialog(false))
             }
@@ -228,14 +222,13 @@ export const getReviews = (id) => {
     }
 }
 
-export const createReview = (id, data, resetForm) => {
+export const createReview = (id, data, resetForm, setSubmitting) => {
     return async (dispatch) => {
         try {
-            dispatch(setLoading(true))
             const res = await storeReview(id, data)
             if (res.status === 200) {
                 dispatch(setReviews(res.data.data))
-                dispatch(setLoading(false))
+                setSubmitting(false)
                 dispatch(setSnackbar({isOpen: true, text: 'Review created successfully!'}))
                 resetForm()
             }
@@ -303,13 +296,12 @@ export const cancelOrder = (id) => {
     }
 }
 
-export const createShop = (data) => {
+export const createShop = (data, setSubmitting) => {
     return async (dispatch) => {
         try {
-            dispatch(setLoading(true))
             const res = await storeShop(data)
             if(res.status === 201) {
-                dispatch(setLoading(false))
+                setSubmitting(false)
                 dispatch(setSnackbar({isOpen: true, text: 'Shop created successfully!'}))
                 router.push(`/vendor/${res.data.data.id}`)
             }
@@ -319,13 +311,12 @@ export const createShop = (data) => {
     }
 }
 
-export const createProduct = (data, resetForm) => {
+export const createProduct = (data, resetForm, setSubmitting) => {
     return async (dispatch) => {
         try {
-            dispatch(setLoading(true))
             const res = await storeProduct(data)
             if (res.status === 201) {
-                dispatch(setLoading(false))
+                setSubmitting(false)
                 dispatch(toggleAddProductDialog(false))
                 dispatch(setSnackbar({isOpen: true, text: 'Product created successfully!'}))
                 resetForm()
@@ -337,13 +328,12 @@ export const createProduct = (data, resetForm) => {
     }
 }
 
-export const editProduct = (id, data, resetForm, setPreview) => {
+export const editProduct = (id, data, resetForm, setPreview, setSubmitting) => {
     return async (dispatch) => {
         try {
-            dispatch(setLoading(true))
             const res = await updateProduct(id, data)
             if (res.status === 200) {
-                dispatch(setLoading(false))
+                setSubmitting(false)
                 dispatch(toggleEditProductDialog(false))
                 dispatch(setSnackbar({isOpen: true, text: 'Product updated successfully!'}))
                 resetForm()
