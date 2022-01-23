@@ -57,9 +57,18 @@ const Profile = () => {
     )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => async () => {
+export const getServerSideProps = wrapper.getServerSideProps(({getState}) => async () => {
 
+    const user = getState().user
     
+    if (!user) {
+        return {
+            redirect: {
+                destination: '/login',
+                permanent: false
+            }
+        }
+    }
 
 })
 

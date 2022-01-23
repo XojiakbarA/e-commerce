@@ -51,7 +51,18 @@ const Orders = () => {
     )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => async ({query, req}) => {
+export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getState}) => async ({query, req}) => {
+
+    const user = getState().user
+    
+    if (!user) {
+        return {
+            redirect: {
+                destination: '/login',
+                permanent: false
+            }
+        }
+    }
 
     await dispatch(getOrders(query, req.headers.cookie))
 

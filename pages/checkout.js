@@ -1,8 +1,6 @@
 import { Button, CircularProgress, Grid, Stack } from "@mui/material"
-import { useEffect } from "react"
 import { useRouter } from "next/router"
-import { useDispatch, useSelector } from "react-redux"
-import {getRegions, toggleLoginDialog} from "../redux/actions"
+import {getRegions} from "../redux/actions"
 import CheckoutForm from "../components/shopping-pages/CheckoutForm"
 import ShoppingLayout from "../components/layout/ShoppingLayout/ShoppingLayout"
 import PaymentForm from "../components/shopping-pages/PaymentForm"
@@ -13,9 +11,6 @@ import { useCheckout } from "../app/hooks/useFormik/useCheckout"
 const Checkout = () => {
 
     const router = useRouter()
-    const dispatch = useDispatch()
-
-    const user = useSelector(state => state.user)
 
     const {
         handleSubmit, getFieldProps, handleBlur, handleChange,
@@ -24,17 +19,8 @@ const Checkout = () => {
         regions, districts, region, district
     } = useCheckout()
 
-    useEffect(() => {
-        if (!user) {
-            dispatch(toggleLoginDialog(true))
-        }
-    }, [dispatch, user])
-
     return(
         <>
-        {
-            user
-            ?
             <ShoppingLayout>
                 <Grid item lg={8}>
                     <form onSubmit={handleSubmit}>
@@ -82,14 +68,32 @@ const Checkout = () => {
                 </Grid>
                 <OrderDialog/>
             </ShoppingLayout>
-            :
-            null
-        }
         </>
     )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => async () => {
+export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getState}) => async () => {
+
+    const user = getState().user
+    const cart = getState().cart.data
+    
+    if (!user) {
+        return {
+            redirect: {
+                destination: '/login',
+                permanent: false
+            }
+        }
+    }
+
+    if (cart.length === 0) {
+        return {
+            redirect: {
+                destination: '/cart',
+                permanent: false
+            }
+        }
+    }
 
     await dispatch(getRegions())
 

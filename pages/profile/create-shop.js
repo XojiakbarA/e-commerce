@@ -167,7 +167,18 @@ const CreateShop = () => {
     )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => async ({params, query}) => {
+export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getState}) => async ({params, query}) => {
+
+    const user = getState().user
+    
+    if (!user) {
+        return {
+            redirect: {
+                destination: '/login',
+                permanent: false
+            }
+        }
+    }
 
     await dispatch(getRegions())
 

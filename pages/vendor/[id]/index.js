@@ -2,6 +2,7 @@ import { Grid, List, ListItem, ListSubheader, Paper, Stack, Typography } from '@
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import ProfileLayout from '../../../components/layout/ProfileLayout/ProfileLayout'
 import ProfileTitle from '../../../components/profile/ProfileTitle'
+import { wrapper } from '../../../redux/store'
 
 const Vendor = () => {
     return (
@@ -104,5 +105,20 @@ const Vendor = () => {
         </ProfileLayout>
     )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getState}) => async ({params, query}) => {
+
+    const user = getState().user
+    
+    if (!user) {
+        return {
+            redirect: {
+                destination: '/login',
+                permanent: false
+            }
+        }
+    }
+
+})
 
 export default Vendor

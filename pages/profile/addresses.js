@@ -4,6 +4,7 @@ import AddIcon from '@mui/icons-material/Add'
 import ProfileLayout from '../../components/layout/ProfileLayout/ProfileLayout'
 import ProfileTitle from '../../components/profile/ProfileTitle'
 import ProfileRowCard from '../../components/profile/ProfileRowCard'
+import { wrapper } from '../../redux/store'
 
 const Addresses = () => {
     return (
@@ -29,5 +30,20 @@ const Addresses = () => {
         </ProfileLayout>
     )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(({getState}) => async () => {
+
+    const user = getState().user
+    
+    if (!user) {
+        return {
+            redirect: {
+                destination: '/login',
+                permanent: false
+            }
+        }
+    }
+
+})
 
 export default Addresses

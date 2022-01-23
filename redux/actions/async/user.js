@@ -184,10 +184,19 @@ export const userLogout = () => {
             dispatch(setLoading(true))
             const res = await logout()
             if (res.status === 204) {
+
+                const isProtectedPage = router.pathname.indexOf('/profile') === 0 ||
+                                        router.pathname.indexOf('/vendor') === 0 ||
+                                        router.pathname === '/checkout'
+
                 dispatch(setLoading(false))
+                if (isProtectedPage) {
+                    await router.push('/')
+                }
                 dispatch(toggleAccountMenu(null))
                 dispatch(setUser(null))
-                dispatch(setCart([]))
+                dispatch(setCart({data: [], total: 0}))
+                dispatch(setWishlist([]))
                 dispatch(setSnackbar({isOpen: true, text: 'You are logged out!'}))
             }
         } catch (e) {

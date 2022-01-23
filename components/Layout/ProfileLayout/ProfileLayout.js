@@ -11,16 +11,11 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import SettingsIcon from '@mui/icons-material/Settings'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ProfileSidebar from "./ProfileSidebar/ProfileSidebar"
-import { useSelector, useDispatch } from "react-redux"
-import { useEffect } from "react"
-import { toggleLoginDialog } from "../../../redux/actions"
 import { useRouter } from "next/router"
 
 const ProfileLayout = ({children}) => {
 
     const router = useRouter()
-    const user = useSelector(state => state.user)
-    const dispatch = useDispatch()
     const id = router.query?.id
     const isVendorPage = router.route.indexOf('/vendor') == 0
 
@@ -41,23 +36,14 @@ const ProfileLayout = ({children}) => {
         {title: 'Back To Profile', path: `/profile`, icon: (<ArrowBackIcon/>)}
     ]
 
-    useEffect(() => {
-        if (!user) {
-            dispatch(toggleLoginDialog(true))
-        }
-    }, [dispatch, user])
-
     return (
         <>
-            {
-                user &&
-                <Grid container spacing={2}>
-                    <ProfileSidebar menu={isVendorPage ? vendorMenu : userMenu}/>
-                    <Grid item lg={9}>
-                        {children}
-                    </Grid>
+            <Grid container spacing={2}>
+                <ProfileSidebar menu={isVendorPage ? vendorMenu : userMenu}/>
+                <Grid item lg={9}>
+                    {children}
                 </Grid>
-            }
+            </Grid>
         </>
     )
 
