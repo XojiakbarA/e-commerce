@@ -66,10 +66,10 @@ const Products = () => {
     )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getState}) => async ({params, query}) => {
+export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getState}) => async ({params, query, req}) => {
 
     const user = getState().user
-    
+
     if (!user) {
         return {
             redirect: {
@@ -79,9 +79,18 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getStat
         }
     }
 
+    const cookie = req?.headers.cookie
     query.count = query.count ?? 5
 
-    await dispatch(getShopProducts(params.id, query))
+    await dispatch(getShopProducts(params.id, query, cookie))
+
+    const products = getState().products.data
+
+    if (!products) {
+        return {
+            notFound: true
+        }
+    }
 
 })
 
