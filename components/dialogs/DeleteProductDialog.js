@@ -25,7 +25,7 @@ const DeleteProductDialog = () => {
                 {isLoading && <CircularProgress size={25} sx={{position: 'absolute', top: 15, right: 20}}/>}
             </DialogTitle>
             <DialogContent>
-                {`Do you really want to delete the ${product.title}?`}
+                {`Do you really want to delete the "${product.title}"?`}
             </DialogContent>
             <DialogActions>
                 <Button onClick={closeDeleteProductDialog} disabled={isLoading}>No</Button>

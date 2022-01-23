@@ -8,13 +8,13 @@ const Login = () => {
         <Grid container spacing={2}>
             <Grid item xs={2}/>
             <Grid item xs={4}>
-                <Paper sx={{paddingX: 5, paddingY: 7}}>
-                <Stack spacing={3}>
-                    <Typography variant="h4">
-                        Login
-                    </Typography>
-                    <LoginForm/>
-                </Stack>
+                <Paper sx={{paddingX: 5, paddingY: 7}} elevation={3}>
+                    <Stack spacing={3}>
+                        <Typography variant="h4">
+                            Login
+                        </Typography>
+                        <LoginForm/>
+                    </Stack>
                 </Paper>
             </Grid>
         </Grid>

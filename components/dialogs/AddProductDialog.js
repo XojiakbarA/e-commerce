@@ -25,7 +25,7 @@ const AddProductDialog = () => {
     return (
         <Dialog open={addProductDialog} onClose={closeAddProductDialog} fullWidth maxWidth='lg'>
             <DialogTitle sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                <Typography variant="button" fontSize={20}>
+                <Typography variant="button">
                     Add Product
                 </Typography>
                 <IconButton onClick={closeAddProductDialog}>
