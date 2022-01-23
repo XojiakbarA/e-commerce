@@ -166,7 +166,11 @@ export const userLogin = (data, setSubmitting) => {
                 dispatch(setUser(res2.data.data))
                 setSubmitting(false)
                 dispatch(setSnackbar({isOpen: true, text: 'You are logged in!'}))
-                dispatch(toggleLoginDialog(false))
+                if (router.pathname === '/login') {
+                    router.push('/')
+                } else {
+                    dispatch(toggleLoginDialog(false))
+                }
             }
         } catch (e) {
             console.log(e)

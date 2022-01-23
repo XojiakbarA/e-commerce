@@ -72,16 +72,24 @@ export const useToggle = () => {
     }
 
     const openLoginDialog = () => {
-        dispatch(toggleRegisterDialog(false))
-        dispatch(toggleLoginDialog(true))
+        if (router.pathname === '/login') {
+            return
+        } else {
+            dispatch(toggleRegisterDialog(false))
+            dispatch(toggleLoginDialog(true))
+        }
     }
     const closeLoginDialog = () => {
         dispatch(toggleLoginDialog(false))
     }
 
     const openRegisterDialog = () => {
-        dispatch(toggleRegisterDialog(true))
-        dispatch(toggleLoginDialog(false))
+        if (router.pathname === '/login') {
+            router.push('/register')
+        } else {
+            dispatch(toggleRegisterDialog(true))
+            dispatch(toggleLoginDialog(false))
+        }
     }
     const closeRegisterDialog = () => {
         dispatch(toggleRegisterDialog(false))
