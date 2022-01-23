@@ -11,7 +11,7 @@ export const useLogin = () => {
         initialValues: {
             email: '',
             password: '',
-            remember_me: false
+            remember: ''
         },
         validationSchema: loginValidationSchema,
         onSubmit: (data) => {
