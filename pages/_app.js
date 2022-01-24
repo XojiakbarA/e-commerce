@@ -5,7 +5,7 @@ import { wrapper } from '../redux/store'
 import { getCategories, getBrands, getUser, getCart, getWishlist } from '../redux/actions'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { setToken } from '../api/user'
+import { setToken } from '../api/common'
 
 const MyApp = ({Component, pageProps}) => {
 
