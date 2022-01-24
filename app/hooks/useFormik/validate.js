@@ -63,6 +63,7 @@ export const checkoutValidationSchema = yup.object({
         .required('Home Number is required'),
     phone: yup
         .string('Enter your Phone')
+        .required('Phone is required')
         .min(14, 'Phone should be of minimum 9 characters length'),
     email: yup
         .string('Enter your email')
