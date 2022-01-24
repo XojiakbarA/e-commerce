@@ -22,7 +22,6 @@ export const useAddProduct = () => {
     const [brand, setBrand] = useState(null)
 
     const shop_id = router.query.id
-    const user_id = useSelector(state => state.user.id)
 
     const formik = useFormik({
         initialValues: {
@@ -39,7 +38,7 @@ export const useAddProduct = () => {
         validationSchema: productValidationSchema,
         onSubmit: (data, {resetForm}) => {
             const formData = appendToFormData(data)
-            dispatch(createProduct(user_id, shop_id, formData, resetForm, formik.setSubmitting))
+            dispatch(createProduct(shop_id, formData, resetForm, formik.setSubmitting))
         }
     })
 

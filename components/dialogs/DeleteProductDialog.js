@@ -9,12 +9,11 @@ const DeleteProductDialog = () => {
     const dispatch = useDispatch()
     const isLoading = useSelector(state => state.toggle.isLoading)
     const product = useSelector(state => state.product)
-    const user_id = useSelector(state => state.user.id)
 
     const { deleteProductDialog, closeDeleteProductDialog } = useToggle()
 
     const handleDeleteClick = () => {
-        dispatch(deleteProduct(user_id, product.shop.id, product.id))
+        dispatch(deleteProduct(product.shop.id, product.id))
     }
 
     return (

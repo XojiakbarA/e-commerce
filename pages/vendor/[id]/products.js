@@ -81,7 +81,7 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getStat
 
     const cookie = req?.headers.cookie
 
-    await dispatch(getProducts(user.id, params.id, query, cookie))
+    await dispatch(getProducts(params.id, query, cookie))
 
     const products = getState().products.data
 

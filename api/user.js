@@ -95,11 +95,11 @@ export const storeReview = async (id, data) => {
 }
 
 export const storeOrder = async (data) => {
-    return await user.post('api/orders', data)
+    return await user.post('api/user/orders', data)
 }
 
 export const fetchOrders = async (query, cookie) => {
-    return await user.get('api/orders', {
+    return await user.get('api/user/orders', {
         params: query,
         headers: {
             'Cookie': cookie,
@@ -109,7 +109,7 @@ export const fetchOrders = async (query, cookie) => {
 }
 
 export const fetchOrder = async (id, cookie) => {
-    return await user.get(`api/orders/${id}`, {
+    return await user.get(`api/user/orders/${id}`, {
         headers: {
             'Cookie': cookie,
             'Referer': 'http://localhost:3000/'
@@ -118,9 +118,9 @@ export const fetchOrder = async (id, cookie) => {
 }
 
 export const cancellationOrder = async (id) => {
-    return await user.put(`api/orders/${id}`, {status: 'cancelled'})
+    return await user.put(`api/user/orders/${id}`, {status: 'cancelled'})
 }
 
 export const destroyUserImage = async (image_id) => {
-    return await user.delete(`api/user-images/${image_id}`)
+    return await user.delete(`api/user/user-images/${image_id}`)
 }

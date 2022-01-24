@@ -23,7 +23,6 @@ export const useEditProduct = () => {
     const [subCategory, setSubCategory] = useState(null)
     const [brand, setBrand] = useState(null)
 
-    const user_id = useSelector(state => state.user.id)
     const shop_id = product.shop?.id
     const product_id = product.id
 
@@ -44,7 +43,7 @@ export const useEditProduct = () => {
         validationSchema: productValidationSchema,
         onSubmit: (data, {resetForm}) => {
             const formData = appendToFormData(data)
-            dispatch(editProduct(user_id, shop_id, product_id, formData, resetForm, setPreview, formik.setSubmitting))
+            dispatch(editProduct(shop_id, product_id, formData, resetForm, setPreview, formik.setSubmitting))
         },
         enableReinitialize: true
     })
@@ -75,7 +74,7 @@ export const useEditProduct = () => {
     }
 
     const handleProductImageClick = (image_id) => {
-        dispatch(deleteProductImage(user_id, shop_id, product.id, image_id))
+        dispatch(deleteProductImage(shop_id, product.id, image_id))
     }
 
     const handlePreviewImageClick = (i) => {
