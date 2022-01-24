@@ -23,7 +23,7 @@ const AvatarButton = ({ setFieldValue, setPreview, value, src}) => {
     }
 
     const handleDeleteImage = () => {
-        dispatch(deleteUserImage(user.id, user.image.id, setPreview))
+        dispatch(deleteUserImage(user.image.id, setPreview))
     }
 
     return (

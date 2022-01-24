@@ -121,6 +121,6 @@ export const cancellationOrder = async (id) => {
     return await user.put(`api/orders/${id}`, {status: 'cancelled'})
 }
 
-export const destroyUserImage = async (user_id, image_id) => {
-    return await user.delete(`api/users/${user_id}/user-images/${image_id}`)
+export const destroyUserImage = async (image_id) => {
+    return await user.delete(`api/user-images/${image_id}`)
 }

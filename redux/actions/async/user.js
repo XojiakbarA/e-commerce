@@ -324,11 +324,11 @@ export const createShop = (data, setSubmitting) => {
     }
 }
 
-export const deleteUserImage = (user_id, image_id, setPreview) => {
+export const deleteUserImage = (image_id, setPreview) => {
     return async (dispatch) => {
         try {
             dispatch(setLoading(true))
-            const res = await destroyUserImage(user_id, image_id)
+            const res = await destroyUserImage(image_id)
             if (res.status === 200) {
                 dispatch(setUser(res.data.data))
                 dispatch(setLoading(false))
