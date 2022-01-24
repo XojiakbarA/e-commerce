@@ -3,7 +3,6 @@ import AddIcon from '@mui/icons-material/Add'
 import ProfileLayout from "../../../components/layout/ProfileLayout/ProfileLayout"
 import ProfileTitle from "../../../components/profile/ProfileTitle"
 import { useSelector } from 'react-redux'
-import { getShopProducts } from '../../../redux/actions'
 import { Grid, Typography } from '@mui/material'
 import AddProductDialog from '../../../components/dialogs/AddProductDialog'
 import ViewProductDialog from '../../../components/dialogs/ViewProductDialog'
@@ -14,6 +13,7 @@ import { useRouter } from 'next/router'
 import ProductList from '../../../components/common/List/List'
 import ProductListItem from '../../../components/vendor/ProductListItem'
 import { useToggle } from '../../../app/hooks/useToggle'
+import { getProducts } from '../../../redux/actions/async/vendor'
 
 const labels = [ 'Title', 'Image', 'Stock', 'Price', 'Sale Price', 'Rating', '' ]
 
@@ -80,9 +80,8 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getStat
     }
 
     const cookie = req?.headers.cookie
-    query.count = query.count ?? 5
 
-    await dispatch(getShopProducts(params.id, query, cookie))
+    await dispatch(getProducts(user.id, params.id, query, cookie))
 
     const products = getState().products.data
 

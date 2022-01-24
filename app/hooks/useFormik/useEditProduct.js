@@ -2,7 +2,7 @@ import { useFormik } from "formik"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { deleteProductImage, editProduct, getShopProducts } from "../../../redux/actions"
+import { deleteProductImage, editProduct } from "../../../redux/actions/async/vendor"
 import { appendToFormData, makeURLArray } from "../../../utils/utils"
 import { productValidationSchema } from "./validate"
 
@@ -23,6 +23,10 @@ export const useEditProduct = () => {
     const [subCategory, setSubCategory] = useState(null)
     const [brand, setBrand] = useState(null)
 
+    const user_id = useSelector(state => state.user.id)
+    const shop_id = product.shop?.id
+    const product_id = product.id
+
     const formik = useFormik({
         initialValues: {
             title: product.title ?? '',
@@ -40,7 +44,7 @@ export const useEditProduct = () => {
         validationSchema: productValidationSchema,
         onSubmit: (data, {resetForm}) => {
             const formData = appendToFormData(data)
-            dispatch(editProduct(product.id, formData, resetForm, setPreview, formik.setSubmitting))
+            dispatch(editProduct(user_id, shop_id, product_id, formData, resetForm, setPreview, formik.setSubmitting))
         },
         enableReinitialize: true
     })
@@ -71,8 +75,7 @@ export const useEditProduct = () => {
     }
 
     const handleProductImageClick = (image_id) => {
-        dispatch(deleteProductImage(product.id, image_id))
-        dispatch(getShopProducts(router.query.id))
+        dispatch(deleteProductImage(user_id, shop_id, product.id, image_id))
     }
 
     const handlePreviewImageClick = (i) => {

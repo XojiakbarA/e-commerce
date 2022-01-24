@@ -1,7 +1,7 @@
 import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material"
 import { useDispatch, useSelector } from "react-redux"
 import { useToggle } from "../../app/hooks/useToggle"
-import { deleteProduct } from "../../redux/actions"
+import { deleteProduct } from "../../redux/actions/async/vendor"
 
 
 const DeleteProductDialog = () => {
@@ -9,11 +9,12 @@ const DeleteProductDialog = () => {
     const dispatch = useDispatch()
     const isLoading = useSelector(state => state.toggle.isLoading)
     const product = useSelector(state => state.product)
+    const user_id = useSelector(state => state.user.id)
 
     const { deleteProductDialog, closeDeleteProductDialog } = useToggle()
 
     const handleDeleteClick = () => {
-        dispatch(deleteProduct(product.shop.id, product.id))
+        dispatch(deleteProduct(user_id, product.shop.id, product.id))
     }
 
     return (

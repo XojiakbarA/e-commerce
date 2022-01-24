@@ -35,13 +35,8 @@ export const setBanners = (banners) => ({
     payload: banners
 })
 
-export const setSearchProducts = (products) => ({
-    type: type.SET_SEARCH_PRODUCTS,
-    payload: products
-})
-
-export const setShopProducts = (products) => ({
-    type: type.SET_SHOP_PRODUCTS,
+export const setProducts = (products) => ({
+    type: type.SET_PRODUCTS,
     payload: products
 })
 

@@ -37,13 +37,9 @@ export const fetchShop = async (id) => {
     return await instance.get(`shops/${id}`)
 }
 
-export const fetchShopProducts = async (id, query, cookie) => {
+export const fetchShopProducts = async (id, query) => {
     return await instance.get(`shops/${id}/products`, {
-        params: query,
-        headers: cookie && {
-            'Cookie': cookie,
-            'Referer': 'http://localhost:3000/'
-        }
+        params: query
     })
 }
 

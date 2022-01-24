@@ -2,7 +2,7 @@ import { useFormik } from "formik"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { createProduct } from "../../../redux/actions"
+import { createProduct } from "../../../redux/actions/async/vendor"
 import { appendToFormData, makeURLArray } from "../../../utils/utils"
 import { productValidationSchema } from "./validate"
 
@@ -22,6 +22,7 @@ export const useAddProduct = () => {
     const [brand, setBrand] = useState(null)
 
     const shop_id = router.query.id
+    const user_id = useSelector(state => state.user.id)
 
     const formik = useFormik({
         initialValues: {
@@ -33,13 +34,12 @@ export const useAddProduct = () => {
             stock: '',
             price: '',
             sale_price: '',
-            images: null,
-            shop_id: shop_id
+            images: null
         },
         validationSchema: productValidationSchema,
         onSubmit: (data, {resetForm}) => {
             const formData = appendToFormData(data)
-            dispatch(createProduct(formData, resetForm, formik.setSubmitting))
+            dispatch(createProduct(user_id, shop_id, formData, resetForm, formik.setSubmitting))
         }
     })
 

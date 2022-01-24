@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const user = axios.create({
+export const user = axios.create({
     withCredentials: true,
     baseURL: 'http://localhost:8000/'
 })
@@ -119,22 +119,6 @@ export const fetchOrder = async (id, cookie) => {
 
 export const cancellationOrder = async (id) => {
     return await user.put(`api/orders/${id}`, {status: 'cancelled'})
-}
-
-export const storeProduct = async (data) => {
-    return await user.post('api/products', data)
-}
-
-export const updateProduct = async (id, data) => {
-    return await user.post(`api/products/${id}?_method=PUT`, data)
-}
-
-export const destroyProductImage = async (product_id, image_id) => {
-    return await user.delete(`api/products/${product_id}/product-images/${image_id}`)
-}
-
-export const destroyProduct = async (shop_id, product_id) => {
-    return await user.delete(`api/shops/${shop_id}/products/${product_id}`)
 }
 
 export const destroyUserImage = async (user_id, image_id) => {

@@ -1,6 +1,5 @@
 import { fetchBanners, fetchBrands, fetchCategories, fetchDistricts, fetchProduct, fetchProducts, fetchRegions, fetchShop, fetchShopProducts, fetchShops } from '../../../api/api'
-import { setCats, setBrands, setBanners, setProduct, setSearchProducts, setShops, setShop, setShopProducts, setLoading, setRegions, setDistricts, setDistrictFetching } from '..'
-import { fetchVendorProducts } from '../../../api/user'
+import { setCats, setBrands, setBanners, setProduct, setShops, setShop, setShopProducts, setLoading, setRegions, setDistricts, setDistrictFetching, setProducts } from '..'
 
 export const getCategories = () => {
     return async (dispatch) => {
@@ -53,20 +52,19 @@ export const getProducts = (query) => {
     return async (dispatch) => {
         try {
             const res = await fetchProducts(query)
-            dispatch(setSearchProducts(res.data))
+            dispatch(setProducts(res.data))
         } catch (e) {
-            dispatch(setSearchProducts({id: 1, title: 'server is offline', price: 'server is offline'}))
-            console.log(e.response.data)
+            console.log(e)
         }
     }
 }
 
-export const getShopProducts = (id, query, cookie) => {
+export const getShopProducts = (id, query) => {
     return async (dispatch) => {
         try {
-            const res = await fetchShopProducts(id, query, cookie)
+            const res = await fetchShopProducts(id, query)
             if (res.status === 200) {
-                dispatch(setShopProducts(res.data))
+                dispatch(setProducts(res.data))
             }
         } catch (e) {
             console.log(e)

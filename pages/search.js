@@ -4,7 +4,7 @@ import SearchPanel from "../components/search/SearchPanel"
 import SearchSidebar from "../components/search/SearchSidebar"
 import ProductCard from "../components/common/ProductCard"
 import { wrapper } from "../redux/store"
-import { getProducts } from "../redux/actions"
+import { getProducts } from "../redux/actions/async/component"
 import { useSelector } from "react-redux"
 import { useRouter } from "next/router"
 
