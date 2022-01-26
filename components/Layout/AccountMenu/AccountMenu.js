@@ -1,7 +1,7 @@
 import { CircularProgress, ListItem, Menu, MenuItem } from "@mui/material"
 import Link from '../../common/Link'
 import { useSelector, useDispatch } from "react-redux"
-import { userLogout } from "../../../redux/actions"
+import { userLogout } from "../../../app/store/actions/async/user"
 import { useToggle } from "../../../app/hooks/useToggle"
 
 const AccountMenu = () => {

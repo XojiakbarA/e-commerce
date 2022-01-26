@@ -1,6 +1,6 @@
 import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from "@mui/material"
 import {useDispatch, useSelector} from "react-redux"
-import {cancelOrder} from "../../redux/actions"
+import {cancelOrder} from "../../app/store/actions/async/user"
 import {useRouter} from "next/router"
 import { useToggle } from "../../app/hooks/useToggle"
 

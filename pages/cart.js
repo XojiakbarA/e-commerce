@@ -2,7 +2,7 @@ import { CircularProgress, Grid, Stack, Typography } from "@mui/material"
 import CartProductCard from "../components/shopping-pages/CartProductCard"
 import { useSelector } from "react-redux"
 import ShoppingLayout from "../components/layout/ShoppingLayout/ShoppingLayout"
-import { wrapper } from '../redux/store'
+import { wrapper } from '../app/store'
 
 const Cart = () => {
 

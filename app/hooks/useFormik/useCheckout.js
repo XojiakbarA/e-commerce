@@ -1,7 +1,9 @@
 import { useFormik } from "formik"
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { createOrder, getDistricts, setDistricts } from "../../../redux/actions"
+import { createOrder } from "../../store/actions/async/user"
+import { getDistricts } from "../../store/actions/async/common"
+import { setDistricts } from "../../store/actions/actionCreators"
 import { checkoutValidationSchema } from "./validate"
 
 export const useCheckout = () => {

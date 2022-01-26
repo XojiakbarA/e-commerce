@@ -5,7 +5,7 @@ import {
     toggleDeleteProductDialog, toggleEditProductDialog,
     toggleEditProfileDialog, toggleLoginDialog, toggleRegisterDialog,
     toggleViewProductDialog
-} from "../../redux/actions"
+} from "../store/actions/actionCreators"
 
 export const useToggle = () => {
 

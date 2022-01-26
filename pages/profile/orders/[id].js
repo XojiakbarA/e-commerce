@@ -6,9 +6,9 @@ import ProfileLayout from "../../../components/layout/ProfileLayout/ProfileLayou
 import OrderStatus from "../../../components/profile/orders/OrderStatus";
 import OrderShippingAddress from "../../../components/profile/orders/OrderShippingAddress";
 import {useSelector} from "react-redux";
-import {getOrder} from "../../../redux/actions";
+import {getOrder} from "../../../app/store/actions/async/user";
 import OrderDetails from "../../../components/profile/orders/OrderDetails";
-import { wrapper } from "../../../redux/store"
+import { wrapper } from "../../../app/store"
 import OrderProductList from '../../../components/common/List/List'
 import OrderProductListItem from "../../../components/profile/orders/OrderProductListItem";
 import ConfirmDialog from "../../../components/dialogs/ConfirmDialog";

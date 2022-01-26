@@ -1,6 +1,6 @@
 import { useFormik } from "formik"
 import { useDispatch } from "react-redux"
-import { userLogin } from "../../../redux/actions"
+import { userLogin } from "../../store/actions/async/user"
 import { loginValidationSchema } from "./validate"
 
 export const useLogin = () => {

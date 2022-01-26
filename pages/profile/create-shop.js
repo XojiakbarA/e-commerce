@@ -6,9 +6,9 @@ import ProfileLayout from '../../components/layout/ProfileLayout/ProfileLayout'
 import ProfileTitle from '../../components/profile/ProfileTitle'
 import PhoneMask from '../../components/common/PhoneMask'
 import AutocompleteAsync from '../../components/common/AutocompleteAsync/AutocompleteAsync'
-import { getRegions } from '../../redux/actions'
+import { getRegions } from '../../app/store/actions/async/common'
 import { useCreateShop } from '../../app/hooks/useFormik/useCreateShop'
-import { wrapper } from '../../redux/store'
+import { wrapper } from '../../app/store'
 
 const CreateShop = () => {
 

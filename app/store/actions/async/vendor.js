@@ -1,5 +1,12 @@
-import { setLoading, setProduct, setProducts, setSnackbar, toggleAddProductDialog, toggleDeleteProductDialog, toggleEditProductDialog } from ".."
-import { destroyProduct, destroyProductImage, fetchProducts, storeProduct, updateProduct } from "../../../api/vendor"
+import {
+    setLoading, setProduct, setProducts, setSnackbar,
+    toggleAddProductDialog, toggleDeleteProductDialog,
+    toggleEditProductDialog
+} from "../actionCreators"
+import {
+    destroyProduct, destroyProductImage,
+    fetchProducts, storeProduct, updateProduct
+} from "../../../../api/vendor"
 
 export const getProducts = (shop_id, query, cookie) => {
     return async (dispatch) => {

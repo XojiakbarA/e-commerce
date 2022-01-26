@@ -3,7 +3,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import ProductGallery from "../product/ProductGallery"
 import ProductInfo from "../product/ProductInfo"
 import { useDispatch, useSelector } from "react-redux"
-import { getReviews } from "../../redux/actions"
+import { getReviews } from "../../app/store/actions/async/user"
 import { useEffect } from "react"
 import ReviewItem from "../product/ProductTab/ReviewItem"
 import { useToggle } from "../../app/hooks/useToggle"

@@ -1,4 +1,4 @@
-import * as type from '../types'
+import * as type from './types'
 
 export const setCart = (cart) => ({
     type: type.SET_CART,

@@ -3,8 +3,9 @@ import { useSelector } from "react-redux"
 import ProductGallery from "../../components/product/ProductGallery"
 import ProductInfo from '../../components/product/ProductInfo'
 import ProductTab from "../../components/product/ProductTab/ProductTab"
-import { getProduct, getReviews } from "../../redux/actions"
-import { wrapper } from "../../redux/store"
+import { getProduct } from "../../app/store/actions/async/common"
+import { getReviews } from "../../app/store/actions/async/user"
+import { wrapper } from "../../app/store"
 
 const Product = () => {
 

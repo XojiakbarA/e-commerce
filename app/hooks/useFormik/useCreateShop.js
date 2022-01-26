@@ -1,7 +1,9 @@
 import { useFormik } from "formik"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { createShop, getDistricts, setDistricts } from "../../../redux/actions"
+import { createShop } from "../../store/actions/async/user"
+import { getDistricts } from "../../store/actions/async/common"
+import { setDistricts } from "../../store/actions/actionCreators"
 import { appendToFormData } from "../../../utils/utils"
 import { createShopValidationSchema } from "./validate"
 

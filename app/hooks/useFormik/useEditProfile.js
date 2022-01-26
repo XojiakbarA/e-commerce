@@ -1,7 +1,7 @@
 import { useFormik } from "formik"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { editUser } from "../../../redux/actions"
+import { editUser } from "../../store/actions/async/user"
 import { appendToFormData } from "../../../utils/utils"
 import { editProfileValidationSchema } from "./validate"
 

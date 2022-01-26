@@ -1,7 +1,7 @@
 import { Grid, Typography } from '@mui/material'
 import ProductCard from '../components/common/ProductCard'
 import { useSelector } from "react-redux"
-import { wrapper } from '../redux/store'
+import { wrapper } from '../app/store'
 
 const Wishlist = () => {
 

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { addToCart, deleteFromCart, removeFromCart } from "../../redux/actions"
+import { addToCart, deleteFromCart, removeFromCart } from "../store/actions/async/user"
 
 export const useCart = (id) => {
 

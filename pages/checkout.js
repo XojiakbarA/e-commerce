@@ -1,10 +1,10 @@
 import { Button, CircularProgress, Grid, Stack } from "@mui/material"
 import { useRouter } from "next/router"
-import {getRegions} from "../redux/actions"
+import {getRegions} from "../app/store/actions/async/common"
 import CheckoutForm from "../components/shopping-pages/CheckoutForm"
 import ShoppingLayout from "../components/layout/ShoppingLayout/ShoppingLayout"
 import PaymentForm from "../components/shopping-pages/PaymentForm"
-import { wrapper } from '../redux/store'
+import { wrapper } from '../app/store'
 import OrderDialog from "../components/dialogs/OrderDialog"
 import { useCheckout } from "../app/hooks/useFormik/useCheckout"
 

@@ -1,5 +1,13 @@
-import { fetchBanners, fetchBrands, fetchCategories, fetchDistricts, fetchProduct, fetchProducts, fetchRegions, fetchShop, fetchShopProducts, fetchShops } from '../../../api/common'
-import { setCats, setBrands, setBanners, setProduct, setShops, setShop, setLoading, setRegions, setDistricts, setDistrictFetching, setProducts } from '..'
+import {
+    fetchBanners, fetchBrands, fetchCategories, fetchDistricts,
+    fetchProduct, fetchProducts, fetchRegions, fetchShop,
+    fetchShopProducts, fetchShops
+} from '../../../../api/common'
+import {
+    setCats, setBrands, setBanners, setProduct, setShops,
+    setShop, setLoading, setRegions, setDistricts,
+    setDistrictFetching, setProducts
+} from '../actionCreators'
 
 export const getCategories = () => {
     return async (dispatch) => {

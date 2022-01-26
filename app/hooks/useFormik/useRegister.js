@@ -1,6 +1,6 @@
 import { useFormik } from "formik"
 import { useDispatch } from "react-redux"
-import { userRegister } from "../../../redux/actions"
+import { userRegister } from "../../store/actions/async/user"
 import { registerValidationSchema } from "./validate"
 
 export const useRegister = () => {

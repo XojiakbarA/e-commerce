@@ -1,6 +1,6 @@
 import { Alert, Snackbar } from "@mui/material"
 import { useDispatch, useSelector } from "react-redux"
-import { setSnackbar } from "../../../redux/actions"
+import { setSnackbar } from "../../../app/store/actions/actionCreators"
 
 
 const CustomSnackbar = () => {

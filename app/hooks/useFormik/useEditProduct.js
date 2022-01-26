@@ -2,7 +2,7 @@ import { useFormik } from "formik"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { deleteProductImage, editProduct } from "../../../redux/actions/async/vendor"
+import { deleteProductImage, editProduct } from "../../store/actions/async/vendor"
 import { appendToFormData, makeURLArray } from "../../../utils/utils"
 import { productValidationSchema } from "./validate"
 

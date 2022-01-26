@@ -2,7 +2,7 @@ import { Grid, List, ListItem, ListSubheader, Paper, Stack, Typography } from '@
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import ProfileLayout from '../../../components/layout/ProfileLayout/ProfileLayout'
 import ProfileTitle from '../../../components/profile/ProfileTitle'
-import { wrapper } from '../../../redux/store'
+import { wrapper } from '../../../app/store'
 
 const Vendor = () => {
     return (

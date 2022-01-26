@@ -1,7 +1,7 @@
 import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material"
 import { useDispatch, useSelector } from "react-redux"
 import { useToggle } from "../../app/hooks/useToggle"
-import { deleteProduct } from "../../redux/actions/async/vendor"
+import { deleteProduct } from "../../app/store/actions/async/vendor"
 
 
 const DeleteProductDialog = () => {

@@ -1,32 +1,17 @@
 import router from 'next/router'
 import {
-    login,
-    logout,
-    fetchUser,
-    fetchCart,
-    addCart,
-    removeCart,
-    deleteCart,
-    register,
-    fetchReviews,
-    addWishlist,
-    fetchWishlist,
-    deleteWishlist,
-    storeOrder,
-    fetchOrders, fetchOrder, cancellationOrder, storeShop, storeReview, destroyUserImage, updateUser
-} from '../../../api/user'
+    login, logout, fetchUser, fetchCart, addCart, removeCart,
+    deleteCart, register, addWishlist, fetchWishlist,
+    deleteWishlist, storeOrder, fetchOrders, fetchOrder, cancellationOrder,
+    storeShop, storeReview, destroyUserImage, updateUser
+} from '../../../../api/user'
+import { fetchReviews } from '../../../../api/common'
 import {
-    setUser,
-    setCart,
-    setLoading,
-    setSnackbar,
-    toggleLoginDialog,
-    toggleRegisterDialog,
-    setReviews,
-    setWishlist,
-    toggleOrderDialog,
-    setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog, setCartFetching, toggleAccountMenu
-} from '..'
+    setUser, setCart, setLoading, setSnackbar, toggleLoginDialog,
+    toggleRegisterDialog, setReviews, setWishlist, toggleOrderDialog,
+    setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog,
+    setCartFetching, toggleAccountMenu
+} from '../actionCreators'
 
 export const getCart = (cookie) => {
     return async (dispatch) => {

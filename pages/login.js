@@ -1,6 +1,6 @@
 import { Grid, Paper, Stack, Typography } from "@mui/material"
 import LoginForm from "../components/forms/LoginForm"
-import { wrapper } from "../redux/store"
+import { wrapper } from "../app/store"
 
 const Login = () => {
 

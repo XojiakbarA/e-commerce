@@ -1,8 +1,8 @@
 import { Typography, Grid } from "@mui/material"
 import Banner from "../components/index/Banner"
 import ProductCard from "../components/common/ProductCard"
-import { getBanners, getProducts } from "../redux/actions/async/component"
-import { wrapper } from "../redux/store"
+import { getBanners, getProducts } from "../app/store/actions/async/common"
+import { wrapper } from "../app/store"
 import { useSelector } from "react-redux"
 
 const Index = () => {

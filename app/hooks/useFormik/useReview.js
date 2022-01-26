@@ -1,6 +1,6 @@
 import { useFormik } from "formik"
 import { useDispatch, useSelector } from "react-redux"
-import { createReview } from "../../../redux/actions"
+import { createReview } from "../../store/actions/async/user"
 import { reviewValidationSchema } from "./validate"
 
 export const useReview = () => {

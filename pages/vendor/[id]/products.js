@@ -8,12 +8,12 @@ import AddProductDialog from '../../../components/dialogs/AddProductDialog'
 import ViewProductDialog from '../../../components/dialogs/ViewProductDialog'
 import EditProductDialog from '../../../components/dialogs/EditProductDialog'
 import DeleteProductDialog from '../../../components/dialogs/DeleteProductDialog'
-import { wrapper } from "../../../redux/store"
+import { wrapper } from "../../../app/store"
 import { useRouter } from 'next/router'
 import ProductList from '../../../components/common/List/List'
 import ProductListItem from '../../../components/vendor/ProductListItem'
 import { useToggle } from '../../../app/hooks/useToggle'
-import { getProducts } from '../../../redux/actions/async/vendor'
+import { getProducts } from '../../../app/store/actions/async/vendor'
 
 const labels = [ 'Title', 'Image', 'Stock', 'Price', 'Sale Price', 'Rating', '' ]
 

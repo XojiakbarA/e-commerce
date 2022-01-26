@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { addToWishlist, deleteFromWishlist } from "../../redux/actions"
+import { addToWishlist, deleteFromWishlist } from "../store/actions/async/user"
 
 export const useWIshlist = (id) => {
 

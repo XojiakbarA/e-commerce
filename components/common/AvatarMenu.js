@@ -3,7 +3,7 @@ import {useState} from 'react'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteUserImage } from '../../redux/actions'
+import { deleteUserImage } from '../../app/store/actions/async/user'
 
 const AvatarButton = ({ setFieldValue, setPreview, value, src}) => {
 

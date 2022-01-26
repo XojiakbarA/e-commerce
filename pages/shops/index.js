@@ -1,7 +1,7 @@
 import { Grid, Pagination } from "@mui/material"
 import ShopCard from '../../components/shop/ShopCard'
-import { wrapper } from "../../redux/store"
-import { getShops } from "../../redux/actions"
+import { wrapper } from "../../app/store"
+import { getShops } from "../../app/store/actions/async/common"
 import { useSelector } from "react-redux"
 import { useRouter } from "next/router"
 
