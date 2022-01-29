@@ -25,3 +25,21 @@ export const destroyProduct = async (shop_id, product_id) => {
 export const destroyProductImage = async (shop_id, product_id, image_id) => {
     return await instance.delete(`api/vendor/shops/${shop_id}/products/${product_id}/product-images/${image_id}`)
 }
+
+export const fetchOrders = async (shop_id, cookie) => {
+    return await instance.get(`api/vendor/shops/${shop_id}/orders`, {
+        headers: {
+            'Cookie': cookie,
+            'Referer': 'http://localhost:3000/'
+        }
+    })
+}
+
+export const fetchOrder = async (shop_id, order_id, cookie) => {
+    return await instance.get(`api/vendor/shops/${shop_id}/orders/${order_id}`, {
+        headers: {
+            'Cookie': cookie,
+            'Referer': 'http://localhost:3000/'
+        }
+    })
+}

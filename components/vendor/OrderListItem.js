@@ -1,12 +1,16 @@
 import {Avatar, AvatarGroup, Grid, Paper, Typography} from "@mui/material";
-import NextLink from '../../common/Link';
+import NextLink from '../common/Link';
 import Image from "next/image";
-import {productImageURL, noImageUrl} from "../../../utils/utils";
+import {productImageURL, noImageUrl} from "../../utils/utils";
+import { useRouter } from "next/router";
 
 const OrderListItem = ({order}) => {
 
+    const router = useRouter()
+    const shop_id = router.query.id
+
     return (
-        <NextLink href={`/profile/orders/${order.id}`}>
+        <NextLink href={`/vendor/${shop_id}/orders/${order.id}`}>
             <Paper sx={{padding: 2}}>
                 <Grid container alignItems='center'>
                 <Grid item xs={3}>
@@ -17,20 +21,23 @@ const OrderListItem = ({order}) => {
                 <Grid item xs display='flex' justifyContent='center'>
                     <AvatarGroup max={3} spacing='small'>
                         {
-                            order.order_shops.map(order_shop => (
-                                order_shop.order_products.map(product => (
-                                    <Avatar key={product.id}>
-                                        <Image
-                                            src={product.image ? productImageURL + product.image.src : noImageUrl}
-                                            alt={product.image?.src}
-                                            layout='fill'
-                                            objectFit='cover'
-                                        />
-                                    </Avatar>
-                                ))
+                            order.order_products.map(product => (
+                                <Avatar key={product.id}>
+                                    <Image
+                                        src={product.image ? productImageURL + product.image.src : noImageUrl}
+                                        alt={product.image?.src}
+                                        layout='fill'
+                                        objectFit='cover'
+                                    />
+                                </Avatar>
                             ))
                         }
                     </AvatarGroup>
+                </Grid>
+                <Grid item xs display='flex' justifyContent='center'>
+                    <Typography variant='body2'>
+                        {order.status}
+                    </Typography>
                 </Grid>
                 <Grid item xs display='flex' justifyContent='center'>
                     <Typography variant='body2'>

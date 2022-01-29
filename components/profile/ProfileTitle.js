@@ -1,6 +1,6 @@
 import { Stack, Typography, Button } from "@mui/material"
 
-const ProfileTitle = ({title, titleIcon, buttonText, buttonIcon, onClick}) => {
+const ProfileTitle = ({title, titleIcon, buttonText, buttonIcon, onClick, disabled}) => {
     return (
         <Stack direction='row' justifyContent='space-between' marginBottom={2}>
             <Stack direction='row'>
@@ -9,6 +9,7 @@ const ProfileTitle = ({title, titleIcon, buttonText, buttonIcon, onClick}) => {
             </Stack>
             <Button
                 variant='contained'
+                disabled={disabled}
                 startIcon={buttonIcon}
                 sx={{ display: buttonText ? 'inline-flex' : 'none' }}
                 onClick={onClick}

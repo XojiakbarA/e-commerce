@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { Grid, Typography } from "@mui/material";
 import { getOrders } from "../../../app/store/actions/async/user";
 import { wrapper } from "../../../app/store"
-import OrderList from "../../../components/common/List/List";
+import OrderList from '../../../components/common/List/List'
 import OrderListItem from "../../../components/profile/orders/OrderListItem";
 
 const labels = ['Order ID', 'Products', 'Date purchased', 'Total']
@@ -37,7 +37,7 @@ const Orders = () => {
                     {
                         orders.map(order => (
                             <Grid item xs={12} key={order.id}>
-                                <OrderListItem href={`/profile/orders/${order.id}`} order={order}/>
+                                <OrderListItem order={order}/>
                             </Grid>
                         ))
                     }
