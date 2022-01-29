@@ -43,3 +43,7 @@ export const fetchOrder = async (shop_id, order_id, cookie) => {
         }
     })
 }
+
+export const orderShip = async (shop_id, order_id) => {
+    return await instance.put(`api/vendor/shops/${shop_id}/orders/${order_id}`, {status: 'shipped'})
+}

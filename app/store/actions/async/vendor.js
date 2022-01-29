@@ -1,11 +1,12 @@
 import {
-    setLoading, setProduct, setProducts, setSnackbar,
+    setLoading, setOrderShop, setProduct, setProducts, setSnackbar,
     toggleAddProductDialog, toggleDeleteProductDialog,
     toggleEditProductDialog
 } from "../actionCreators"
 import {
     destroyProduct, destroyProductImage,
-    fetchProducts, storeProduct, updateProduct
+    fetchOrder,
+    fetchProducts, orderShip, storeProduct, updateProduct
 } from "../../../../api/vendor"
 
 export const getProducts = (shop_id, query, cookie) => {
@@ -83,6 +84,31 @@ export const deleteProductImage = (shop_id, product_id, image_id) => {
                 dispatch(setLoading(false))
                 dispatch(getProducts(shop_id))
             }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const getOrder = (shop_id, order_id, cookie) => {
+    return async (dispatch) => {
+        try {
+            const res = await fetchOrder(shop_id, order_id, cookie)
+            if (res.status === 200) {
+                dispatch(setOrderShop(res.data))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const orderShipping = (shop_id, order_id) => {
+    return async (dispatch) => {
+        try {
+            dispatch(setLoading(true))
+            const res = await orderShip(shop_id, order_id)
+            console.log(res)
         } catch (e) {
             console.log(e)
         }

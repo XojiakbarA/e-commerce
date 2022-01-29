@@ -4,7 +4,7 @@ import {
     setOrderShop,
     setProduct, toggleAccountMenu, toggleAddProductDialog, toggleCartSidebar, toggleConfirmDialog,
     toggleDeleteProductDialog, toggleEditProductDialog,
-    toggleEditProfileDialog, toggleLoginDialog, toggleRegisterDialog,
+    toggleEditProfileDialog, toggleLoginDialog, toggleOrderShipDialog, toggleRegisterDialog,
     toggleViewProductDialog
 } from "../store/actions/actionCreators"
 
@@ -21,8 +21,16 @@ export const useToggle = () => {
         editProductDialog, viewProductDialog,
         confirmDialog, editProfileDialog,
         loginDialog, registerDialog,
-        orderDialog, accountMenu, cartSidebar
+        orderDialog, accountMenu, cartSidebar,
+        orderShipDialog
     } = toggle
+
+    const openOrderShipDialog = () => {
+        dispatch(toggleOrderShipDialog(true))
+    }
+    const closeOrderShipDialog = () => {
+        dispatch(toggleOrderShipDialog(false))
+    }
 
     const openAddProductDialog = () => {
         dispatch(toggleAddProductDialog(true))
@@ -137,7 +145,10 @@ export const useToggle = () => {
         registerDialog,
         accountMenu,
         cartSidebar,
+        orderShipDialog,
 
+        openOrderShipDialog,
+        closeOrderShipDialog,
         openAddProductDialog,
         closeAddProductDialog,
         openDeleteProductDialog,

@@ -9,11 +9,18 @@ import ProfileLayout from "../../../../components/layout/ProfileLayout/ProfileLa
 import ProfileTitle from "../../../../components/profile/ProfileTitle"
 import OrderProductListItem from '../../../../components/vendor/OrderProductListItem'
 import { wrapper } from '../../../../app/store'
-import { fetchOrder } from '../../../../api/vendor'
 import OrderShippingAddress from '../../../../components/profile/orders/OrderShippingAddress'
 import OrderDetails from '../../../../components/profile/orders/OrderDetails'
+import { getOrder } from '../../../../app/store/actions/async/vendor';
+import { useSelector } from 'react-redux';
+import { useToggle } from '../../../../app/hooks/useToggle';
+import OrderShipDialog from '../../../../components/dialogs/OrderShipDialog';
 
-const Order = ({order}) => {
+const Order = () => {
+
+    const order = useSelector(state => state.orderShop.data)
+
+    const { openOrderShipDialog } = useToggle()
 
     return (
         <ProfileLayout>
@@ -22,7 +29,8 @@ const Order = ({order}) => {
                 titleIcon={<ShoppingCartIcon fontSize='large' />}
                 buttonText='Ship'
                 buttonIcon={<LocalShippingIcon/>}
-                disabled={order.status !== 'cancelled' && order.payment_status === 'approved' ? false : true}
+                disabled={order.status !== 'shipped' && order.status !== 'cancelled' && order.payment_status === 'approved' ? false : true}
+                onClick={openOrderShipDialog}
             />
             <Grid container spacing={2}>
                 <Grid item xs={12}>
@@ -116,11 +124,12 @@ const Order = ({order}) => {
                     </Grid>
                 </Grid>
             </Grid>
+            <OrderShipDialog/>
         </ProfileLayout>
     )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(({getState}) => async ({query, req}) => {
+export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getState}) => async ({query, req}) => {
 
     const user = getState().user
     const cookie = req.headers.cookie
@@ -134,22 +143,7 @@ export const getServerSideProps = wrapper.getServerSideProps(({getState}) => asy
         }
     }
 
-    try {
-        const res = await fetchOrder(query.id, query.order_id, cookie)
-        if (res.status === 200) {
-            return {
-                props: {
-                    order: res.data.data
-                }
-            }
-        }
-    } catch (e) {
-        if (e.response.status === 404) {
-            return {
-                notFound: true
-            }
-        }
-    }
+    await dispatch(getOrder(query.id, query.order_id, cookie))
 
 })
 
