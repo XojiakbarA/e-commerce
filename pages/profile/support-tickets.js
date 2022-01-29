@@ -2,7 +2,7 @@ import { Stack } from '@mui/material'
 import ProfileLayout from '../../components/layout/ProfileLayout/ProfileLayout'
 import ProfileTitle from '../../components/profile/ProfileTitle'
 import HeadsetMicIcon from '@mui/icons-material/HeadsetMic'
-import { wrapper } from '../../redux/store'
+import { wrapper } from '../../app/store'
 
 const SupportTickets = () => {
 

@@ -4,7 +4,7 @@ import AddIcon from '@mui/icons-material/Add'
 import ProfileLayout from '../../components/layout/ProfileLayout/ProfileLayout'
 import ProfileTitle from '../../components/profile/ProfileTitle'
 import ProfileRowCard from '../../components/profile/ProfileRowCard'
-import { wrapper } from '../../redux/store'
+import { wrapper } from '../../app/store'
 
 const PaymentMethods = () => {
     return (
