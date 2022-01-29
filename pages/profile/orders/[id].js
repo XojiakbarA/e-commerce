@@ -1,6 +1,5 @@
 import {Grid} from "@mui/material";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
-import CancelIcon from '@mui/icons-material/Cancel';
 import ProfileTitle from "../../../components/profile/ProfileTitle";
 import ProfileLayout from "../../../components/layout/ProfileLayout/ProfileLayout";
 import OrderStatus from "../../../components/profile/orders/OrderStatus";
@@ -9,43 +8,38 @@ import {useSelector} from "react-redux";
 import {getOrder} from "../../../app/store/actions/async/user";
 import OrderDetails from "../../../components/profile/orders/OrderDetails";
 import { wrapper } from "../../../app/store"
-import OrderProductList from '../../../components/common/List/List'
 import OrderProductListItem from "../../../components/profile/orders/OrderProductListItem";
 import ConfirmDialog from "../../../components/dialogs/ConfirmDialog";
-import { useToggle } from "../../../app/hooks/useToggle";
-
-const labels = ['Product', 'Title', 'Price', 'Brand', 'Shop']
 
 const Order = () => {
 
     const order = useSelector(state => state.order.data)
-
-    const { openConfirmDialog } = useToggle()
 
     return (
         <ProfileLayout>
             <ProfileTitle
                 title='Order Details'
                 titleIcon={<ShoppingBagIcon fontSize='large'/>}
-                buttonText={order.status == 'cancelled' ? null : 'Cancel the Order'}
-                buttonIcon={<CancelIcon />}
-                onClick={openConfirmDialog}
             />
-            <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <OrderStatus status={order.status} />
-                </Grid>
-                <Grid item xs={12}>
-                    <OrderProductList labels={labels}>
-                        {
-                            order.order_products.map(product => (
-                                <Grid item xs={12} key={product.id}>
-                                    <OrderProductListItem product={product}/>
+            <Grid container spacing={4}>
+                {
+                    order.order_shops.map(order_shop => (
+                        <Grid item xs={12} key={order_shop.id}>
+                            <Grid container spacing={1}>
+                                <Grid item xs={12}>
+                                    <OrderStatus orderShop={order_shop}/>
                                 </Grid>
-                            ))
-                        }
-                    </OrderProductList>
-                </Grid>
+                                {
+                                    order_shop.order_products.map(product => (
+                                        <Grid item xs={12} key={product.id}>
+                                            <OrderProductListItem product={product}/>
+                                        </Grid>
+                                    ))
+                                }
+                            </Grid>
+                        </Grid>
+                    ))
+                }
                 <Grid item xs={12}>
                     <Grid container spacing={2}>
                         <Grid item lg={6}>
