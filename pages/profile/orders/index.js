@@ -9,7 +9,7 @@ import { wrapper } from "../../../app/store"
 import OrderList from "../../../components/common/List/List";
 import OrderListItem from "../../../components/profile/orders/OrderListItem";
 
-const labels = ['Order ID', 'Products', 'Status', 'Date purchased', 'Total']
+const labels = ['Order ID', 'Products', 'Date purchased', 'Total']
 
 const Orders = () => {
 
@@ -37,7 +37,7 @@ const Orders = () => {
                     {
                         orders.map(order => (
                             <Grid item xs={12} key={order.id}>
-                                <OrderListItem order={order}/>
+                                <OrderListItem href={`/profile/orders/${order.id}`} order={order}/>
                             </Grid>
                         ))
                     }

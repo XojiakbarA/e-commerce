@@ -1,20 +1,18 @@
 import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from "@mui/material"
 import {useDispatch, useSelector} from "react-redux"
 import {cancelOrder} from "../../app/store/actions/async/user"
-import {useRouter} from "next/router"
 import { useToggle } from "../../app/hooks/useToggle"
 
 const ConfirmDialog = () => {
 
-    const router = useRouter()
     const dispatch = useDispatch()
     const isLoading = useSelector(state => state.toggle.isLoading)
-    const id = router.query.id
+    const orderShop = useSelector(state => state.orderShop)
 
     const { confirmDialog, closeConfirmDialog } = useToggle()
 
     const handleCancelOrder = () => {
-        dispatch(cancelOrder(id))
+        dispatch(cancelOrder(orderShop.id))
     }
 
     return (

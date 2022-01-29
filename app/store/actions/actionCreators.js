@@ -135,6 +135,11 @@ export const setOrder = (order) => ({
     payload: order
 })
 
+export const setOrderShop = (order) => ({
+    type: type.SET_ORDER_SHOP,
+    payload: order
+})
+
 export const setRegions = (regions) => ({
     type: type.SET_REGIONS,
     payload: regions
