@@ -16,7 +16,7 @@ const OrderStatus = ({orderShop}) => {
     const steps = [
         {
             label: status === 'cancelled'? 'Cancelled' : 'Cancel',
-            icon: (<CancelIcon color={status == 'cancelled' ? 'error' : 'inherit'}/>)
+            icon: (<CancelIcon color={status == 'pending' ? 'inherit' : status === 'cancelled' ? 'error' : 'disabled'}/>)
         },
         {label: 'Pending', icon: (<PendingIcon color={status == 'pending' ? 'primary' : 'disabled'}/>)},
         {label: 'Shipped', icon: (<LocalShippingIcon color={status == 'shipped' ? 'primary' : 'disabled'}/>)},
@@ -39,7 +39,7 @@ const OrderStatus = ({orderShop}) => {
                     </Typography>
                 </Stack>
                 <Box sx={{ width: '70%' }}>
-                    <Stepper activeStep={status === 'cancelled' ? -1 : 0}>
+                    <Stepper activeStep={status === 'pending' ? 0 : -1}>
                         {steps.map((step) => (
                             <Step key={step.label}>
                                 <StepButton icon={step.icon} onClick={() => openConfirmDialog(orderShop)}>
