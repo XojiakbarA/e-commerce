@@ -87,7 +87,7 @@ export const editProfileValidationSchema = yup.object({
         .min(14, 'Phone should be of minimum 9 characters length')
 })
 
-export const createShopValidationSchema = yup.object({
+export const shopValidationSchema = yup.object({
     first_name: yup
         .string('Enter Your First Name')
         .required('First Name is required'),

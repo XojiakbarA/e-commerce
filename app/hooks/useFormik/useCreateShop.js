@@ -5,7 +5,7 @@ import { createShop } from "../../store/actions/async/user"
 import { getDistricts } from "../../store/actions/async/common"
 import { setDistricts } from "../../store/actions/actionCreators"
 import { appendToFormData } from "../../../utils/utils"
-import { createShopValidationSchema } from "./validate"
+import { shopValidationSchema } from "./validate"
 
 export const useCreateShop = () => {
 
@@ -34,7 +34,7 @@ export const useCreateShop = () => {
             bg_image: null,
             av_image: null
         },
-        validationSchema: createShopValidationSchema,
+        validationSchema: shopValidationSchema,
         onSubmit: (data) => {
             const formData = appendToFormData(data)
             dispatch(createShop(formData, formik.setSubmitting))
