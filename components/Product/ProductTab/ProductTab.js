@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import {Tabs, Tab, Box, Typography, Grid} from '@mui/material'
 import ProductTabPanel from './ProductTabPanel'
-import ReviewForm from './ReviewForm'
+import ReviewForm from '../../forms/ReviewForm'
 import ReviewItem from './ReviewItem'
 
 function a11yProps(index) {
