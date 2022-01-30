@@ -1,4 +1,4 @@
-import {Avatar, AvatarGroup, Grid, Paper, Typography} from "@mui/material";
+import {Avatar, AvatarGroup, Chip, Grid, Paper, Typography} from "@mui/material";
 import NextLink from '../common/Link';
 import Image from "next/image";
 import {productImageURL, noImageUrl} from "../../utils/utils";
@@ -35,9 +35,20 @@ const OrderListItem = ({order}) => {
                     </AvatarGroup>
                 </Grid>
                 <Grid item xs display='flex' justifyContent='center'>
-                    <Typography variant='body2'>
-                        {order.status}
-                    </Typography>
+                    <Chip
+                        label={order.status}
+                        variant="outlined"
+                        size="small"
+                        color={
+                            order.status === 'cancelled' ?
+                            'error' :
+                            order.status === 'shipped' ?
+                            'primary' :
+                            order.status === 'delivered' ?
+                            'success' :
+                            'default'
+                        }
+                    />
                 </Grid>
                 <Grid item xs display='flex' justifyContent='center'>
                     <Typography variant='body2'>
