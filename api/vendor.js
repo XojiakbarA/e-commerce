@@ -51,3 +51,16 @@ export const orderShip = async (shop_id, order_id) => {
 export const updateOrderProducts = async (shop_id, order_id, data) => {
     return await instance.put(`api/vendor/shops/${shop_id}/orders/${order_id}`, data)
 }
+
+export const fetchShop = async (shop_id, cookie) => {
+    return await instance.get(`api/vendor/shops/${shop_id}`, {
+        headers: {
+            'Cookie': cookie,
+            'Referer': 'http://localhost:3000/'
+        }
+    })
+}
+
+export const updateShop = async (shop_id, data) => {
+    return await instance.post(`api/vendor/shops/${shop_id}?_method=PUT`, data)
+}

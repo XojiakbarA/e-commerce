@@ -1,5 +1,5 @@
 import {
-    setLoading, setOrderShop, setProduct, setProducts, setSnackbar,
+    setLoading, setOrderShop, setProduct, setProducts, setShop, setSnackbar,
     toggleAddProductDialog, toggleDeleteProductDialog,
     toggleEditProductDialog,
     toggleOrderShipDialog
@@ -7,7 +7,7 @@ import {
 import {
     destroyProduct, destroyProductImage,
     fetchOrder,
-    fetchProducts, orderShip, storeProduct, updateOrderProducts, updateProduct
+    fetchProducts, fetchShop, orderShip, storeProduct, updateOrderProducts, updateProduct, updateShop
 } from "../../../../api/vendor"
 
 export const getProducts = (shop_id, query, cookie) => {
@@ -131,6 +131,34 @@ export const editOrderProducts = (shop_id, order_id, setSaveDisabled, data) => {
                 dispatch(setLoading(false))
                 setSaveDisabled(true)
                 dispatch(setSnackbar({isOpen: true, text: 'Order products updated successfully!'}))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const getShop = (shop_id, cookie) => {
+    return async (dispatch) => {
+        try {
+            const res = await fetchShop(shop_id, cookie)
+            if (res.status === 200) {
+                dispatch(setShop(res.data))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const editShop = (shop_id, data, setSubmitting) => {
+    return async (dispatch) => {
+        try {
+            const res = await updateShop(shop_id, data)
+            if (res.status === 200) {
+                dispatch(setShop(res.data))
+                setSubmitting(false)
+                dispatch(setSnackbar({isOpen: true, text: 'Shop updated successfully!'}))
             }
         } catch (e) {
             console.log(e)
