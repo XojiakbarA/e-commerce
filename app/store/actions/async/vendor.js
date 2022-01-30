@@ -1,12 +1,13 @@
 import {
     setLoading, setOrderShop, setProduct, setProducts, setSnackbar,
     toggleAddProductDialog, toggleDeleteProductDialog,
-    toggleEditProductDialog
+    toggleEditProductDialog,
+    toggleOrderShipDialog
 } from "../actionCreators"
 import {
     destroyProduct, destroyProductImage,
     fetchOrder,
-    fetchProducts, orderShip, storeProduct, updateProduct
+    fetchProducts, orderShip, storeProduct, updateOrderProducts, updateProduct
 } from "../../../../api/vendor"
 
 export const getProducts = (shop_id, query, cookie) => {
@@ -108,7 +109,29 @@ export const orderShipping = (shop_id, order_id) => {
         try {
             dispatch(setLoading(true))
             const res = await orderShip(shop_id, order_id)
-            console.log(res)
+            if (res.status === 200) {
+                dispatch(setOrderShop(res.data))
+                dispatch(setLoading(false))
+                dispatch(toggleOrderShipDialog(false))
+                dispatch(setSnackbar({isOpen: true, text: 'Order shipped successfully!'}))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const editOrderProducts = (shop_id, order_id, setSaveDisabled, data) => {
+    return async (dispatch) => {
+        try {
+            dispatch(setLoading(true))
+            const res = await updateOrderProducts(shop_id, order_id, data)
+            if (res.status === 200) {
+                dispatch(setOrderShop(res.data))
+                dispatch(setLoading(false))
+                setSaveDisabled(true)
+                dispatch(setSnackbar({isOpen: true, text: 'Order products updated successfully!'}))
+            }
         } catch (e) {
             console.log(e)
         }

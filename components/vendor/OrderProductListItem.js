@@ -1,10 +1,10 @@
-import { Avatar, Grid, IconButton, Paper, Typography } from "@mui/material"
+import { Avatar, Chip, Grid, IconButton, Paper, Typography } from "@mui/material"
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import { productImageURL } from "../../utils/utils"
 
-const OrderProductListItem = ({product}) => {
+const OrderProductListItem = ({product, count, handleAddClick, handleRemoveClick, setSaveDisabled, editDisabled}) => {
 
     return (
         <Paper sx={{padding: 2}}>
@@ -32,16 +32,32 @@ const OrderProductListItem = ({product}) => {
                     </Typography>
                 </Grid>
                 <Grid item xs display='flex' justifyContent='center' alignItems='center'>
-                    <IconButton>
+                    <IconButton
+                        disabled={editDisabled}
+                        onClick={() => {
+                            handleAddClick(product.id)
+                            setSaveDisabled(false)
+                        }}
+                    >
                         <AddCircleOutlineIcon/>
                     </IconButton>
-                    <Typography variant="body2">
-                        {product.quantity}
-                    </Typography>
-                    <IconButton>
+                    <Chip
+                        label={count}
+                        variant="outlined"
+                        size="small"
+                    />
+                    <IconButton
+                        disabled={editDisabled}
+                        onClick={() => {
+                            handleRemoveClick(product.id)
+                            setSaveDisabled(false)
+                        }}
+                    >
                         <RemoveCircleOutlineIcon/>
                     </IconButton>
-                    <IconButton>
+                    <IconButton
+                        disabled={editDisabled}
+                    >
                         <DeleteForeverIcon/>
                     </IconButton>
                 </Grid>
