@@ -16,15 +16,6 @@ export const useToggle = () => {
     const toggle = useSelector(state => state.toggle)
     const user = useSelector(state => state.user)
 
-    const {
-        addProductDialog, deleteProductDialog,
-        editProductDialog, viewProductDialog,
-        confirmDialog, editProfileDialog,
-        loginDialog, registerDialog,
-        orderDialog, accountMenu, cartSidebar,
-        orderShipDialog
-    } = toggle
-
     const openOrderShipDialog = () => {
         dispatch(toggleOrderShipDialog(true))
     }
@@ -134,18 +125,7 @@ export const useToggle = () => {
     }
 
     return {
-        addProductDialog,
-        deleteProductDialog,
-        editProductDialog,
-        viewProductDialog,
-        confirmDialog,
-        orderDialog,
-        editProfileDialog,
-        loginDialog,
-        registerDialog,
-        accountMenu,
-        cartSidebar,
-        orderShipDialog,
+        ...toggle,
 
         openOrderShipDialog,
         closeOrderShipDialog,
