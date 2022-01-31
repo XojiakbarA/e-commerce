@@ -1,8 +1,9 @@
 import { Grid, Pagination } from "@mui/material"
+import MyPagination from "../Pagination"
 import ListHead from "./ListHead"
 
 
-const List = ({labels, children, meta, onChange}) => {
+const List = ({labels, children, meta}) => {
 
     return (
         <Grid container spacing={2}>
@@ -13,14 +14,9 @@ const List = ({labels, children, meta, onChange}) => {
                 children
             }
             {
-                meta && meta.last_page > 1 &&
+                meta.last_page > 1 &&
                 <Grid item xs={12}>
-                    <Pagination
-                        color="primary"
-                        page={meta.current_page}
-                        count={meta.last_page}
-                        onChange={onChange}
-                    />
+                    <MyPagination meta={meta}/>
                 </Grid>
             }
         </Grid>

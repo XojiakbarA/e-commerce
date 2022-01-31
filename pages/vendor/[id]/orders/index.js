@@ -6,7 +6,6 @@ import ProfileLayout from "../../../../components/layout/ProfileLayout/ProfileLa
 import OrderListItem from '../../../../components/vendor/OrderListItem'
 import ProfileTitle from "../../../../components/profile/ProfileTitle"
 import OrderList from '../../../../components/common/List/List'
-import { useRouter } from 'next/router'
 
 const labels = ['Order ID', 'Products', 'Status', 'Date purchased', 'Total']
 
@@ -14,14 +13,6 @@ const Orders = ({data}) => {
 
     const orders = data.data
     const meta = data.meta
-
-    const router = useRouter()
-
-    const handlePageChange = (e, p) => {
-        router.push({
-            query: { ...router.query, page: p }
-        })
-    }
 
     return (
         <ProfileLayout>
@@ -32,7 +23,7 @@ const Orders = ({data}) => {
             {
                 orders.length > 0
                 ?
-                <OrderList labels={labels} meta={meta} onChange={handlePageChange}>
+                <OrderList labels={labels} meta={meta}>
                     {
                         orders.map(order => (
                             <Grid item xs={12} key={order.id}>

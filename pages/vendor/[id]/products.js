@@ -9,7 +9,6 @@ import ViewProductDialog from '../../../components/dialogs/ViewProductDialog'
 import EditProductDialog from '../../../components/dialogs/EditProductDialog'
 import DeleteProductDialog from '../../../components/dialogs/DeleteProductDialog'
 import { wrapper } from "../../../app/store"
-import { useRouter } from 'next/router'
 import ProductList from '../../../components/common/List/List'
 import ProductListItem from '../../../components/vendor/ProductListItem'
 import { useToggle } from '../../../app/hooks/useToggle'
@@ -19,18 +18,10 @@ const labels = [ 'Title', 'Image', 'Stock', 'Price', 'Sale Price', 'Rating', '' 
 
 const Products = () => {
 
-    const router = useRouter()
-
     const products = useSelector(state => state.products.data)
     const meta = useSelector(state => state.products.meta)
 
     const { openAddProductDialog } = useToggle()
-
-    const handlePageChange = (e, p) => {
-        router.push({
-            query: { ...router.query, page: p }
-        })
-    }
 
     return (
         <ProfileLayout>
@@ -44,7 +35,7 @@ const Products = () => {
             {
                 products.length > 0
                 ?
-                <ProductList labels={labels} meta={meta} onChange={handlePageChange}>
+                <ProductList labels={labels} meta={meta}>
                     {
                         products.map(product => (
                             <Grid item xs={12} key={product.id}>

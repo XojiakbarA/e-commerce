@@ -1,18 +1,17 @@
-import { Grid, Pagination, PaginationItem, Paper, Typography } from "@mui/material"
+import { Grid, Paper, Typography } from "@mui/material"
 import ShopBigCard from "../../../components/shop/ShopBigCard"
 import { getShop, getShopProducts } from "../../../app/store/actions/async/common"
 import { wrapper } from "../../../app/store"
 import { useSelector } from "react-redux"
 import SearchSidebar from "../../../components/search/SearchSidebar"
 import ProductCard from "../../../components/common/ProductCard"
+import MyPagination from "../../../components/common/Pagination"
 
 const Shop = () => {
 
-    const shopData = useSelector(state => state.shop)
-    const shop = shopData.data
-    const productsData = useSelector(state => state.products)
-    const products = productsData.data
-    const lastPage = productsData.meta.last_page
+    const shop = useSelector(state => state.shop.data)
+    const products = useSelector(state => state.products.data)
+    const meta = useSelector(state => state.products.meta)
 
     return (
         <Grid container spacing={2}>
@@ -26,36 +25,28 @@ const Shop = () => {
             </Grid>
             <Grid item lg={9}>
                     <Grid container spacing={2}>
-                    {!products.length
+                    {
+                        products.length > 0
                         ?
-                            <Grid item>
-                                <Typography variant='h2'>
-                                    Not found products
-                                </Typography>
-                            </Grid>
-                        :
                         products.map((product) => (
                             <Grid item xs={12} lg={4} key={product.id}>
                                 <ProductCard product={product} />
                             </Grid>
                         ))
+                        :
+                        <Grid item xs={12}>
+                            <Typography variant='h4'>
+                                Not found products
+                            </Typography>
+                        </Grid>
+                    }
+                    {
+                        meta.last_page > 1 &&
+                        <Grid item xs={12}>
+                            <MyPagination meta={meta}/>
+                        </Grid>
                     }
                     </Grid>
-                    {lastPage == 1 ? null :
-                        <Pagination
-                            size='large' 
-                            color='primary'
-                            sx={{my: 2}}
-                            page={currentPage}
-                            count={lastPage}
-                            onChange={ (e, p) => handlePageChange(e, p) }
-                            renderItem={item => (    
-                                <PaginationItem
-                                    {...item}
-                                />
-                            )}
-                        />
-                        }
                 </Grid>
         </Grid>
     )

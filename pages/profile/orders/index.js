@@ -1,7 +1,6 @@
 import ProfileLayout from "../../../components/layout/ProfileLayout/ProfileLayout";
 import ProfileTitle from "../../../components/profile/ProfileTitle";
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag'
-import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { Grid, Typography } from "@mui/material";
 import { getOrders } from "../../../app/store/actions/async/user";
@@ -13,16 +12,8 @@ const labels = ['Order ID', 'Products', 'Date purchased', 'Total']
 
 const Orders = () => {
 
-    const router = useRouter()
-
     const orders = useSelector(state => state.orders.data)
     const meta = useSelector(state => state.orders.meta)
-
-    const handlePageChange = (e, p) => {
-        router.push({
-            query: { page: p }
-        })
-    }
 
     return (
         <ProfileLayout>
@@ -33,7 +24,7 @@ const Orders = () => {
             {
                 orders.length > 0
                 ?
-                <OrderList labels={labels} meta={meta} onChange={handlePageChange}>
+                <OrderList labels={labels} meta={meta}>
                     {
                         orders.map(order => (
                             <Grid item xs={12} key={order.id}>

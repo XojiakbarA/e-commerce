@@ -1,16 +1,15 @@
 import { useState } from "react"
-import {Grid, Paper, Drawer, Pagination, Typography} from "@mui/material"
+import {Grid, Paper, Drawer, Typography} from "@mui/material"
 import SearchPanel from "../components/search/SearchPanel"
 import SearchSidebar from "../components/search/SearchSidebar"
 import ProductCard from "../components/common/ProductCard"
 import { wrapper } from "../app/store"
 import { getProducts } from "../app/store/actions/async/common"
 import { useSelector } from "react-redux"
-import { useRouter } from "next/router"
+import MyPagination from "../components/common/Pagination"
 
 const Search = ({title}) => {
 
-    const router = useRouter()
     const products = useSelector(state => state.products.data)
     const meta = useSelector(state => state.products.meta)
 
@@ -27,12 +26,6 @@ const Search = ({title}) => {
 
     function handleSidebarClose() {
         setSidebar(false)
-    }
-
-    function handlePageChange(e, p) {
-        router.push({
-            query: { ...router.query, page: p }
-        })
     }
 
     return(
@@ -72,13 +65,7 @@ const Search = ({title}) => {
                     {
                         meta.last_page > 1 &&
                         <Grid item xs={12}>
-                            <Pagination
-                                color='primary'
-                                sx={{my: 2}}
-                                page={meta.current_page}
-                                count={meta.last_page}
-                                onChange={ (e, p) => handlePageChange(e, p) }
-                            />
+                            <MyPagination meta={meta}/>
                         </Grid>
                     }
                     </Grid>
