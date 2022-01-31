@@ -5,15 +5,19 @@ import PhoneMask from '../../components/common/PhoneMask'
 import AutocompleteAsync from '../../components/common/AutocompleteAsync/AutocompleteAsync'
 import { useEditShop } from '../../app/hooks/useFormik/useEditShop'
 import { shopImageURL } from '../../utils/utils'
+import { useLocation } from '../../app/hooks/useLocation'
 
 const EditShopForm = () => {
 
     const {
         handleSubmit, setFieldValue, getFieldProps, handleBlur,
-        preview, shop, touched, errors, isFetching, isSubmitting,
-        regions, region, districts, district,
-        handleRegionChange, handleDistrictChange
+        preview, shop, touched, errors, isSubmitting,
     } = useEditShop()
+
+    const {
+        regions, region, districts, district, isFetching,
+        handleRegionChange, handleDistrictChange
+    } = useLocation(setFieldValue, shop.region, shop.district)
 
     return (
         <form onSubmit={handleSubmit}>

@@ -4,15 +4,19 @@ import UploadButton from '../../components/common/AvatarUpload/UploadButton'
 import PhoneMask from '../../components/common/PhoneMask'
 import AutocompleteAsync from '../../components/common/AutocompleteAsync/AutocompleteAsync'
 import { useCreateShop } from '../../app/hooks/useFormik/useCreateShop'
+import { useLocation } from '../../app/hooks/useLocation'
 
 const CreateShopForm = () => {
 
     const {
         handleSubmit, getFieldProps, setFieldValue, handleBlur,
-        handleRegionChange, handleDistrictChange,
-        touched, errors, isSubmitting,
-        preview, regions, districts, region, district, isFetching
+        touched, errors, isSubmitting, preview
     } = useCreateShop()
+
+    const {
+        regions, region, districts, district, isFetching,
+        handleRegionChange, handleDistrictChange
+    } = useLocation(setFieldValue)
 
     return (
         <form onSubmit={handleSubmit}>

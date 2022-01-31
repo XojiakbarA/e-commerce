@@ -7,17 +7,21 @@ import PaymentForm from "../components/shopping-pages/PaymentForm"
 import { wrapper } from '../app/store'
 import OrderDialog from "../components/dialogs/OrderDialog"
 import { useCheckout } from "../app/hooks/useFormik/useCheckout"
+import { useLocation } from "../app/hooks/useLocation"
 
 const Checkout = () => {
 
     const router = useRouter()
 
     const {
-        handleSubmit, getFieldProps, handleBlur, handleChange,
-        handleRegionChange, handleDistrictChange,
-        touched, errors, values, isFetching, isSubmitting,
-        regions, districts, region, district
+        handleSubmit, getFieldProps, handleBlur, handleChange, setFieldValue,
+        touched, errors, values, isSubmitting,
     } = useCheckout()
+
+    const {
+        regions, region, districts, district, isFetching,
+        handleRegionChange, handleDistrictChange,
+    } = useLocation(setFieldValue)
 
     return(
         <>
