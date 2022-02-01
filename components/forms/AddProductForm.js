@@ -5,6 +5,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import AutocompleteAsync from "../common/AutocompleteAsync/AutocompleteAsync"
 import { useAddProduct } from "../../app/hooks/useFormik/useAddProduct"
 import { useMultiPreview } from "../../app/hooks/usePreview/useMultiPreview"
+import { useFieldProduct } from "../../app/hooks/useFieldProduct"
 
 const Input = styled('input')({
     display: 'none'
@@ -14,10 +15,13 @@ const AddProductForm = () => {
 
     const {
         handleSubmit, getFieldProps, handleBlur, setValues,
-        handleCategoriesChange, handleSubCategoriesChange, handleBrandsChange,
-        values, touched, errors, isSubmitting, categories, brands,
-        category, subCategory, subCategories, brand
+        values, touched, errors, isSubmitting
     } = useAddProduct()
+
+    const {
+        categories, subCategories, brands, category, subCategory, brand,
+        handleCategoriesChange, handleSubCategoriesChange, handleBrandsChange
+    } = useFieldProduct(setValues)
 
     const {
         preview,

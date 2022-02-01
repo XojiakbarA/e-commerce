@@ -6,6 +6,7 @@ import AutocompleteAsync from "../common/AutocompleteAsync/AutocompleteAsync"
 import { productImageURL } from "../../utils/utils"
 import { useEditProduct } from "../../app/hooks/useFormik/useEditProduct"
 import { useMultiPreview } from "../../app/hooks/usePreview/useMultiPreview"
+import { useFieldProduct } from "../../app/hooks/useFieldProduct"
 
 const Input = styled('input')({
     display: 'none'
@@ -15,11 +16,14 @@ const EditProductForm = () => {
 
     const {
         handleSubmit, getFieldProps, handleBlur, setValues,
-        handleCategoriesChange, handleSubCategoriesChange, handleBrandsChange,
         handleProductImageClick,
-        touched, errors, isSubmitting, product, categories, brands,
-        category, subCategory, subCategories, brand, values
+        touched, errors, isSubmitting, values, product
     } = useEditProduct()
+
+    const {
+        categories, subCategories, brands, category, subCategory, brand,
+        handleCategoriesChange, handleSubCategoriesChange, handleBrandsChange
+    } = useFieldProduct(setValues)
 
     const {
         preview,
