@@ -7,6 +7,7 @@ import { getReviews } from "../../app/store/actions/async/user"
 import { useEffect } from "react"
 import ReviewItem from "../product/ProductTab/ReviewItem"
 import { useToggle } from "../../app/hooks/useToggle"
+import ProductNuller from './ProductNuller'
 
 const ViewProductDialog = () => {
 
@@ -15,7 +16,6 @@ const ViewProductDialog = () => {
     const product = useSelector(state => state.product)
     const reviews = useSelector(state => state.reviews)
     const reviewsLoading = useSelector(state => state.reviews.isLoading)
-    const isLoading = useSelector(state => state.toggle.isLoading)
 
     const { viewProductDialog, closeViewProductDialog } = useToggle()
 
@@ -36,11 +36,7 @@ const ViewProductDialog = () => {
                 </IconButton>
             </DialogTitle>
             <DialogContent>
-            {
-                isLoading
-                ?
-                null
-                :
+                <ProductNuller/>
                 <Grid container spacing={2}>
                     <Grid item lg={6}>
                         <ProductGallery images={product.images}/>
@@ -81,7 +77,6 @@ const ViewProductDialog = () => {
                         }
                     </Grid>
                 </Grid>
-            }
             </DialogContent>
         </Dialog>
     )

@@ -2,7 +2,7 @@ import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogT
 import { useDispatch, useSelector } from "react-redux"
 import { useToggle } from "../../app/hooks/useToggle"
 import { deleteProduct } from "../../app/store/actions/async/vendor"
-
+import ProductNuller from "./ProductNuller"
 
 const DeleteProductDialog = () => {
 
@@ -26,6 +26,7 @@ const DeleteProductDialog = () => {
             </DialogTitle>
             <DialogContent>
                 {`Do you really want to delete the "${product.title}"?`}
+                <ProductNuller/>
             </DialogContent>
             <DialogActions>
                 <Button onClick={closeDeleteProductDialog} disabled={isLoading}>No</Button>

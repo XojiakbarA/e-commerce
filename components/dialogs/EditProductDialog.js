@@ -2,6 +2,7 @@ import { Box, Dialog, DialogContent, DialogTitle, IconButton, Typography } from 
 import CloseIcon from '@mui/icons-material/Close'
 import { useToggle } from "../../app/hooks/useToggle"
 import EditProductForm from "../forms/EditProductForm"
+import ProductNuller from "./ProductNuller"
 
 const EditProductDialog = () => {
 
@@ -19,6 +20,7 @@ const EditProductDialog = () => {
             </DialogTitle>
             <DialogContent>
                 <Box sx={{marginY: 2}}>
+                    <ProductNuller/>
                     <EditProductForm/>
                 </Box>
             </DialogContent>
