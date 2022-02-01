@@ -1,14 +1,14 @@
 import { Avatar, Badge } from "@mui/material"
 import UploadButton from "./UploadButton"
 
-const AvatarUpload = ({ setFieldValue, value, src, styles, title }) => {
+const AvatarUpload = ({ onChange, value, src, styles, title }) => {
 
     return (
         <Badge
             anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
             badgeContent={
                 <UploadButton
-                    setFieldValue={setFieldValue}
+                    onChange={onChange}
                     value={value}
                     title={title}
                 />

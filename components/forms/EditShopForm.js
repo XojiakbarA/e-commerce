@@ -6,12 +6,13 @@ import AutocompleteAsync from '../../components/common/AutocompleteAsync/Autocom
 import { useEditShop } from '../../app/hooks/useFormik/useEditShop'
 import { shopImageURL } from '../../utils/utils'
 import { useLocation } from '../../app/hooks/useLocation'
+import { useDoublePreview } from '../../app/hooks/usePreview/useDoublePreview'
 
 const EditShopForm = () => {
 
     const {
-        handleSubmit, setFieldValue, getFieldProps, handleBlur,
-        preview, shop, touched, errors, isSubmitting,
+        handleSubmit, setFieldValue, getFieldProps, handleBlur, setValues,
+        shop, touched, errors, isSubmitting,
     } = useEditShop()
 
     const {
@@ -19,13 +20,15 @@ const EditShopForm = () => {
         handleRegionChange, handleDistrictChange
     } = useLocation(setFieldValue, shop.region, shop.district)
 
+    const { preview, handleBgUploadChange, handleAvUploadChange } = useDoublePreview(setValues)
+
     return (
         <form onSubmit={handleSubmit}>
             <Card sx={{position: 'relative'}}>
                 <UploadButton
                     styles={{position: 'absolute', top: 0, left: 0}}
                     title='Select background'
-                    setFieldValue={setFieldValue}
+                    onChange={handleBgUploadChange}
                     value='bg_image'
                 />
                 <CardMedia
@@ -39,7 +42,7 @@ const EditShopForm = () => {
                     <AvatarUpload
                         styles={{marginTop: '-80px'}}
                         title='Select Avatar'
-                        setFieldValue={setFieldValue}
+                        onChange={handleAvUploadChange}
                         value='av_image'
                         src={preview.av_image ?? (shop.av_image ? shopImageURL + shop.av_image.src : undefined)}
                     />

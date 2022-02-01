@@ -7,22 +7,25 @@ import PhoneMask from "../common/PhoneMask"
 import AvatarMenu from "../common/AvatarMenu"
 import { useEditProfile } from "../../app/hooks/useFormik/useEditProfile"
 import { useSelector } from "react-redux"
+import { useSinglePreview } from "../../app/hooks/usePreview/useSinglePreview"
 
 const EditProfileForm = () => {
 
     const user = useSelector(state => state.user)
 
     const {
-        handleSubmit, getFieldProps, setFieldValue, setPreview,
-        values, touched, errors, isSubmitting, preview
+        handleSubmit, getFieldProps, setFieldValue, setPreview, setValues,
+        values, touched, errors, isSubmitting
     } = useEditProfile()
+
+    const { preview, handleUploadChange } = useSinglePreview(setValues)
 
     return (
         <form onSubmit={handleSubmit}>
             <Stack spacing={2}>
                 <Box alignSelf='center' paddingBottom={2}>
                     <AvatarMenu
-                        setFieldValue={setFieldValue}
+                        handleUploadChange={handleUploadChange}
                         setPreview={setPreview}
                         value='image'
                         src={preview ?? (user.image ? userImageURL + user.image.src : undefined)}

@@ -9,7 +9,6 @@ export const useEditProfile = () => {
 
     const dispatch = useDispatch()
     const user = useSelector(state => state.user)
-    const [preview, setPreview] = useState(null)
 
     const formik = useFormik({
         initialValues: {
@@ -21,24 +20,14 @@ export const useEditProfile = () => {
             image: null
         },
         validationSchema: editProfileValidationSchema,
-        onSubmit: (data) => {
+        onSubmit: (data, {setSubmitting}) => {
             const formData = appendToFormData(data)
-            dispatch(editUser(formData, user.id, setPreview, formik.setSubmitting))
+            dispatch(editUser(formData, user.id, setSubmitting))
         },
         enableReinitialize: true
     })
 
-    useEffect(() => {
-        const image = formik.values.image
-        if (image) {
-            const url = URL.createObjectURL(image)
-            setPreview(url)
-        }
-    }, [formik.values.image])
-
     return {
-        ...formik,
-        preview,
-        setPreview
+        ...formik
     }
 }

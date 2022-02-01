@@ -3,15 +3,13 @@ import { useRouter } from "next/router"
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { createProduct } from "../../store/actions/async/vendor"
-import { appendToFormData, makeURLArray } from "../../../utils/utils"
+import { appendToFormData } from "../../../utils/utils"
 import { productValidationSchema } from "./validate"
 
 export const useAddProduct = () => {
 
     const dispatch = useDispatch()
     const router = useRouter()
-
-    const [preview, setPreview] = useState([])
 
     const categories = useSelector(state => state.categories)
     const [subCategories, setSubCategories] = useState([])
@@ -33,7 +31,8 @@ export const useAddProduct = () => {
             stock: '',
             price: '',
             sale_price: '',
-            images: null
+            images: null,
+            images_count: 0,
         },
         validationSchema: productValidationSchema,
         onSubmit: (data, {resetForm}) => {
@@ -67,45 +66,8 @@ export const useAddProduct = () => {
         formik.setValues({...formik.values, brand_id: value?.id})
     }
 
-    const handlePreviewImageClick = (i) => {
-        const images = { ...formik.values.images }
-        delete images[i]
-        const dt = new DataTransfer()
-        for (let key in images) {
-            dt.items.add(images[key])
-        }
-        images = dt.files
-        formik.setFieldValue('images', images)
-        setPreview(makeURLArray(images))
-    }
-
-    const handleClearClick = () => {
-        formik.setFieldValue('images', null)
-        setPreview([])
-    }
-
-    const handleUploadChange = (e) => {
-        const prevImages = formik.values.images
-        const newImages = e.target.files
-
-        const dt = new DataTransfer()
-        if (prevImages) {
-            for (let image of prevImages) {
-                dt.items.add(image)
-            }
-        }
-        for (let image of newImages) {
-            dt.items.add(image)
-        }
-        const images = dt.files
-
-        formik.setFieldValue('images', images)
-        setPreview(makeURLArray(images))
-    }
-
     return {
         ...formik,
-        preview,
         categories,
         subCategories,
         brands,
@@ -114,9 +76,6 @@ export const useAddProduct = () => {
         brand,
         handleCategoriesChange,
         handleSubCategoriesChange,
-        handleBrandsChange,
-        handleUploadChange,
-        handlePreviewImageClick,
-        handleClearClick,
+        handleBrandsChange
     }
 }

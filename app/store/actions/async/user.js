@@ -125,7 +125,7 @@ export const getUser = (cookie) => {
     }
 }
 
-export const editUser = (data, id, setPreview, setSubmitting) => {
+export const editUser = (data, id, setSubmitting) => {
     return async (dispatch) => {
         try {
             const res = await updateUser(data, id)
@@ -134,7 +134,6 @@ export const editUser = (data, id, setPreview, setSubmitting) => {
                 setSubmitting(false)
                 dispatch(setSnackbar({isOpen: true, text: 'Сhanges completed successfully!'}))
                 dispatch(toggleEditProfileDialog(false))
-                setPreview(null)
             }
         } catch (e) {
             console.log(e)
@@ -309,7 +308,7 @@ export const createShop = (data, setSubmitting) => {
     }
 }
 
-export const deleteUserImage = (image_id, setPreview) => {
+export const deleteUserImage = (image_id) => {
     return async (dispatch) => {
         try {
             dispatch(setLoading(true))
@@ -318,7 +317,6 @@ export const deleteUserImage = (image_id, setPreview) => {
                 dispatch(setUser(res.data.data))
                 dispatch(setLoading(false))
                 dispatch(setSnackbar({isOpen: true, text: 'Image deleted'}))
-                setPreview(null)
             }
         } catch (e) {
             console.log(e)

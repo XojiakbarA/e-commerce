@@ -1,22 +1,19 @@
 import { Dialog, DialogContent, DialogTitle, IconButton, Typography } from "@mui/material"
 import CloseIcon from '@mui/icons-material/Close'
 import { useToggle } from "../../app/hooks/useToggle"
-import { useEditProfile } from "../../app/hooks/useFormik/useEditProfile"
 import EditProfileForm from "../forms/EditProfileForm"
 
 const EditProfileDialog = () => {
 
     const { editProfileDialog, closeEditProfileDialog } = useToggle()
 
-    const { setFieldValue, setPreview } = useEditProfile()
-
     return (
-        <Dialog open={editProfileDialog} onClose={e => closeEditProfileDialog(setPreview, setFieldValue)}>
+        <Dialog open={editProfileDialog} onClose={closeEditProfileDialog}>
             <DialogTitle sx={{display: 'flex', alignItems: 'end', justifyContent: 'space-between'}}>
                 <Typography variant="button">
                     Edit Profile
                 </Typography>
-                <IconButton onClick={e => closeEditProfileDialog(setPreview, setFieldValue)}>
+                <IconButton onClick={closeEditProfileDialog}>
                     <CloseIcon/>
                 </IconButton>
             </DialogTitle>

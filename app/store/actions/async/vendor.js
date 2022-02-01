@@ -40,7 +40,7 @@ export const createProduct = (shop_id, data, resetForm, setSubmitting) => {
     }
 }
 
-export const editProduct = (shop_id, product_id, data, resetForm, setPreview, setSubmitting) => {
+export const editProduct = (shop_id, product_id, data, resetForm, setSubmitting) => {
     return async (dispatch) => {
         try {
             const res = await updateProduct(shop_id, product_id, data)
@@ -49,7 +49,6 @@ export const editProduct = (shop_id, product_id, data, resetForm, setPreview, se
                 dispatch(toggleEditProductDialog(false))
                 dispatch(setSnackbar({isOpen: true, text: 'Product updated successfully!'}))
                 resetForm()
-                setPreview([])
                 dispatch(getProducts(shop_id))
             }
         } catch (e) {

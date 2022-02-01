@@ -1,27 +1,26 @@
 import { useFormik } from "formik"
-import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { deleteProductImage, editProduct } from "../../store/actions/async/vendor"
-import { appendToFormData, makeURLArray } from "../../../utils/utils"
+import { appendToFormData } from "../../../utils/utils"
 import { productValidationSchema } from "./validate"
 
 export const useEditProduct = () => {
 
-    const router = useRouter()
     const dispatch = useDispatch()
-
-    const [preview, setPreview] = useState([])
 
     const product = useSelector(state => state.product)
 
     const categories = useSelector(state => state.categories)
-    const [subCategories, setSubCategories] = useState([])
+
+    const initSubCategories = categories.find(item => item.id === product.category?.id)?.sub_categories
+
+    const [subCategories, setSubCategories] = useState(initSubCategories)
     const brands = useSelector(state => state.brands)
 
-    const [category, setCategory] = useState(null)
-    const [subCategory, setSubCategory] = useState(null)
-    const [brand, setBrand] = useState(null)
+    const [category, setCategory] = useState(product.category)
+    const [subCategory, setSubCategory] = useState(product.sub_category)
+    const [brand, setBrand] = useState(product.brand)
 
     const shop_id = product.shop?.id
     const product_id = product.id
@@ -38,12 +37,12 @@ export const useEditProduct = () => {
             price: product.price ?? '',
             sale_price: product.sale_price ?? '',
             images: null,
-            images_count: product.images?.length ?? null,
+            images_count: 0,
         },
         validationSchema: productValidationSchema,
         onSubmit: (data, {resetForm}) => {
             const formData = appendToFormData(data)
-            dispatch(editProduct(shop_id, product_id, formData, resetForm, setPreview, formik.setSubmitting))
+            dispatch(editProduct(shop_id, product_id, formData, resetForm, formik.setSubmitting))
         },
         enableReinitialize: true
     })
@@ -77,77 +76,18 @@ export const useEditProduct = () => {
         dispatch(deleteProductImage(shop_id, product.id, image_id))
     }
 
-    const handlePreviewImageClick = (i) => {
-        const images = { ...formik.values.images }
-        delete images[i]
-
-        const dt = new DataTransfer()
-        for (let key in images) {
-            dt.items.add(images[key])
-        }
-        images = dt.files
-
-        formik.setValues({
-            ...formik.values,
-            images_count: formik.values.images_count - 1,
-            images: images
-        })
-        setPreview(makeURLArray(images))
-    }
-
-    const handleUploadChange = (e) => {
-        const prevImages = formik.values.images
-        const newImages = e.target.files
-
-        const countPrevImages = product.images.length
-        const countNewImages = newImages.length
-
-        const dt = new DataTransfer()
-        if (prevImages) {
-            for (let image of prevImages) {
-                dt.items.add(image)
-            }
-        }
-        for (let image of newImages) {
-            dt.items.add(image)
-        }
-        const images = dt.files
-
-        formik.setValues({ 
-            ...formik.values,
-            images_count: countPrevImages + countNewImages,
-            images: newImages
-        })
-
-        setPreview(makeURLArray(images))
-    }
-
-    useEffect(() => {
-        if (product?.category) {
-            setCategory(product.category)
-            const category = categories.find(item => item.id === product.category.id)
-            setSubCategories(category.sub_categories)
-            setSubCategory(product.sub_category)
-            setBrand(product.brand)
-        }
-    }, [product, categories])
-
     return {
         ...formik,
         product,
         categories,
         brands,
-        preview,
         category,
         subCategory,
         subCategories,
         brand,
-        setPreview,
         handleCategoriesChange,
         handleSubCategoriesChange,
         handleBrandsChange,
-        handleProductImageClick,
-        handlePreviewImageClick,
-        handleUploadChange,
+        handleProductImageClick
     }
 }

@@ -1,9 +1,10 @@
-import { Avatar, Badge, Box, Button, CircularProgress, Grid, IconButton, InputAdornment, TextField } from "@mui/material"
+import { Avatar, Badge, Box, Button, CircularProgress, FormHelperText, Grid, IconButton, InputAdornment, TextField } from "@mui/material"
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
 import { styled } from "@mui/material/styles"
 import CloseIcon from '@mui/icons-material/Close'
 import AutocompleteAsync from "../common/AutocompleteAsync/AutocompleteAsync"
 import { useAddProduct } from "../../app/hooks/useFormik/useAddProduct"
+import { useMultiPreview } from "../../app/hooks/usePreview/useMultiPreview"
 
 const Input = styled('input')({
     display: 'none'
@@ -12,12 +13,16 @@ const Input = styled('input')({
 const AddProductForm = () => {
 
     const {
-        handleSubmit, getFieldProps, handleBlur,
+        handleSubmit, getFieldProps, handleBlur, setValues,
         handleCategoriesChange, handleSubCategoriesChange, handleBrandsChange,
-        handlePreviewImageClick, handleUploadChange, handleClearClick,
-        values, touched, errors, isSubmitting, preview, categories, brands,
+        values, touched, errors, isSubmitting, categories, brands,
         category, subCategory, subCategories, brand
     } = useAddProduct()
+
+    const {
+        preview,
+        handleUploadChange, handlePreviewDeleteClick, handleClearClick
+    } = useMultiPreview(values.images, setValues)
 
     return (
         <form onSubmit={handleSubmit}>
@@ -77,7 +82,8 @@ const AddProductForm = () => {
                 </Grid>
                 <Grid item lg={12}>
                     <Box sx={{
-                            border: '1px dashed black',
+                            border: '1px dashed',
+                            borderColor: Boolean(errors.images_count) ? 'red' : 'black',
                             borderRadius: 1,
                             padding: 1,
                             minHeight: 200,
@@ -94,7 +100,7 @@ const AddProductForm = () => {
                                                 <IconButton
                                                     size="small"
                                                     color='primary'
-                                                    onClick={() => handlePreviewImageClick(i)}
+                                                    onClick={() => handlePreviewDeleteClick(i)}
                                                 >
                                                     <CloseIcon fontSize='small'/>
                                                 </IconButton>
@@ -114,7 +120,7 @@ const AddProductForm = () => {
                                 <Box sx={{
                                         width: 200,
                                         height: 200,
-                                        display: values.images?.length >= 5 ? 'none' : 'flex',
+                                        display: values.images_count > 4 ? 'none' : 'flex',
                                         justifyContent: 'center',
                                         alignItems: 'center'
                                     }}>
@@ -135,7 +141,10 @@ const AddProductForm = () => {
                         </Grid>
                     </Box>
                 </Grid>
-                <Grid item lg={12}>
+                <Grid item lg={12} display='flex' justifyContent='space-between'>
+                    <FormHelperText error={true}>
+                        {errors.images_count}
+                    </FormHelperText>
                     <Button
                         variant="outlined"
                         onClick={handleClearClick}

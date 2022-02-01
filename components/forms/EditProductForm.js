@@ -5,6 +5,7 @@ import { styled } from "@mui/material/styles"
 import AutocompleteAsync from "../common/AutocompleteAsync/AutocompleteAsync"
 import { productImageURL } from "../../utils/utils"
 import { useEditProduct } from "../../app/hooks/useFormik/useEditProduct"
+import { useMultiPreview } from "../../app/hooks/usePreview/useMultiPreview"
 
 const Input = styled('input')({
     display: 'none'
@@ -13,12 +14,17 @@ const Input = styled('input')({
 const EditProductForm = () => {
 
     const {
-        handleSubmit, getFieldProps, handleBlur,
+        handleSubmit, getFieldProps, handleBlur, setValues,
         handleCategoriesChange, handleSubCategoriesChange, handleBrandsChange,
-        handleProductImageClick, handlePreviewImageClick, handleUploadChange,
-        touched, errors, isSubmitting, product, preview, categories, brands,
-        category, subCategory, subCategories, brand
+        handleProductImageClick,
+        touched, errors, isSubmitting, product, categories, brands,
+        category, subCategory, subCategories, brand, values
     } = useEditProduct()
+
+    const {
+        preview,
+        handleUploadChange, handlePreviewDeleteClick, handleClearClick
+    } = useMultiPreview(values.images, setValues)
 
     return (
         <form onSubmit={handleSubmit}>
@@ -125,7 +131,7 @@ const EditProductForm = () => {
                                                 <IconButton
                                                     size="small"
                                                     color='primary'
-                                                    onClick={() => handlePreviewImageClick(i)}
+                                                    onClick={() => handlePreviewDeleteClick(i)}
                                                 >
                                                     <CloseIcon fontSize='small'/>
                                                 </IconButton>
@@ -145,7 +151,7 @@ const EditProductForm = () => {
                                 <Box sx={{
                                         width: 200,
                                         height: 200,
-                                        display: product.images?.length + preview.length >= 5 ? 'none' : 'flex',
+                                        display: values.images_count > 4 ? 'none' : 'flex',
                                         justifyContent: 'center',
                                         alignItems: 'center'
                                     }}>
@@ -172,8 +178,8 @@ const EditProductForm = () => {
                     </FormHelperText>
                     <Button
                         variant="outlined"
-                        
-                        
+                        onClick={handleClearClick}
+                        disabled={preview.length === 0}
                         sx={{float: 'right'}}
                     >
                         Clear

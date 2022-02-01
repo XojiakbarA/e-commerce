@@ -5,7 +5,7 @@ import AddAPhotoIcon from '@mui/icons-material/AddAPhoto'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteUserImage } from '../../app/store/actions/async/user'
 
-const AvatarButton = ({ setFieldValue, setPreview, value, src}) => {
+const AvatarButton = ({ handleUploadChange, value, src}) => {
 
     const dispatch = useDispatch()
 
@@ -23,7 +23,7 @@ const AvatarButton = ({ setFieldValue, setPreview, value, src}) => {
     }
 
     const handleDeleteImage = () => {
-        dispatch(deleteUserImage(user.image.id, setPreview))
+        dispatch(deleteUserImage(user.image.id))
     }
 
     return (
@@ -104,7 +104,7 @@ const AvatarButton = ({ setFieldValue, setPreview, value, src}) => {
                     sx={{display: 'none'}}
                     name={value}
                     onChange={e => {
-                        setFieldValue(value, e.target.files[0])
+                        handleUploadChange(e)
                         handleClose()
                     }}
                 />

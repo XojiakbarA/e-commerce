@@ -42,9 +42,8 @@ export const useToggle = () => {
         dispatch(setProduct(product))
         dispatch(toggleEditProductDialog(true))
     }
-    const closeEditProductDialog = (setPreview) => {
+    const closeEditProductDialog = () => {
         dispatch(toggleEditProductDialog(false))
-        setPreview([])
     }
 
     const openViewProductDialog = (product) => {
@@ -66,10 +65,8 @@ export const useToggle = () => {
     const openEditProfileDialog = () => {
         dispatch(toggleEditProfileDialog(true))
     }
-    const closeEditProfileDialog = (setPreview, setFieldValue) => {
+    const closeEditProfileDialog = () => {
         dispatch(toggleEditProfileDialog(false))
-        setPreview(null)
-        setFieldValue('image', null)
     }
 
     const openLoginDialog = () => {

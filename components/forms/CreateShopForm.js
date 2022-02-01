@@ -5,12 +5,13 @@ import PhoneMask from '../../components/common/PhoneMask'
 import AutocompleteAsync from '../../components/common/AutocompleteAsync/AutocompleteAsync'
 import { useCreateShop } from '../../app/hooks/useFormik/useCreateShop'
 import { useLocation } from '../../app/hooks/useLocation'
+import { useDoublePreview } from '../../app/hooks/usePreview/useDoublePreview'
 
 const CreateShopForm = () => {
 
     const {
-        handleSubmit, getFieldProps, setFieldValue, handleBlur,
-        touched, errors, isSubmitting, preview
+        handleSubmit, getFieldProps, setFieldValue, handleBlur, setValues,
+        touched, errors, isSubmitting
     } = useCreateShop()
 
     const {
@@ -18,13 +19,15 @@ const CreateShopForm = () => {
         handleRegionChange, handleDistrictChange
     } = useLocation(setFieldValue)
 
+    const { preview, handleBgUploadChange, handleAvUploadChange } = useDoublePreview(setValues)
+
     return (
         <form onSubmit={handleSubmit}>
             <Card sx={{position: 'relative'}}>
                 <UploadButton
                     styles={{position: 'absolute', top: 0, left: 0}}
                     title='Select background'
-                    setFieldValue={setFieldValue}
+                    onChange={handleBgUploadChange}
                     value='bg_image'
                 />
                 <CardMedia
@@ -38,7 +41,7 @@ const CreateShopForm = () => {
                     <AvatarUpload
                         styles={{marginTop: '-80px'}}
                         title='Select Avatar'
-                        setFieldValue={setFieldValue}
+                        onChange={handleAvUploadChange}
                         value='av_image'
                         src={preview.av_image ?? null}
                     />
