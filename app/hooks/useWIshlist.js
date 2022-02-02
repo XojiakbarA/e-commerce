@@ -1,7 +1,8 @@
+import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { addToWishlist, deleteFromWishlist } from "../store/actions/async/user"
 
-export const useWIshlist = (id) => {
+export const useWishlist = (id) => {
 
     const dispatch = useDispatch()
 
@@ -9,16 +10,24 @@ export const useWIshlist = (id) => {
 
     const productInWishlist = wishlist.find(item => item.id === id)
 
-    const addProductWishlist = () => {
-        dispatch(addToWishlist(id))
+    const [isWishClicked, setIsWishClicked] = useState(false)
+
+    const [wishlistFetching, setWishlistFetching] = useState(false)
+
+    const addProductWishlist = (e, clickedId) => {
+        setIsWishClicked(clickedId === id)
+        dispatch(addToWishlist(id, setIsWishClicked, setWishlistFetching))
     }
 
-    const deleteProductWishlist = () => {
-        dispatch(deleteFromWishlist(id))
+    const deleteProductWishlist = (e, clickedId) => {
+        setIsWishClicked(clickedId === id)
+        dispatch(deleteFromWishlist(id, setIsWishClicked, setWishlistFetching))
     }
 
     return {
         productInWishlist,
+        wishlistFetching,
+        isWishClicked,
         addProductWishlist,
         deleteProductWishlist
     }

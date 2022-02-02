@@ -8,14 +8,14 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import NextLink from '../../common/Link'
 import { useRouter } from 'next/router'
 import { useCart } from '../../../app/hooks/useCart'
-import { useWIshlist } from '../../../app/hooks/useWIshlist'
+import { useWishlist } from '../../../app/hooks/useWishlist'
 
 const ProductInfo = ({product}) => {
 
     const router = useRouter()
 
     const { cartFetching, isClicked, productInCart, addProductCart, removeProductCart} = useCart(product.id)
-    const { productInWishlist, addProductWishlist, deleteProductWishlist } = useWIshlist(product.id)
+    const { wishlistFetching, isWishClicked, productInWishlist, addProductWishlist, deleteProductWishlist } = useWishlist(product.id)
 
     const hasInCart = Boolean(productInCart)
     const hasInWishlist = Boolean(productInWishlist)
@@ -28,23 +28,31 @@ const ProductInfo = ({product}) => {
             {
                 isProductsPage
                 ?
-                    hasInWishlist
-                    ?
-                    <IconButton
-                        size='large'
-                        sx={{position: 'absolute', top: 0, right: 0}}
-                        onClick={deleteProductWishlist}
-                    >
-                        <FavoriteIcon fontSize='large'/>
-                    </IconButton>
-                    :
-                    <IconButton
-                        size='large'
-                        sx={{position: 'absolute', top: 0, right: 0}}
-                        onClick={addProductWishlist}
-                    >
-                        <FavoriteBorderIcon fontSize='large'/>
-                    </IconButton>
+                    <Stack direction='row' spacing={2} sx={{position: 'absolute', top: 0, right: 0}} alignItems='center'>
+                        {
+                            wishlistFetching && isWishClicked &&
+                            <CircularProgress size={25}/>
+                        }
+                        {
+                            hasInWishlist
+                            ?
+                            <IconButton
+                                size='large'
+                                disabled={wishlistFetching && isWishClicked}
+                                onClick={ e => deleteProductWishlist(e, product.id) }
+                            >
+                                <FavoriteIcon fontSize='large'/>
+                            </IconButton>
+                            :
+                            <IconButton
+                                size='large'
+                                disabled={wishlistFetching && isWishClicked}
+                                onClick={ e => addProductWishlist(e, product.id) }
+                            >
+                                <FavoriteBorderIcon fontSize='large'/>
+                            </IconButton>
+                        }
+                    </Stack>
                 :
                 null
             }

@@ -5,6 +5,7 @@ import Image from 'next/image'
 import ProductCardButtons from './ProductCardButtons'
 import { noImageUrl } from '../../../utils/utils'
 import { useCart } from '../../../app/hooks/useCart'
+import { useWishlist } from '../../../app/hooks/useWishlist'
 
 const ProductCard = ({product, listView}) => {
 
@@ -16,7 +17,10 @@ const ProductCard = ({product, listView}) => {
 
     const { productInCart, cartFetching, isClicked, addProductCart, deleteProductCart} = useCart(product.id)
 
+    const { productInWishlist, wishlistFetching, isWishClicked, addProductWishlist, deleteProductWishlist } = useWishlist(product.id)
+
     const hasInCart = Boolean(productInCart)
+    const hasInWishlist = Boolean(productInWishlist)
 
     return (
         <Card sx={style.card}>
@@ -71,13 +75,21 @@ const ProductCard = ({product, listView}) => {
                 isClicked={isClicked}
                 addProductCart={addProductCart}
                 deleteProductCart={deleteProductCart}
+                hasInWishlist={hasInWishlist}
+                wishlistFetching={wishlistFetching}
+                isWishClicked={isWishClicked}
+                addProductWishlist={addProductWishlist}
+                deleteProductWishlist={deleteProductWishlist}
             />
             {
-                cartFetching && isClicked &&
+                cartFetching && isClicked || wishlistFetching && isWishClicked
+                ?
                 <CircularProgress
                     sx={{display: 'flex', flexDirection: 'column', position: 'absolute', top: 5, left: 5}}
                     size={20}
                 />
+                :
+                null
             }
         </Card>
     );

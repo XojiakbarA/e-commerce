@@ -87,12 +87,15 @@ export const getWishlist = (cookie) => {
     }
 }
 
-export const addToWishlist = (id) => {
+export const addToWishlist = (id, setIsWishClicked, setWishlistFetching) => {
     return async (dispatch) => {
         try {
+            setWishlistFetching(true)
             const res = await addWishlist(id)
             if (res.status === 200) {
                 dispatch(setWishlist(res.data.data))
+                setWishlistFetching(false)
+                setIsWishClicked(false)
             }
         } catch (e) {
             console.log(e)
@@ -100,12 +103,15 @@ export const addToWishlist = (id) => {
     }
 }
 
-export const deleteFromWishlist = (id) =>{
+export const deleteFromWishlist = (id, setIsWishClicked, setWishlistFetching) =>{
     return async (dispatch) => {
         try {
+            setWishlistFetching(true)
             const res = await deleteWishlist(id)
             if (res.status === 200) {
                 dispatch(setWishlist(res.data.data))
+                setWishlistFetching(false)
+                setIsWishClicked(false)
             }
         } catch (e) {
             console.log(e)

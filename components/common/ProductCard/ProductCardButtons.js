@@ -3,13 +3,12 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import { useWIshlist } from '../../../app/hooks/useWIshlist'
 
-const ProductCardButtons = ({ id, hasInCart, cartFetching, isClicked, addProductCart, deleteProductCart }) => {
-
-    const { productInWishlist, addProductWishlist, deleteProductWishlist } = useWIshlist(id)
-
-    const hasInWishlist = Boolean(productInWishlist)
+const ProductCardButtons = ({
+    id,
+    hasInCart, cartFetching, isClicked, addProductCart, deleteProductCart,
+    hasInWishlist, wishlistFetching, isWishClicked, addProductWishlist, deleteProductWishlist
+}) => {
 
     return (
         <Box
@@ -18,13 +17,13 @@ const ProductCardButtons = ({ id, hasInCart, cartFetching, isClicked, addProduct
             {
                 hasInWishlist
                 ?
-                <IconButton onClick={ deleteProductWishlist }>
+                <IconButton onClick={ e => deleteProductWishlist(e, id) } disabled={wishlistFetching && isWishClicked}>
                     <Tooltip title='Remove from wishlist' placement='right' key={id}>
                         <FavoriteIcon />
                     </Tooltip>
                 </IconButton>
                 :
-                <IconButton onClick={ addProductWishlist }>
+                <IconButton onClick={ e => addProductWishlist(e, id) } disabled={wishlistFetching && isWishClicked}>
                     <Tooltip title='Add to wishlist' placement='right'>
                         <FavoriteBorderIcon />
                     </Tooltip>
