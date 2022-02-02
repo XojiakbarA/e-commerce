@@ -1,9 +1,10 @@
-import { Breadcrumbs, Button, IconButton, Rating, Stack, Typography } from '@mui/material'
+import { Breadcrumbs, Button, CircularProgress, IconButton, Rating, Stack, Typography } from '@mui/material'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import FavoriteIcon from '@mui/icons-material/Favorite'
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import NextLink from '../../common/Link'
 import { useRouter } from 'next/router'
 import { useCart } from '../../../app/hooks/useCart'
@@ -13,7 +14,7 @@ const ProductInfo = ({product}) => {
 
     const router = useRouter()
 
-    const { productInCart, addProductCart, removeProductCart} = useCart(product.id)
+    const { cartFetching, isClicked, productInCart, addProductCart, removeProductCart} = useCart(product.id)
     const { productInWishlist, addProductWishlist, deleteProductWishlist } = useWIshlist(product.id)
 
     const hasInCart = Boolean(productInCart)
@@ -118,8 +119,9 @@ const ProductInfo = ({product}) => {
                     <Stack direction='row' spacing={2} alignItems='center'>
                         <Button
                             variant='outlined'
+                            disabled={cartFetching && isClicked}
                             sx={{padding: 1, minWidth: 0}}
-                            onClick={ addProductCart }
+                            onClick={ e => addProductCart(e, product.id) }
                         >
                             <AddIcon />
                         </Button>
@@ -128,14 +130,32 @@ const ProductInfo = ({product}) => {
                         </Typography>
                         <Button
                             variant='outlined'
+                            disabled={cartFetching && isClicked}
                             sx={{padding: 1, minWidth: 0, marginLeft: 0}}
-                            onClick={ removeProductCart }
+                            onClick={ e => removeProductCart(e, product.id) }
                         >
                             <RemoveIcon />
                         </Button>
+                        {
+                            cartFetching && isClicked &&
+                            <CircularProgress size={20} sx={{alignSelf: 'start'}}/>
+                        }                        
                     </Stack>
                     :
-                    <Button variant='contained' onClick={ addProductCart }>Add To Cart</Button>
+                    <Button
+                        variant='contained'
+                        disabled={cartFetching && isClicked}
+                        onClick={ e => addProductCart(e, product.id) }
+                        endIcon={
+                            cartFetching && isClicked
+                            ?
+                            <CircularProgress size={20} color='inherit'/>
+                            :
+                            <AddShoppingCartIcon/>
+                        }
+                    >
+                        Add To Cart
+                    </Button>
                 :
                 null
             }

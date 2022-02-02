@@ -1,9 +1,10 @@
-import {Card, CardContent, CardMedia, CardActionArea, Typography, Rating, Stack} from '@mui/material'
+import {Card, CardContent, CardMedia, CardActionArea, Typography, Rating, Stack, CircularProgress} from '@mui/material'
 import { productImageURL } from '../../../utils/utils'
 import NextLink from '../Link'
 import Image from 'next/image'
 import ProductCardButtons from './ProductCardButtons'
 import { noImageUrl } from '../../../utils/utils'
+import { useCart } from '../../../app/hooks/useCart'
 
 const ProductCard = ({product, listView}) => {
 
@@ -12,6 +13,10 @@ const ProductCard = ({product, listView}) => {
         card: {boxShadow: 3, borderRadius: 2, position: 'relative'},
         cardMedia: {position: 'relative', width: listView ? 150 : '100%', height: listView ? 150 : 276}
     }
+
+    const { productInCart, cartFetching, isClicked, addProductCart, deleteProductCart} = useCart(product.id)
+
+    const hasInCart = Boolean(productInCart)
 
     return (
         <Card sx={style.card}>
@@ -59,7 +64,21 @@ const ProductCard = ({product, listView}) => {
                     </CardContent>
                 </NextLink>
             </CardActionArea>
-            <ProductCardButtons id={product.id}/>
+            <ProductCardButtons
+                id={product.id}
+                hasInCart={hasInCart}
+                cartFetching={cartFetching}
+                isClicked={isClicked}
+                addProductCart={addProductCart}
+                deleteProductCart={deleteProductCart}
+            />
+            {
+                cartFetching && isClicked &&
+                <CircularProgress
+                    sx={{display: 'flex', flexDirection: 'column', position: 'absolute', top: 5, left: 5}}
+                    size={20}
+                />
+            }
         </Card>
     );
 }

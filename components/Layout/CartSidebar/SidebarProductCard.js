@@ -1,4 +1,4 @@
-import { Button, IconButton, Typography, Card, CardActionArea, CardMedia, CardContent, Stack, Box } from '@mui/material'
+import { Button, IconButton, Typography, Card, CardActionArea, CardMedia, CardContent, Stack, Box, CircularProgress } from '@mui/material'
 import NextLink from '../../common/Link'
 import Image from 'next/image'
 import CloseIcon from '@mui/icons-material/Close'
@@ -12,7 +12,7 @@ const SidebarProductCard = ({product}) => {
 
     const [ripple, events] = useRipple()
 
-    const { addProductCart, removeProductCart, deleteProductCart} = useCart(product.id)
+    const { cartFetching, isClicked, addProductCart, removeProductCart, deleteProductCart} = useCart(product.id)
 
     return(
         <Card sx={{display: 'flex'}}>
@@ -27,7 +27,8 @@ const SidebarProductCard = ({product}) => {
                         <Button
                             variant='outlined'
                             sx={{padding: 0, minWidth: 0}}
-                            onClick={ addProductCart }
+                            disabled={cartFetching && isClicked}
+                            onClick={ e => addProductCart(e, product.id) }
                         >
                             <AddIcon fontSize='small' />
                         </Button>
@@ -37,7 +38,8 @@ const SidebarProductCard = ({product}) => {
                         <Button
                             variant='outlined'
                             sx={{padding: 0, minWidth: 0, marginLeft: 0}}
-                            onClick={ removeProductCart }
+                            disabled={cartFetching && isClicked}
+                            onClick={ e => removeProductCart(e, product.id) }
                         >
                             <RemoveIcon fontSize='small' />
                         </Button>
@@ -80,9 +82,17 @@ const SidebarProductCard = ({product}) => {
                         sx={{position: 'absolute', top: 0, right: 0}}
                         { ...events }
                     >
-                        <IconButton onClick={ deleteProductCart }>
-                            <CloseIcon fontSize='small' />
-                        </IconButton>
+                        {
+                            cartFetching && isClicked
+                            ?
+                            <IconButton>
+                                <CircularProgress size={20}/>
+                            </IconButton>
+                            :
+                            <IconButton onClick={ e => deleteProductCart(e, product.id) }>
+                                <CloseIcon fontSize='small' />
+                            </IconButton>
+                        }
                     </Stack>
                 </NextLink>
             </CardActionArea>

@@ -1,4 +1,4 @@
-import { Button, IconButton, Typography, Card, CardActionArea, CardMedia, CardContent, Stack } from '@mui/material'
+import { Button, IconButton, Typography, Card, CardActionArea, CardMedia, CardContent, Stack, CircularProgress } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
@@ -9,7 +9,7 @@ import { useCart } from '../../app/hooks/useCart'
 
 const CartProductCard = ({product}) => {
 
-    const { addProductCart, removeProductCart, deleteProductCart } = useCart(product.id)
+    const { cartFetching, isClicked, addProductCart, removeProductCart, deleteProductCart } = useCart(product.id)
 
     return(
         <Card sx={{display: 'flex', position: 'relative'}}>
@@ -52,14 +52,23 @@ const CartProductCard = ({product}) => {
                 padding={1}
                 sx={{position: 'absolute', top: 0, right: 0, height: '100%'}}
             >
-                <IconButton onClick={ deleteProductCart }>
-                    <CloseIcon fontSize='small' />
-                </IconButton>
+                {
+                    cartFetching && isClicked
+                    ?
+                    <IconButton>
+                        <CircularProgress size={20}/>
+                    </IconButton>
+                    :
+                    <IconButton onClick={ e => deleteProductCart(e, product.id) }>
+                        <CloseIcon fontSize='small' />
+                    </IconButton>
+                }
                 <Stack direction='row' spacing={1}>
                     <Button
                         variant='outlined'
+                        disabled={cartFetching && isClicked}
                         sx={{padding: 0, minWidth: 0}}
-                        onClick={ addProductCart }
+                        onClick={ e => addProductCart(e, product.id) }
                     >
                         <AddIcon fontSize='small' />
                     </Button>
@@ -68,8 +77,9 @@ const CartProductCard = ({product}) => {
                     </Typography>
                     <Button
                         variant='outlined'
+                        disabled={cartFetching && isClicked}
                         sx={{padding: 0, minWidth: 0, marginLeft: 0}}
-                        onClick={ removeProductCart }
+                        onClick={ e => removeProductCart(e, product.id) }
                     >
                         <RemoveIcon fontSize='small' />
                     </Button>

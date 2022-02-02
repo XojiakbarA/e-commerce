@@ -3,15 +3,12 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import { useCart } from '../../../app/hooks/useCart'
 import { useWIshlist } from '../../../app/hooks/useWIshlist'
 
-const ProductCardButtons = ({ id }) => {
+const ProductCardButtons = ({ id, hasInCart, cartFetching, isClicked, addProductCart, deleteProductCart }) => {
 
-    const { productInCart, addProductCart, deleteProductCart} = useCart(id)
     const { productInWishlist, addProductWishlist, deleteProductWishlist } = useWIshlist(id)
 
-    const hasInCart = Boolean(productInCart)
     const hasInWishlist = Boolean(productInWishlist)
 
     return (
@@ -36,13 +33,13 @@ const ProductCardButtons = ({ id }) => {
             {
                 hasInCart
                 ?
-                <IconButton onClick={ deleteProductCart }>
+                <IconButton onClick={ e => deleteProductCart(e, id) } disabled={cartFetching && isClicked}>
                     <Tooltip title='Remove from cart' placement='right' key={id}>
                         <ShoppingCartIcon />
                     </Tooltip>
                 </IconButton>
                 :
-                <IconButton onClick={ addProductCart }>
+                <IconButton onClick={ e => addProductCart(e, id) } disabled={cartFetching && isClicked}>
                     <Tooltip title='Add to cart' placement='right'>
                         <ShoppingCartOutlinedIcon />
                     </Tooltip>

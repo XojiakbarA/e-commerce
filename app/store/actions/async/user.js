@@ -10,17 +10,15 @@ import {
     setUser, setCart, setLoading, setSnackbar, toggleLoginDialog,
     toggleRegisterDialog, setReviews, setWishlist, toggleOrderDialog,
     setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog,
-    setCartFetching, toggleAccountMenu
+    toggleAccountMenu
 } from '../actionCreators'
 
 export const getCart = (cookie) => {
     return async (dispatch) => {
         try {
-            dispatch(setCartFetching(true))
             const res = await fetchCart(cookie)
             if (res.status === 200) {
                 dispatch(setCart(res.data))
-                dispatch(setCartFetching(false))
             }
         } catch (e) {
             console.log(e)
@@ -28,14 +26,15 @@ export const getCart = (cookie) => {
     }
 }
 
-export const addToCart = (id) => {
+export const addToCart = (id, setIsClicked, setCartFetching) => {
     return async (dispatch) => {
         try {
-            dispatch(setCartFetching(true))
+            setCartFetching(true)
             const res = await addCart(id)
             if (res.status === 200) {
                 dispatch(setCart(res.data))
-                dispatch(setCartFetching(false))
+                setCartFetching(false)
+                setIsClicked(false)
             }
         } catch (e) {
             console.log(e)
@@ -43,14 +42,15 @@ export const addToCart = (id) => {
     }
 }
 
-export const removeFromCart = (id) => {
+export const removeFromCart = (id, setIsClicked, setCartFetching) => {
     return async (dispatch) => {
         try {
-            dispatch(setCartFetching(true))
+            setCartFetching(true)
             const res = await removeCart(id)
             if (res.status === 200) {
                 dispatch(setCart(res.data))
-                dispatch(setCartFetching(false))
+                setCartFetching(false)
+                setIsClicked(false)
             }
         } catch (e) {
             console.log(e)
@@ -58,14 +58,15 @@ export const removeFromCart = (id) => {
     }
 }
 
-export const deleteFromCart = (id) => {
+export const deleteFromCart = (id, setIsClicked, setCartFetching) => {
     return async (dispatch) => {
         try {
-            dispatch(setCartFetching(true))
+            setCartFetching(true)
             const res = await deleteCart(id)
             if (res.status === 200) {
                 dispatch(setCart(res.data))
-                dispatch(setCartFetching(false))
+                setCartFetching(false)
+                setIsClicked(false)
             }
         } catch (e) {
             console.log(e)
