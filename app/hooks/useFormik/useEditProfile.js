@@ -21,8 +21,10 @@ export const useEditProfile = () => {
         },
         validationSchema: editProfileValidationSchema,
         onSubmit: (data, {setSubmitting}) => {
-            const formData = appendToFormData(data)
-            dispatch(editUser(formData, user.id, setSubmitting))
+            // const formData = appendToFormData(data)
+            // dispatch(editUser(formData, user.id, setSubmitting))
+            console.log(data)
+            setSubmitting(false)
         },
         enableReinitialize: true
     })

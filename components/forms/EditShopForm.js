@@ -1,4 +1,5 @@
 import { Button, Card, CardContent, CardMedia, CircularProgress, Grid, TextField } from '@mui/material'
+import EditIcon from '@mui/icons-material/Edit'
 import AvatarUpload from '../../components/common/AvatarUpload/AvatarUpload'
 import UploadButton from '../../components/common/AvatarUpload/UploadButton'
 import PhoneMask from '../../components/common/PhoneMask'
@@ -141,12 +142,12 @@ const EditShopForm = () => {
                                 sx={{float: 'right'}}
                                 variant='contained'
                                 type='submit'
-                                endIcon={ isSubmitting
-                                    &&
-                                    <CircularProgress
-                                        color='inherit'
-                                        size={20}
-                                    />
+                                endIcon={
+                                    isSubmitting
+                                    ?
+                                    <CircularProgress color='inherit' size={20}/>
+                                    :
+                                    <EditIcon/>
                                 }
                                 disabled={isSubmitting}
                             >

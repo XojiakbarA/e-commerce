@@ -25,7 +25,7 @@ const ConfirmDialog = () => {
             </DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    Are you sure you want to cancel the order?
+                    {`Are you sure you want to cancel the "${orderShop.title}" order?`}
                 </DialogContentText>
             </DialogContent>
             <DialogActions>

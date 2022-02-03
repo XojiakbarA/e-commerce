@@ -1,6 +1,8 @@
 import { Avatar, Badge, Box, Button, CircularProgress, FormHelperText, Grid, IconButton, InputAdornment, TextField } from "@mui/material"
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
+import EditIcon from '@mui/icons-material/Edit'
 import CloseIcon from '@mui/icons-material/Close'
+import DeleteIcon from '@mui/icons-material/Delete'
 import { styled } from "@mui/material/styles"
 import AutocompleteAsync from "../common/AutocompleteAsync/AutocompleteAsync"
 import { productImageURL } from "../../utils/utils"
@@ -185,6 +187,7 @@ const EditProductForm = () => {
                         onClick={handleClearClick}
                         disabled={preview.length === 0}
                         sx={{float: 'right'}}
+                        endIcon={<DeleteIcon/>}
                     >
                         Clear
                     </Button>
@@ -240,13 +243,12 @@ const EditProductForm = () => {
                         type='submit'
                         variant='contained'
                         sx={{float: 'right'}}
-                        endIcon={ isSubmitting
-                            &&
-                            <CircularProgress
-                                color='inherit'
-                                size={20}
-                                sx={{position: 'absolute', top: 8, right: 50}}
-                            />
+                        endIcon={
+                            isSubmitting
+                            ?
+                            <CircularProgress color='inherit' size={20}/>
+                            :
+                            <EditIcon/>
                         }
                         disabled={isSubmitting}
                     >

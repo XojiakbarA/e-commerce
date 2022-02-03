@@ -1,4 +1,5 @@
 import { Box, Button, CircularProgress, Stack, TextField } from "@mui/material"
+import SaveIcon from '@mui/icons-material/Save'
 import {DesktopDatePicker, LocalizationProvider} from "@mui/lab"
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import ruLocale from 'date-fns/locale/ru'
@@ -8,17 +9,17 @@ import AvatarMenu from "../common/AvatarMenu"
 import { useEditProfile } from "../../app/hooks/useFormik/useEditProfile"
 import { useSelector } from "react-redux"
 import { useSinglePreview } from "../../app/hooks/usePreview/useSinglePreview"
+import { useToggle } from '../../app/hooks/useToggle'
 
 const EditProfileForm = () => {
 
     const user = useSelector(state => state.user)
 
-    const {
-        handleSubmit, getFieldProps, setFieldValue, setPreview, setValues,
-        values, touched, errors, isSubmitting
-    } = useEditProfile()
+    const { handleSubmit, getFieldProps, setValues, values, touched, errors, isSubmitting } = useEditProfile()
 
     const { preview, handleUploadChange } = useSinglePreview(setValues)
+
+    const { closeEditProfileDialog } = useToggle()
 
     return (
         <form onSubmit={handleSubmit}>
@@ -26,7 +27,6 @@ const EditProfileForm = () => {
                 <Box alignSelf='center' paddingBottom={2}>
                     <AvatarMenu
                         handleUploadChange={handleUploadChange}
-                        setPreview={setPreview}
                         value='image'
                         src={preview ?? (user.image ? userImageURL + user.image.src : undefined)}
                     />
@@ -68,19 +68,19 @@ const EditProfileForm = () => {
                         label="Birth Date"
                         name='birth_date'
                         value={values.birth_date}
-                        onChange={(value) => setFieldValue('birth_date', value)}
+                        onChange={(value) => setValues(prevValues => ({ ...prevValues, birth_date: value }))}
                     />
                 </LocalizationProvider>
                 <Button
                     size='small'
                     variant='contained'
                     type='submit'
-                    endIcon={ isSubmitting
-                        &&
+                    endIcon={
+                        isSubmitting &&
                         <CircularProgress
                             color='inherit'
                             size={20}
-                            sx={{position: 'absolute', top: 8, right: 50}}
+                            sx={{position: 'absolute', right: 10, top: '25%'}}
                         />
                     }
                     disabled={isSubmitting}
@@ -90,7 +90,7 @@ const EditProfileForm = () => {
                 <Button
                     size='small'
                     variant='outlined'
-                    onClick={e => closeEditProfileDialog(setPreview, setFieldValue)}
+                    onClick={ closeEditProfileDialog }
                 >
                     Cancel
                 </Button>

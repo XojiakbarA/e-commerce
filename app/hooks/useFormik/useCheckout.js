@@ -21,8 +21,8 @@ export const useCheckout = () => {
             pay_mode: ''
         },
         validationSchema: checkoutValidationSchema,
-        onSubmit: (data) => {
-            dispatch(createOrder(data))
+        onSubmit: (data, {setSubmitting}) => {
+            dispatch(createOrder(data, setSubmitting))
         },
         enableReinitialize: true
     })

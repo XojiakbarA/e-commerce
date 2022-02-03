@@ -242,13 +242,13 @@ export const createReview = (id, data, resetForm, setSubmitting) => {
     }
 }
 
-export const createOrder = (data) => {
+export const createOrder = (data, setSubmitting) => {
     return async (dispatch) => {
         try {
-            dispatch(setLoading(true))
             const res = await storeOrder(data)
             if (res.status === 201) {
-                dispatch(setLoading(false))
+                dispatch(setOrder(res.data.data))
+                setSubmitting(false)
                 dispatch(toggleOrderDialog(true))
             }
         } catch (e) {

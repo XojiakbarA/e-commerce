@@ -146,7 +146,6 @@ const CheckoutForm = () => {
                                                 label={label}
                                                 control={<Radio />}
                                                 name='pay_mode'
-                                                
                                             />
                                         ))
                                     }
@@ -163,12 +162,12 @@ const CheckoutForm = () => {
                             variant='contained'
                             fullWidth
                             type='submit'
-                            endIcon={ isSubmitting
-                                &&
+                            endIcon={
+                                isSubmitting &&
                                 <CircularProgress
                                     color='inherit'
                                     size={20}
-                                    sx={{position: 'absolute', top: 8, right: 50}}
+                                    sx={{position: 'absolute', top: '25%', right: 10}}
                                 />
                             }
                             disabled={isSubmitting}

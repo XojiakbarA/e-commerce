@@ -8,7 +8,7 @@ const Banner = () => {
     const banners = useSelector(state => state.banners)
 
     return (
-        <Carousel className={style.wrapper}>
+        <Carousel className={style.wrapper} autoPlay={false}>
             {
                 banners.map( (banner) => <BannerItem key={banner.id} banner={banner} /> )
             }
