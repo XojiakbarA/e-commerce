@@ -1,9 +1,9 @@
 import { Stack, Typography, Button } from "@mui/material"
 
-const ProfileTitle = ({title, titleIcon, buttonText, buttonIcon, onClick, disabled}) => {
+const PageTitle = ({title, titleIcon, buttonText, buttonIcon, onClick, disabled}) => {
     return (
         <Stack direction='row' justifyContent='space-between' marginBottom={2}>
-            <Stack direction='row'>
+            <Stack direction='row' spacing={1} alignItems='center'>
                 {titleIcon}
                 <Typography variant='h4'>{title}</Typography>
             </Stack>
@@ -20,4 +20,4 @@ const ProfileTitle = ({title, titleIcon, buttonText, buttonIcon, onClick, disabl
     )
 }
 
-export default ProfileTitle
+export default PageTitle
