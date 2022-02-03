@@ -1,13 +1,13 @@
 import { Grid, List, ListItem, ListSubheader, Paper, Stack, Typography } from '@mui/material'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import ProfileLayout from '../../../components/layout/ProfileLayout/ProfileLayout'
-import ProfileTitle from '../../../components/profile/ProfileTitle'
+import PageTitle from '../../../components/common/PageTitle'
 import { wrapper } from '../../../app/store'
 
 const Vendor = () => {
     return (
         <ProfileLayout>
-            <ProfileTitle
+            <PageTitle
                 title='Dashboard'
                 titleIcon={<DashboardIcon fontSize='large'/>}
             />

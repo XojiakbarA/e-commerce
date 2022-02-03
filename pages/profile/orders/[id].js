@@ -1,6 +1,6 @@
 import {Grid} from "@mui/material";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
-import ProfileTitle from "../../../components/profile/ProfileTitle";
+import PageTitle from "../../../components/common/PageTitle";
 import ProfileLayout from "../../../components/layout/ProfileLayout/ProfileLayout";
 import OrderStatus from "../../../components/profile/orders/OrderStatus";
 import OrderShippingAddress from "../../../components/profile/orders/OrderShippingAddress";
@@ -10,14 +10,15 @@ import OrderDetails from "../../../components/profile/orders/OrderDetails";
 import { wrapper } from "../../../app/store"
 import OrderProductListItem from "../../../components/profile/orders/OrderProductListItem";
 import ConfirmDialog from "../../../components/dialogs/ConfirmDialog";
+import MainLayout from '../../../components/layout/MainLayout'
 
 const Order = () => {
 
     const order = useSelector(state => state.order.data)
 
     return (
-        <ProfileLayout>
-            <ProfileTitle
+        <>
+            <PageTitle
                 title='Order Details'
                 titleIcon={<ShoppingBagIcon fontSize='large'/>}
             />
@@ -52,7 +53,7 @@ const Order = () => {
                 </Grid>
             </Grid>
             <ConfirmDialog/>
-        </ProfileLayout>
+        </>
     )
 }
 
@@ -82,3 +83,14 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getStat
 })
 
 export default Order
+
+Order.getLayout = (page) => {
+    return (
+        
+        <MainLayout>
+            <ProfileLayout>
+                {page}
+            </ProfileLayout>
+        </MainLayout>
+    )
+}

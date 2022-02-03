@@ -1,4 +1,5 @@
 import { Typography, Grid } from "@mui/material"
+import MainLayout from "../components/layout/MainLayout"
 import Banner from "../components/index/Banner"
 import ProductCard from "../components/common/ProductCard"
 import { getBanners, getProducts } from "../app/store/actions/async/common"
@@ -28,6 +29,8 @@ const Index = () => {
     )
 }
 
+
+
 export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => async () => {
 
     await dispatch(getBanners())
@@ -36,3 +39,11 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => asy
 })
 
 export default Index
+
+Index.getLayout = (page) => {
+    return (
+        <MainLayout>
+            {page}
+        </MainLayout>
+    )
+}

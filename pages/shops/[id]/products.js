@@ -6,6 +6,7 @@ import { useSelector } from "react-redux"
 import SearchSidebar from "../../../components/search/SearchSidebar"
 import ProductCard from "../../../components/common/ProductCard"
 import MyPagination from "../../../components/common/Pagination"
+import MainLayout from "../../../components/layout/MainLayout"
 
 const Shop = () => {
 
@@ -61,3 +62,11 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => asy
 })
 
 export default Shop
+
+Shop.getLayout = (page) => {
+    return (
+        <MainLayout>
+            {page}
+        </MainLayout>
+    )
+}

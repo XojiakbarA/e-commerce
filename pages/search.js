@@ -7,6 +7,7 @@ import { wrapper } from "../app/store"
 import { getProducts } from "../app/store/actions/async/common"
 import { useSelector } from "react-redux"
 import MyPagination from "../components/common/Pagination"
+import MainLayout from "../components/layout/MainLayout"
 
 const Search = ({title}) => {
 
@@ -95,3 +96,11 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => asy
 })
 
 export default Search
+
+Search.getLayout = (page) => {
+    return (
+        <MainLayout>
+            {page}
+        </MainLayout>
+    )
+}

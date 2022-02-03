@@ -4,7 +4,7 @@ import { fetchOrders } from '../../../../api/vendor'
 import { wrapper } from '../../../../app/store'
 import ProfileLayout from "../../../../components/layout/ProfileLayout/ProfileLayout"
 import OrderListItem from '../../../../components/vendor/OrderListItem'
-import ProfileTitle from "../../../../components/profile/ProfileTitle"
+import PageTitle from "../../../../components/common/PageTitle"
 import OrderList from '../../../../components/common/List/List'
 
 const labels = ['Order ID', 'Products', 'Status', 'Date purchased', 'Total']
@@ -16,7 +16,7 @@ const Orders = ({data}) => {
 
     return (
         <ProfileLayout>
-            <ProfileTitle
+            <PageTitle
                 title='Orders'
                 titleIcon={<ShoppingCartIcon fontSize='large'/>}
             />

@@ -4,6 +4,7 @@ import CheckoutForm from "../components/forms/CheckoutForm"
 import ShoppingLayout from "../components/layout/ShoppingLayout/ShoppingLayout"
 import { wrapper } from '../app/store'
 import OrderDialog from "../components/dialogs/OrderDialog"
+import MainLayout from "../components/layout/MainLayout"
 
 const Checkout = () => {
 
@@ -45,3 +46,11 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getStat
 })
 
 export default Checkout
+
+Checkout.getLayout = (page) => {
+    return (
+        <MainLayout>
+            {page}
+        </MainLayout>
+    )
+}

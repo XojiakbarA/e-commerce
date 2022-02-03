@@ -2,6 +2,7 @@ import { Grid, Typography } from '@mui/material'
 import ProductCard from '../components/common/ProductCard'
 import { useSelector } from "react-redux"
 import { wrapper } from '../app/store'
+import MainLayout from '../components/layout/MainLayout'
 
 const Wishlist = () => {
 
@@ -33,3 +34,11 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => asy
 })
 
 export default Wishlist
+
+Wishlist.getLayout = (page) => {
+    return (
+        <MainLayout>
+            {page}
+        </MainLayout>
+    )
+}

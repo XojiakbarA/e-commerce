@@ -2,7 +2,7 @@ import { Button, CircularProgress, Grid } from '@mui/material'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import ProfileLayout from "../../../../components/layout/ProfileLayout/ProfileLayout"
-import ProfileTitle from "../../../../components/profile/ProfileTitle"
+import PageTitle from "../../../../components/common/PageTitle"
 import OrderProductListItem from '../../../../components/vendor/OrderProductListItem'
 import { wrapper } from '../../../../app/store'
 import OrderShippingAddress from '../../../../components/profile/orders/OrderShippingAddress'
@@ -59,7 +59,7 @@ const Order = () => {
 
     return (
         <ProfileLayout>
-            <ProfileTitle
+            <PageTitle
                 title='Order Details'
                 titleIcon={<ShoppingCartIcon fontSize='large' />}
                 buttonText='Ship'

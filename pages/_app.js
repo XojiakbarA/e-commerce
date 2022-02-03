@@ -31,11 +31,13 @@ const MyApp = ({Component, pageProps}) => {
         }
     })
 
+    const getLayout = Component.getLayout || ((page) => page)
+
     useEffect(() => {
         setToken()
     }, [])
 
-    return (
+    return getLayout(
             <>
             <Backdrop
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -43,10 +45,10 @@ const MyApp = ({Component, pageProps}) => {
             >
                 <CircularProgress color="inherit" />
             </Backdrop>
-            <MainLayout>
+            {/* <MainLayout> */}
                 <CssBaseline />
                 <Component {...pageProps} />
-            </MainLayout>
+            {/* </MainLayout> */}
             </>
     )
 }

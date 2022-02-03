@@ -6,6 +6,7 @@ import ProductTab from "../../components/product/ProductTab/ProductTab"
 import { getProduct } from "../../app/store/actions/async/common"
 import { getReviews } from "../../app/store/actions/async/user"
 import { wrapper } from "../../app/store"
+import MainLayout from "../../components/layout/MainLayout"
 
 const Product = () => {
 
@@ -35,3 +36,12 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => asy
 })
 
 export default Product
+
+Product.getLayout = (page) => {
+    return (
+        
+        <MainLayout>
+            {page}
+        </MainLayout>
+    )
+}

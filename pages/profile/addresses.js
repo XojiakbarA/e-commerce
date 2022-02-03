@@ -2,14 +2,14 @@ import { Stack } from '@mui/material'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import AddIcon from '@mui/icons-material/Add'
 import ProfileLayout from '../../components/layout/ProfileLayout/ProfileLayout'
-import ProfileTitle from '../../components/profile/ProfileTitle'
+import PageTitle from '../../components/common/PageTitle'
 import ProfileRowCard from '../../components/profile/ProfileRowCard'
 import { wrapper } from '../../app/store'
 
 const Addresses = () => {
     return (
         <ProfileLayout>
-            <ProfileTitle
+            <PageTitle
                 title='My Addresses'
                 titleIcon={<LocationOnIcon fontSize='large' />}
                 buttonText='Add New Address'

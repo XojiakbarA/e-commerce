@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material'
 import ProfileLayout from '../../../components/layout/ProfileLayout/ProfileLayout'
-import ProfileTitle from '../../../components/profile/ProfileTitle'
+import PageTitle from '../../../components/common/PageTitle'
 import SettingsIcon from '@mui/icons-material/Settings'
 import EditShopForm from '../../../components/forms/EditShopForm'
 import { wrapper } from '../../../app/store'
@@ -11,7 +11,7 @@ const Settings = () => {
 
     return (
         <ProfileLayout>
-            <ProfileTitle
+            <PageTitle
                 title='Settings'
                 titleIcon={<SettingsIcon fontSize='large'/>}
             />

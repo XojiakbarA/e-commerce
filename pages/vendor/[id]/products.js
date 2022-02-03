@@ -1,7 +1,7 @@
 import ListAltIcon from '@mui/icons-material/ListAlt'
 import AddIcon from '@mui/icons-material/Add'
 import ProfileLayout from "../../../components/layout/ProfileLayout/ProfileLayout"
-import ProfileTitle from "../../../components/profile/ProfileTitle"
+import PageTitle from "../../../components/common/PageTitle"
 import { useSelector } from 'react-redux'
 import { Grid, Typography } from '@mui/material'
 import AddProductDialog from '../../../components/dialogs/AddProductDialog'
@@ -25,7 +25,7 @@ const Products = () => {
 
     return (
         <ProfileLayout>
-            <ProfileTitle
+            <PageTitle
                 title='Products'
                 titleIcon={<ListAltIcon fontSize='large'/>}
                 buttonText='Add Product'

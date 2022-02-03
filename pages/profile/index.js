@@ -3,13 +3,14 @@ import Person from "@mui/icons-material/Person"
 import EditIcon from '@mui/icons-material/Edit'
 import ProfileLayout from "../../components/layout/ProfileLayout/ProfileLayout"
 import UserInfoTable from "../../components/profile/index/UserInfoTable"
-import ProfileTitle from "../../components/profile/ProfileTitle"
+import PageTitle from "../../components/common/PageTitle"
 import {useSelector} from "react-redux"
 import OrderCountCard from "../../components/profile/index/OrderCountCard"
 import UserCard from "../../components/profile/index/UserCard"
 import EditProfileDialog from "../../components/dialogs/EditProfileDialog"
 import { wrapper } from "../../app/store"
 import { useToggle } from "../../app/hooks/useToggle"
+import MainLayout from "../../components/layout/MainLayout"
 
 const Profile = () => {
 
@@ -25,8 +26,8 @@ const Profile = () => {
     ]
 
     return (
-        <ProfileLayout>
-            <ProfileTitle
+        <>
+            <PageTitle
                 title={user.first_name}
                 titleIcon={<Person fontSize='large' />}
                 buttonText='Edit Profile'
@@ -53,7 +54,7 @@ const Profile = () => {
                 <UserInfoTable user={user} />
             </Stack>
             <EditProfileDialog/>
-        </ProfileLayout>
+        </>
     )
 }
 
@@ -73,3 +74,14 @@ export const getServerSideProps = wrapper.getServerSideProps(({getState}) => asy
 })
 
 export default Profile
+
+Profile.getLayout = (page) => {
+    return (
+        
+        <MainLayout>
+            <ProfileLayout>
+                {page}
+            </ProfileLayout>
+        </MainLayout>
+    )
+}

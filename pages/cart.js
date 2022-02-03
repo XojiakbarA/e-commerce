@@ -3,6 +3,7 @@ import CartProductCard from "../components/shopping-pages/CartProductCard"
 import { useSelector } from "react-redux"
 import ShoppingLayout from "../components/layout/ShoppingLayout/ShoppingLayout"
 import { wrapper } from '../app/store'
+import MainLayout from "../components/layout/MainLayout"
 
 const Cart = () => {
 
@@ -36,3 +37,11 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => asy
 })
 
 export default Cart
+
+Cart.getLayout = (page) => {
+    return (
+        <MainLayout>
+            {page}
+        </MainLayout>
+    )
+}

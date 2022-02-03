@@ -4,6 +4,7 @@ import { wrapper } from "../../app/store"
 import { getShops } from "../../app/store/actions/async/common"
 import { useSelector } from "react-redux"
 import MyPagination from "../../components/common/Pagination"
+import MainLayout from "../../components/layout/MainLayout"
 
 const Shops = () => {
 
@@ -36,3 +37,11 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => asy
 })
 
 export default Shops
+
+Shops.getLayout = (page) => {
+    return (
+        <MainLayout>
+            {page}
+        </MainLayout>
+    )
+}

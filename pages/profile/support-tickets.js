@@ -1,6 +1,6 @@
 import { Stack } from '@mui/material'
 import ProfileLayout from '../../components/layout/ProfileLayout/ProfileLayout'
-import ProfileTitle from '../../components/profile/ProfileTitle'
+import PageTitle from '../../components/common/PageTitle'
 import HeadsetMicIcon from '@mui/icons-material/HeadsetMic'
 import { wrapper } from '../../app/store'
 
@@ -8,7 +8,7 @@ const SupportTickets = () => {
 
     return (
         <ProfileLayout>
-            <ProfileTitle
+            <PageTitle
                 title='Support Tickets'
                 titleIcon={<HeadsetMicIcon fontSize='large' />}
             />

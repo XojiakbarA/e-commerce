@@ -1,5 +1,5 @@
 import ProfileLayout from "../../../components/layout/ProfileLayout/ProfileLayout";
-import ProfileTitle from "../../../components/profile/ProfileTitle";
+import PageTitle from "../../../components/common/PageTitle";
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag'
 import { useSelector } from "react-redux";
 import { Grid, Typography } from "@mui/material";
@@ -7,6 +7,7 @@ import { getOrders } from "../../../app/store/actions/async/user";
 import { wrapper } from "../../../app/store"
 import OrderList from '../../../components/common/List/List'
 import OrderListItem from "../../../components/profile/orders/OrderListItem";
+import MainLayout from "../../../components/layout/MainLayout";
 
 const labels = ['Order ID', 'Products', 'Date purchased', 'Total']
 
@@ -16,8 +17,8 @@ const Orders = () => {
     const meta = useSelector(state => state.orders.meta)
 
     return (
-        <ProfileLayout>
-            <ProfileTitle
+        <>
+            <PageTitle
                 title='My Orders'
                 titleIcon={<ShoppingBagIcon fontSize='large'/>}
             />
@@ -38,7 +39,7 @@ const Orders = () => {
                     No orders yet
                 </Typography>
             }
-        </ProfileLayout>
+        </>
     )
 }
 
@@ -60,3 +61,14 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getStat
 })
 
 export default Orders
+
+Orders.getLayout = (page) => {
+    return (
+        
+        <MainLayout>
+            <ProfileLayout>
+                {page}
+            </ProfileLayout>
+        </MainLayout>
+    )
+}
