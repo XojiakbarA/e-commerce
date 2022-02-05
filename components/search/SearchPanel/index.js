@@ -10,7 +10,7 @@ import ViewSidebarIcon from '@mui/icons-material/ViewSidebar'
 const SearchPanel = ({listView, handleViewClick, handleSidebarClick, title, total}) => {
 
     const router = useRouter()
-    const initSort = router.query.sort || 'new'
+    const initSort = router.query.sort || 'created_at,desc'
     const [sort, setSort] = useState(initSort)
 
     function handleSortChange(e) {
@@ -18,7 +18,7 @@ const SearchPanel = ({listView, handleViewClick, handleSidebarClick, title, tota
         setSort(sort)
 
         router.push({
-            query: { ...router.query, sort: sort, page: 1 }
+            query: { ...router.query, sort: sort.split(','), page: 1 }
         })
     }
 
@@ -45,9 +45,9 @@ const SearchPanel = ({listView, handleViewClick, handleSidebarClick, title, tota
                                 onChange={ (e) => handleSortChange(e) }
                                 size='small'
                             >
-                                <MenuItem value='new'>New</MenuItem>
-                                <MenuItem value='expensive'>Expensive</MenuItem>
-                                <MenuItem value='cheap'>Cheap</MenuItem>
+                                <MenuItem value='created_at,desc'>New</MenuItem>
+                                <MenuItem value='price,desc'>Expensive</MenuItem>
+                                <MenuItem value='price,asc'>Cheap</MenuItem>
                             </Select>
                         </FormControl>
                         <Stack direction='row' alignItems='center' spacing={2}>
