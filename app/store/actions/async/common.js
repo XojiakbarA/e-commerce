@@ -59,8 +59,10 @@ export const getProduct = (id) => {
 export const getProducts = (query) => {
     return async (dispatch) => {
         try {
+            dispatch(setLoading(true))
             const res = await fetchProducts(query)
             dispatch(setProducts(res.data))
+            dispatch(setLoading(false))
         } catch (e) {
             console.log(e)
         }

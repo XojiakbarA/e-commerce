@@ -24,7 +24,7 @@ const MainLayout = ({children}) => {
         <LoginDialog />
         <RegisterDialog />
         <CartSidebar />
-        <Snackbar/>
+        {/* <Snackbar/> */}
         </>
     )
 }

@@ -1,5 +1,6 @@
 import { CssBaseline, Backdrop, CircularProgress } from '@mui/material'
 import MainLayout from '../components/layout/MainLayout'
+import Snackbar from '../components/layout/Snackbar/Snackbar'
 import '../styles/globals.css'
 import { wrapper } from '../app/store'
 import { getUser, getCart, getWishlist } from '../app/store/actions/async/user'
@@ -48,6 +49,7 @@ const MyApp = ({Component, pageProps}) => {
             {/* <MainLayout> */}
                 <CssBaseline />
                 <Component {...pageProps} />
+                <Snackbar/>
             {/* </MainLayout> */}
             </>
     )

@@ -6,10 +6,25 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import EditIcon from '@mui/icons-material/Edit'
 import Image from 'next/image'
 import { noImageUrl, productImageURL } from '../../utils/utils'
+import { useDispatch, useSelector } from 'react-redux'
+import { editProductPublished } from '../../app/store/actions/async/admin'
+import { useRouter } from 'next/router'
 
 const ProductTableRow = ({ product }) => {
 
-    const [open, setOpen] = useState(false);
+    const dispatch = useDispatch()
+    const router = useRouter()
+
+    const isLoading = useSelector(state => state.toggle.isLoading)
+
+    const [open, setOpen] = useState(false)
+    const [published, setPublished] = useState(Boolean(product.published))
+    const [isClicked, setIsClicked] = useState(false)
+
+    const handleSwitchChange = (e, id) => {
+        dispatch(editProductPublished(id, router.query, setPublished, {published: e.target.checked}))
+        setIsClicked(product.id === id)
+    }
     
     return (
         <>
@@ -45,7 +60,12 @@ const ProductTableRow = ({ product }) => {
                 </Typography>
             </TableCell>
             <TableCell align="right">
-                <Switch inputProps={{ 'aria-label': 'is-published' }} checked={product.is_published}/>
+                <Switch
+                    inputProps={{ 'aria-label': 'published' }}
+                    checked={published}
+                    onChange={e => handleSwitchChange(e, product.id)}
+                    disabled={isLoading && isClicked}
+                />
             </TableCell>
             <TableCell align="right">
                 <Chip
