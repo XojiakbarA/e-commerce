@@ -18,12 +18,11 @@ const ProductTableRow = ({ product }) => {
     const isLoading = useSelector(state => state.toggle.isLoading)
 
     const [open, setOpen] = useState(false)
-    const [published, setPublished] = useState(Boolean(product.published))
     const [isClicked, setIsClicked] = useState(false)
 
     const handleSwitchChange = (e, id) => {
-        dispatch(editProductPublished(id, router.query, setPublished, {published: e.target.checked}))
         setIsClicked(product.id === id)
+        dispatch(editProductPublished(id, router.query, setIsClicked, {published: e.target.checked}))
     }
     
     return (
@@ -62,7 +61,7 @@ const ProductTableRow = ({ product }) => {
             <TableCell align="right">
                 <Switch
                     inputProps={{ 'aria-label': 'published' }}
-                    checked={published}
+                    checked={Boolean(product.published)}
                     onChange={e => handleSwitchChange(e, product.id)}
                     disabled={isLoading && isClicked}
                 />

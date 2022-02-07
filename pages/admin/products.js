@@ -6,11 +6,26 @@ import ProductTable from "../../components/admin/ProductTable"
 import { wrapper } from '../../app/store'
 import { getProducts } from '../../app/store/actions/async/common'
 import { useSelector } from "react-redux"
+import { useRouter } from "next/router"
 
 const Products = () => {
 
+    const router = useRouter()
+
     const products = useSelector(state => state.products.data)
     const meta = useSelector(state => state.products.meta)
+
+    const handleSearch = (e) => {
+        const value = e.target.value
+        if (e.keyCode === 13) {
+            if (!value) {
+                return
+            }
+            router.push({
+                query: { ...router.query, title: value }
+            })
+        }
+    }
 
     return (
         <Grid container spacing={2}>
@@ -18,6 +33,7 @@ const Products = () => {
                 <PageTitle
                     title='Products'
                     titleIcon={<ListAltIcon fontSize="large"/>}
+                    onKeyUp={handleSearch}
                 />
             </Grid>
             <Grid item xs={12}>

@@ -1,5 +1,4 @@
 import { useFormik } from "formik"
-import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { editUser } from "../../store/actions/async/user"
 import { appendToFormData } from "../../../utils/utils"
@@ -21,10 +20,8 @@ export const useEditProfile = () => {
         },
         validationSchema: editProfileValidationSchema,
         onSubmit: (data, {setSubmitting}) => {
-            // const formData = appendToFormData(data)
-            // dispatch(editUser(formData, user.id, setSubmitting))
-            console.log(data)
-            setSubmitting(false)
+            const formData = appendToFormData(data)
+            dispatch(editUser(formData, user.id, setSubmitting))
         },
         enableReinitialize: true
     })

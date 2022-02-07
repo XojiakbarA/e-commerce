@@ -48,7 +48,12 @@ const ProductTable = ({ products, meta }) => {
     };
 
     // Avoid a layout jump when reaching the last page with empty rows.
-    const emptyRows = meta.per_page - (meta.total % meta.per_page)
+    let emptyRows
+    if (meta.total % meta.per_page === 0) {
+        emptyRows = 0
+    } else {
+        emptyRows = meta.per_page - (meta.total % meta.per_page)
+    }
 
     return (
         <Paper sx={{ width: '100%', mb: 2 }}>

@@ -1,7 +1,7 @@
 import { styled, alpha } from '@mui/material/styles'
 import InputBase from '@mui/material/InputBase'
 import SearchIcon from '@mui/icons-material/Search'
-import router from 'next/router'
+import { blue } from '@mui/material/colors';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -43,26 +43,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const InputSearch = () => {
-
-    function handleEnter(e) {
-        const value = e.target.value
-        if (e.keyCode === 13) {
-            if (!value) {
-                return
-            }
-            router.push('/search?title=' + value)
-        }
-    }
+const InputSearch = ({ onKeyUp }) => {
 
     return(
-        <Search>
+        <Search sx={{display: onKeyUp ? 'block' : 'none', border: `1px solid ${blue['600']}` }}>
             <SearchIconWrapper>
                 <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
                 placeholder="Search…"
-                onKeyUp={handleEnter}
+                onKeyUp={onKeyUp}
             />
         </Search>
     )
