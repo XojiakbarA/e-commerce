@@ -11,6 +11,7 @@ import { wrapper } from "../../../app/store"
 import OrderProductListItem from "../../../components/profile/orders/OrderProductListItem";
 import ConfirmDialog from "../../../components/dialogs/ConfirmDialog";
 import MainLayout from '../../../components/layout/MainLayout'
+import AddReviewDialog from "../../../components/dialogs/AddReviewDialog";
 
 const Order = () => {
 
@@ -53,6 +54,7 @@ const Order = () => {
                 </Grid>
             </Grid>
             <ConfirmDialog/>
+            <AddReviewDialog/>
         </>
     )
 }

@@ -95,6 +95,11 @@ export const toggleDeleteProductDialog = (bool) => ({
     payload: bool
 })
 
+export const toggleAddReviewDialog = (bool) => ({
+    type: type.TOGGLE_ADD_REVIEW_DIALOG,
+    payload: bool
+})
+
 export const toggleAccountMenu = (anchorEl) => ({
     type: type.TOGGLE_ACCOUNT_MENU,
     payload: anchorEl

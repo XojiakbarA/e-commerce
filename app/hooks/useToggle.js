@@ -2,7 +2,7 @@ import { useRouter } from "next/router"
 import { useDispatch, useSelector } from "react-redux"
 import { 
     setOrderShop,
-    setProduct, toggleAccountMenu, toggleAddProductDialog, toggleCartSidebar, toggleConfirmDialog,
+    setProduct, toggleAccountMenu, toggleAddProductDialog, toggleAddReviewDialog, toggleCartSidebar, toggleConfirmDialog,
     toggleDeleteProductDialog, toggleEditProductDialog,
     toggleEditProfileDialog, toggleLoginDialog, toggleOrderShipDialog, toggleRegisterDialog,
     toggleViewProductDialog
@@ -113,6 +113,15 @@ export const useToggle = () => {
         dispatch(toggleCartSidebar(false))
     }
 
+    const openAddReviewDialog = (e, product) => {
+        e.preventDefault()
+        dispatch(setProduct(product))
+        dispatch(toggleAddReviewDialog(true))
+    }
+    const closeAddReviewDialog = () => {
+        dispatch(toggleAddReviewDialog(false))
+    }
+
     const handleAccount = (e) => {
         if (user) {
             openAccountMenu(e)
@@ -147,6 +156,8 @@ export const useToggle = () => {
         closeAccountMenu,
         openSidebar,
         closeSidebar,
+        openAddReviewDialog,
+        closeAddReviewDialog,
 
         handleAccount
     }

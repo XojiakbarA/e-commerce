@@ -1,12 +1,19 @@
-import {Avatar, Grid, Paper, Typography} from "@mui/material";
-import NextLink from '../../common/Link';
-import {productImageURL} from "../../../utils/utils";
+import {Avatar, Box, Card, CardActionArea, Grid, IconButton, Tooltip, Typography} from "@mui/material"
+import AddCommentIcon from '@mui/icons-material/AddComment'
+import NextLink from '../../common/Link'
+import {productImageURL} from "../../../utils/utils"
+import { useRipple } from "../../../app/hooks/useRipple"
+import { useToggle } from "../../../app/hooks/useToggle"
 
-const OrderProductListItem = ({product, styles}) => {
+const OrderProductListItem = ({product}) => {
+
+    const [ripple, events] = useRipple()
+    const { openAddReviewDialog } = useToggle()
 
     return (
-        <NextLink href={`/products/${product.id}`}>
-            <Paper sx={{padding: 2}}>
+        <NextLink href={`/products/${product.product_id}`}>
+            <Card sx={{position: 'relative'}}>
+                <CardActionArea sx={{padding: 2}} disableRipple={ripple}>
                 <Grid container alignItems='center'>
                     <Grid item xs={3}>
                         <Avatar
@@ -36,7 +43,18 @@ const OrderProductListItem = ({product, styles}) => {
                         </Typography>
                     </Grid>
                 </Grid>
-            </Paper>
+                </CardActionArea>
+                <Box sx={{position: 'absolute', top: 0, right: 0}}>
+                <Tooltip title='Write a Review'>
+                    <IconButton
+                        onClick={ e => openAddReviewDialog(e, product) }
+                        {...events}
+                    >
+                        <AddCommentIcon/>
+                    </IconButton>
+                </Tooltip>
+                </Box>
+            </Card>
         </NextLink>
     )
 }
