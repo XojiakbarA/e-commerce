@@ -1,6 +1,6 @@
 import * as type from '../actions/types'
 
-const initialState = []
+const initialState = {}
 
 const reviews = (state = initialState, action) => {
     switch (action.type) {
