@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Box, Grid } from "@mui/material"
 import Image from 'next/image'
 import GalleryButtons from "./GalleryButtons"
-import { productImageURL } from "../../../utils/utils"
+import { productImageURL } from "../../../../utils/utils"
 
 const ProductGallery = ({images}) => {
 

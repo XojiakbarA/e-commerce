@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button'
 import ButtonGroup from '@mui/material/ButtonGroup'
 import Image from 'next/image'
-import { productImageURL } from '../../../utils/utils'
+import { productImageURL } from '../../../../utils/utils'
 
 const GalleryButtons = ({state, images, handleClick}) => {
 

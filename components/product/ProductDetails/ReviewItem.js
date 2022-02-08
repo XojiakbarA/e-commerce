@@ -1,6 +1,6 @@
 import {Box, Avatar, Stack, Typography, Rating} from '@mui/material'
 import Image from 'next/image'
-import { userImageURL } from '../../utils/utils'
+import { userImageURL } from '../../../utils/utils'
 
 const ReviewItem = ({review}) => {
     return(
