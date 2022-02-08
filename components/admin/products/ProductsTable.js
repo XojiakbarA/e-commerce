@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Table, TableBody, TableCell, TableContainer, TablePagination, TableRow, Paper} from '@mui/material'
-import ProductTableRow from './ProductTableRow'
-import ProductTableHead from './ProductTableHead'
+import ProductsTableRow from './ProductsTableRow'
+import ProductsTableHead from './ProductsTableHead'
 import { useRouter } from 'next/router'
 
-const ProductTable = ({ products, meta }) => {
+const ProductsTable = ({ products, meta }) => {
 
     const router = useRouter()
 
@@ -20,10 +20,10 @@ const ProductTable = ({ products, meta }) => {
     const [orderBy, setOrderBy] = useState(initOrderBy)
 
     useEffect(() => {
-        if (!router.query.sort) {
+        if (!router.query.sort_by) {
             setOrderBy('')
         }
-    }, [router.query.sort])
+    }, [router.query.sort_by])
 
     const handleRequestSort = (event, field) => {
         const isAsc = orderBy === field && order === 'asc'
@@ -31,7 +31,7 @@ const ProductTable = ({ products, meta }) => {
         setOrderBy(field)
 
         router.push({
-            query: { ...router.query, sort: [field, isAsc ? 'desc' : 'asc'] }
+            query: { ...router.query, sort_by: [field, isAsc ? 'desc' : 'asc'] }
         })
     }
 
@@ -63,7 +63,7 @@ const ProductTable = ({ products, meta }) => {
                     aria-labelledby="tableTitle"
                     
                 >
-                    <ProductTableHead
+                    <ProductsTableHead
                         order={order}
                         orderBy={orderBy}
                         onRequestSort={handleRequestSort}
@@ -71,7 +71,7 @@ const ProductTable = ({ products, meta }) => {
                     <TableBody>
                         {
                             products.map((product) => (
-                                <ProductTableRow key={product.id} product={product}/>
+                                <ProductsTableRow key={product.id} product={product}/>
                             ))}
                         {
                             emptyRows > 0 && Number(router.query.page) === meta.last_page && (
@@ -102,4 +102,4 @@ const ProductTable = ({ products, meta }) => {
     )
 }
 
-export default ProductTable
+export default ProductsTable

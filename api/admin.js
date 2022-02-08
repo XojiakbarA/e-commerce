@@ -17,3 +17,13 @@ export const fetchReviews = (query, cookie) => {
         }
     })
 }
+
+export const fetchProducts = (query, cookie) => {
+    return instance.get(`api/admin/products`, {
+        params: query,
+        headers: {
+            'Cookie': cookie,
+            'Referer': 'http://localhost:3000/'
+        }
+    })
+}

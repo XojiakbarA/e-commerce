@@ -1,7 +1,19 @@
-import { fetchReviews, updateProductPublished, updateReviewPublished } from "../../../../api/admin"
-import { setLoading, setReviews, setSnackbar } from "../actionCreators"
+import { fetchProducts, fetchReviews, updateProductPublished, updateReviewPublished } from "../../../../api/admin"
+import { setLoading, setProducts, setReviews, setSnackbar } from "../actionCreators"
 import router from "next/router"
 
+export const getProducts = (query, cookie) => {
+    return async (dispatch) => {
+        try {
+            const res = await fetchProducts(query, cookie)
+            if (res.status === 200) {
+                dispatch(setProducts(res.data))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
 
 export const getReviews = (query, cookie) => {
     return async (dispatch) => {

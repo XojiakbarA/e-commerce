@@ -2,9 +2,9 @@ import { Grid } from "@mui/material"
 import ListAltIcon from '@mui/icons-material/ListAlt'
 import PageTitle from "../../components/common/PageTitle"
 import AdminLayout from "../../components/layout/AdminLayout/AdminLayout"
-import ProductTable from "../../components/admin/ProductTable"
+import ProductsTable from "../../components/admin/products/ProductsTable"
 import { wrapper } from '../../app/store'
-import { getProducts } from '../../app/store/actions/async/common'
+import { getProducts } from '../../app/store/actions/async/admin'
 import { useSelector } from "react-redux"
 import { useRouter } from "next/router"
 
@@ -37,18 +37,20 @@ const Products = () => {
                 />
             </Grid>
             <Grid item xs={12}>
-                <ProductTable products={products} meta={meta}/>
+                <ProductsTable products={products} meta={meta}/>
             </Grid>
         </Grid>
     )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => async ({query}) => {
+export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => async ({query, req}) => {
+
+    const cookie = req.headers.cookie
 
     query.count = query.count ?? 5
     query.page = query.page ?? 1
 
-    await dispatch(getProducts(query))
+    await dispatch(getProducts(query, cookie))
 
 })
 
