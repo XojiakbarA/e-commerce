@@ -1,11 +1,9 @@
-import { Grid, Rating, Typography, TextField, Button, CircularProgress } from "@mui/material"
+import { Grid, Rating, Typography, TextField, Button, CircularProgress, FormHelperText } from "@mui/material"
 import SendIcon from '@mui/icons-material/Send'
-import { useSelector } from "react-redux"
+import StarBorder from "@mui/icons-material/StarBorder"
 import { useReview } from "../../app/hooks/useFormik/useReview"
 
 const ReviewForm = () => {
-
-    const user = useSelector(state => state.user)
 
     const {
         handleSubmit, handleChange, handleBlur, getFieldProps,
@@ -16,12 +14,7 @@ const ReviewForm = () => {
         <form onSubmit={handleSubmit}>
             <Grid container spacing={2}>
                 <Grid item lg={12}>
-                    <Typography variant='h4'>
-                        Write a Review for this product
-                    </Typography>
-                </Grid>
-                <Grid item lg={12}>
-                    <Typography variant='h6'>
+                    <Typography variant='body1'>
                         Your Rating
                     </Typography>
                     <Rating
@@ -29,20 +22,15 @@ const ReviewForm = () => {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={Number(values.rating)}
+                        emptyIcon={
+                            <StarBorder
+                                fontSize="inherit"
+                                color={touched.rating && errors.rating ? 'error' : 'inherit'}
+                            />
+                        }
                     />
+                    <FormHelperText error={true}>{touched.rating && errors.rating}</FormHelperText>
                 </Grid>
-                {
-                    !user &&
-                    <Grid item lg={12}>
-                        <TextField
-                            label='Name'
-                            size='small'
-                            error={ touched.name && Boolean(errors.name) }
-                            helperText={ touched.name && errors.name }
-                            { ...getFieldProps('name') }
-                        />
-                    </Grid>
-                }
                 <Grid item lg={12}>
                     <TextField
                         label="Your Review"
@@ -53,9 +41,12 @@ const ReviewForm = () => {
                         helperText={ touched.text && errors.text }
                         { ...getFieldProps('text') }
                     />
+                </Grid>
+                <Grid item lg={12}>
                     <Button
+                        sx={{float: 'right'}}
                         variant='contained'
-                        sx={{my: 2}}
+                        size='small'
                         type='submit'
                         endIcon={
                             isSubmitting

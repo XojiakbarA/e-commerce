@@ -3,14 +3,15 @@ import {
     login, logout, fetchUser, fetchCart, addCart, removeCart,
     deleteCart, register, addWishlist, fetchWishlist,
     deleteWishlist, storeOrder, fetchOrders, fetchOrder, cancellationOrder,
-    storeShop, storeReview, destroyUserImage, updateUser
+    storeShop, destroyUserImage, updateUser
 } from '../../../../api/user'
-import { fetchReviews } from '../../../../api/common'
+import { storeReview } from '../../../../api/common'
 import {
     setUser, setCart, setLoading, setSnackbar, toggleLoginDialog,
-    toggleRegisterDialog, setReviews, setWishlist, toggleOrderDialog,
+    toggleRegisterDialog, setWishlist, toggleOrderDialog,
     setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog,
-    toggleAccountMenu
+    toggleAccountMenu,
+    toggleAddReviewDialog
 } from '../actionCreators'
 
 export const getCart = (cookie) => {
@@ -213,28 +214,14 @@ export const userRegister = (data, setSubmitting) => {
     }
 }
 
-export const getReviews = (id) => {
-    return async (dispatch) => {
-        try {
-            const res = await fetchReviews(id)
-            if (res.status === 200) {
-                dispatch(setReviews(res.data.data))
-            }
-        } catch (e) {
-            console.log(e)
-        }
-    }
-}
-
-export const createReview = (id, data, resetForm, setSubmitting) => {
+export const createReview = (id, data, setSubmitting) => {
     return async (dispatch) => {
         try {
             const res = await storeReview(id, data)
             if (res.status === 200) {
-                dispatch(setReviews(res.data.data))
                 setSubmitting(false)
+                dispatch(toggleAddReviewDialog(false))
                 dispatch(setSnackbar({isOpen: true, text: 'Review created successfully!'}))
-                resetForm()
             }
         } catch (e) {
             console.log(e)

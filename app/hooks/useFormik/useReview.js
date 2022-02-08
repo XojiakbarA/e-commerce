@@ -7,18 +7,16 @@ export const useReview = () => {
 
     const dispatch = useDispatch()
 
-    const id = useSelector(state => state.product.id)
-    const user = useSelector(state => state.user)
+    const id = useSelector(state => state.product.product_id)
 
     const formik = useFormik({
         initialValues: {
-            rating: 0,
-            name: user.first_name ?? '',
+            rating: '',
             text: ''
         },
         validationSchema: reviewValidationSchema,
-        onSubmit: (data, {resetForm}) => {
-            dispatch(createReview(id, data, resetForm, formik.setSubmitting))
+        onSubmit: (data, {setSubmitting}) => {
+            dispatch(createReview(id, data, setSubmitting))
         },
         enableReinitialize: true
     })
