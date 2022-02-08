@@ -1,13 +1,24 @@
 import {Box, Avatar, Stack, Typography, Rating} from '@mui/material'
-import { userImageURL } from '../../../utils/utils'
+import Image from 'next/image'
+import { userImageURL } from '../../utils/utils'
 
 const ReviewItem = ({review}) => {
     return(
         <Box marginBottom={4}>
             <Stack direction='row' spacing={2} alignItems='center' marginBottom={1}>
-                <Avatar src={review.image ? userImageURL + review.image : undefined}/>
+                <Avatar>
+                    {
+                        review.image &&
+                        <Image
+                            src={userImageURL + review.image.src}
+                            alt={review.image}
+                            layout='fill'
+                            objectFit='cover'
+                        />
+                    }
+                </Avatar>
                 <Stack>
-                    <Typography variant='body1'>
+                    <Typography variant='subtitle2'>
                         {review.name}
                     </Typography>
                     <Stack direction='row' alignItems='center' spacing={2}>
