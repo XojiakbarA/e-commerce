@@ -3,7 +3,6 @@ import Person from "@mui/icons-material/Person"
 import EditIcon from '@mui/icons-material/Edit'
 import ProfileLayout from "../../components/layout/ProfileLayout/ProfileLayout"
 import UserInfoTable from "../../components/profile/index/UserInfoTable"
-import PageTitle from "../../components/common/PageTitle"
 import {useSelector} from "react-redux"
 import OrderCountCard from "../../components/profile/index/OrderCountCard"
 import UserCard from "../../components/profile/index/UserCard"
@@ -11,6 +10,7 @@ import EditProfileDialog from "../../components/dialogs/EditProfileDialog"
 import { wrapper } from "../../app/store"
 import { useToggle } from "../../app/hooks/useToggle"
 import MainLayout from "../../components/layout/MainLayout"
+import ProfilePageHead from "../../components/common/ProfilePageHead"
 
 const Profile = () => {
 
@@ -26,35 +26,39 @@ const Profile = () => {
     ]
 
     return (
-        <>
-            <PageTitle
-                title={user.first_name}
-                titleIcon={<Person fontSize='large' />}
-                buttonText='Edit Profile'
-                buttonIcon={<EditIcon />}
-                onClick={openEditProfileDialog}
-            />
-            <Stack spacing={2}>
-                <Stack direction='row' spacing={2} alignItems='stretch'>
-                    <Grid item lg={6}>
-                        <UserCard
-                            image={user.image}
-                            firstName={user.first_name}
-                            lastName={user.last_name}
-                        />
-                    </Grid>
-                    <Stack spacing={2} direction='row'>
-                        {
-                            orders.map(order => (
-                                <OrderCountCard key={order.title} count={order.count} title={order.title}/>
-                            ))
-                        }
+        <Grid container spacing={2}>
+            <Grid item xs={12}>
+                <ProfilePageHead
+                    title={ user.first_name }
+                    titleIcon={ <Person fontSize='large' /> }
+                    buttonText={ 'Edit Profile' }
+                    buttonIcon={ <EditIcon /> }
+                    onClick={ openEditProfileDialog }
+                />
+            </Grid>
+            <Grid item xs={12}>
+                <Stack spacing={2}>
+                    <Stack direction='row' spacing={2} alignItems='stretch'>
+                        <Grid item lg={6}>
+                            <UserCard
+                                image={user.image}
+                                firstName={user.first_name}
+                                lastName={user.last_name}
+                            />
+                        </Grid>
+                        <Stack spacing={2} direction='row'>
+                            {
+                                orders.map(order => (
+                                    <OrderCountCard key={order.title} count={order.count} title={order.title}/>
+                                ))
+                            }
+                        </Stack>
                     </Stack>
+                    <UserInfoTable user={user} />
                 </Stack>
-                <UserInfoTable user={user} />
-            </Stack>
+            </Grid>
             <EditProfileDialog/>
-        </>
+        </Grid>
     )
 }
 

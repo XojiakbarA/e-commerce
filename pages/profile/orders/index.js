@@ -1,5 +1,4 @@
 import ProfileLayout from "../../../components/layout/ProfileLayout/ProfileLayout";
-import PageTitle from "../../../components/common/PageTitle";
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag'
 import { useSelector } from "react-redux";
 import { Grid, Typography } from "@mui/material";
@@ -8,6 +7,7 @@ import { wrapper } from "../../../app/store"
 import OrderList from '../../../components/common/List/List'
 import OrderListItem from "../../../components/profile/orders/OrderListItem";
 import MainLayout from "../../../components/layout/MainLayout";
+import ProfilePageHead from "../../../components/common/ProfilePageHead";
 
 const labels = ['Order ID', 'Products', 'Date purchased', 'Total']
 
@@ -17,29 +17,33 @@ const Orders = () => {
     const meta = useSelector(state => state.orders.meta)
 
     return (
-        <>
-            <PageTitle
-                title='My Orders'
-                titleIcon={<ShoppingBagIcon fontSize='large'/>}
-            />
-            {
-                orders.length > 0
-                ?
-                <OrderList labels={labels} meta={meta}>
-                    {
-                        orders.map(order => (
-                            <Grid item xs={12} key={order.id}>
-                                <OrderListItem order={order}/>
-                            </Grid>
-                        ))
-                    }
-                </OrderList>
-                :
-                <Typography variant="h4">
-                    No orders yet
-                </Typography>
-            }
-        </>
+        <Grid container spacing={2}>
+            <Grid item xs={12}>
+                <ProfilePageHead
+                    title='My Orders'
+                    titleIcon={<ShoppingBagIcon fontSize='large'/>}
+                />
+            </Grid>
+            <Grid item xs={12}>
+                {
+                    orders.length > 0
+                    ?
+                    <OrderList labels={labels} meta={meta}>
+                        {
+                            orders.map(order => (
+                                <Grid item xs={12} key={order.id}>
+                                    <OrderListItem order={order}/>
+                                </Grid>
+                            ))
+                        }
+                    </OrderList>
+                    :
+                    <Typography variant="h4">
+                        No orders yet
+                    </Typography>
+                }
+            </Grid>
+        </Grid>
     )
 }
 

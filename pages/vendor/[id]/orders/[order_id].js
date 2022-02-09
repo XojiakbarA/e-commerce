@@ -2,7 +2,6 @@ import { Button, CircularProgress, Grid } from '@mui/material'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import ProfileLayout from "../../../../components/layout/ProfileLayout/ProfileLayout"
-import PageTitle from "../../../../components/common/PageTitle"
 import OrderProductListItem from '../../../../components/vendor/OrderProductListItem'
 import { wrapper } from '../../../../app/store'
 import OrderShippingAddress from '../../../../components/profile/orders/OrderShippingAddress'
@@ -14,6 +13,8 @@ import OrderShipDialog from '../../../../components/dialogs/OrderShipDialog';
 import OrderHead from '../../../../components/vendor/OrderHead';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import ProfilePageHead from '../../../../components/common/ProfilePageHead';
+import MainLayout from '../../../../components/layout/MainLayout';
 
 const Order = () => {
 
@@ -58,63 +59,67 @@ const Order = () => {
     }
 
     return (
-        <ProfileLayout>
-            <PageTitle
-                title='Order Details'
-                titleIcon={<ShoppingCartIcon fontSize='large' />}
-                buttonText='Ship'
-                buttonIcon={<LocalShippingIcon/>}
-                disabled={order.status !== 'shipped' && order.status !== 'cancelled' && order.payment_status === 'approved' ? false : true}
-                onClick={openOrderShipDialog}
-            />
-            <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <OrderHead order={order}/>
-                </Grid>
-                {
-                    order.order_products.map(product => (
-                        <Grid item xs={12} key={product.id}>
-                            <OrderProductListItem
-                                product={product}
-                                count={counts[product.id]}
-                                handleAddClick={handleAddClick}
-                                handleRemoveClick={handleRemoveClick}
-                                setSaveDisabled={setSaveDisabled}
-                                editDisabled={editDisabled}
-                            />
-                        </Grid>
-                    ))
-                }
-                <Grid item xs={12} display='flex' justifyContent='flex-end'>
-                    <Button
-                        variant='outlined'
-                        size='small'
-                        disabled={saveDisabled || isLoading}
-                        onClick={handleSaveClick}
-                        endIcon={
-                            isLoading &&
-                            <CircularProgress
-                                size={20}
-                                color='inherit'
-                            />
-                        }
-                    >
-                        Save Changes
-                    </Button>
-                </Grid>
-                <Grid item xs={12}>
-                    <Grid container spacing={2}>
-                        <Grid item lg={6}>
-                            <OrderShippingAddress order={order}/>
-                        </Grid>
-                        <Grid item lg={6}>
-                            <OrderDetails order={order}/>
+        <Grid container spacing={2}>
+            <Grid item xs={12}>
+                <ProfilePageHead
+                    title='Order Details'
+                    titleIcon={<ShoppingCartIcon fontSize='large' />}
+                    buttonText='Ship'
+                    buttonIcon={<LocalShippingIcon/>}
+                    disabled={order.status !== 'shipped' && order.status !== 'cancelled' && order.payment_status === 'approved' ? false : true}
+                    onClick={openOrderShipDialog}
+                />
+            </Grid>
+            <Grid item xs={12}>
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <OrderHead order={order}/>
+                    </Grid>
+                    {
+                        order.order_products.map(product => (
+                            <Grid item xs={12} key={product.id}>
+                                <OrderProductListItem
+                                    product={product}
+                                    count={counts[product.id]}
+                                    handleAddClick={handleAddClick}
+                                    handleRemoveClick={handleRemoveClick}
+                                    setSaveDisabled={setSaveDisabled}
+                                    editDisabled={editDisabled}
+                                />
+                            </Grid>
+                        ))
+                    }
+                    <Grid item xs={12} display='flex' justifyContent='flex-end'>
+                        <Button
+                            variant='outlined'
+                            size='small'
+                            disabled={saveDisabled || isLoading}
+                            onClick={handleSaveClick}
+                            endIcon={
+                                isLoading &&
+                                <CircularProgress
+                                    size={20}
+                                    color='inherit'
+                                />
+                            }
+                        >
+                            Save Changes
+                        </Button>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Grid container spacing={2}>
+                            <Grid item lg={6}>
+                                <OrderShippingAddress order={order}/>
+                            </Grid>
+                            <Grid item lg={6}>
+                                <OrderDetails order={order}/>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
             </Grid>
             <OrderShipDialog/>
-        </ProfileLayout>
+        </Grid>
     )
 }
 
@@ -137,3 +142,14 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getStat
 })
 
 export default Order
+
+Order.getLayout = (page) => {
+    return (
+        
+        <MainLayout>
+            <ProfileLayout>
+                {page}
+            </ProfileLayout>
+        </MainLayout>
+    )
+}

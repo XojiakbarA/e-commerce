@@ -6,21 +6,22 @@ import { getRegions } from '../../app/store/actions/async/common'
 import { wrapper } from '../../app/store'
 import CreateShopForm from '../../components/forms/CreateShopForm'
 import MainLayout from '../../components/layout/MainLayout'
+import ProfilePageHead from '../../components/common/ProfilePageHead'
 
 const CreateShop = () => {
 
     return (
-        <>
-            <PageTitle
-                title='Create Shop'
-                titleIcon={<AddBusinessIcon fontSize='large' />}
-            />
-            <Grid container>
-                <Grid item xs={12}>
-                    <CreateShopForm/>
-                </Grid>
+        <Grid container spacing={2}>
+            <Grid item xs={12}>
+                <ProfilePageHead
+                    title='Create Shop'
+                    titleIcon={<AddBusinessIcon fontSize='large' />}
+                />
             </Grid>
-        </>
+            <Grid item xs={12}>
+                <CreateShopForm/>
+            </Grid>
+        </Grid>
     )
 }
 

@@ -6,21 +6,27 @@ import EditShopForm from '../../../components/forms/EditShopForm'
 import { wrapper } from '../../../app/store'
 import { getShop } from '../../../app/store/actions/async/vendor'
 import { getDistricts, getRegions } from '../../../app/store/actions/async/common'
+import ProfilePageHead from '../../../components/common/ProfilePageHead'
+import MainLayout from '../../../components/layout/MainLayout'
 
 const Settings = () => {
 
     return (
-        <ProfileLayout>
-            <PageTitle
-                title='Settings'
-                titleIcon={<SettingsIcon fontSize='large'/>}
-            />
-            <Grid container>
-                <Grid item xs={12}>
-                    <EditShopForm/>
+        <Grid container spacing={2}>
+            <Grid item xs={12}>
+                <ProfilePageHead
+                    title='Settings'
+                    titleIcon={<SettingsIcon fontSize='large'/>}
+                />
+            </Grid>
+            <Grid item xs={12}>
+                <Grid container>
+                    <Grid item xs={12}>
+                        <EditShopForm/>
+                    </Grid>
                 </Grid>
             </Grid>
-        </ProfileLayout>
+        </Grid>
     )
 }
 
@@ -48,3 +54,14 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getStat
 })
 
 export default Settings
+
+Settings.getLayout = (page) => {
+    return (
+        
+        <MainLayout>
+            <ProfileLayout>
+                {page}
+            </ProfileLayout>
+        </MainLayout>
+    )
+}

@@ -1,7 +1,6 @@
 import { styled, alpha } from '@mui/material/styles'
 import InputBase from '@mui/material/InputBase'
 import SearchIcon from '@mui/icons-material/Search'
-import { blue } from '@mui/material/colors';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -46,7 +45,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const InputSearch = ({ onKeyUp }) => {
 
     return(
-        <Search sx={{display: onKeyUp ? 'block' : 'none', border: `1px solid ${blue['600']}` }}>
+        <Search>
             <SearchIconWrapper>
                 <SearchIcon />
             </SearchIconWrapper>

@@ -1,5 +1,5 @@
 import { Container, AppBar, Box, Toolbar } from '@mui/material'
-import InputSearch from '../../common/InputSearch'
+import InputSearch from './InputSearch'
 import AppLogo from '../AppLogo'
 import Menu from './Menu'
 import router from 'next/router'
