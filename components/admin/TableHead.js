@@ -1,18 +1,6 @@
 import { TableCell, TableHead, TableRow, TableSortLabel } from '@mui/material'
 
-const labels = [
-    { label: 'Published', field: 'published' },
-    { label: 'Title', field: 'title' },
-    { label: 'Stock', field: 'stock' },
-    { label: 'Regular Price', field: 'price' },
-    { label: 'Sales Price', field: 'sale_price' },
-    { label: 'Rating', field: 'rating' },
-    { label: 'Category', field: 'category' },
-    { label: 'Brand', field: 'brand' },
-    { label: 'Shop', field: 'shop' },
-];
-
-const ProductTableHead = ({ order, orderBy, onRequestSort }) => {
+const DataTableHead = ({ order, orderBy, onRequestSort, labels, colSpan }) => {
 
     return (
         <TableHead>
@@ -21,11 +9,7 @@ const ProductTableHead = ({ order, orderBy, onRequestSort }) => {
                     labels.map((label) => (
                         <TableCell
                             key={label.field}
-                            colSpan={
-                                label.field === 'title' ||
-                                label.field === 'shop'
-                                ? 2 : 0
-                            }
+                            colSpan={colSpan(label.field)}
                             sortDirection={orderBy === label.field ? order : false}
                         >
                             <TableSortLabel
@@ -43,4 +27,4 @@ const ProductTableHead = ({ order, orderBy, onRequestSort }) => {
     )
 }
 
-export default ProductTableHead
+export default DataTableHead

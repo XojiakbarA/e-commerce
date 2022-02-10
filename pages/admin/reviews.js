@@ -1,57 +1,61 @@
 import { Grid } from "@mui/material"
 import CommentIcon from '@mui/icons-material/Comment'
 import AdminLayout from "../../components/layout/AdminLayout/AdminLayout"
-import ReviewsTable from "../../components/admin/reviews/ReviewsTable"
 import { wrapper } from "../../app/store"
 import { getReviews } from "../../app/store/actions/async/admin"
 import { useSelector } from "react-redux"
-import { useState } from "react"
-import { useRouter } from "next/router"
 import AdminPageHead from "../../components/common/AdminPageHead"
+import DataTable from "../../components/admin/DataTable"
+import ReviewsTableRow from "../../components/admin/TableRows/ReviewsTableRow"
+import { useAdminSearch } from "../../app/hooks/useAdminSearch"
+
+const headLabels = [
+    {label: 'Published', field: 'published'},
+    {label: 'User', field: 'user_name'},
+    {label: 'Rating', field: 'rating'},
+    {label: 'Text', field: 'text'},
+    {label: 'Product', field: 'product_title'},
+    {label: 'Created At', field: 'created_at'}
+]
+
+const colSpan = (field) => {
+    return  field === 'product_title' ||
+            field === 'created_at' ||
+            field === 'user_name'
+            ? 2 : 0
+}
+
+function* labelsGenerator() { 
+    yield {label: 'By User', field: 'user_name'}
+    return {label: 'By Product', field: 'product_title'}
+}
 
 const Reviews = () => {
-
-    const router = useRouter()
 
     const reviews = useSelector(state => state.reviews.data)
     const meta = useSelector(state => state.reviews.meta)
 
-    const [filterBy, setFilterBy] = useState('user_name')
-
-    const handleSearch = (e) => {
-        const value = e.target.value
-        if (e.keyCode === 13) {
-            if (!value) return
-
-            if (router.query.user_name) {
-                delete router.query.user_name
-            } else if (router.query.product_title) {
-                delete router.query.product_title
-            }
-            router.query[filterBy] = value
-
-            router.push({
-                query: { ...router.query }
-            })
-        }
-    }
-    const handleClick = () => {
-        setFilterBy(prev => prev === 'user_name' ? 'product_title' : 'user_name')
-    }
+    const { label, handleSearch, handleClick } = useAdminSearch(labelsGenerator)
 
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
                 <AdminPageHead
-                    title='Products'
+                    title='Reviews'
                     titleIcon={<CommentIcon fontSize='large'/>}
                     onKeyUp={handleSearch}
                     onClick={handleClick}
-                    buttonText={filterBy === 'user_name' ? 'By User' : 'By Product'}
+                    buttonText={label}
                 />
             </Grid>
             <Grid item xs={12}>
-                <ReviewsTable reviews={reviews} meta={meta}/>
+                <DataTable meta={meta} labels={headLabels} colSpan={colSpan}>
+                    {
+                        reviews.map(review => (
+                            <ReviewsTableRow key={review.id} review={review}/>
+                        ))
+                    }
+                </DataTable>
             </Grid>
         </Grid>
     )

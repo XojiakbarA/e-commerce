@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Table, TableBody, TableCell, TableContainer, TablePagination, TableRow, Paper} from '@mui/material'
-import ProductsTableRow from './ProductsTableRow'
-import ProductsTableHead from './ProductsTableHead'
 import { useRouter } from 'next/router'
+import DataTableHead from './TableHead'
 
-const ProductsTable = ({ products, meta }) => {
+const DataTable = ({ meta, labels, colSpan, children }) => {
 
     const router = useRouter()
 
@@ -63,16 +62,17 @@ const ProductsTable = ({ products, meta }) => {
                     aria-labelledby="tableTitle"
                     
                 >
-                    <ProductsTableHead
+                    <DataTableHead
                         order={order}
                         orderBy={orderBy}
                         onRequestSort={handleRequestSort}
+                        labels={labels}
+                        colSpan={colSpan}
                     />
                     <TableBody>
                         {
-                            products.map((product) => (
-                                <ProductsTableRow key={product.id} product={product}/>
-                            ))}
+                            children
+                        }
                         {
                             emptyRows > 0 && Number(router.query.page) === meta.last_page && (
                                 <TableRow
@@ -80,7 +80,7 @@ const ProductsTable = ({ products, meta }) => {
                                         height: 53 * emptyRows,
                                     }}
                                 >
-                                    <TableCell colSpan={6} />
+                                    <TableCell colSpan={12} />
                                 </TableRow>
                             )
                         }
@@ -102,4 +102,4 @@ const ProductsTable = ({ products, meta }) => {
     )
 }
 
-export default ProductsTable
+export default DataTable
