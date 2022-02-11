@@ -1,7 +1,7 @@
 import { Paper, InputBase } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 
-const AdminSearch = ({ onKeyUp, children }) => {
+const AdminSearch = ({ onKeyUp, children, inputComponent, placeholder }) => {
 
     return (
         <Paper
@@ -9,7 +9,8 @@ const AdminSearch = ({ onKeyUp, children }) => {
         >
             <InputBase
                 sx={{ ml: 1, flex: 1 }}
-                placeholder="Search..."
+                placeholder={placeholder}
+                inputComponent={inputComponent}
                 inputProps={{ 'aria-label': 'search google maps' }}
                 onKeyUp={onKeyUp}
             />

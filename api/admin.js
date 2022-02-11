@@ -27,3 +27,13 @@ export const fetchProducts = (query, cookie) => {
         }
     })
 }
+
+export const fetchUsers = (query, cookie) => {
+    return instance.get(`api/admin/users`, {
+        params: query,
+        headers: {
+            'Cookie': cookie,
+            'Referer': 'http://localhost:3000/'
+        }
+    })
+}
