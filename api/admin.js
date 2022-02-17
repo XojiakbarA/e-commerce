@@ -57,3 +57,13 @@ export const fetchOrders = (query, cookie) => {
         }
     })
 }
+
+export const fetchTransactions = (query, cookie) => {
+    return instance.get(`api/admin/transactions`, {
+        params: query,
+        headers: {
+            'Cookie': cookie,
+            'Referer': 'http://localhost:3000/'
+        }
+    })
+}
