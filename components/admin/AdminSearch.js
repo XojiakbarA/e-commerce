@@ -5,7 +5,7 @@ const AdminSearch = ({ onKeyUp, children, inputComponent, placeholder }) => {
 
     return (
         <Paper
-            sx={{ padding: 1, alignItems: 'center', display: 'flex' }}
+            sx={{ padding: 1, alignItems: 'center', display: onKeyUp ? 'flex' : 'none' }}
         >
             <InputBase
                 sx={{ ml: 1, flex: 1 }}

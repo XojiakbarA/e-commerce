@@ -141,3 +141,9 @@ export const productValidationSchema = yup.object({
         .number('Image Count')
         .max(5, 'Images should be maximum 5 items')
 })
+
+export const categoryValidationSchema = yup.object({
+    category: yup.object({
+        title: yup.string('Enter Category Title').required('Category Title is required'),
+    })
+})

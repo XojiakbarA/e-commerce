@@ -1,5 +1,5 @@
-import { fetchProducts, fetchReviews, updateProductPublished, updateReviewPublished } from "../../../../api/admin"
-import { setLoading, setProducts, setReviews, setSnackbar } from "../actionCreators"
+import { fetchCategories, fetchProducts, fetchReviews, storeCategory, updateProductPublished, updateReviewPublished } from "../../../../api/admin"
+import { addCategory, setCategories, setLoading, setProducts, setReviews, setSnackbar } from "../actionCreators"
 import router from "next/router"
 
 export const getProducts = (query, cookie) => {
@@ -55,6 +55,35 @@ export const editReviewPublished = (id, query, setIsClicked, data) => {
                 dispatch(setLoading(false))
                 await router.push({query}, null, {scroll: false})
                 dispatch(setSnackbar({isOpen: true, text: `Review ${!data.published ? 'un' : ''}published successfully!`}))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const getCategories = (cookie) => {
+    return async (dispatch) => {
+        try {
+            const res = await fetchCategories(cookie)
+            if (res.status === 200) {
+                dispatch(setCategories(res.data.data))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const createCategory = (data, resetForm, setSubmitting) => {
+    return async (dispatch) => {
+        try {
+            const res = await storeCategory(data)
+            if (res.status === 201) {
+                dispatch(addCategory(res.data.data))
+                resetForm()
+                setSubmitting(false)
+                dispatch(setSnackbar({isOpen: true, text: `Category created successfully!`}))
             }
         } catch (e) {
             console.log(e)

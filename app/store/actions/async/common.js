@@ -4,16 +4,16 @@ import {
     fetchShopProducts, fetchShops
 } from '../../../../api/common'
 import {
-    setCats, setBrands, setBanners, setProduct, setShops,
+    setBrands, setBanners, setProduct, setShops,
     setShop, setLoading, setRegions, setDistricts,
-    setDistrictFetching, setProducts
+    setDistrictFetching, setProducts, setCategories
 } from '../actionCreators'
 
 export const getCategories = () => {
     return async (dispatch) => {
         try {
             const res = await fetchCategories()
-            dispatch(setCats(res.data.data))
+            dispatch(setCategories(res.data.data))
         } catch (e) {
             console.log(e)
         }

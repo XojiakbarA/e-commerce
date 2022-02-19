@@ -67,3 +67,18 @@ export const fetchTransactions = (query, cookie) => {
         }
     })
 }
+
+export const fetchCategories = (cookie) => {
+    return instance.get(`api/admin/categories`, cookie &&
+        {
+            headers: {
+                'Cookie': cookie,
+                'Referer': 'http://localhost:3000/'
+            }
+        }
+    )
+}
+
+export const storeCategory = (data) => {
+    return instance.post(`api/admin/categories`, data)
+}

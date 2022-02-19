@@ -1,4 +1,4 @@
-import { List, Divider, IconButton, ListItem, ListItemIcon, ListItemText, Avatar, Stack, Typography } from '@mui/material'
+import { List, Divider, IconButton, ListItem, ListItemIcon, ListItemText, Avatar, Stack, Typography, Box } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
@@ -16,21 +16,18 @@ import { Drawer, DrawerHeader } from "./styledComponents"
 import { useRouter } from 'next/router'
 import NextLink from '../../common/Link'
 
-const mainMenu = [
+const menu = [
     {label: 'Products', path: '/admin/products', icon: <ListAltIcon/> },
     {label: 'Reviews', path: '/admin/reviews', icon: <CommentIcon/> },
     {label: 'Users', path: '/admin/users', icon: <GroupIcon/> },
     {label: 'Vendors', path: '/admin/vendors', icon: <StoreIcon/> },
     {label: 'Orders', path: '/admin/orders', icon: <ShoppingBagIcon/> },
     {label: 'Transactions', path: '/admin/transactions', icon: <PaidIcon/> },
-]
-
-const secondaryMenu = [
-    {label: 'Banners', icon: <ViewCarouselIcon/> },
-    {label: 'Categories', icon: <CategoryIcon/> },
-    {label: 'Brands', icon: <CategoryIcon/> },
-    {label: 'Regions', icon: <LocationOnIcon/> },
-    {label: 'Settings', icon: <SettingsIcon/> },
+    {label: 'Banners', path: '/admin/banners', icon: <ViewCarouselIcon/> },
+    {label: 'Categories', path: '/admin/categories', icon: <CategoryIcon/> },
+    {label: 'Brands', path: '/admin/brands', icon: <CategoryIcon/> },
+    {label: 'Regions', path: '/admin/regions', icon: <LocationOnIcon/> },
+    {label: 'Settings', path: '/admin/settings', icon: <SettingsIcon/> },
 ]
 
 const Sidebar = ({ open, handleDrawerClose }) => {
@@ -54,28 +51,20 @@ const Sidebar = ({ open, handleDrawerClose }) => {
             <Divider />
             <List>
                 {
-                    mainMenu.map(item => (
-                        <NextLink key={item.label} href={item.path}>
-                            <ListItem button key={item.label} selected={router.pathname === item.path}>
-                                <ListItemIcon>
-                                    {item.icon}
-                                </ListItemIcon>
-                                <ListItemText primary={item.label}/>
-                            </ListItem>
-                        </NextLink>
-                    ))
-                }
-            </List>
-            <Divider />
-            <List>
-                {
-                    secondaryMenu.map(item => (
-                        <ListItem button key={item.label}>
-                            <ListItemIcon>
-                                {item.icon}
-                            </ListItemIcon>
-                            <ListItemText primary={item.label} />
-                        </ListItem>
+                    menu.map(item => (
+                        <Box key={item.label} >
+                            <NextLink href={item.path}>
+                                <ListItem button key={item.label} selected={router.pathname === item.path}>
+                                    <ListItemIcon>
+                                        {item.icon}
+                                    </ListItemIcon>
+                                    <ListItemText primary={item.label}/>
+                                </ListItem>
+                            </NextLink>
+                            {
+                                item.label == 'Transactions' && <Divider />
+                            }
+                        </Box>
                     ))
                 }
             </List>

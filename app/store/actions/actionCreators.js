@@ -15,9 +15,14 @@ export const setUser = (user) => ({
     payload: user
 })
 
-export const setCats = (cats) => ({
-    type: type.SET_CATS,
-    payload: cats
+export const setCategories = (categories) => ({
+    type: type.SET_CATEGORIES,
+    payload: categories
+})
+
+export const addCategory = (category) => ({
+    type: type.ADD_CATEGORY,
+    payload: category
 })
 
 export const setBrands = (brands) => ({
