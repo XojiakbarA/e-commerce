@@ -1,8 +1,22 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-export const useSinglePreview = (setValues) => {
+export const useSinglePreview = (setValues, image) => {
 
     const [preview, setPreview] = useState(null)
+
+    useEffect(() => {
+        setPreview(null)
+    }, [image])
+
+    const handlePreviewDeleteClick = () => {
+        setValues(prevValues => (
+            {
+                ...prevValues,
+                image: image
+            }
+        ))
+        setPreview(null)
+    }
 
     const handleUploadChange = (e) => {
         const image = e.target.files[0]
@@ -19,6 +33,7 @@ export const useSinglePreview = (setValues) => {
 
     return {
         preview,
+        handlePreviewDeleteClick,
         handleUploadChange
     }
 }

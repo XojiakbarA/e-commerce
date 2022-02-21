@@ -1,5 +1,5 @@
-import { fetchCategories, fetchProducts, fetchReviews, storeCategory, updateProductPublished, updateReviewPublished } from "../../../../api/admin"
-import { addCategory, setCategories, setLoading, setProducts, setReviews, setSnackbar } from "../actionCreators"
+import { fetchCategories, fetchProducts, fetchReviews, storeCategory, updateBanner, updateProductPublished, updateReviewPublished } from "../../../../api/admin"
+import { addCategory, setCategories, setLoading, setProducts, setReviews, setSnackbar, updateBanners } from "../actionCreators"
 import router from "next/router"
 
 export const getProducts = (query, cookie) => {
@@ -84,6 +84,22 @@ export const createCategory = (data, resetForm, setSubmitting) => {
                 resetForm()
                 setSubmitting(false)
                 dispatch(setSnackbar({isOpen: true, text: `Category created successfully!`}))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const editBanner = (id, data, setSubmitting, resetForm) => {
+    return async (dispatch) => {
+        try {
+            const res = await updateBanner(id, data)
+            if (res.status === 200) {
+                dispatch(updateBanners(res.data.data))
+                resetForm()
+                setSubmitting(false)
+                dispatch(setSnackbar({isOpen: true, text: `Banner updated successfully!`}))
             }
         } catch (e) {
             console.log(e)

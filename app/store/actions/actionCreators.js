@@ -35,6 +35,11 @@ export const setBanners = (banners) => ({
     payload: banners
 })
 
+export const updateBanners = (banner) => ({
+    type: type.UPDATE_BANNERS,
+    payload: banner
+})
+
 export const setProducts = (products) => ({
     type: type.SET_PRODUCTS,
     payload: products

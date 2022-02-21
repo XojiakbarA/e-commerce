@@ -1,7 +1,7 @@
 import { Avatar, Badge } from "@mui/material"
 import UploadButton from "./UploadButton"
 
-const AvatarUpload = ({ onChange, value, src, styles, title }) => {
+const AvatarUpload = ({ onChange, value, src, variant, size, styles, title }) => {
 
     return (
         <Badge
@@ -15,7 +15,7 @@ const AvatarUpload = ({ onChange, value, src, styles, title }) => {
             }
             sx={styles}
         >
-            <Avatar src={src} sx={{height: 70, width: 70}} />
+            <Avatar src={src} variant={variant} sx={{height: size, width: size}} />
         </Badge>
     )
 }

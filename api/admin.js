@@ -82,3 +82,7 @@ export const fetchCategories = (cookie) => {
 export const storeCategory = (data) => {
     return instance.post(`api/admin/categories`, data)
 }
+
+export const updateBanner = (id, data) => {
+    return instance.post(`api/admin/banners/${id}?_method=PUT`, data)
+}
