@@ -145,7 +145,12 @@ export const productValidationSchema = yup.object({
 export const categoryValidationSchema = yup.object({
     category: yup.object({
         title: yup.string('Enter Category Title').required('Category Title is required'),
-    })
+    }),
+    sub_categories: yup.array().of(
+        yup.object({
+            title: yup.string('Enter Sub Category Title').required('Sub Category Title is required')
+        })
+    )
 })
 
 export const bannerValidationSchema = yup.object({

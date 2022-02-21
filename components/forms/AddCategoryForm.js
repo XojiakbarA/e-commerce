@@ -37,6 +37,20 @@ const AddCategoryForm = () => {
                                                     fullWidth
                                                     label={`Sub Category Title ${i+1}`}
                                                     size='small'
+                                                    error={
+                                                        touched.sub_categories
+                                                        &&
+                                                        errors.sub_categories ?
+                                                        Boolean(errors.sub_categories[i]?.title) :
+                                                        null
+                                                    }
+                                                    helperText={
+                                                        touched.sub_categories
+                                                        &&
+                                                        errors.sub_categories ?
+                                                        errors.sub_categories[i]?.title :
+                                                        null
+                                                    }
                                                     { ...getFieldProps(`sub_categories[${i}].title`) }
                                                 />
                                                 <IconButton size='small' onClick={ e => remove(i) }>
