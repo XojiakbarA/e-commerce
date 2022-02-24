@@ -3,9 +3,9 @@ import CategoryIcon from '@mui/icons-material/Category'
 import AdminPageHead from '../../components/common/AdminPageHead'
 import { wrapper } from "../../app/store"
 import AdminLayout from "../../components/layout/AdminLayout/AdminLayout"
-import DataTabs from "../../components/admin/DataTabs/DataTabs"
 import { getCategories } from "../../app/store/actions/async/admin"
 import { useSelector } from "react-redux"
+import CategoryList from "../../components/admin/CategoryList/CategoryList"
 
 const Categories = () => {
 
@@ -19,8 +19,8 @@ const Categories = () => {
                     titleIcon={<CategoryIcon fontSize='large'/>}
                 />
             </Grid>
-            <Grid item xs={12}>
-                <DataTabs categories={categories}/>
+            <Grid item xs={4}>
+                <CategoryList categories={categories}/>
             </Grid>
         </Grid>
     )

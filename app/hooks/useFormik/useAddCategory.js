@@ -19,7 +19,8 @@ export const useAddCategory = () => {
         validationSchema: categoryValidationSchema,
         onSubmit: (data, {resetForm, setSubmitting}) => {
             dispatch(createCategory(data, resetForm, setSubmitting))
-        }
+        },
+        validateOnBlur: false
     })
 
     return { ...formik }
