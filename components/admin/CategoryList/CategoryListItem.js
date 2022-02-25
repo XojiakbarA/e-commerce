@@ -31,10 +31,8 @@ const CategoryListItem = ({ category }) => {
         setEdit(prev => !prev)
     }
     const handleBlur = () => {
-        if (!ripple) {
-            setEdit(false)
-            resetForm()
-        }
+        if (!ripple) setEdit(false)
+        resetForm()
     }
     const handleSubmitClick = async () => {
         await submitForm() 
@@ -68,8 +66,7 @@ const CategoryListItem = ({ category }) => {
                     <ListItemText primary={category.title}/>
                 }
                 {
-                    category.title != values.title
-                    ?
+                    category.title != values.title &&
                     <IconButton
                         size='small'
                         onClick={ handleSubmitClick }
@@ -77,15 +74,14 @@ const CategoryListItem = ({ category }) => {
                     >
                         <SaveIcon fontSize='small'/>
                     </IconButton>
-                    :
-                    <IconButton
-                        size='small'
-                        onClick={handleEditClick}
-                        { ...events }
-                    >
-                        {edit ? <EditOffIcon fontSize='small'/> : <EditIcon fontSize='small'/>}
-                    </IconButton>
                 }
+                <IconButton
+                    size='small'
+                    onClick={handleEditClick}
+                    { ...events }
+                >
+                    {edit ? <EditOffIcon fontSize='small'/> : <EditIcon fontSize='small'/>}
+                </IconButton>
                 <IconButton
                     size='small'
                     onClick={handleEditClick}

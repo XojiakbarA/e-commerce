@@ -74,7 +74,7 @@ const AddCategoryListItem = () => {
                                 <ListSubheader>Sub Categories</ListSubheader>
                                 {
                                     values.sub_categories.map((sub_category, i) => (
-                                        <ListItem key={i}>
+                                        <ListItem key={i} sx={{ pl: 4 }}>
                                             <TextField
                                                 fullWidth
                                                 variant='standard'
@@ -105,7 +105,7 @@ const AddCategoryListItem = () => {
                                         </ListItem>
                                     ))
                                 }
-                                <ListItem>
+                                <ListItem sx={{ pl: 4 }}>
                                     <ListItemText>
                                         Add Sub Category
                                     </ListItemText>
