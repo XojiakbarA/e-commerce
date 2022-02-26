@@ -15,6 +15,11 @@ export const setUser = (user) => ({
     payload: user
 })
 
+export const setCategory = (category) => ({
+    type: type.SET_CATEGORY,
+    payload: category
+})
+
 export const setCategories = (categories) => ({
     type: type.SET_CATEGORIES,
     payload: categories
@@ -38,6 +43,11 @@ export const updateBrands = (brand) => ({
 export const addCategory = (category) => ({
     type: type.ADD_CATEGORY,
     payload: category
+})
+
+export const dropCategory = (id) => ({
+    type: type.DELETE_CATEGORY,
+    payload: id
 })
 
 export const addSubCategory = (sub_category, category_id) => ({
@@ -128,6 +138,11 @@ export const toggleEditProductDialog = (bool) => ({
 
 export const toggleDeleteProductDialog = (bool) => ({
     type: type.TOGGLE_DELETE_PRODUCT_DIALOG,
+    payload: bool
+})
+
+export const toggleDeleteCategoryDialog = (bool) => ({
+    type: type.TOGGLE_DELETE_CATEGORY_DIALOG,
     payload: bool
 })
 

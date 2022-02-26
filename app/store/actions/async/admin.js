@@ -1,5 +1,5 @@
-import { fetchCategories, fetchProducts, fetchReviews, storeBrand, storeCategory, storeSubCategory, updateBanner, updateBrand, updateCategory, updateProductPublished, updateReviewPublished, updateSubCategory } from "../../../../api/admin"
-import { addBrand, addCategory, addSubCategory, setCategories, setLoading, setProducts, setReviews, setSnackbar, updateBanners, updateBrands, updateCategories, updateSubCategories } from "../actionCreators"
+import { destroyCategory, fetchCategories, fetchProducts, fetchReviews, storeBrand, storeCategory, storeSubCategory, updateBanner, updateBrand, updateCategory, updateProductPublished, updateReviewPublished, updateSubCategory } from "../../../../api/admin"
+import { addBrand, addCategory, addSubCategory, dropCategory, setCategories, setLoading, setProducts, setReviews, setSnackbar, updateBanners, updateBrands, updateCategories, updateSubCategories } from "../actionCreators"
 import router from "next/router"
 
 export const getProducts = (query, cookie) => {
@@ -186,6 +186,22 @@ export const editBanner = (id, data, setSubmitting, resetForm) => {
                 resetForm()
                 setSubmitting(false)
                 dispatch(setSnackbar({isOpen: true, text: `Banner updated successfully!`}))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const deleteCategory = (id, setSubmitting) => {
+    return async (dispatch) => {
+        try {
+            setSubmitting(true)
+            const res = await destroyCategory(id)
+            if (res.status === 204) {
+                dispatch(dropCategory(id))
+                setSubmitting(false)
+                dispatch(setSnackbar({isOpen: true, text: `Category deleted successfully!`}))
             }
         } catch (e) {
             console.log(e)

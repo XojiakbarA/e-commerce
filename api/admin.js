@@ -106,3 +106,7 @@ export const updateBrand = (id, data) => {
 export const updateBanner = (id, data) => {
     return instance.post(`api/admin/banners/${id}?_method=PUT`, data)
 }
+
+export const destroyCategory = (id) => {
+    return instance.delete(`api/admin/categories/${id}`)
+}

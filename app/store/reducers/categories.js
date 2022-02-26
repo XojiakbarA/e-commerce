@@ -15,6 +15,9 @@ const categories = (state = initialState, action) => {
         case type.ADD_CATEGORY:
             return state.concat(action.payload)
 
+        case type.DELETE_CATEGORY:
+            return state.filter(item => item.id !== action.payload)
+
         case type.ADD_SUB_CATEGORY:
             newState = [ ...state ]
             cat_index = newState.findIndex(item => item.id === action.category_id)

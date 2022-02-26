@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import { HYDRATE } from 'next-redux-wrapper'
+import category from './category'
 import categories from './categories'
 import brands from './brands'
 import banners from './banners'
@@ -20,6 +21,7 @@ import regions from './regions'
 import orderShop from './orderShop'
 
 const combindedReducer = combineReducers({
+    category: category,
     categories: categories,
     brands: brands,
     banners: banners,

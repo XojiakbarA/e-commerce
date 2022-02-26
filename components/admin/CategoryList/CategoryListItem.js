@@ -1,51 +1,23 @@
-import { Box, CircularProgress, Collapse, IconButton, List, ListItemButton, ListItemText, TextField } from "@mui/material"
+import { Box, CircularProgress, Collapse, IconButton, List, ListItemButton, ListItemText, TextField, Tooltip } from "@mui/material"
 import {ExpandLess, ExpandMore} from '@mui/icons-material'
 import SaveIcon from '@mui/icons-material/Save'
 import EditIcon from '@mui/icons-material/Edit'
 import EditOffIcon from '@mui/icons-material/EditOff'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { useState } from "react"
-import { useRipple } from '../../../app/hooks/useRipple'
 import CategorySubListItem from "./CategorySubListItem"
-import { useFormik } from "formik"
-import { useDispatch } from "react-redux"
-import { editCategory } from "../../../app/store/actions/async/admin"
 import AddSubCategoryListItem from "./AddSubCategoryListItem"
+import { useEditCategory } from "../../../app/hooks/useFormik/useEditCategory"
+import { useToggle } from "../../../app/hooks/useToggle"
 
 const CategoryListItem = ({ category }) => {
 
-    const dispatch = useDispatch()
+    const {
+        open, edit, ripple, values, isSubmitting, events,
+        getFieldProps, handleSubmit, handleOpenClick, handleEditClick,
+        handleBlur, handleSubmitClick
+    } = useEditCategory(category)
 
-    const [ripple, events] = useRipple()
-    const [open, setOpen] = useState(false)
-    const [ edit, setEdit ] = useState(false)
-
-    const { values, isSubmitting, handleChange, handleSubmit, submitForm, resetForm } = useFormik({
-        initialValues: { title: category.title },
-        onSubmit: (data, {resetForm, setSubmitting}) => {
-            if (values.title == category.title) {
-                setSubmitting(false)
-                return
-            }
-            dispatch(editCategory(category.id, data, resetForm, setSubmitting, setEdit))
-        },
-        enableReinitialize: true
-    })
-
-    const handleOpenClick = (e) => {
-        if (!edit) setOpen(prev => !prev)
-    }
-    const handleEditClick = (e) => {
-        e.stopPropagation()
-        resetForm()
-        setEdit(prev => !prev)
-    }
-    const handleBlur = () => {
-        if (!ripple) setEdit(false)
-    }
-    const handleSubmitClick = async () => {
-        await submitForm()
-    }
+    const { openDeleteCategoryDialog } = useToggle()
 
     return (
         <>
@@ -69,10 +41,8 @@ const CategoryListItem = ({ category }) => {
                             variant='standard'
                             fullWidth
                             autoFocus
-                            value={values.title}
+                            { ...getFieldProps('title') }
                             onBlur={handleBlur}
-                            onChange={handleChange}
-                            name='title'
                             { ...events }
                         />
                     </form>
@@ -89,19 +59,27 @@ const CategoryListItem = ({ category }) => {
                         <SaveIcon fontSize='small'/>
                     </IconButton>
                 }
-                <IconButton
-                    size='small'
-                    onClick={handleEditClick}
-                    { ...events }
-                >
-                    {edit ? <EditOffIcon fontSize='small'/> : <EditIcon fontSize='small'/>}
-                </IconButton>
-                <IconButton
-                    size='small'
-                    { ...events }
-                >
-                    <DeleteIcon fontSize='small'/>
-                </IconButton>
+                <Tooltip title={edit ? 'Close Edit' : 'Edit'}>
+                    <IconButton
+                        size='small'
+                        onClick={handleEditClick}
+                        { ...events }
+                    >
+                        {edit ? <EditOffIcon fontSize='small'/> : <EditIcon fontSize='small'/>}
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title='Delete'>
+                    <IconButton
+                        size='small'
+                        onClick={e => {
+                            e.stopPropagation()
+                            openDeleteCategoryDialog(category)
+                        }}
+                        { ...events }
+                    >
+                        <DeleteIcon fontSize='small'/>
+                    </IconButton>
+                </Tooltip>
                 { category.sub_categories && (open ? <ExpandLess /> : <ExpandMore />) }
             </ListItemButton>
             {
