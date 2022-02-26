@@ -75,7 +75,7 @@ const CategoryListItem = ({ category }) => {
                         size='small'
                         onClick={e => {
                             e.stopPropagation()
-                            openConfirmDialog(true, dialogText, category)
+                            openConfirmDialog(dialogText, category)
                         }}
                         { ...events }
                     >

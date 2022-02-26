@@ -9,9 +9,7 @@ const initialState = {
     editProfileDialog: false,
     addProductDialog: false,
     viewProductDialog: false,
-    editProductDialog: false,
-    deleteProductDialog: false,
-    deleteCategoryDialog: false,
+    editProductDialog: {isOpen: false, payload: {}},
     addReviewDialog: false,
     cartSidebar: false,
     accountMenu: null,
@@ -30,6 +28,7 @@ const toggleReducer = (state = initialState, action) => {
             return { ...state, orderDialog: action.payload }
         case type.TOGGLE_ORDER_SHIP_DIALOG:
             return { ...state, orderShipDialog: action.payload }
+
         case type.TOGGLE_CONFIRM_DIALOG:
             return {
                 ...state,
@@ -38,18 +37,22 @@ const toggleReducer = (state = initialState, action) => {
                     text: action.text,
                     payload: action.payload
                 }}
+
         case type.TOGGLE_EDIT_PROFILE_DIALOG:
             return { ...state, editProfileDialog: action.payload }
         case type.TOGGLE_ADD_PRODUCT_DIALOG:
             return { ...state, addProductDialog: action.payload }
         case type.TOGGLE_VIEW_PRODUCT_DIALOG:
             return { ...state, viewProductDialog: action.payload }
+
         case type.TOGGLE_EDIT_PRODUCT_DIALOG:
-            return { ...state, editProductDialog: action.payload }
-        case type.TOGGLE_DELETE_PRODUCT_DIALOG:
-            return { ...state, deleteProductDialog: action.payload }
-        case type.TOGGLE_DELETE_CATEGORY_DIALOG:
-            return { ...state, deleteCategoryDialog: action.payload }
+            return {
+                ...state,
+                editProductDialog: {
+                    isOpen: action.isOpen,
+                    payload: action.payload
+                }}
+
         case type.TOGGLE_ADD_REVIEW_DIALOG:
             return { ...state, addReviewDialog: action.payload }
         case type.TOGGLE_CART_SIDEBAR:

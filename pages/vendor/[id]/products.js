@@ -6,7 +6,6 @@ import { Grid, Typography } from '@mui/material'
 import AddProductDialog from '../../../components/dialogs/AddProductDialog'
 import ViewProductDialog from '../../../components/dialogs/ViewProductDialog'
 import EditProductDialog from '../../../components/dialogs/EditProductDialog'
-import DeleteProductDialog from '../../../components/dialogs/DeleteProductDialog'
 import { wrapper } from "../../../app/store"
 import ProductList from '../../../components/common/List/List'
 import ProductListItem from '../../../components/vendor/ProductListItem'
@@ -14,6 +13,8 @@ import { useToggle } from '../../../app/hooks/useToggle'
 import { getProducts } from '../../../app/store/actions/async/vendor'
 import MainLayout from '../../../components/layout/MainLayout'
 import ProfilePageHead from '../../../components/common/ProfilePageHead'
+import ConfirmDialog from '../../../components/dialogs/ConfirmDialog'
+import { useEditProduct } from '../../../app/hooks/useFormik/useEditProduct'
 
 const labels = [ 'Title', 'Image', 'Stock', 'Price', 'Sale Price', 'Rating', '' ]
 
@@ -23,6 +24,10 @@ const Products = () => {
     const meta = useSelector(state => state.products.meta)
 
     const { openAddProductDialog } = useToggle()
+
+    const { payload } = useSelector(state => state.toggle.confirmDialog)
+
+    const { isSubmitting, handleDeleteClick } = useEditProduct(payload)
 
     return (
         <Grid container spacing={2}>
@@ -56,7 +61,10 @@ const Products = () => {
                 <AddProductDialog/>
                 <ViewProductDialog/>
                 <EditProductDialog/>
-                <DeleteProductDialog/>
+                <ConfirmDialog
+                    loading={isSubmitting}
+                    handleConfirmClick={handleDeleteClick}
+                />
             </Grid>
         </Grid>
     )

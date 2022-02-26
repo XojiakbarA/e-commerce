@@ -2,9 +2,7 @@ import { useState } from "react"
 import { useSelector } from "react-redux"
 
 
-export const useFieldProduct = (setValues) => {
-
-    const product = useSelector(state => state.product)
+export const useFieldProduct = (setValues, product) => {
 
     const categories = useSelector(state => state.categories)
     const brands = useSelector(state => state.brands)

@@ -1,14 +1,12 @@
 import { useFormik } from "formik"
-import { useDispatch, useSelector } from "react-redux"
-import { deleteProductImage, editProduct } from "../../store/actions/async/vendor"
+import { useDispatch } from "react-redux"
+import { deleteProduct, deleteProductImage, editProduct } from "../../store/actions/async/vendor"
 import { appendToFormData } from "../../../utils/utils"
 import { productValidationSchema } from "./validate"
 
-export const useEditProduct = () => {
+export const useEditProduct = (product) => {
 
     const dispatch = useDispatch()
-
-    const product = useSelector(state => state.product)
 
     const shop_id = product.shop?.id
     const product_id = product.id
@@ -36,12 +34,15 @@ export const useEditProduct = () => {
     })
 
     const handleProductImageClick = (image_id) => {
-        dispatch(deleteProductImage(shop_id, product.id, image_id))
+        dispatch(deleteProductImage(shop_id, product_id, image_id))
+    }
+    const handleDeleteClick = () => {
+        dispatch(deleteProduct(shop_id, product_id, formik.setSubmitting))
     }
 
     return {
         ...formik,
-        product,
-        handleProductImageClick
+        handleProductImageClick,
+        handleDeleteClick
     }
 }

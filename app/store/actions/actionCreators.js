@@ -133,19 +133,10 @@ export const toggleViewProductDialog = (bool) => ({
     payload: bool
 })
 
-export const toggleEditProductDialog = (bool) => ({
+export const toggleEditProductDialog = (bool, payload) => ({
     type: type.TOGGLE_EDIT_PRODUCT_DIALOG,
-    payload: bool
-})
-
-export const toggleDeleteProductDialog = (bool) => ({
-    type: type.TOGGLE_DELETE_PRODUCT_DIALOG,
-    payload: bool
-})
-
-export const toggleDeleteCategoryDialog = (bool) => ({
-    type: type.TOGGLE_DELETE_CATEGORY_DIALOG,
-    payload: bool
+    isOpen: bool,
+    payload: payload
 })
 
 export const toggleAddReviewDialog = (bool) => ({

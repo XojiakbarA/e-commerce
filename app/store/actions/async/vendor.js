@@ -1,13 +1,10 @@
 import {
     setLoading, setOrderShop, setProduct, setProducts, setShop, setSnackbar,
-    toggleAddProductDialog, toggleDeleteProductDialog,
-    toggleEditProductDialog,
-    toggleOrderShipDialog
+    toggleAddProductDialog, toggleConfirmDialog, toggleEditProductDialog, toggleOrderShipDialog
 } from "../actionCreators"
 import {
-    destroyProduct, destroyProductImage,
-    fetchOrder,
-    fetchProducts, fetchShop, orderShip, storeProduct, updateOrderProducts, updateProduct, updateShop
+    destroyProduct, destroyProductImage, fetchOrder, fetchProducts, fetchShop,
+    orderShip, storeProduct, updateOrderProducts, updateProduct, updateShop
 } from "../../../../api/vendor"
 
 export const getProducts = (shop_id, query, cookie) => {
@@ -57,14 +54,14 @@ export const editProduct = (shop_id, product_id, data, resetForm, setSubmitting)
     }
 }
 
-export const deleteProduct = (shop_id, product_id) => {
+export const deleteProduct = (shop_id, product_id, setSubmitting) => {
     return async (dispatch) => {
         try {
-            dispatch(setLoading(true))
+            setSubmitting(true)
             const res = await destroyProduct(shop_id, product_id)
             if (res.status === 200) {
-                dispatch(setLoading(false))
-                dispatch(toggleDeleteProductDialog(false))
+                setSubmitting(false)
+                dispatch(toggleConfirmDialog(false, '', {}))
                 dispatch(setSnackbar({isOpen: true, text: 'Product deleted successfully!'}))
                 dispatch(getProducts(shop_id))
             }

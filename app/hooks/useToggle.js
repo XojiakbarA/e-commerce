@@ -1,13 +1,9 @@
 import { useRouter } from "next/router"
 import { useDispatch, useSelector } from "react-redux"
-import { 
-    setCategory,
-    setOrderShop,
-    setProduct, toggleAccountMenu, toggleAddProductDialog, toggleAddReviewDialog, toggleCartSidebar, toggleConfirmDialog,
-    toggleDeleteCategoryDialog,
-    toggleDeleteProductDialog, toggleEditProductDialog,
-    toggleEditProfileDialog, toggleLoginDialog, toggleOrderShipDialog, toggleRegisterDialog,
-    toggleViewProductDialog
+import {
+    setProduct, toggleAccountMenu, toggleAddProductDialog, toggleAddReviewDialog,
+    toggleCartSidebar, toggleConfirmDialog, toggleEditProductDialog, toggleEditProfileDialog,
+    toggleLoginDialog, toggleOrderShipDialog, toggleRegisterDialog, toggleViewProductDialog
 } from "../store/actions/actionCreators"
 
 export const useToggle = () => {
@@ -32,20 +28,11 @@ export const useToggle = () => {
         dispatch(toggleAddProductDialog(false))
     }
 
-    const openDeleteProductDialog = (product) => {
-        dispatch(setProduct(product))
-        dispatch(toggleDeleteProductDialog(true))
-    }
-    const closeDeleteProductDialog = () => {
-        dispatch(toggleDeleteProductDialog(false))
-    }
-
     const openEditProductDialog = (product) => {
-        dispatch(setProduct(product))
-        dispatch(toggleEditProductDialog(true))
+        dispatch(toggleEditProductDialog(true, product))
     }
     const closeEditProductDialog = () => {
-        dispatch(toggleEditProductDialog(false))
+        dispatch(toggleEditProductDialog(false, {}))
     }
 
     const openViewProductDialog = (product) => {
@@ -56,9 +43,9 @@ export const useToggle = () => {
         dispatch(toggleViewProductDialog(false))
     }
 
-    const openConfirmDialog = (bool, text, payload) => {
+    const openConfirmDialog = (text, payload) => {
         // dispatch(setOrderShop(obj))
-        dispatch(toggleConfirmDialog(bool, text, payload))
+        dispatch(toggleConfirmDialog(true, text, payload))
     }
     const closeConfirmDialog = () => {
         dispatch(toggleConfirmDialog(false, '', {}))
@@ -124,14 +111,6 @@ export const useToggle = () => {
         dispatch(toggleAddReviewDialog(false))
     }
 
-    const openDeleteCategoryDialog = (category) => {
-        dispatch(setCategory(category))
-        dispatch(toggleDeleteCategoryDialog(true))
-    }
-    const closeDeleteCategoryDialog = () => {
-        dispatch(toggleDeleteCategoryDialog(false))
-    }
-
     const handleAccount = (e) => {
         if (user) {
             openAccountMenu(e)
@@ -147,8 +126,6 @@ export const useToggle = () => {
         closeOrderShipDialog,
         openAddProductDialog,
         closeAddProductDialog,
-        openDeleteProductDialog,
-        closeDeleteProductDialog,
         openEditProductDialog,
         closeEditProductDialog,
         openViewProductDialog,
@@ -168,8 +145,6 @@ export const useToggle = () => {
         closeSidebar,
         openAddReviewDialog,
         closeAddReviewDialog,
-        openDeleteCategoryDialog,
-        closeDeleteCategoryDialog,
 
         handleAccount
     }

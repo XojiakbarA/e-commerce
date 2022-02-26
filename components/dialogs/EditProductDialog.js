@@ -8,8 +8,10 @@ const EditProductDialog = () => {
 
     const { editProductDialog, closeEditProductDialog } = useToggle()
 
+    const { isOpen, payload } = editProductDialog
+
     return (
-        <Dialog open={editProductDialog} onClose={closeEditProductDialog} fullWidth maxWidth='lg'>
+        <Dialog open={isOpen} onClose={closeEditProductDialog} fullWidth maxWidth='lg'>
             <DialogTitle sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                 <Typography variant="button">
                     Edit Product
@@ -21,7 +23,7 @@ const EditProductDialog = () => {
             <DialogContent>
                 <Box sx={{marginY: 2}}>
                     <ProductNuller/>
-                    <EditProductForm/>
+                    <EditProductForm product={payload}/>
                 </Box>
             </DialogContent>
         </Dialog>

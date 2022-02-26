@@ -14,18 +14,17 @@ const Input = styled('input')({
     display: 'none'
 })
 
-const EditProductForm = () => {
+const EditProductForm = ({ product }) => {
 
     const {
-        handleSubmit, getFieldProps, handleBlur, setValues,
-        handleProductImageClick,
-        touched, errors, isSubmitting, values, product
-    } = useEditProduct()
+        handleSubmit, getFieldProps, handleBlur, setValues, handleProductImageClick,
+        touched, errors, isSubmitting, values
+    } = useEditProduct(product)
 
     const {
         categories, subCategories, brands, category, subCategory, brand,
         handleCategoriesChange, handleSubCategoriesChange, handleBrandsChange
-    } = useFieldProduct(setValues)
+    } = useFieldProduct(setValues, product)
 
     const {
         preview,
