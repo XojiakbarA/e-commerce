@@ -83,6 +83,14 @@ export const storeCategory = (data) => {
     return instance.post(`api/admin/categories`, data)
 }
 
+export const updateCategory = (id, data) => {
+    return instance.put(`api/admin/categories/${id}`, data)
+}
+
+export const updateSubCategory = (id, data) => {
+    return instance.put(`api/admin/sub-categories/${id}`, data)
+}
+
 export const updateBanner = (id, data) => {
     return instance.post(`api/admin/banners/${id}?_method=PUT`, data)
 }

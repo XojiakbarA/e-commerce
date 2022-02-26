@@ -1,5 +1,5 @@
-import { fetchCategories, fetchProducts, fetchReviews, storeCategory, updateBanner, updateProductPublished, updateReviewPublished } from "../../../../api/admin"
-import { addCategory, setCategories, setLoading, setProducts, setReviews, setSnackbar, updateBanners } from "../actionCreators"
+import { fetchCategories, fetchProducts, fetchReviews, storeCategory, updateBanner, updateCategory, updateProductPublished, updateReviewPublished, updateSubCategory } from "../../../../api/admin"
+import { addCategory, setCategories, setLoading, setProducts, setReviews, setSnackbar, updateBanners, updateCategories, updateSubCategories } from "../actionCreators"
 import router from "next/router"
 
 export const getProducts = (query, cookie) => {
@@ -84,6 +84,38 @@ export const createCategory = (data, resetForm, setSubmitting) => {
                 resetForm()
                 setSubmitting(false)
                 dispatch(setSnackbar({isOpen: true, text: `Category created successfully!`}))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const editCategory = (id, data, resetForm, setSubmitting) => {
+    return async (dispatch) => {
+        try {
+            const res = await updateCategory(id, data)
+            if (res.status === 200) {
+                dispatch(updateCategories(res.data.data))
+                resetForm()
+                setSubmitting(false)
+                dispatch(setSnackbar({isOpen: true, text: `Category updated successfully!`}))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const editSubCategory = (id, data, resetForm, setSubmitting) => {
+    return async (dispatch) => {
+        try {
+            const res = await updateSubCategory(id, data)
+            if (res.status === 200) {
+                dispatch(updateSubCategories(res.data.data))
+                resetForm()
+                setSubmitting(false)
+                dispatch(setSnackbar({isOpen: true, text: `Sub Category updated successfully!`}))
             }
         } catch (e) {
             console.log(e)

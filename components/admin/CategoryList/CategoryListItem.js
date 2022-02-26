@@ -1,4 +1,4 @@
-import { Collapse, IconButton, List, ListItemButton, ListItemText, TextField } from "@mui/material"
+import { CircularProgress, Collapse, IconButton, List, ListItemButton, ListItemText, TextField } from "@mui/material"
 import {ExpandLess, ExpandMore} from '@mui/icons-material'
 import SaveIcon from '@mui/icons-material/Save'
 import EditIcon from '@mui/icons-material/Edit'
@@ -8,19 +8,27 @@ import { useState } from "react"
 import { useRipple } from '../../../app/hooks/useRipple'
 import CategorySubListItem from "./CategorySubListItem"
 import { useFormik } from "formik"
+import { useDispatch } from "react-redux"
+import { editCategory } from "../../../app/store/actions/async/admin"
 
 const CategoryListItem = ({ category }) => {
 
+    const dispatch = useDispatch()
     const [ripple, events] = useRipple()
 
     const [open, setOpen] = useState(false)
     const [ edit, setEdit ] = useState(false)
 
-    const { values, handleChange, handleSubmit, submitForm, resetForm } = useFormik({
+    const { values, isSubmitting, handleChange, handleSubmit, submitForm, resetForm } = useFormik({
         initialValues: { title: category.title },
-        onSubmit: (data) => {
-            console.log(data)
-        }
+        onSubmit: (data, {resetForm, setSubmitting}) => {
+            if (values.title == category.title) {
+                setSubmitting(false)
+                return
+            }
+            dispatch(editCategory(category.id, data, resetForm, setSubmitting))
+        },
+        enableReinitialize: true
     })
 
     const handleOpenClick = (e) => {
@@ -29,14 +37,13 @@ const CategoryListItem = ({ category }) => {
     const handleEditClick = (e) => {
         e.stopPropagation()
         setEdit(prev => !prev)
+        resetForm()
     }
     const handleBlur = () => {
         if (!ripple) setEdit(false)
-        resetForm()
     }
     const handleSubmitClick = async () => {
-        await submitForm() 
-        resetForm()
+        await submitForm()
         setEdit(false)
     }
 
@@ -66,7 +73,11 @@ const CategoryListItem = ({ category }) => {
                     <ListItemText primary={category.title}/>
                 }
                 {
-                    category.title != values.title &&
+                    isSubmitting
+                    ?
+                    <CircularProgress size={20}/>
+                    :
+                    (values.title != category.title && values.title != false) &&
                     <IconButton
                         size='small'
                         onClick={ handleSubmitClick }

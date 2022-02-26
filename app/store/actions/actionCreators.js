@@ -20,6 +20,16 @@ export const setCategories = (categories) => ({
     payload: categories
 })
 
+export const updateCategories = (category) => ({
+    type: type.UPDATE_CATEGORIES,
+    payload: category
+})
+
+export const updateSubCategories = (sub_category) => ({
+    type: type.UPDATE_SUB_CATEGORIES,
+    payload: sub_category
+})
+
 export const addCategory = (category) => ({
     type: type.ADD_CATEGORY,
     payload: category
