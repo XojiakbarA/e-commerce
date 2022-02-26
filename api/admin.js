@@ -87,12 +87,20 @@ export const storeSubCategory = (cat_id, data) => {
     return instance.post(`api/admin/categories/${cat_id}/sub-categories`, data)
 }
 
+export const storeBrand = (data) => {
+    return instance.post(`api/admin/brands`, data)
+}
+
 export const updateCategory = (id, data) => {
     return instance.put(`api/admin/categories/${id}`, data)
 }
 
 export const updateSubCategory = (id, data) => {
     return instance.put(`api/admin/sub-categories/${id}`, data)
+}
+
+export const updateBrand = (id, data) => {
+    return instance.put(`api/admin/brands/${id}`, data)
 }
 
 export const updateBanner = (id, data) => {

@@ -1,4 +1,4 @@
-import { CircularProgress, Collapse, IconButton, List, ListItemButton, ListItemText, TextField } from "@mui/material"
+import { Box, CircularProgress, Collapse, IconButton, List, ListItemButton, ListItemText, TextField } from "@mui/material"
 import {ExpandLess, ExpandMore} from '@mui/icons-material'
 import SaveIcon from '@mui/icons-material/Save'
 import EditIcon from '@mui/icons-material/Edit'
@@ -15,8 +15,8 @@ import AddSubCategoryListItem from "./AddSubCategoryListItem"
 const CategoryListItem = ({ category }) => {
 
     const dispatch = useDispatch()
-    const [ripple, events] = useRipple()
 
+    const [ripple, events] = useRipple()
     const [open, setOpen] = useState(false)
     const [ edit, setEdit ] = useState(false)
 
@@ -27,7 +27,7 @@ const CategoryListItem = ({ category }) => {
                 setSubmitting(false)
                 return
             }
-            dispatch(editCategory(category.id, data, resetForm, setSubmitting))
+            dispatch(editCategory(category.id, data, resetForm, setSubmitting, setEdit))
         },
         enableReinitialize: true
     })
@@ -37,15 +37,14 @@ const CategoryListItem = ({ category }) => {
     }
     const handleEditClick = (e) => {
         e.stopPropagation()
-        setEdit(prev => !prev)
         resetForm()
+        setEdit(prev => !prev)
     }
     const handleBlur = () => {
         if (!ripple) setEdit(false)
     }
     const handleSubmitClick = async () => {
         await submitForm()
-        setEdit(false)
     }
 
     return (
@@ -56,6 +55,13 @@ const CategoryListItem = ({ category }) => {
                 onClick={ handleOpenClick }
             >
                 {
+                    isSubmitting
+                    ?
+                    <>
+                    <CircularProgress size={20}/>
+                    <Box sx={{ flexGrow: 1 }}/>
+                    </>
+                    :
                     edit
                     ?
                     <form onSubmit={handleSubmit} style={{ width: '100%' }}>
@@ -74,10 +80,6 @@ const CategoryListItem = ({ category }) => {
                     <ListItemText primary={category.title}/>
                 }
                 {
-                    isSubmitting
-                    ?
-                    <CircularProgress size={20}/>
-                    :
                     (values.title != category.title && values.title != false) &&
                     <IconButton
                         size='small'
@@ -96,7 +98,6 @@ const CategoryListItem = ({ category }) => {
                 </IconButton>
                 <IconButton
                     size='small'
-                    onClick={handleEditClick}
                     { ...events }
                 >
                     <DeleteIcon fontSize='small'/>

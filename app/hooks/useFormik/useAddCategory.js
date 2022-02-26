@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux"
 import { createCategory } from "../../store/actions/async/admin"
 import { categoryValidationSchema } from "./validate"
 
-export const useAddCategory = () => {
+export const useAddCategory = (setOpen) => {
 
     const dispatch = useDispatch()
 
@@ -18,7 +18,7 @@ export const useAddCategory = () => {
         },
         validationSchema: categoryValidationSchema,
         onSubmit: (data, {resetForm, setSubmitting}) => {
-            dispatch(createCategory(data, resetForm, setSubmitting))
+            dispatch(createCategory(data, resetForm, setSubmitting, setOpen))
         },
         validateOnBlur: false
     })

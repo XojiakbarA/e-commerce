@@ -1,5 +1,5 @@
-import { fetchCategories, fetchProducts, fetchReviews, storeCategory, storeSubCategory, updateBanner, updateCategory, updateProductPublished, updateReviewPublished, updateSubCategory } from "../../../../api/admin"
-import { addCategory, addSubCategory, setCategories, setLoading, setProducts, setReviews, setSnackbar, updateBanners, updateCategories, updateSubCategories } from "../actionCreators"
+import { fetchCategories, fetchProducts, fetchReviews, storeBrand, storeCategory, storeSubCategory, updateBanner, updateBrand, updateCategory, updateProductPublished, updateReviewPublished, updateSubCategory } from "../../../../api/admin"
+import { addBrand, addCategory, addSubCategory, setCategories, setLoading, setProducts, setReviews, setSnackbar, updateBanners, updateBrands, updateCategories, updateSubCategories } from "../actionCreators"
 import router from "next/router"
 
 export const getProducts = (query, cookie) => {
@@ -75,7 +75,7 @@ export const getCategories = (cookie) => {
     }
 }
 
-export const createCategory = (data, resetForm, setSubmitting) => {
+export const createCategory = (data, resetForm, setSubmitting, setEdit) => {
     return async (dispatch) => {
         try {
             const res = await storeCategory(data)
@@ -83,6 +83,7 @@ export const createCategory = (data, resetForm, setSubmitting) => {
                 dispatch(addCategory(res.data.data))
                 resetForm()
                 setSubmitting(false)
+                setEdit(false)
                 dispatch(setSnackbar({isOpen: true, text: `Category created successfully!`}))
             }
         } catch (e) {
@@ -108,7 +109,24 @@ export const createSubCategory = (cat_id, data, resetForm, setSubmitting, setEdi
     }
 }
 
-export const editCategory = (id, data, resetForm, setSubmitting) => {
+export const createBrand = (data, resetForm, setSubmitting, setEdit) => {
+    return async (dispatch) => {
+        try {
+            const res = await storeBrand(data)
+            if (res.status === 201) {
+                dispatch(addBrand(res.data.data))
+                resetForm()
+                setSubmitting(false)
+                setEdit(false)
+                dispatch(setSnackbar({isOpen: true, text: `Brand created successfully!`}))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const editCategory = (id, data, resetForm, setSubmitting, setEdit) => {
     return async (dispatch) => {
         try {
             const res = await updateCategory(id, data)
@@ -116,6 +134,7 @@ export const editCategory = (id, data, resetForm, setSubmitting) => {
                 dispatch(updateCategories(res.data.data))
                 resetForm()
                 setSubmitting(false)
+                setEdit(false)
                 dispatch(setSnackbar({isOpen: true, text: `Category updated successfully!`}))
             }
         } catch (e) {
@@ -124,7 +143,7 @@ export const editCategory = (id, data, resetForm, setSubmitting) => {
     }
 }
 
-export const editSubCategory = (id, data, resetForm, setSubmitting) => {
+export const editSubCategory = (id, data, resetForm, setSubmitting, setEdit) => {
     return async (dispatch) => {
         try {
             const res = await updateSubCategory(id, data)
@@ -132,7 +151,25 @@ export const editSubCategory = (id, data, resetForm, setSubmitting) => {
                 dispatch(updateSubCategories(res.data.data))
                 resetForm()
                 setSubmitting(false)
+                setEdit(false)
                 dispatch(setSnackbar({isOpen: true, text: `Sub Category updated successfully!`}))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const editBrand = (id, data, resetForm, setSubmitting, setEdit) => {
+    return async (dispatch) => {
+        try {
+            const res = await updateBrand(id, data)
+            if (res.status === 200) {
+                dispatch(updateBrands(res.data.data))
+                resetForm()
+                setSubmitting(false)
+                setEdit(false)
+                dispatch(setSnackbar({isOpen: true, text: `Brand updated successfully!`}))
             }
         } catch (e) {
             console.log(e)

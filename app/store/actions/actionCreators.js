@@ -30,6 +30,11 @@ export const updateSubCategories = (sub_category) => ({
     payload: sub_category
 })
 
+export const updateBrands = (brand) => ({
+    type: type.UPDATE_BRANDS,
+    payload: brand
+})
+
 export const addCategory = (category) => ({
     type: type.ADD_CATEGORY,
     payload: category
@@ -39,6 +44,11 @@ export const addSubCategory = (sub_category, category_id) => ({
     type: type.ADD_SUB_CATEGORY,
     payload: sub_category,
     category_id
+})
+
+export const addBrand = (brand) => ({
+    type: type.ADD_BRAND,
+    payload: brand
 })
 
 export const setBrands = (brands) => ({

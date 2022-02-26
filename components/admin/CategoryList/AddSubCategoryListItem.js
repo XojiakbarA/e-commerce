@@ -1,4 +1,4 @@
-import { IconButton, ListItem, ListItemText, TextField } from "@mui/material"
+import { Box, CircularProgress, IconButton, ListItem, ListItemText, TextField } from "@mui/material"
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
 import SaveIcon from '@mui/icons-material/Save'
@@ -16,12 +16,11 @@ const AddSubCategoryListItem = ({ category_id }) => {
     const [ripple, events] = useRipple()
     const [edit, setEdit] = useState(false)
 
-    const { values, touched, errors, isValid, handleSubmit, getFieldProps, resetForm, submitForm } = useFormik({
+    const { touched, errors, isValid, isSubmitting, handleSubmit, getFieldProps, resetForm, submitForm } = useFormik({
         initialValues: {
             title: ''
         },
         validationSchema: titleValidationSchema,
-        validateOnBlur: false,
         onSubmit: (data, {resetForm, setSubmitting}) => {
             dispatch(createSubCategory(category_id, data, resetForm, setSubmitting, setEdit))
         }
@@ -41,6 +40,13 @@ const AddSubCategoryListItem = ({ category_id }) => {
     return (
         <ListItem sx={{ pl: 4, alignItems: 'flex-start' }}>
             {
+                isSubmitting
+                ?
+                <>
+                <CircularProgress size={20}/>
+                <Box sx={{ flexGrow: 1 }}/>
+                </>
+                :
                 edit
                 ?
                 <form onSubmit={handleSubmit} style={{ width: '100%' }}>
@@ -63,6 +69,7 @@ const AddSubCategoryListItem = ({ category_id }) => {
                 <IconButton
                     size='small'
                     onClick={handleSubmitClick}
+                    disabled={isSubmitting}
                     { ...events }
                 >
                     <SaveIcon fontSize='small'/>
@@ -71,6 +78,7 @@ const AddSubCategoryListItem = ({ category_id }) => {
             <IconButton
                 size='small'
                 onClick={handleEditClick}
+                disabled={isSubmitting}
             >
                 {edit ? <RemoveCircleIcon fontSize='small'/> : <AddCircleIcon fontSize='small'/>}
             </IconButton>
