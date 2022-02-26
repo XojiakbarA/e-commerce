@@ -11,13 +11,22 @@ const categories = (state = initialState, action) => {
     switch (action.type) {
         case type.SET_CATEGORIES:
             return action.payload
+
         case type.ADD_CATEGORY:
             return state.concat(action.payload)
+
+        case type.ADD_SUB_CATEGORY:
+            newState = [ ...state ]
+            cat_index = newState.findIndex(item => item.id === action.category_id)
+            newState[cat_index].sub_categories.push(action.payload)
+            return newState
+
         case type.UPDATE_CATEGORIES:
             newState = [ ...state ]
             cat_index = newState.findIndex(item => item.id === action.payload.id)
             newState[cat_index] = action.payload
             return newState
+
         case type.UPDATE_SUB_CATEGORIES:
             newState = [ ...state ]
             cat_index = newState.findIndex(cat => (
@@ -30,6 +39,7 @@ const categories = (state = initialState, action) => {
             )
             newState[cat_index].sub_categories[sub_cat_index] = action.payload
             return newState
+
         default:
             return state
     }

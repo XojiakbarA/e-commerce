@@ -1,5 +1,5 @@
-import { fetchCategories, fetchProducts, fetchReviews, storeCategory, updateBanner, updateCategory, updateProductPublished, updateReviewPublished, updateSubCategory } from "../../../../api/admin"
-import { addCategory, setCategories, setLoading, setProducts, setReviews, setSnackbar, updateBanners, updateCategories, updateSubCategories } from "../actionCreators"
+import { fetchCategories, fetchProducts, fetchReviews, storeCategory, storeSubCategory, updateBanner, updateCategory, updateProductPublished, updateReviewPublished, updateSubCategory } from "../../../../api/admin"
+import { addCategory, addSubCategory, setCategories, setLoading, setProducts, setReviews, setSnackbar, updateBanners, updateCategories, updateSubCategories } from "../actionCreators"
 import router from "next/router"
 
 export const getProducts = (query, cookie) => {
@@ -84,6 +84,23 @@ export const createCategory = (data, resetForm, setSubmitting) => {
                 resetForm()
                 setSubmitting(false)
                 dispatch(setSnackbar({isOpen: true, text: `Category created successfully!`}))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const createSubCategory = (cat_id, data, resetForm, setSubmitting, setEdit) => {
+    return async (dispatch) => {
+        try {
+            const res = await storeSubCategory(cat_id, data)
+            if (res.status === 201) {
+                dispatch(addSubCategory(res.data.data, cat_id))
+                resetForm()
+                setSubmitting(false)
+                setEdit(false)
+                dispatch(setSnackbar({isOpen: true, text: `Sub Category created successfully!`}))
             }
         } catch (e) {
             console.log(e)

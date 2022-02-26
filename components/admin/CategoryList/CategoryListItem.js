@@ -10,6 +10,7 @@ import CategorySubListItem from "./CategorySubListItem"
 import { useFormik } from "formik"
 import { useDispatch } from "react-redux"
 import { editCategory } from "../../../app/store/actions/async/admin"
+import AddSubCategoryListItem from "./AddSubCategoryListItem"
 
 const CategoryListItem = ({ category }) => {
 
@@ -111,6 +112,7 @@ const CategoryListItem = ({ category }) => {
                                 <CategorySubListItem key={sub_category.id} sub_category={sub_category}/>
                             ))
                         }
+                        <AddSubCategoryListItem category_id={category.id}/>
                     </List>
                 </Collapse>
             }

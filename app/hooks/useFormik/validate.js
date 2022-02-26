@@ -162,8 +162,8 @@ export const bannerValidationSchema = yup.object({
         .required('Banner Description is required'),
 })
 
-export const brandValidationSchema = yup.object({
+export const titleValidationSchema = yup.object({
     title: yup
-        .string('Enter Brand Title')
-        .required('Brand Title is required')
+        .string('Enter Title')
+        .required('Title is required')
 })

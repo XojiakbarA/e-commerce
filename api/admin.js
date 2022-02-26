@@ -83,6 +83,10 @@ export const storeCategory = (data) => {
     return instance.post(`api/admin/categories`, data)
 }
 
+export const storeSubCategory = (cat_id, data) => {
+    return instance.post(`api/admin/categories/${cat_id}/sub-categories`, data)
+}
+
 export const updateCategory = (id, data) => {
     return instance.put(`api/admin/categories/${id}`, data)
 }

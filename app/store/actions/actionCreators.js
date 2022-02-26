@@ -35,6 +35,12 @@ export const addCategory = (category) => ({
     payload: category
 })
 
+export const addSubCategory = (sub_category, category_id) => ({
+    type: type.ADD_SUB_CATEGORY,
+    payload: sub_category,
+    category_id
+})
+
 export const setBrands = (brands) => ({
     type: type.SET_BRANDS,
     payload: brands
