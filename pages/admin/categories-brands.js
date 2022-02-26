@@ -7,7 +7,6 @@ import { getCategories } from "../../app/store/actions/async/admin"
 import { useSelector } from "react-redux"
 import CategoryList from "../../components/admin/CategoryList/CategoryList"
 import BrandList from "../../components/admin/BrandList/BrandList"
-import DeleteCategoryDialog from "../../components/dialogs/DeleteCategoryDialog"
 
 const CategoriesBrands = () => {
 
@@ -28,7 +27,6 @@ const CategoriesBrands = () => {
             <Grid item xs={4}>
                 <BrandList brands={brands}/>
             </Grid>
-            <DeleteCategoryDialog/>
         </Grid>
     )
 }

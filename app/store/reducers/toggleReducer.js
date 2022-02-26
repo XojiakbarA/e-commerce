@@ -6,7 +6,6 @@ const initialState = {
     registerDialog: false,
     orderDialog: false,
     orderShipDialog: false,
-    confirmDialog: false,
     editProfileDialog: false,
     addProductDialog: false,
     viewProductDialog: false,
@@ -15,7 +14,8 @@ const initialState = {
     deleteCategoryDialog: false,
     addReviewDialog: false,
     cartSidebar: false,
-    accountMenu: null
+    accountMenu: null,
+    confirmDialog: { isOpen: false, text: '', payload: {} }
 }
 
 const toggleReducer = (state = initialState, action) => {
@@ -31,7 +31,13 @@ const toggleReducer = (state = initialState, action) => {
         case type.TOGGLE_ORDER_SHIP_DIALOG:
             return { ...state, orderShipDialog: action.payload }
         case type.TOGGLE_CONFIRM_DIALOG:
-            return { ...state, confirmDialog: action.payload }
+            return {
+                ...state,
+                confirmDialog: {
+                    isOpen: action.isOpen,
+                    text: action.text,
+                    payload: action.payload
+                }}
         case type.TOGGLE_EDIT_PROFILE_DIALOG:
             return { ...state, editProfileDialog: action.payload }
         case type.TOGGLE_ADD_PRODUCT_DIALOG:

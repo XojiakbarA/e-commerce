@@ -17,7 +17,9 @@ const CategoryListItem = ({ category }) => {
         handleBlur, handleSubmitClick
     } = useEditCategory(category)
 
-    const { openDeleteCategoryDialog } = useToggle()
+    const { openConfirmDialog } = useToggle()
+
+    const dialogText = `Do you really want to delete the "${category.title}"?`
 
     return (
         <>
@@ -73,7 +75,7 @@ const CategoryListItem = ({ category }) => {
                         size='small'
                         onClick={e => {
                             e.stopPropagation()
-                            openDeleteCategoryDialog(category)
+                            openConfirmDialog(true, dialogText, category)
                         }}
                         { ...events }
                     >

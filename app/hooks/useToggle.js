@@ -56,12 +56,12 @@ export const useToggle = () => {
         dispatch(toggleViewProductDialog(false))
     }
 
-    const openConfirmDialog = (orderShop) => {
-        dispatch(setOrderShop(orderShop))
-        dispatch(toggleConfirmDialog(true))
+    const openConfirmDialog = (bool, text, payload) => {
+        // dispatch(setOrderShop(obj))
+        dispatch(toggleConfirmDialog(bool, text, payload))
     }
     const closeConfirmDialog = () => {
-        dispatch(toggleConfirmDialog(false))
+        dispatch(toggleConfirmDialog(false, '', {}))
     }
 
     const openEditProfileDialog = () => {
