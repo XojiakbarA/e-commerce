@@ -6,8 +6,8 @@ import {
 } from "../../../../api/admin"
 import {
     addBrand, addCategory, addSubCategory, dropCategory, dropSubCategory,
-    setCategories, setDialogContent, setLoading, setProducts, setReviews,
-    setSnackbar, toggleDeleteCategoryDialog, toggleDeleteSubCategoryDialog,
+    setCategories, setLoading, setProducts, setReviews, setSnackbar,
+    toggleDeleteCategoryDialog, toggleDeleteSubCategoryDialog,
     updateBanners, updateBrands, updateCategories, updateSubCategories
 } from "../actionCreators"
 import router from "next/router"
@@ -211,8 +211,7 @@ export const deleteCategory = (id, setSubmitting) => {
             if (res.status === 204) {
                 dispatch(dropCategory(id))
                 setSubmitting(false)
-                dispatch(toggleDeleteCategoryDialog(false))
-                dispatch(setDialogContent('', {}))
+                dispatch(toggleDeleteCategoryDialog(false, '', {}))
                 dispatch(setSnackbar({isOpen: true, text: `Category deleted successfully!`}))
             }
         } catch (e) {
@@ -229,8 +228,7 @@ export const deleteSubCategory = (id, setSubmitting) => {
             if (res.status === 204) {
                 dispatch(dropSubCategory(id))
                 setSubmitting(false)
-                dispatch(toggleDeleteSubCategoryDialog(false))
-                dispatch(setDialogContent('', {}))
+                dispatch(toggleDeleteSubCategoryDialog(false, '', {}))
                 dispatch(setSnackbar({isOpen: true, text: `Sub Category deleted successfully!`}))
             }
         } catch (e) {

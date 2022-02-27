@@ -16,9 +16,9 @@ const CategoriesBrands = () => {
     const categories = useSelector(state => state.categories)
     const brands = useSelector(state => state.brands)
 
-    const { text, payload } = useSelector(state => state.toggle.dialogContent)
-
     const { deleteCategoryDialog, closeDeleteCategoryDialog } = useToggle()
+
+    const { isOpen, text, payload } = deleteCategoryDialog
 
     const { isSubmitting, handleDeleteClick } = useEditCategory(payload)
 
@@ -33,7 +33,7 @@ const CategoriesBrands = () => {
             <Grid item xs={4}>
                 <CategoryList categories={categories}/>
                 <ConfirmDialog
-                    open={deleteCategoryDialog}
+                    open={isOpen}
                     content={text}
                     loading={isSubmitting}
                     handleCancelClick={closeDeleteCategoryDialog}

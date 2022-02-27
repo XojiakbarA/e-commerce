@@ -1,5 +1,4 @@
 import { List, ListSubheader, Paper } from "@mui/material"
-import { useSelector } from "react-redux"
 import { useEditSubCategory } from "../../../app/hooks/useFormik/useEditSubCategory"
 import { useToggle } from "../../../app/hooks/useToggle"
 import ConfirmDialog from "../../dialogs/ConfirmDialog"
@@ -8,9 +7,9 @@ import CategoryListItem from "./CategoryListItem"
 
 const CategoryList = ({ categories }) => {
 
-    const { text, payload } = useSelector(state => state.toggle.dialogContent)
-
     const { deleteSubCategoryDialog, closeDeleteSubCategoryDialog } = useToggle()
+
+    const { isOpen, text, payload } = deleteSubCategoryDialog
 
     const { isSubmitting, handleDeleteClick } = useEditSubCategory(payload)
 
@@ -26,7 +25,7 @@ const CategoryList = ({ categories }) => {
                 <AddCategoryListItem/>
             </List>
             <ConfirmDialog
-                open={deleteSubCategoryDialog}
+                open={isOpen}
                 content={text}
                 loading={isSubmitting}
                 handleCancelClick={closeDeleteSubCategoryDialog}

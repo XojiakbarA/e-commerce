@@ -116,25 +116,25 @@ export const toggleOrderShipDialog = (bool) => ({
     payload: bool
 })
 
-export const setDialogContent = (text, payload) => ({
-    type: type.SET_DIALOG_CONTENT,
+export const toggleDeleteCategoryDialog = (bool, text, payload) => ({
+    type: type.TOGGLE_DELETE_CATEGORY_DIALOG,
+    isOpen: bool,
     text: text,
     payload: payload
 })
 
-export const toggleDeleteCategoryDialog = (bool) => ({
-    type: type.TOGGLE_DELETE_CATEGORY_DIALOG,
-    payload: bool
-})
-
-export const toggleDeleteSubCategoryDialog = (bool) => ({
+export const toggleDeleteSubCategoryDialog = (bool, text, payload) => ({
     type: type.TOGGLE_DELETE_SUB_CATEGORY_DIALOG,
-    payload: bool
+    isOpen: bool,
+    text: text,
+    payload: payload
 })
 
-export const toggleDeleteProductDialog = (bool) => ({
+export const toggleDeleteProductDialog = (bool, text, payload) => ({
     type: type.TOGGLE_DELETE_PRODUCT_DIALOG,
-    payload: bool
+    isOpen: bool,
+    text: text,
+    payload: payload
 })
 
 export const toggleEditProfileDialog = (bool) => ({

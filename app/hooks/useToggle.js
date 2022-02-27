@@ -1,9 +1,9 @@
 import { useRouter } from "next/router"
 import { useDispatch, useSelector } from "react-redux"
 import {
-    setDialogContent,
     setProduct, toggleAccountMenu, toggleAddProductDialog, toggleAddReviewDialog,
-    toggleCartSidebar, toggleConfirmDialog, toggleDeleteCategoryDialog, toggleDeleteProductDialog, toggleDeleteSubCategoryDialog, toggleEditProductDialog, toggleEditProfileDialog,
+    toggleCartSidebar, toggleDeleteCategoryDialog, toggleDeleteProductDialog,
+    toggleDeleteSubCategoryDialog, toggleEditProductDialog, toggleEditProfileDialog,
     toggleLoginDialog, toggleOrderShipDialog, toggleRegisterDialog, toggleViewProductDialog
 } from "../store/actions/actionCreators"
 
@@ -44,39 +44,25 @@ export const useToggle = () => {
         dispatch(toggleViewProductDialog(false))
     }
 
-    const openConfirmDialog = (text, payload) => {
-        // dispatch(setOrderShop(obj))
-        dispatch(toggleConfirmDialog(true, text, payload))
-    }
-    const closeConfirmDialog = () => {
-        dispatch(toggleConfirmDialog(false, '', {}))
-    }
-
     const openDeleteCategoryDialog = (text, payload) => {
-        dispatch(toggleDeleteCategoryDialog(true))
-        dispatch(setDialogContent(text, payload))
+        dispatch(toggleDeleteCategoryDialog(true, text, payload))
     }
     const closeDeleteCategoryDialog = () => {
-        dispatch(toggleDeleteCategoryDialog(false))
-        dispatch(setDialogContent('', {}))
+        dispatch(toggleDeleteCategoryDialog(false, '', {}))
     }
 
     const openDeleteSubCategoryDialog = (text, payload) => {
-        dispatch(toggleDeleteSubCategoryDialog(true))
-        dispatch(setDialogContent(text, payload))
+        dispatch(toggleDeleteSubCategoryDialog(true, text, payload))
     }
     const closeDeleteSubCategoryDialog = () => {
-        dispatch(toggleDeleteSubCategoryDialog(false))
-        dispatch(setDialogContent('', {}))
+        dispatch(toggleDeleteSubCategoryDialog(false, '', {}))
     }
 
     const openDeleteProductDialog = (text, payload) => {
-        dispatch(toggleDeleteProductDialog(true))
-        dispatch(setDialogContent(text, payload))
+        dispatch(toggleDeleteProductDialog(true, text, payload))
     }
     const closeDeleteProductDialog = () => {
-        dispatch(toggleDeleteProductDialog(false))
-        dispatch(setDialogContent('', {}))
+        dispatch(toggleDeleteProductDialog(false, '', {}))
     }
 
     const openEditProfileDialog = () => {
@@ -158,8 +144,6 @@ export const useToggle = () => {
         closeEditProductDialog,
         openViewProductDialog,
         closeViewProductDialog,
-        openConfirmDialog,
-        closeConfirmDialog,
         openEditProfileDialog,
         closeEditProfileDialog,
         openLoginDialog,

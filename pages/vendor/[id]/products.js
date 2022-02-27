@@ -23,9 +23,9 @@ const Products = () => {
     const products = useSelector(state => state.products.data)
     const meta = useSelector(state => state.products.meta)
 
-    const { text, payload } = useSelector(state => state.toggle.dialogContent)
-
     const { openAddProductDialog, deleteProductDialog, closeDeleteProductDialog } = useToggle()
+
+    const { isOpen, text, payload } = deleteProductDialog
 
     const { isSubmitting, handleDeleteClick } = useEditProduct(payload)
 
@@ -62,7 +62,7 @@ const Products = () => {
                 <ViewProductDialog/>
                 <EditProductDialog/>
                 <ConfirmDialog
-                    open={deleteProductDialog}
+                    open={isOpen}
                     content={text}
                     loading={isSubmitting}
                     handleCancelClick={closeDeleteProductDialog}

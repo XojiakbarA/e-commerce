@@ -13,10 +13,21 @@ const initialState = {
     addReviewDialog: false,
     cartSidebar: false,
     accountMenu: null,
-    dialogContent: { text: '', payload: {} },
-    deleteCategoryDialog: false,
-    deleteSubCategoryDialog: false,
-    deleteProductDialog: false
+    deleteCategoryDialog: {
+        isOpen: false,
+        text: '',
+        payload: {}
+    },
+    deleteSubCategoryDialog: {
+        isOpen: false,
+        text: '',
+        payload: {}
+    },
+    deleteProductDialog: {
+        isOpen: false,
+        text: '',
+        payload: {}
+    }
 }
 
 const toggleReducer = (state = initialState, action) => {
@@ -32,22 +43,35 @@ const toggleReducer = (state = initialState, action) => {
         case type.TOGGLE_ORDER_SHIP_DIALOG:
             return { ...state, orderShipDialog: action.payload }
 
-        case type.SET_DIALOG_CONTENT:
+        case type.TOGGLE_DELETE_CATEGORY_DIALOG:
             return {
                 ...state,
-                dialogContent: {
+                deleteCategoryDialog: {
+                    isOpen: action.isOpen,
                     text: action.text,
                     payload: action.payload
-                }}
-
-        case type.TOGGLE_DELETE_CATEGORY_DIALOG:
-            return { ...state, deleteCategoryDialog: action.payload }
+                }
+            }
 
         case type.TOGGLE_DELETE_SUB_CATEGORY_DIALOG:
-            return { ...state, deleteSubCategoryDialog: action.payload }
+            return {
+                ...state,
+                deleteSubCategoryDialog: {
+                    isOpen: action.isOpen,
+                    text: action.text,
+                    payload: action.payload
+                }
+            }
 
         case type.TOGGLE_DELETE_PRODUCT_DIALOG:
-            return { ...state, deleteProductDialog: action.payload }
+            return {
+                ...state,
+                deleteProductDialog: {
+                    isOpen: action.isOpen,
+                    text: action.text,
+                    payload: action.payload
+                }
+            }
 
         case type.TOGGLE_EDIT_PROFILE_DIALOG:
             return { ...state, editProfileDialog: action.payload }
