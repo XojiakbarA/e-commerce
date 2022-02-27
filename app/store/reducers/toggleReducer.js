@@ -15,6 +15,7 @@ const initialState = {
     accountMenu: null,
     dialogContent: { text: '', payload: {} },
     deleteCategoryDialog: false,
+    deleteSubCategoryDialog: false,
     deleteProductDialog: false
 }
 
@@ -41,6 +42,9 @@ const toggleReducer = (state = initialState, action) => {
 
         case type.TOGGLE_DELETE_CATEGORY_DIALOG:
             return { ...state, deleteCategoryDialog: action.payload }
+
+        case type.TOGGLE_DELETE_SUB_CATEGORY_DIALOG:
+            return { ...state, deleteSubCategoryDialog: action.payload }
 
         case type.TOGGLE_DELETE_PRODUCT_DIALOG:
             return { ...state, deleteProductDialog: action.payload }

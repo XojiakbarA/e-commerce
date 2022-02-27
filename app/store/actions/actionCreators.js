@@ -56,6 +56,11 @@ export const addSubCategory = (sub_category, category_id) => ({
     category_id
 })
 
+export const dropSubCategory = (id) => ({
+    type: type.DELETE_SUB_CATEGORY,
+    payload: id
+})
+
 export const addBrand = (brand) => ({
     type: type.ADD_BRAND,
     payload: brand
@@ -119,6 +124,11 @@ export const setDialogContent = (text, payload) => ({
 
 export const toggleDeleteCategoryDialog = (bool) => ({
     type: type.TOGGLE_DELETE_CATEGORY_DIALOG,
+    payload: bool
+})
+
+export const toggleDeleteSubCategoryDialog = (bool) => ({
+    type: type.TOGGLE_DELETE_SUB_CATEGORY_DIALOG,
     payload: bool
 })
 

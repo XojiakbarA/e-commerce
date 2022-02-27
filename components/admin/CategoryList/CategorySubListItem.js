@@ -3,39 +3,19 @@ import SaveIcon from '@mui/icons-material/Save'
 import EditIcon from '@mui/icons-material/Edit'
 import EditOffIcon from '@mui/icons-material/EditOff'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { useState } from "react"
-import { useFormik } from "formik"
-import { useDispatch } from "react-redux"
-import { editSubCategory } from '../../../app/store/actions/async/admin'
+import { useToggle } from "../../../app/hooks/useToggle"
+import { useEditSubCategory } from "../../../app/hooks/useFormik/useEditSubCategory"
 
 const CategorySubListItem = ({ sub_category }) => {
 
-    const dispatch = useDispatch()
+    const {
+        edit, values, isSubmitting, getFieldProps,handleSubmit,
+        handleEditClick, handleBlur, handleSubmitClick
+    } = useEditSubCategory(sub_category)
 
-    const [ edit, setEdit ] = useState(false)
+    const { openDeleteSubCategoryDialog } = useToggle()
 
-    const { values, isSubmitting, handleChange, handleSubmit, submitForm, resetForm, setSubmitting } = useFormik({
-        initialValues: { title: sub_category.title },
-        onSubmit: (data) => {
-            if (values.title == sub_category.title) {
-                setSubmitting(false)
-                return
-            }
-            dispatch(editSubCategory(sub_category.id, data, resetForm, setSubmitting, setEdit))
-        },
-        enableReinitialize: true
-    })
-
-    const handleEditClick = (e) => {
-        resetForm()
-        setEdit(prev => !prev)
-    }
-    const handleBlur = () => {
-        setEdit(false)
-    }
-    const handleSubmitClick = async () => {
-        await submitForm()
-    }
+    const dialogText = `Do you really want to delete the "${sub_category.title}"?`
 
     return (
         <ListItem selected={edit} sx={{ pl: 4 }}>
@@ -54,10 +34,8 @@ const CategorySubListItem = ({ sub_category }) => {
                         variant='standard'
                         fullWidth
                         autoFocus
-                        value={values.title}
+                        { ...getFieldProps('title') }
                         onBlur={handleBlur}
-                        onChange={handleChange}
-                        name='title'
                     />
                 </form>
                 :
@@ -82,6 +60,7 @@ const CategorySubListItem = ({ sub_category }) => {
             </IconButton>
             <IconButton
                 size='small'
+                onClick={e => openDeleteSubCategoryDialog(dialogText, sub_category)}
                 disabled={isSubmitting}
             >
                 <DeleteIcon fontSize='small'/>

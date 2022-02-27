@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import {
     setDialogContent,
     setProduct, toggleAccountMenu, toggleAddProductDialog, toggleAddReviewDialog,
-    toggleCartSidebar, toggleConfirmDialog, toggleDeleteCategoryDialog, toggleDeleteProductDialog, toggleEditProductDialog, toggleEditProfileDialog,
+    toggleCartSidebar, toggleConfirmDialog, toggleDeleteCategoryDialog, toggleDeleteProductDialog, toggleDeleteSubCategoryDialog, toggleEditProductDialog, toggleEditProfileDialog,
     toggleLoginDialog, toggleOrderShipDialog, toggleRegisterDialog, toggleViewProductDialog
 } from "../store/actions/actionCreators"
 
@@ -58,6 +58,15 @@ export const useToggle = () => {
     }
     const closeDeleteCategoryDialog = () => {
         dispatch(toggleDeleteCategoryDialog(false))
+        dispatch(setDialogContent('', {}))
+    }
+
+    const openDeleteSubCategoryDialog = (text, payload) => {
+        dispatch(toggleDeleteSubCategoryDialog(true))
+        dispatch(setDialogContent(text, payload))
+    }
+    const closeDeleteSubCategoryDialog = () => {
+        dispatch(toggleDeleteSubCategoryDialog(false))
         dispatch(setDialogContent('', {}))
     }
 
@@ -168,6 +177,8 @@ export const useToggle = () => {
         closeDeleteCategoryDialog,
         openDeleteProductDialog,
         closeDeleteProductDialog,
+        openDeleteSubCategoryDialog,
+        closeDeleteSubCategoryDialog,
 
         handleAccount
     }

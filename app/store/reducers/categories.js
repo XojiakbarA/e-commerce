@@ -18,6 +18,17 @@ const categories = (state = initialState, action) => {
         case type.DELETE_CATEGORY:
             return state.filter(item => item.id !== action.payload)
 
+        case type.DELETE_SUB_CATEGORY:
+            newState = [ ...state ]
+            cat_index = newState.findIndex(cat => (
+                cat.sub_categories.find(sub_cat => (
+                    sub_cat.id === action.payload
+                ))
+            ))
+            const newSubCats = newState[cat_index].sub_categories.filter(sub_cat => sub_cat.id !== action.payload)
+            newState[cat_index].sub_categories = newSubCats
+            return newState
+
         case type.ADD_SUB_CATEGORY:
             newState = [ ...state ]
             cat_index = newState.findIndex(item => item.id === action.category_id)

@@ -110,3 +110,7 @@ export const updateBanner = (id, data) => {
 export const destroyCategory = (id) => {
     return instance.delete(`api/admin/categories/${id}`)
 }
+
+export const destroySubCategory = (id) => {
+    return instance.delete(`api/admin/sub-categories/${id}`)
+}
