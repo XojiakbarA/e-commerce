@@ -1,12 +1,14 @@
 import {
+    destroyBrand,
     destroyCategory, destroySubCategory, fetchCategories, fetchProducts,
     fetchReviews, storeBrand, storeCategory, storeSubCategory, updateBanner,
     updateBrand, updateCategory, updateProductPublished, updateReviewPublished,
     updateSubCategory
 } from "../../../../api/admin"
 import {
-    addBrand, addCategory, addSubCategory, dropCategory, dropSubCategory,
+    addBrand, addCategory, addSubCategory, dropBrand, dropCategory, dropSubCategory,
     setCategories, setLoading, setProducts, setReviews, setSnackbar,
+    toggleDeleteBrandDialog,
     toggleDeleteCategoryDialog, toggleDeleteSubCategoryDialog,
     updateBanners, updateBrands, updateCategories, updateSubCategories
 } from "../actionCreators"
@@ -230,6 +232,23 @@ export const deleteSubCategory = (id, setSubmitting) => {
                 setSubmitting(false)
                 dispatch(toggleDeleteSubCategoryDialog(false, '', {}))
                 dispatch(setSnackbar({isOpen: true, text: `Sub Category deleted successfully!`}))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const deleteBrand = (id, setSubmitting) => {
+    return async (dispatch) => {
+        try {
+            setSubmitting(true)
+            const res = await destroyBrand(id)
+            if (res.status === 204) {
+                dispatch(dropBrand(id))
+                setSubmitting(false)
+                dispatch(toggleDeleteBrandDialog(false, '', {}))
+                dispatch(setSnackbar({isOpen: true, text: `Brand deleted successfully!`}))
             }
         } catch (e) {
             console.log(e)

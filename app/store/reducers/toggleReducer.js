@@ -18,6 +18,11 @@ const initialState = {
         text: '',
         payload: {}
     },
+    deleteBrandDialog: {
+        isOpen: false,
+        text: '',
+        payload: {}
+    },
     deleteSubCategoryDialog: {
         isOpen: false,
         text: '',
@@ -47,6 +52,16 @@ const toggleReducer = (state = initialState, action) => {
             return {
                 ...state,
                 deleteCategoryDialog: {
+                    isOpen: action.isOpen,
+                    text: action.text,
+                    payload: action.payload
+                }
+            }
+
+        case type.TOGGLE_DELETE_BRAND_DIALOG:
+            return {
+                ...state,
+                deleteBrandDialog: {
                     isOpen: action.isOpen,
                     text: action.text,
                     payload: action.payload

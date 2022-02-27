@@ -66,6 +66,11 @@ export const addBrand = (brand) => ({
     payload: brand
 })
 
+export const dropBrand = (id) => ({
+    type: type.DELETE_BRAND,
+    payload: id
+})
+
 export const setBrands = (brands) => ({
     type: type.SET_BRANDS,
     payload: brands
@@ -125,6 +130,13 @@ export const toggleDeleteCategoryDialog = (bool, text, payload) => ({
 
 export const toggleDeleteSubCategoryDialog = (bool, text, payload) => ({
     type: type.TOGGLE_DELETE_SUB_CATEGORY_DIALOG,
+    isOpen: bool,
+    text: text,
+    payload: payload
+})
+
+export const toggleDeleteBrandDialog = (bool, text, payload) => ({
+    type: type.TOGGLE_DELETE_BRAND_DIALOG,
     isOpen: bool,
     text: text,
     payload: payload

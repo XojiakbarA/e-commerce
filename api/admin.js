@@ -114,3 +114,7 @@ export const destroyCategory = (id) => {
 export const destroySubCategory = (id) => {
     return instance.delete(`api/admin/sub-categories/${id}`)
 }
+
+export const destroyBrand = (id) => {
+    return instance.delete(`api/admin/brands/${id}`)
+}

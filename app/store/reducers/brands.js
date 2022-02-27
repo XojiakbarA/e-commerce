@@ -21,6 +21,9 @@ const brands = (state = initialState, action) => {
             newState[index] = action.payload
             return newState
 
+        case type.DELETE_BRAND:
+            return state.filter(brand => brand.id !== action.payload)
+
         default:
             return state
     }
