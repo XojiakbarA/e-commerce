@@ -25,7 +25,7 @@ const menu = [
     {label: 'Transactions', path: '/admin/transactions', icon: <PaidIcon/> },
     {label: 'Banners', path: '/admin/banners', icon: <ViewCarouselIcon/> },
     {label: 'Categories & Brands', path: '/admin/categories-brands', icon: <CategoryIcon/> },
-    {label: 'Regions', path: '/admin/regions', icon: <LocationOnIcon/> },
+    {label: 'Regions', path: '/admin/regions-districts', icon: <LocationOnIcon/> },
     {label: 'Settings', path: '/admin/settings', icon: <SettingsIcon/> },
 ]
 

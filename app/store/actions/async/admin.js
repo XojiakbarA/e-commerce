@@ -1,13 +1,14 @@
 import {
     destroyBrand,
     destroyCategory, destroySubCategory, fetchCategories, fetchProducts,
+    fetchRegions,
     fetchReviews, storeBrand, storeCategory, storeSubCategory, updateBanner,
     updateBrand, updateCategory, updateProductPublished, updateReviewPublished,
     updateSubCategory
 } from "../../../../api/admin"
 import {
     addBrand, addCategory, addSubCategory, dropBrand, dropCategory, dropSubCategory,
-    setCategories, setLoading, setProducts, setReviews, setSnackbar,
+    setCategories, setLoading, setProducts, setRegions, setReviews, setSnackbar,
     toggleDeleteBrandDialog,
     toggleDeleteCategoryDialog, toggleDeleteSubCategoryDialog,
     updateBanners, updateBrands, updateCategories, updateSubCategories
@@ -36,6 +37,19 @@ export const getReviews = (query, cookie) => {
             }
         } catch (e) {
             console.log(e.response.data.message)
+        }
+    }
+}
+
+export const getRegions = (cookie) => {
+    return async (dispatch) => {
+        try {
+            const res = await fetchRegions(cookie)
+            if (res.status === 200) {
+                dispatch(setRegions(res.data.data))
+            }
+        } catch (e) {
+            console.log(e)
         }
     }
 }

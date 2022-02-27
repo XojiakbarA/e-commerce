@@ -142,6 +142,20 @@ export const toggleDeleteBrandDialog = (bool, text, payload) => ({
     payload: payload
 })
 
+export const toggleDeleteRegionDialog = (bool, text, payload) => ({
+    type: type.TOGGLE_DELETE_REGION_DIALOG,
+    isOpen: bool,
+    text: text,
+    payload: payload
+})
+
+export const toggleDeleteDistrictDialog = (bool, text, payload) => ({
+    type: type.TOGGLE_DELETE_DISTRICT_DIALOG,
+    isOpen: bool,
+    text: text,
+    payload: payload
+})
+
 export const toggleDeleteProductDialog = (bool, text, payload) => ({
     type: type.TOGGLE_DELETE_PRODUCT_DIALOG,
     isOpen: bool,
@@ -233,4 +247,10 @@ export const setDistricts = (regions) => ({
 export const setDistrictFetching = (bool) => ({
     type: type.SET_DISTRICTS_FETCHING,
     payload: bool
+})
+
+export const toggleFormSnackbar = (bool, text) => ({
+    type: type.TOGGLE_FORM_SNACKBAR,
+    isOpen: bool,
+    text: text
 })

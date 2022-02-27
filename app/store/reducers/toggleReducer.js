@@ -28,10 +28,24 @@ const initialState = {
         text: '',
         payload: {}
     },
+    deleteRegionDialog: {
+        isOpen: false,
+        text: '',
+        payload: {}
+    },
+    deleteDistrictDialog: {
+        isOpen: false,
+        text: '',
+        payload: {}
+    },
     deleteProductDialog: {
         isOpen: false,
         text: '',
         payload: {}
+    },
+    formSnackbar: {
+        isOpen: false,
+        text: ''
     }
 }
 
@@ -78,6 +92,26 @@ const toggleReducer = (state = initialState, action) => {
                 }
             }
 
+        case type.TOGGLE_DELETE_REGION_DIALOG:
+            return {
+                ...state,
+                deleteRegionDialog: {
+                    isOpen: action.isOpen,
+                    text: action.text,
+                    payload: action.payload
+                }
+            }
+
+        case type.TOGGLE_DELETE_DISTRICT_DIALOG:
+            return {
+                ...state,
+                deleteRegionDialog: {
+                    isOpen: action.isOpen,
+                    text: action.text,
+                    payload: action.payload
+                }
+            }
+
         case type.TOGGLE_DELETE_PRODUCT_DIALOG:
             return {
                 ...state,
@@ -85,6 +119,15 @@ const toggleReducer = (state = initialState, action) => {
                     isOpen: action.isOpen,
                     text: action.text,
                     payload: action.payload
+                }
+            }
+
+        case type.TOGGLE_FORM_SNACKBAR:
+            return {
+                ...state,
+                formSnackbar: {
+                    isOpen: action.isOpen,
+                    text: action.text
                 }
             }
 

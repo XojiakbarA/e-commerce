@@ -2,7 +2,8 @@ import { useRouter } from "next/router"
 import { useDispatch, useSelector } from "react-redux"
 import {
     setProduct, toggleAccountMenu, toggleAddProductDialog, toggleAddReviewDialog,
-    toggleCartSidebar, toggleDeleteBrandDialog, toggleDeleteCategoryDialog, toggleDeleteProductDialog,
+    toggleCartSidebar, toggleDeleteBrandDialog, toggleDeleteCategoryDialog, toggleDeleteDistrictDialog, toggleDeleteProductDialog,
+    toggleDeleteRegionDialog,
     toggleDeleteSubCategoryDialog, toggleEditProductDialog, toggleEditProfileDialog,
     toggleLoginDialog, toggleOrderShipDialog, toggleRegisterDialog, toggleViewProductDialog
 } from "../store/actions/actionCreators"
@@ -63,6 +64,22 @@ export const useToggle = () => {
     }
     const closeDeleteSubCategoryDialog = () => {
         dispatch(toggleDeleteSubCategoryDialog(false, '', {}))
+    }
+
+    const openDeleteRegionDialog = (text, payload) => {
+        dispatch(toggleDeleteRegionDialog(true, text, payload))
+    }
+
+    const closeDeleteRegionDialog = (text, payload) => {
+        dispatch(toggleDeleteRegionDialog(false, '', {}))
+    }
+
+    const openDeleteDistrictDialog = (text, payload) => {
+        dispatch(toggleDeleteDistrictDialog(true, text, payload))
+    }
+
+    const closeDeleteDistrictDialog = (text, payload) => {
+        dispatch(toggleDeleteDistrictDialog(false, '', {}))
     }
 
     const openDeleteProductDialog = (text, payload) => {
@@ -172,6 +189,10 @@ export const useToggle = () => {
         closeDeleteSubCategoryDialog,
         openDeleteBrandDialog,
         closeDeleteBrandDialog,
+        openDeleteRegionDialog,
+        closeDeleteRegionDialog,
+        openDeleteDistrictDialog,
+        closeDeleteDistrictDialog,
 
         handleAccount
     }

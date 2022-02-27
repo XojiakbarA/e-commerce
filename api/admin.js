@@ -79,6 +79,17 @@ export const fetchCategories = (cookie) => {
     )
 }
 
+export const fetchRegions = (cookie) => {
+    return instance.get(`api/admin/regions`, cookie &&
+        {
+            headers: {
+                'Cookie': cookie,
+                'Referer': 'http://localhost:3000/'
+            }
+        }
+    )
+}
+
 export const storeCategory = (data) => {
     return instance.post(`api/admin/categories`, data)
 }

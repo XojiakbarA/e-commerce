@@ -167,3 +167,11 @@ export const titleValidationSchema = yup.object({
         .string('Enter Title')
         .required('Title is required')
 })
+
+export const nameValidationSchema = yup.object({
+    name: yup
+        .string('Enter Name')
+        .strict(true)
+        .trim('Name cannot include leading and trailing spaces')
+        .required('Name is required')
+})
