@@ -1,8 +1,9 @@
 import { useRouter } from "next/router"
 import { useDispatch, useSelector } from "react-redux"
 import {
+    setDialogContent,
     setProduct, toggleAccountMenu, toggleAddProductDialog, toggleAddReviewDialog,
-    toggleCartSidebar, toggleConfirmDialog, toggleEditProductDialog, toggleEditProfileDialog,
+    toggleCartSidebar, toggleConfirmDialog, toggleDeleteCategoryDialog, toggleDeleteProductDialog, toggleEditProductDialog, toggleEditProfileDialog,
     toggleLoginDialog, toggleOrderShipDialog, toggleRegisterDialog, toggleViewProductDialog
 } from "../store/actions/actionCreators"
 
@@ -49,6 +50,24 @@ export const useToggle = () => {
     }
     const closeConfirmDialog = () => {
         dispatch(toggleConfirmDialog(false, '', {}))
+    }
+
+    const openDeleteCategoryDialog = (text, payload) => {
+        dispatch(toggleDeleteCategoryDialog(true))
+        dispatch(setDialogContent(text, payload))
+    }
+    const closeDeleteCategoryDialog = () => {
+        dispatch(toggleDeleteCategoryDialog(false))
+        dispatch(setDialogContent('', {}))
+    }
+
+    const openDeleteProductDialog = (text, payload) => {
+        dispatch(toggleDeleteProductDialog(true))
+        dispatch(setDialogContent(text, payload))
+    }
+    const closeDeleteProductDialog = () => {
+        dispatch(toggleDeleteProductDialog(false))
+        dispatch(setDialogContent('', {}))
     }
 
     const openEditProfileDialog = () => {
@@ -145,6 +164,10 @@ export const useToggle = () => {
         closeSidebar,
         openAddReviewDialog,
         closeAddReviewDialog,
+        openDeleteCategoryDialog,
+        closeDeleteCategoryDialog,
+        openDeleteProductDialog,
+        closeDeleteProductDialog,
 
         handleAccount
     }

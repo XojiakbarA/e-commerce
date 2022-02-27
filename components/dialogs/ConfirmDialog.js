@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {cancelOrder} from "../../app/store/actions/async/user"
 import { useToggle } from "../../app/hooks/useToggle"
 
-const ConfirmDialog = ({ loading, handleConfirmClick }) => {
+const ConfirmDialog = ({ open, content, loading, handleCancelClick, handleConfirmClick }) => {
 
     // const dispatch = useDispatch()
     // const isLoading = useSelector(state => state.toggle.isLoading)
@@ -12,11 +12,8 @@ const ConfirmDialog = ({ loading, handleConfirmClick }) => {
     //     dispatch(cancelOrder(orderShop.id))
     // }
 
-    const { confirmDialog, closeConfirmDialog } = useToggle()
-    const { isOpen, text } = confirmDialog
-
     return (
-        <Dialog open={isOpen} onClose={closeConfirmDialog} maxWidth='xs' fullWidth={true}>
+        <Dialog open={open} onClose={handleCancelClick} maxWidth='xs' fullWidth={true}>
             <DialogTitle>
                 <Typography variant="button">
                     Delete
@@ -25,12 +22,12 @@ const ConfirmDialog = ({ loading, handleConfirmClick }) => {
             </DialogTitle>
             <DialogContent>
                 <DialogContentText height={40}>
-                    {text}
+                    {content}
                     {/* {`Are you sure you want to cancel the "${orderShop.title}" order?`} */}
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={closeConfirmDialog} disabled={loading}>No</Button>
+                <Button onClick={handleCancelClick} disabled={loading}>No</Button>
                 <Button onClick={handleConfirmClick} disabled={loading}>Yes</Button>
             </DialogActions>
         </Dialog>

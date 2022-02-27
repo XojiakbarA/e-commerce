@@ -14,9 +14,9 @@ const CategorySubListItem = ({ sub_category }) => {
 
     const [ edit, setEdit ] = useState(false)
 
-    const { values, isSubmitting, handleChange, handleSubmit, resetForm, submitForm } = useFormik({
+    const { values, isSubmitting, handleChange, handleSubmit, submitForm, resetForm, setSubmitting } = useFormik({
         initialValues: { title: sub_category.title },
-        onSubmit: (data, {resetForm, setSubmitting}) => {
+        onSubmit: (data) => {
             if (values.title == sub_category.title) {
                 setSubmitting(false)
                 return

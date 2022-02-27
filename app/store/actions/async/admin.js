@@ -1,5 +1,5 @@
-import { destroyCategory, fetchCategories, fetchProducts, fetchReviews, storeBrand, storeCategory, storeSubCategory, updateBanner, updateBrand, updateCategory, updateProductPublished, updateReviewPublished, updateSubCategory } from "../../../../api/admin"
-import { addBrand, addCategory, addSubCategory, dropCategory, setCategories, setLoading, setProducts, setReviews, setSnackbar, toggleConfirmDialog, updateBanners, updateBrands, updateCategories, updateSubCategories } from "../actionCreators"
+import { destroyCategory, destroySubCategory, fetchCategories, fetchProducts, fetchReviews, storeBrand, storeCategory, storeSubCategory, updateBanner, updateBrand, updateCategory, updateProductPublished, updateReviewPublished, updateSubCategory } from "../../../../api/admin"
+import { addBrand, addCategory, addSubCategory, dropCategory, dropSubCategory, setCategories, setDialogContent, setLoading, setProducts, setReviews, setSnackbar, toggleConfirmDialog, toggleDeleteCategoryDialog, updateBanners, updateBrands, updateCategories, updateSubCategories } from "../actionCreators"
 import router from "next/router"
 
 export const getProducts = (query, cookie) => {
@@ -201,7 +201,8 @@ export const deleteCategory = (id, setSubmitting) => {
             if (res.status === 204) {
                 dispatch(dropCategory(id))
                 setSubmitting(false)
-                dispatch(toggleConfirmDialog(false, '', null))
+                dispatch(toggleDeleteCategoryDialog(false))
+                dispatch(setDialogContent('', {}))
                 dispatch(setSnackbar({isOpen: true, text: `Category deleted successfully!`}))
             }
         } catch (e) {

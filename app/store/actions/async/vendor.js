@@ -1,6 +1,7 @@
 import {
+    setDialogContent,
     setLoading, setOrderShop, setProduct, setProducts, setShop, setSnackbar,
-    toggleAddProductDialog, toggleConfirmDialog, toggleEditProductDialog, toggleOrderShipDialog
+    toggleAddProductDialog, toggleConfirmDialog, toggleDeleteProductDialog, toggleEditProductDialog, toggleOrderShipDialog
 } from "../actionCreators"
 import {
     destroyProduct, destroyProductImage, fetchOrder, fetchProducts, fetchShop,
@@ -61,7 +62,8 @@ export const deleteProduct = (shop_id, product_id, setSubmitting) => {
             const res = await destroyProduct(shop_id, product_id)
             if (res.status === 200) {
                 setSubmitting(false)
-                dispatch(toggleConfirmDialog(false, '', {}))
+                dispatch(toggleDeleteProductDialog(false))
+                dispatch(setDialogContent('', {}))
                 dispatch(setSnackbar({isOpen: true, text: 'Product deleted successfully!'}))
                 dispatch(getProducts(shop_id))
             }

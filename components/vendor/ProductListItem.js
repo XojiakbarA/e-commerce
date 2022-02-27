@@ -8,7 +8,7 @@ import { useToggle } from "../../app/hooks/useToggle"
 
 const ProductListItem = ({ product }) => {
 
-    const { openEditProductDialog, openConfirmDialog, openViewProductDialog } = useToggle()
+    const { openEditProductDialog, openDeleteProductDialog, openViewProductDialog } = useToggle()
 
     const dialogText = `Do you really want to delete the "${product.title}"?`
 
@@ -58,7 +58,7 @@ const ProductListItem = ({ product }) => {
                         </IconButton>
                     </Tooltip>
                     <Tooltip title='Delete'>
-                        <IconButton onClick={e => openConfirmDialog(dialogText, product)}>
+                        <IconButton onClick={e => openDeleteProductDialog(dialogText, product)}>
                             <DeleteIcon fontSize="small"/>
                         </IconButton>
                     </Tooltip>

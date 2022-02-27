@@ -111,11 +111,20 @@ export const toggleOrderShipDialog = (bool) => ({
     payload: bool
 })
 
-export const toggleConfirmDialog = (bool, text, payload) => ({
-    type: type.TOGGLE_CONFIRM_DIALOG,
-    isOpen: bool,
+export const setDialogContent = (text, payload) => ({
+    type: type.SET_DIALOG_CONTENT,
     text: text,
     payload: payload
+})
+
+export const toggleDeleteCategoryDialog = (bool) => ({
+    type: type.TOGGLE_DELETE_CATEGORY_DIALOG,
+    payload: bool
+})
+
+export const toggleDeleteProductDialog = (bool) => ({
+    type: type.TOGGLE_DELETE_PRODUCT_DIALOG,
+    payload: bool
 })
 
 export const toggleEditProfileDialog = (bool) => ({

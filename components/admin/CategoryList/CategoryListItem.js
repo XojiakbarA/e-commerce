@@ -17,7 +17,7 @@ const CategoryListItem = ({ category }) => {
         handleBlur, handleSubmitClick
     } = useEditCategory(category)
 
-    const { openConfirmDialog } = useToggle()
+    const { openDeleteCategoryDialog } = useToggle()
 
     const dialogText = `Do you really want to delete the "${category.title}"?`
 
@@ -61,27 +61,23 @@ const CategoryListItem = ({ category }) => {
                         <SaveIcon fontSize='small'/>
                     </IconButton>
                 }
-                <Tooltip title={edit ? 'Close Edit' : 'Edit'}>
-                    <IconButton
-                        size='small'
-                        onClick={handleEditClick}
-                        { ...events }
-                    >
-                        {edit ? <EditOffIcon fontSize='small'/> : <EditIcon fontSize='small'/>}
-                    </IconButton>
-                </Tooltip>
-                <Tooltip title='Delete'>
-                    <IconButton
-                        size='small'
-                        onClick={e => {
-                            e.stopPropagation()
-                            openConfirmDialog(dialogText, category)
-                        }}
-                        { ...events }
-                    >
-                        <DeleteIcon fontSize='small'/>
-                    </IconButton>
-                </Tooltip>
+                <IconButton
+                    size='small'
+                    onClick={handleEditClick}
+                    { ...events }
+                >
+                    {edit ? <EditOffIcon fontSize='small'/> : <EditIcon fontSize='small'/>}
+                </IconButton>
+                <IconButton
+                    size='small'
+                    onClick={e => {
+                        e.stopPropagation()
+                        openDeleteCategoryDialog(dialogText, category)
+                    }}
+                    { ...events }
+                >
+                    <DeleteIcon fontSize='small'/>
+                </IconButton>
                 { category.sub_categories && (open ? <ExpandLess /> : <ExpandMore />) }
             </ListItemButton>
             {
