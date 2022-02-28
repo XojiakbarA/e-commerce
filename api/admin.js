@@ -137,3 +137,11 @@ export const updateRegion = (id, data) => {
 export const destroyRegion = (id) => {
     return instance.delete(`api/admin/regions/${id}`)
 }
+
+export const updateDistrict = (id, data) => {
+    return instance.put(`api/admin/districts/${id}`, data)
+}
+
+export const destroyDistrict = (id) => {
+    return instance.delete(`api/admin/districts/${id}`)
+}

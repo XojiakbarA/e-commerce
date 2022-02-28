@@ -2,6 +2,7 @@ import { useFormik } from "formik"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { toggleFormSnackbar } from "../../store/actions/actionCreators"
+import { deleteDistrict, editDistrict } from "../../store/actions/async/admin"
 import { useRipple } from "../useRipple"
 import { useToggle } from "../useToggle"
 import { nameValidationSchema } from "./validate"
@@ -28,7 +29,7 @@ export const useEditDistrict = (district) => {
                 setSubmitting(false)
                 return
             }
-            console.log(data)
+            dispatch(editDistrict(district.id, data, resetForm, setSubmitting, setEdit))
         },
         enableReinitialize: true
     })
@@ -54,7 +55,7 @@ export const useEditDistrict = (district) => {
         openDeleteDistrictDialog(dialogText, district)
     }
     const handleDeleteConfirmClick = () => {
-
+        dispatch(deleteDistrict(district.id, setSubmitting))
     }
 
     return {

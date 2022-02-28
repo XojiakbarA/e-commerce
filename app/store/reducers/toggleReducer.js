@@ -105,7 +105,7 @@ const toggleReducer = (state = initialState, action) => {
         case type.TOGGLE_DELETE_DISTRICT_DIALOG:
             return {
                 ...state,
-                deleteRegionDialog: {
+                deleteDistrictDialog: {
                     isOpen: action.isOpen,
                     text: action.text,
                     payload: action.payload

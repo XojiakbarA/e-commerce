@@ -9,7 +9,7 @@ const DistrictList = ({ districts }) => {
     const { deleteDistrictDialog, closeDeleteDistrictDialog } = useToggle()
 
     const { isOpen, text, payload } = deleteDistrictDialog
-
+// console.log(deleteDistrictDialog)
     const { isSubmitting, handleDeleteConfirmClick } = useEditDistrict(payload)
 
     return (
