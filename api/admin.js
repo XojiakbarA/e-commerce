@@ -130,6 +130,10 @@ export const destroyBrand = (id) => {
     return instance.delete(`api/admin/brands/${id}`)
 }
 
+export const storeRegion = (data) => {
+    return instance.post(`api/admin/regions`, data)
+}
+
 export const updateRegion = (id, data) => {
     return instance.put(`api/admin/regions/${id}`, data)
 }

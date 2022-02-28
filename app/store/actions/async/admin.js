@@ -2,12 +2,12 @@ import {
     destroyBrand,
     destroyCategory, destroyDistrict, destroyRegion, destroySubCategory, fetchCategories, fetchProducts,
     fetchRegions,
-    fetchReviews, storeBrand, storeCategory, storeSubCategory, updateBanner,
+    fetchReviews, storeBrand, storeCategory, storeRegion, storeSubCategory, updateBanner,
     updateBrand, updateCategory, updateDistrict, updateProductPublished, updateRegion, updateReviewPublished,
     updateSubCategory
 } from "../../../../api/admin"
 import {
-    addBrand, addCategory, addSubCategory, dropBrand, dropCategory, dropDistrict, dropRegion, dropSubCategory,
+    addBrand, addCategory, addRegion, addSubCategory, dropBrand, dropCategory, dropDistrict, dropRegion, dropSubCategory,
     setCategories, setLoading, setProducts, setRegions, setReviews, setSnackbar,
     toggleDeleteBrandDialog,
     toggleDeleteCategoryDialog, toggleDeleteDistrictDialog, toggleDeleteRegionDialog, toggleDeleteSubCategoryDialog,
@@ -263,6 +263,24 @@ export const deleteBrand = (id, setSubmitting) => {
                 setSubmitting(false)
                 dispatch(toggleDeleteBrandDialog(false, '', {}))
                 dispatch(setSnackbar({isOpen: true, text: `Brand deleted successfully!`}))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const createRegion = (data, resetForm, setSubmitting, setEdit, handleSelectedClick) => {
+    return async (dispatch) => {
+        try {
+            const res = await storeRegion(data)
+            if (res.status === 201) {
+                dispatch(addRegion(res.data.data))
+                handleSelectedClick(res.data.data)
+                resetForm()
+                setSubmitting(false)
+                setEdit(false)
+                dispatch(setSnackbar({isOpen: true, text: `Region created successfully!`}))
             }
         } catch (e) {
             console.log(e)

@@ -13,7 +13,7 @@ import FormSnackbar from "../../components/admin/FormSnackbar"
 const Regions = () => {
 
     const regions = useSelector(state => state.regions)
-    const formSnackbar = useSelector(state => state.toggle.formSnackbar)
+    const { isOpen, text } = useSelector(state => state.toggle.formSnackbar)
 
     const [selected, setSelected] = useState(regions[0])
 
@@ -41,10 +41,7 @@ const Regions = () => {
                     districts={selected.districts}
                 />
             </Grid>
-            <FormSnackbar
-                open={formSnackbar.isOpen}
-                text={formSnackbar.text}
-            />
+            <FormSnackbar open={isOpen} text={text}/>
         </Grid>
     )
 }

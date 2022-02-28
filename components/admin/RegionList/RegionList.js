@@ -2,6 +2,7 @@ import { List, ListSubheader, Paper } from "@mui/material"
 import { useEditRegion } from "../../../app/hooks/useFormik/useEditRegion"
 import { useToggle } from "../../../app/hooks/useToggle"
 import ConfirmDialog from "../../dialogs/ConfirmDialog"
+import AddRegionListItem from "./AddRegionListItem"
 import RegionListItem from "./RegionListItem"
 
 const RegionList = ({ regions, selected, handleSelectedClick }) => {
@@ -26,6 +27,7 @@ const RegionList = ({ regions, selected, handleSelectedClick }) => {
                         />
                     ))
                 }
+                <AddRegionListItem handleSelectedClick={handleSelectedClick}/>
             </List>
             <ConfirmDialog
                 open={isOpen}

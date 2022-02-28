@@ -255,6 +255,11 @@ export const toggleFormSnackbar = (bool, text) => ({
     text: text
 })
 
+export const addRegion = (region) => ({
+    type: type.ADD_REGION,
+    payload: region
+})
+
 export const updateRegions = (region) => ({
     type: type.UPDATE_REGIONS,
     payload: region
