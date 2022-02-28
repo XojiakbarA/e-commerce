@@ -1,12 +1,7 @@
-import { forwardRef } from 'react'
 import Snackbar from '@mui/material/Snackbar'
-import MuiAlert from '@mui/material/Alert'
+import Alert from '@mui/material/Alert'
 import { useDispatch } from 'react-redux'
 import { toggleFormSnackbar } from '../../app/store/actions/actionCreators'
-
-const Alert = forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
-})
 
 const FormSnackbar = ({ open, text }) => {
 
@@ -19,7 +14,13 @@ const FormSnackbar = ({ open, text }) => {
 
     return (
         <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+            <Alert
+                severity="error"
+                variant='standard'
+                elevation={6}
+                color='error'
+                onClose={handleClose}
+            >
                 { text }
             </Alert>
         </Snackbar>
