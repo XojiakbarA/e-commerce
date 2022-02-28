@@ -129,3 +129,11 @@ export const destroySubCategory = (id) => {
 export const destroyBrand = (id) => {
     return instance.delete(`api/admin/brands/${id}`)
 }
+
+export const updateRegion = (id, data) => {
+    return instance.put(`api/admin/regions/${id}`, data)
+}
+
+export const destroyRegion = (id) => {
+    return instance.delete(`api/admin/regions/${id}`)
+}

@@ -254,3 +254,13 @@ export const toggleFormSnackbar = (bool, text) => ({
     isOpen: bool,
     text: text
 })
+
+export const updateRegions = (region) => ({
+    type: type.UPDATE_REGIONS,
+    payload: region
+})
+
+export const dropRegion = (id) => ({
+    type: type.DELETE_REGION,
+    payload: id
+})

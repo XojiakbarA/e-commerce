@@ -1,17 +1,17 @@
 import {
     destroyBrand,
-    destroyCategory, destroySubCategory, fetchCategories, fetchProducts,
+    destroyCategory, destroyRegion, destroySubCategory, fetchCategories, fetchProducts,
     fetchRegions,
     fetchReviews, storeBrand, storeCategory, storeSubCategory, updateBanner,
-    updateBrand, updateCategory, updateProductPublished, updateReviewPublished,
+    updateBrand, updateCategory, updateProductPublished, updateRegion, updateReviewPublished,
     updateSubCategory
 } from "../../../../api/admin"
 import {
-    addBrand, addCategory, addSubCategory, dropBrand, dropCategory, dropSubCategory,
+    addBrand, addCategory, addSubCategory, dropBrand, dropCategory, dropRegion, dropSubCategory,
     setCategories, setLoading, setProducts, setRegions, setReviews, setSnackbar,
     toggleDeleteBrandDialog,
-    toggleDeleteCategoryDialog, toggleDeleteSubCategoryDialog,
-    updateBanners, updateBrands, updateCategories, updateSubCategories
+    toggleDeleteCategoryDialog, toggleDeleteRegionDialog, toggleDeleteSubCategoryDialog,
+    updateBanners, updateBrands, updateCategories, updateRegions, updateSubCategories
 } from "../actionCreators"
 import router from "next/router"
 
@@ -263,6 +263,40 @@ export const deleteBrand = (id, setSubmitting) => {
                 setSubmitting(false)
                 dispatch(toggleDeleteBrandDialog(false, '', {}))
                 dispatch(setSnackbar({isOpen: true, text: `Brand deleted successfully!`}))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const editRegion = (id, data, resetForm, setSubmitting, setEdit) => {
+    return async (dispatch) => {
+        try {
+            const res = await updateRegion(id, data)
+            if (res.status === 200) {
+                dispatch(updateRegions(res.data.data))
+                resetForm()
+                setSubmitting(false)
+                setEdit(false)
+                dispatch(setSnackbar({isOpen: true, text: `Region updated successfully!`}))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const deleteRegion = (id, setSubmitting) => {
+    return async (dispatch) => {
+        try {
+            setSubmitting(true)
+            const res = await destroyRegion(id)
+            if (res.status === 204) {
+                dispatch(dropRegion(id))
+                setSubmitting(false)
+                dispatch(toggleDeleteRegionDialog(false, '', {}))
+                dispatch(setSnackbar({isOpen: true, text: `Region deleted successfully!`}))
             }
         } catch (e) {
             console.log(e)

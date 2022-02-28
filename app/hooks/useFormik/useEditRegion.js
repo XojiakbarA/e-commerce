@@ -2,6 +2,7 @@ import { useFormik } from "formik"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { toggleFormSnackbar } from "../../store/actions/actionCreators"
+import { deleteRegion, editRegion } from "../../store/actions/async/admin"
 import { useRipple } from "../useRipple"
 import { useToggle } from "../useToggle"
 import { nameValidationSchema } from "./validate"
@@ -28,7 +29,7 @@ export const useEditRegion = (region) => {
                 setSubmitting(false)
                 return
             }
-            console.log(data)
+            dispatch(editRegion(region.id, data, resetForm, setSubmitting, setEdit))
         },
         enableReinitialize: true
     })
@@ -55,7 +56,7 @@ export const useEditRegion = (region) => {
         openDeleteRegionDialog(dialogText, region)
     }
     const handleDeleteConfirmClick = () => {
-
+        dispatch(deleteRegion(region.id, setSubmitting))
     }
 
     return {
