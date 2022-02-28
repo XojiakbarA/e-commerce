@@ -11,7 +11,7 @@ const RegionList = ({ regions, selected, handleSelectedClick }) => {
 
     const { isOpen, text, payload } = deleteRegionDialog
 
-    const { isSubmitting, handleDeleteConfirmClick } = useEditRegion(payload)
+    const { isSubmitting, handleDeleteConfirmClick } = useEditRegion(payload, handleSelectedClick)
 
     return (
         <Paper>

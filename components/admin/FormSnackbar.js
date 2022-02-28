@@ -13,7 +13,12 @@ const FormSnackbar = ({ open, text }) => {
     }
 
     return (
-        <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
+        <Snackbar
+            open={open}
+            autoHideDuration={5000}
+            onClose={handleClose}
+            anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+        >
             <Alert
                 severity="error"
                 variant='standard'

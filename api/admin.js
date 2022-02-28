@@ -138,6 +138,10 @@ export const updateRegion = (id, data) => {
     return instance.put(`api/admin/regions/${id}`, data)
 }
 
+export const storeDistrict = (reg_id, data) => {
+    return instance.post(`api/admin/regions/${reg_id}/districts`, data)
+}
+
 export const destroyRegion = (id) => {
     return instance.delete(`api/admin/regions/${id}`)
 }

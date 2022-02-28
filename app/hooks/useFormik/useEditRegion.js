@@ -7,7 +7,7 @@ import { useRipple } from "../useRipple"
 import { useToggle } from "../useToggle"
 import { nameValidationSchema } from "./validate"
 
-export const useEditRegion = (region) => {
+export const useEditRegion = (region, handleSelectedClick) => {
 
     const dispatch = useDispatch()
 
@@ -56,7 +56,7 @@ export const useEditRegion = (region) => {
         openDeleteRegionDialog(dialogText, region)
     }
     const handleDeleteConfirmClick = () => {
-        dispatch(deleteRegion(region.id, setSubmitting))
+        dispatch(deleteRegion(region.id, setSubmitting, handleSelectedClick))
     }
 
     return {

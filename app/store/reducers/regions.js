@@ -21,6 +21,12 @@ const regions = (state = initialState, action) => {
             newState[reg_index] = action.payload
             return newState
 
+        case type.ADD_DISTRICT:
+            newState = [ ...state ]
+            reg_index = newState.findIndex(region => region.id === action.region_id)
+            newState[reg_index].districts.push(action.payload)
+            return newState
+
         case type.UPDATE_DISTRICTS:
             newState = [ ...state ]
             reg_index = newState.findIndex(region => (

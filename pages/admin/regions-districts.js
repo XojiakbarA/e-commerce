@@ -38,7 +38,7 @@ const Regions = () => {
             </Grid>
             <Grid item xs={4}>
                 <DistrictList
-                    districts={selected.districts}
+                    region={selected}
                 />
             </Grid>
             <FormSnackbar open={isOpen} text={text}/>

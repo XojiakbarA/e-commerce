@@ -2,12 +2,12 @@ import {
     destroyBrand,
     destroyCategory, destroyDistrict, destroyRegion, destroySubCategory, fetchCategories, fetchProducts,
     fetchRegions,
-    fetchReviews, storeBrand, storeCategory, storeRegion, storeSubCategory, updateBanner,
+    fetchReviews, storeBrand, storeCategory, storeDistrict, storeRegion, storeSubCategory, updateBanner,
     updateBrand, updateCategory, updateDistrict, updateProductPublished, updateRegion, updateReviewPublished,
     updateSubCategory
 } from "../../../../api/admin"
 import {
-    addBrand, addCategory, addRegion, addSubCategory, dropBrand, dropCategory, dropDistrict, dropRegion, dropSubCategory,
+    addBrand, addCategory, addDistrict, addRegion, addSubCategory, dropBrand, dropCategory, dropDistrict, dropRegion, dropSubCategory,
     setCategories, setLoading, setProducts, setRegions, setReviews, setSnackbar,
     toggleDeleteBrandDialog,
     toggleDeleteCategoryDialog, toggleDeleteDistrictDialog, toggleDeleteRegionDialog, toggleDeleteSubCategoryDialog,
@@ -305,16 +305,34 @@ export const editRegion = (id, data, resetForm, setSubmitting, setEdit) => {
     }
 }
 
-export const deleteRegion = (id, setSubmitting) => {
-    return async (dispatch) => {
+export const deleteRegion = (id, setSubmitting, handleSelectedClick) => {
+    return async (dispatch, getState) => {
         try {
             setSubmitting(true)
             const res = await destroyRegion(id)
             if (res.status === 204) {
                 dispatch(dropRegion(id))
+                handleSelectedClick(getState().regions[0])
                 setSubmitting(false)
                 dispatch(toggleDeleteRegionDialog(false, '', {}))
                 dispatch(setSnackbar({isOpen: true, text: `Region deleted successfully!`}))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const createDistrict = (reg_id, data, resetForm, setSubmitting, setEdit) => {
+    return async (dispatch) => {
+        try {
+            const res = await storeDistrict(reg_id, data)
+            if (res.status === 201) {
+                dispatch(addDistrict(res.data.data, reg_id))
+                resetForm()
+                setSubmitting(false)
+                setEdit(false)
+                dispatch(setSnackbar({isOpen: true, text: `District created successfully!`}))
             }
         } catch (e) {
             console.log(e)
