@@ -1,7 +1,7 @@
 import {
-    setLoading, setOrderShop, setProduct, setProducts, setShop, setSnackbar,
+    setLoading, setOrderShop, setProduct, setProducts, setShop,
     toggleAddProductDialog, toggleDeleteProductDialog, toggleEditProductDialog,
-    toggleOrderShipDialog
+    toggleOrderShipDialog, toggleSnackbar
 } from "../actionCreators"
 import {
     destroyProduct, destroyProductImage, fetchOrder, fetchProducts, fetchShop,
@@ -28,7 +28,7 @@ export const createProduct = (shop_id, data, resetForm, setSubmitting) => {
             if (res.status === 201) {
                 setSubmitting(false)
                 dispatch(toggleAddProductDialog(false))
-                dispatch(setSnackbar({isOpen: true, text: 'Product created successfully!'}))
+                dispatch(toggleSnackbar(true, 'Product created successfully!'))
                 resetForm()
                 dispatch(getProducts(shop_id))
             }
@@ -45,7 +45,7 @@ export const editProduct = (shop_id, product_id, data, resetForm, setSubmitting)
             if (res.status === 200) {
                 setSubmitting(false)
                 dispatch(toggleEditProductDialog(false))
-                dispatch(setSnackbar({isOpen: true, text: 'Product updated successfully!'}))
+                dispatch(toggleSnackbar(true, 'Product updated successfully!'))
                 resetForm()
                 dispatch(getProducts(shop_id))
             }
@@ -63,7 +63,7 @@ export const deleteProduct = (shop_id, product_id, setSubmitting) => {
             if (res.status === 200) {
                 setSubmitting(false)
                 dispatch(toggleDeleteProductDialog(false, '', {}))
-                dispatch(setSnackbar({isOpen: true, text: 'Product deleted successfully!'}))
+                dispatch(toggleSnackbar(true, 'Product deleted successfully!'))
                 dispatch(getProducts(shop_id))
             }
         } catch (e) {
@@ -110,7 +110,7 @@ export const orderShipping = (shop_id, order_id) => {
                 dispatch(setOrderShop(res.data))
                 dispatch(setLoading(false))
                 dispatch(toggleOrderShipDialog(false))
-                dispatch(setSnackbar({isOpen: true, text: 'Order shipped successfully!'}))
+                dispatch(toggleSnackbar(true, 'Order shipped successfully!'))
             }
         } catch (e) {
             console.log(e)
@@ -127,7 +127,7 @@ export const editOrderProducts = (shop_id, order_id, setSaveDisabled, data) => {
                 dispatch(setOrderShop(res.data))
                 dispatch(setLoading(false))
                 setSaveDisabled(true)
-                dispatch(setSnackbar({isOpen: true, text: 'Order products updated successfully!'}))
+                dispatch(toggleSnackbar(true, 'Order products updated successfully!'))
             }
         } catch (e) {
             console.log(e)
@@ -155,7 +155,7 @@ export const editShop = (shop_id, data, setSubmitting) => {
             if (res.status === 200) {
                 dispatch(setShop(res.data))
                 setSubmitting(false)
-                dispatch(setSnackbar({isOpen: true, text: 'Shop updated successfully!'}))
+                dispatch(toggleSnackbar(true, 'Shop updated successfully!'))
             }
         } catch (e) {
             console.log(e)

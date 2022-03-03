@@ -216,11 +216,6 @@ export const setLoading = (bool) => ({
     payload: bool
 })
 
-export const setSnackbar = (obj) => ({
-    type: type.IS_OPEN_SNACKBAR,
-    payload: obj
-})
-
 export const setReviews = (reviews) => ({
     type: type.SET_REVIEWS,
     payload: reviews
@@ -266,10 +261,11 @@ export const setDistrictFetching = (bool) => ({
     payload: bool
 })
 
-export const toggleFormSnackbar = (bool, text) => ({
-    type: type.TOGGLE_FORM_SNACKBAR,
-    isOpen: bool,
-    text: text
+export const toggleSnackbar = (bool, text, color) => ({
+    type: type.TOGGLE_SNACKBAR,
+    open: bool,
+    text,
+    color
 })
 
 export const addRegion = (region) => ({

@@ -1,15 +1,17 @@
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
-import { useDispatch } from 'react-redux'
-import { toggleFormSnackbar } from '../../app/store/actions/actionCreators'
+import { useDispatch, useSelector } from 'react-redux'
+import { toggleSnackbar } from '../../app/store/actions/actionCreators'
 
-const FormSnackbar = ({ open, text }) => {
+const CustomSnackbar = () => {
 
     const dispatch = useDispatch()
 
+    const { open, text, color } = useSelector(state => state.toggle.snackbar)
+
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') return
-        dispatch(toggleFormSnackbar(false, ''))
+        dispatch(toggleSnackbar(false, ''))
     }
 
     return (
@@ -17,13 +19,13 @@ const FormSnackbar = ({ open, text }) => {
             open={open}
             autoHideDuration={5000}
             onClose={handleClose}
-            anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         >
             <Alert
-                severity="error"
+                severity={color}
                 variant='standard'
                 elevation={6}
-                color='error'
+                color={color}
                 onClose={handleClose}
             >
                 { text }
@@ -32,4 +34,4 @@ const FormSnackbar = ({ open, text }) => {
     )
 }
 
-export default FormSnackbar
+export default CustomSnackbar

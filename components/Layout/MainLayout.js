@@ -7,7 +7,6 @@ import AccountMenu from "./AccountMenu/AccountMenu"
 import LoginDialog from "../dialogs/LoginDialog"
 import CartSidebar from "./CartSidebar"
 import RegisterDialog from "../dialogs/RegisterDialog"
-import Snackbar from './Snackbar/Snackbar'
 
 const MainLayout = ({children}) => {
 
@@ -24,7 +23,6 @@ const MainLayout = ({children}) => {
         <LoginDialog />
         <RegisterDialog />
         <CartSidebar />
-        {/* <Snackbar/> */}
         </>
     )
 }

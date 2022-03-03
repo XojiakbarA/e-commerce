@@ -8,12 +8,10 @@ import { getRegions } from "../../app/store/actions/async/admin"
 import { useSelector } from "react-redux"
 import DistrictList from "../../components/admin/DistrictList/DistrictList"
 import { useState } from "react"
-import FormSnackbar from "../../components/admin/FormSnackbar"
 
 const Regions = () => {
 
     const regions = useSelector(state => state.regions)
-    const { isOpen, text } = useSelector(state => state.toggle.formSnackbar)
 
     const [selected, setSelected] = useState(regions[0])
 
@@ -41,7 +39,6 @@ const Regions = () => {
                     region={selected}
                 />
             </Grid>
-            <FormSnackbar open={isOpen} text={text}/>
         </Grid>
     )
 }

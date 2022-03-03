@@ -1,7 +1,7 @@
 import { useFormik } from "formik"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import { toggleFormSnackbar } from "../../store/actions/actionCreators"
+import { toggleSnackbar } from "../../store/actions/actionCreators"
 import { createRegion } from "../../store/actions/async/admin"
 import { useRipple } from "../useRipple"
 import { nameValidationSchema } from "./validate"
@@ -27,7 +27,9 @@ export const useAddRegion = (handleSelectedClick) => {
 
     useEffect(() => {
         if (touched.name && errors.name) {
-            dispatch(toggleFormSnackbar(true, errors.name))
+            dispatch(toggleSnackbar(true, errors.name, 'error'))
+        } else {
+            dispatch(toggleSnackbar(false, ''))
         }
     }, [dispatch, touched.name, errors.name])
 

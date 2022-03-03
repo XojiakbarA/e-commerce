@@ -1,17 +1,14 @@
 import router from 'next/router'
 import {
-    login, logout, fetchUser, fetchCart, addCart, removeCart,
-    deleteCart, register, addWishlist, fetchWishlist,
-    deleteWishlist, storeOrder, fetchOrders, fetchOrder, cancellationOrder,
-    storeShop, destroyUserImage, updateUser
+    login, logout, fetchUser, fetchCart, addCart, removeCart, deleteCart, register, addWishlist,
+    fetchWishlist, deleteWishlist, storeOrder, fetchOrders, fetchOrder, cancellationOrder, storeShop,
+    destroyUserImage, updateUser, storeReview
 } from '../../../../api/user'
-import { storeReview } from '../../../../api/common'
+
 import {
-    setUser, setCart, setLoading, setSnackbar, toggleLoginDialog,
-    toggleRegisterDialog, setWishlist, toggleOrderDialog,
-    setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog,
-    toggleAccountMenu,
-    toggleAddReviewDialog
+    setUser, setCart, setLoading, toggleLoginDialog, toggleRegisterDialog, setWishlist, toggleOrderDialog,
+    setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog, toggleAccountMenu, toggleAddReviewDialog,
+    toggleSnackbar
 } from '../actionCreators'
 
 export const getCart = (cookie) => {
@@ -140,7 +137,7 @@ export const editUser = (data, id, setSubmitting) => {
             if (res.status === 200) {
                 dispatch(setUser(res.data.data))
                 setSubmitting(false)
-                dispatch(setSnackbar({isOpen: true, text: 'Сhanges completed successfully!'}))
+                dispatch(toggleSnackbar(true, 'Сhanges completed successfully!'))
                 dispatch(toggleEditProfileDialog(false))
             }
         } catch (e) {
@@ -157,7 +154,7 @@ export const userLogin = (data, setSubmitting) => {
             if (res1.status === 204 && res2.status === 200) {
                 dispatch(setUser(res2.data.data))
                 setSubmitting(false)
-                dispatch(setSnackbar({isOpen: true, text: 'You are logged in!'}))
+                dispatch(toggleSnackbar(true, 'You are logged in!'))
                 if (router.pathname === '/login') {
                     router.push('/')
                 } else {
@@ -189,7 +186,7 @@ export const userLogout = () => {
                 dispatch(setUser(null))
                 dispatch(setCart({data: [], total: 0}))
                 dispatch(setWishlist([]))
-                dispatch(setSnackbar({isOpen: true, text: 'You are logged out!'}))
+                dispatch(toggleSnackbar(true, 'You are logged out!'))
             }
         } catch (e) {
             console.log(e)
@@ -205,7 +202,7 @@ export const userRegister = (data, setSubmitting) => {
             if (res1.status === 201 && res2.status === 200) {
                 dispatch(setUser(res2.data.data))
                 setSubmitting(false)
-                dispatch(setSnackbar({isOpen: true, text: 'You are logged in!'}))
+                dispatch(toggleSnackbar(true, 'You are logged in!'))
                 dispatch(toggleRegisterDialog(false))
             }
         } catch (e) {
@@ -221,7 +218,7 @@ export const createReview = (id, data, setSubmitting) => {
             if (res.status === 200) {
                 setSubmitting(false)
                 dispatch(toggleAddReviewDialog(false))
-                dispatch(setSnackbar({isOpen: true, text: 'Review created successfully!'}))
+                dispatch(toggleSnackbar(true, 'Review created successfully!'))
             }
         } catch (e) {
             console.log(e)
@@ -278,7 +275,7 @@ export const cancelOrder = (id) => {
             if (res.status === 200) {
                 dispatch(setOrder(res.data))
                 dispatch(setLoading(false))
-                dispatch(setSnackbar({isOpen: true, text: 'Order cancelled successfully!'}))
+                dispatch(toggleSnackbar(true, 'Order cancelled successfully!'))
                 dispatch(toggleConfirmDialog(false))
             }
         } catch (e) {
@@ -293,7 +290,7 @@ export const createShop = (data, setSubmitting) => {
             const res = await storeShop(data)
             if(res.status === 201) {
                 setSubmitting(false)
-                dispatch(setSnackbar({isOpen: true, text: 'Shop created successfully!'}))
+                dispatch(toggleSnackbar(true, 'Shop created successfully!'))
                 router.push(`/vendor/${res.data.data.id}`)
             }
         } catch (e) {
@@ -310,7 +307,7 @@ export const deleteUserImage = (image_id) => {
             if (res.status === 200) {
                 dispatch(setUser(res.data.data))
                 dispatch(setLoading(false))
-                dispatch(setSnackbar({isOpen: true, text: 'Image deleted'}))
+                dispatch(toggleSnackbar(true,'Image deleted'))
             }
         } catch (e) {
             console.log(e)

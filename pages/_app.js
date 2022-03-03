@@ -1,56 +1,27 @@
-import { CssBaseline, Backdrop, CircularProgress } from '@mui/material'
-import MainLayout from '../components/layout/MainLayout'
-import Snackbar from '../components/layout/Snackbar/Snackbar'
+import { CssBaseline } from '@mui/material'
 import '../styles/globals.css'
 import { wrapper } from '../app/store'
 import { getUser, getCart, getWishlist } from '../app/store/actions/async/user'
 import { getCategories, getBrands } from '../app/store/actions/async/common'
-import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { setToken } from '../api/common'
+import PageLoader from '../components/common/PageLoader'
+import CustomSnackbar from '../components/common/CustomSnackbar'
 
 const MyApp = ({Component, pageProps}) => {
-
-    const router = useRouter()
-    const [routing, setRouting] = useState(false)
-    
-    useEffect(() => {
-        router.events.on('routeChangeStart', () => {
-            setRouting(true)
-        })
-        router.events.on('routeChangeComplete', () => {
-            setRouting(false)
-        })
-
-        return () => {
-            router.events.off('routeChangeStart', () => {
-                setRouting(true)
-            })
-            router.events.off('routeChangeComplete', () => {
-                setRouting(false)
-            })
-        }
-    })
-
-    const getLayout = Component.getLayout || ((page) => page)
 
     useEffect(() => {
         setToken()
     }, [])
 
+    const getLayout = Component.getLayout || ((page) => page)
+
     return getLayout(
             <>
-            <Backdrop
-                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                open={routing}
-            >
-                <CircularProgress color="inherit" />
-            </Backdrop>
-            {/* <MainLayout> */}
-                <CssBaseline />
-                <Component {...pageProps} />
-                <Snackbar/>
-            {/* </MainLayout> */}
+            <PageLoader/>
+            <CssBaseline />
+            <Component {...pageProps} />
+            <CustomSnackbar/>
             </>
     )
 }

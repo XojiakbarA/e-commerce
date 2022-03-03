@@ -48,9 +48,10 @@ const initialState = {
         text: '',
         payload: {}
     },
-    formSnackbar: {
-        isOpen: false,
-        text: ''
+    snackbar: {
+        open: false,
+        text: '',
+        color: 'success'
     }
 }
 
@@ -137,12 +138,14 @@ const toggleReducer = (state = initialState, action) => {
                 }
             }
 
-        case type.TOGGLE_FORM_SNACKBAR:
+        case type.TOGGLE_SNACKBAR:
             return {
                 ...state,
-                formSnackbar: {
-                    isOpen: action.isOpen,
-                    text: action.text
+                snackbar: {
+                    ...state.snackbar,
+                    open: action.open,
+                    text: action.text,
+                    color: action.color
                 }
             }
 

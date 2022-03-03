@@ -99,3 +99,7 @@ export const fetchOrder = async (id, cookie) => {
 export const cancellationOrder = async (id) => {
     return await instance.put(`api/user/orders/${id}`, {status: 'cancelled'})
 }
+
+export const storeReview = async (id, data) => {
+    return await instance.post(`api/products/${id}/reviews`, data)
+}

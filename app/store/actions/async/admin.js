@@ -1,22 +1,17 @@
+import router from "next/router"
 import {
-    destroyBanner,
-    destroyBrand,
-    destroyCategory, destroyDistrict, destroyRegion, destroySubCategory, fetchCategories, fetchProducts,
-    fetchRegions,
-    fetchReviews, storeBanner, storeBrand, storeCategory, storeDistrict, storeRegion, storeSubCategory, updateBanner,
-    updateBrand, updateCategory, updateDistrict, updateProductPublished, updateRegion, updateReviewPublished,
-    updateSubCategory
+    destroyBanner, destroyBrand, destroyCategory, destroyDistrict, destroyRegion, destroySubCategory,
+    fetchCategories, fetchProducts, fetchRegions, fetchReviews, storeBanner, storeBrand, storeCategory,
+    storeDistrict, storeRegion, storeSubCategory, updateBanner, updateBrand, updateCategory, updateDistrict,
+    updateProductPublished, updateRegion, updateReviewPublished, updateSubCategory
 } from "../../../../api/admin"
 import {
-    addBanner,
-    addBrand, addCategory, addDistrict, addRegion, addSubCategory, dropBanner, dropBrand, dropCategory, dropDistrict, dropRegion, dropSubCategory,
-    setCategories, setLoading, setProducts, setRegions, setReviews, setSnackbar,
-    toggleDeleteBannerDialog,
-    toggleDeleteBrandDialog,
-    toggleDeleteCategoryDialog, toggleDeleteDistrictDialog, toggleDeleteRegionDialog, toggleDeleteSubCategoryDialog,
+    addBanner, addBrand, addCategory, addDistrict, addRegion, addSubCategory, dropBanner, dropBrand,
+    dropCategory, dropDistrict, dropRegion, dropSubCategory, setCategories, setLoading, setProducts,
+    setRegions, setReviews, toggleDeleteBannerDialog, toggleDeleteBrandDialog, toggleDeleteCategoryDialog,
+    toggleDeleteDistrictDialog, toggleDeleteRegionDialog, toggleDeleteSubCategoryDialog, toggleSnackbar,
     updateBanners, updateBrands, updateCategories, updateDistricts, updateRegions, updateSubCategories
 } from "../actionCreators"
-import router from "next/router"
 
 export const getProducts = (query, cookie) => {
     return async (dispatch) => {
@@ -66,7 +61,7 @@ export const editProductPublished = (id, query, setIsClicked, data) => {
                 setIsClicked(false)
                 dispatch(setLoading(false))
                 await router.push({query})
-                dispatch(setSnackbar({isOpen: true, text: `Product ${!data.published ? 'un' : ''}published successfully!`}))
+                dispatch(toggleSnackbar(true, `Product ${!data.published ? 'un' : ''}published successfully!`))
             }
         } catch (e) {
             console.log(e)
@@ -83,7 +78,7 @@ export const editReviewPublished = (id, query, setIsClicked, data) => {
                 setIsClicked(false)
                 dispatch(setLoading(false))
                 await router.push({query}, null, {scroll: false})
-                dispatch(setSnackbar({isOpen: true, text: `Review ${!data.published ? 'un' : ''}published successfully!`}))
+                dispatch(toggleSnackbar(true, `Review ${!data.published ? 'un' : ''}published successfully!`))
             }
         } catch (e) {
             console.log(e)
@@ -113,7 +108,7 @@ export const createCategory = (data, resetForm, setSubmitting, setEdit) => {
                 resetForm()
                 setSubmitting(false)
                 setEdit(false)
-                dispatch(setSnackbar({isOpen: true, text: `Category created successfully!`}))
+                dispatch(toggleSnackbar(true, `Category created successfully!`))
             }
         } catch (e) {
             console.log(e)
@@ -130,7 +125,7 @@ export const createSubCategory = (cat_id, data, resetForm, setSubmitting, setEdi
                 resetForm()
                 setSubmitting(false)
                 setEdit(false)
-                dispatch(setSnackbar({isOpen: true, text: `Sub Category created successfully!`}))
+                dispatch(toggleSnackbar(true, `Sub Category created successfully!`))
             }
         } catch (e) {
             console.log(e)
@@ -147,7 +142,7 @@ export const createBrand = (data, resetForm, setSubmitting, setEdit) => {
                 resetForm()
                 setSubmitting(false)
                 setEdit(false)
-                dispatch(setSnackbar({isOpen: true, text: `Brand created successfully!`}))
+                dispatch(toggleSnackbar(true, `Brand created successfully!`))
             }
         } catch (e) {
             console.log(e)
@@ -164,7 +159,7 @@ export const editCategory = (id, data, resetForm, setSubmitting, setEdit) => {
                 resetForm()
                 setSubmitting(false)
                 setEdit(false)
-                dispatch(setSnackbar({isOpen: true, text: `Category updated successfully!`}))
+                dispatch(toggleSnackbar(true, `Category updated successfully!`))
             }
         } catch (e) {
             console.log(e)
@@ -181,7 +176,7 @@ export const editSubCategory = (id, data, resetForm, setSubmitting, setEdit) => 
                 resetForm()
                 setSubmitting(false)
                 setEdit(false)
-                dispatch(setSnackbar({isOpen: true, text: `Sub Category updated successfully!`}))
+                dispatch(toggleSnackbar(true, `Sub Category updated successfully!`))
             }
         } catch (e) {
             console.log(e)
@@ -198,7 +193,7 @@ export const editBrand = (id, data, resetForm, setSubmitting, setEdit) => {
                 resetForm()
                 setSubmitting(false)
                 setEdit(false)
-                dispatch(setSnackbar({isOpen: true, text: `Brand updated successfully!`}))
+                dispatch(toggleSnackbar(true, `Brand updated successfully!`))
             }
         } catch (e) {
             console.log(e)
@@ -214,7 +209,7 @@ export const createBanner = (data, resetForm, setSubmitting) => {
                 dispatch(addBanner(res.data.data))
                 resetForm()
                 setSubmitting(false)
-                dispatch(setSnackbar({isOpen: true, text: `Banner created successfully!`}))
+                dispatch(toggleSnackbar(true, `Banner created successfully!`))
             }
         } catch (e) {
             console.log(e)
@@ -230,7 +225,7 @@ export const editBanner = (id, data, setSubmitting, resetForm) => {
                 dispatch(updateBanners(res.data.data))
                 resetForm()
                 setSubmitting(false)
-                dispatch(setSnackbar({isOpen: true, text: `Banner updated successfully!`}))
+                dispatch(toggleSnackbar(true, `Banner updated successfully!`))
             }
         } catch (e) {
             console.log(e)
@@ -248,7 +243,7 @@ export const deleteBanner = (id, setSubmitting, handleBannerChange) => {
                 dispatch(dropBanner(id))
                 setSubmitting(false)
                 dispatch(toggleDeleteBannerDialog(false, '', {}))
-                dispatch(setSnackbar({isOpen: true, text: `Banner deleted successfully!`}))
+                dispatch(toggleSnackbar(true, `Banner deleted successfully!`))
             }
         } catch (e) {
             console.log(e)
@@ -265,7 +260,7 @@ export const deleteCategory = (id, setSubmitting) => {
                 dispatch(dropCategory(id))
                 setSubmitting(false)
                 dispatch(toggleDeleteCategoryDialog(false, '', {}))
-                dispatch(setSnackbar({isOpen: true, text: `Category deleted successfully!`}))
+                dispatch(toggleSnackbar(true, `Category deleted successfully!`))
             }
         } catch (e) {
             console.log(e)
@@ -282,7 +277,7 @@ export const deleteSubCategory = (id, setSubmitting) => {
                 dispatch(dropSubCategory(id))
                 setSubmitting(false)
                 dispatch(toggleDeleteSubCategoryDialog(false, '', {}))
-                dispatch(setSnackbar({isOpen: true, text: `Sub Category deleted successfully!`}))
+                dispatch(toggleSnackbar(true, `Sub Category deleted successfully!`))
             }
         } catch (e) {
             console.log(e)
@@ -299,7 +294,7 @@ export const deleteBrand = (id, setSubmitting) => {
                 dispatch(dropBrand(id))
                 setSubmitting(false)
                 dispatch(toggleDeleteBrandDialog(false, '', {}))
-                dispatch(setSnackbar({isOpen: true, text: `Brand deleted successfully!`}))
+                dispatch(toggleSnackbar(true, `Brand deleted successfully!`))
             }
         } catch (e) {
             console.log(e)
@@ -317,7 +312,7 @@ export const createRegion = (data, resetForm, setSubmitting, setEdit, handleSele
                 resetForm()
                 setSubmitting(false)
                 setEdit(false)
-                dispatch(setSnackbar({isOpen: true, text: `Region created successfully!`}))
+                dispatch(toggleSnackbar(true, `Region created successfully!`))
             }
         } catch (e) {
             console.log(e)
@@ -334,7 +329,7 @@ export const editRegion = (id, data, resetForm, setSubmitting, setEdit) => {
                 resetForm()
                 setSubmitting(false)
                 setEdit(false)
-                dispatch(setSnackbar({isOpen: true, text: `Region updated successfully!`}))
+                dispatch(toggleSnackbar(true, `Region updated successfully!`))
             }
         } catch (e) {
             console.log(e)
@@ -352,7 +347,7 @@ export const deleteRegion = (id, setSubmitting, handleSelectedClick) => {
                 handleSelectedClick(getState().regions[0])
                 setSubmitting(false)
                 dispatch(toggleDeleteRegionDialog(false, '', {}))
-                dispatch(setSnackbar({isOpen: true, text: `Region deleted successfully!`}))
+                dispatch(toggleSnackbar(true, `Region deleted successfully!`))
             }
         } catch (e) {
             console.log(e)
@@ -369,7 +364,7 @@ export const createDistrict = (reg_id, data, resetForm, setSubmitting, setEdit) 
                 resetForm()
                 setSubmitting(false)
                 setEdit(false)
-                dispatch(setSnackbar({isOpen: true, text: `District created successfully!`}))
+                dispatch(toggleSnackbar(true, `District created successfully!`))
             }
         } catch (e) {
             console.log(e)
@@ -386,7 +381,7 @@ export const editDistrict = (id, data, resetForm, setSubmitting, setEdit) => {
                 resetForm()
                 setSubmitting(false)
                 setEdit(false)
-                dispatch(setSnackbar({isOpen: true, text: `District updated successfully!`}))
+                dispatch(toggleSnackbar(true, `District updated successfully!`))
             }
         } catch (e) {
             console.log(e)
@@ -403,7 +398,7 @@ export const deleteDistrict = (id, setSubmitting) => {
                 dispatch(dropDistrict(id))
                 setSubmitting(false)
                 dispatch(toggleDeleteDistrictDialog(false, '', {}))
-                dispatch(setSnackbar({isOpen: true, text: `District deleted successfully!`}))
+                dispatch(toggleSnackbar(true, `District deleted successfully!`))
             }
         } catch (e) {
             console.log(e)
