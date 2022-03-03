@@ -1,14 +1,17 @@
 import {
+    destroyBanner,
     destroyBrand,
     destroyCategory, destroyDistrict, destroyRegion, destroySubCategory, fetchCategories, fetchProducts,
     fetchRegions,
-    fetchReviews, storeBrand, storeCategory, storeDistrict, storeRegion, storeSubCategory, updateBanner,
+    fetchReviews, storeBanner, storeBrand, storeCategory, storeDistrict, storeRegion, storeSubCategory, updateBanner,
     updateBrand, updateCategory, updateDistrict, updateProductPublished, updateRegion, updateReviewPublished,
     updateSubCategory
 } from "../../../../api/admin"
 import {
-    addBrand, addCategory, addDistrict, addRegion, addSubCategory, dropBrand, dropCategory, dropDistrict, dropRegion, dropSubCategory,
+    addBanner,
+    addBrand, addCategory, addDistrict, addRegion, addSubCategory, dropBanner, dropBrand, dropCategory, dropDistrict, dropRegion, dropSubCategory,
     setCategories, setLoading, setProducts, setRegions, setReviews, setSnackbar,
+    toggleDeleteBannerDialog,
     toggleDeleteBrandDialog,
     toggleDeleteCategoryDialog, toggleDeleteDistrictDialog, toggleDeleteRegionDialog, toggleDeleteSubCategoryDialog,
     updateBanners, updateBrands, updateCategories, updateDistricts, updateRegions, updateSubCategories
@@ -203,6 +206,22 @@ export const editBrand = (id, data, resetForm, setSubmitting, setEdit) => {
     }
 }
 
+export const createBanner = (data, resetForm, setSubmitting) => {
+    return async (dispatch) => {
+        try {
+            const res = await storeBanner(data)
+            if (res.status === 201) {
+                dispatch(addBanner(res.data.data))
+                resetForm()
+                setSubmitting(false)
+                dispatch(setSnackbar({isOpen: true, text: `Banner created successfully!`}))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
 export const editBanner = (id, data, setSubmitting, resetForm) => {
     return async (dispatch) => {
         try {
@@ -212,6 +231,24 @@ export const editBanner = (id, data, setSubmitting, resetForm) => {
                 resetForm()
                 setSubmitting(false)
                 dispatch(setSnackbar({isOpen: true, text: `Banner updated successfully!`}))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const deleteBanner = (id, setSubmitting, handleBannerChange) => {
+    return async (dispatch) => {
+        try {
+            setSubmitting(true)
+            const res = await destroyBanner(id)
+            if (res.status === 204) {
+                handleBannerChange(0)
+                dispatch(dropBanner(id))
+                setSubmitting(false)
+                dispatch(toggleDeleteBannerDialog(false, '', {}))
+                dispatch(setSnackbar({isOpen: true, text: `Banner deleted successfully!`}))
             }
         } catch (e) {
             console.log(e)

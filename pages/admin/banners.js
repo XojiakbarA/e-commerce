@@ -7,14 +7,18 @@ import Carousel from "react-material-ui-carousel"
 import { useSelector } from "react-redux"
 import BannerItem from "../../components/index/Banner/BannerItem"
 import { getBanners } from "../../app/store/actions/async/common"
-import EditBannerForm from "../../components/forms/EditBannerForm"
 import { useState } from "react"
+import BannersFormTabs from "../../components/admin/BannersFormTabs/BannersFormTabs"
 
 const Banners = () => {
 
-    const [ bannerIndex, setBannerIndex ] = useState(0)
-
     const banners = useSelector(state => state.banners)
+
+    const [ index, setIndex ] = useState(0)
+
+    const handleBannerChange = (now) => {
+        setIndex(now)
+    }
 
     return (
         <Grid container spacing={2}>
@@ -27,8 +31,8 @@ const Banners = () => {
             <Grid item xs={8}>
                 <Carousel
                     autoPlay={false}
-                    onChange={ (now) => setBannerIndex(now) }
-                    index={bannerIndex}
+                    onChange={ handleBannerChange }
+                    index={index}
                 >
                     {
                         banners.map(banner => (
@@ -38,8 +42,11 @@ const Banners = () => {
                 </Carousel>
             </Grid>
             <Grid item xs={4}>
-                <Paper sx={{padding: 2}}>
-                    <EditBannerForm index={bannerIndex}/>
+                <Paper>
+                    <BannersFormTabs
+                        banner={banners[index]}
+                        handleBannerChange={handleBannerChange}
+                    />
                 </Paper>
             </Grid>
         </Grid>

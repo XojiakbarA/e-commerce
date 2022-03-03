@@ -43,6 +43,11 @@ const initialState = {
         text: '',
         payload: {}
     },
+    deleteBannerDialog: {
+        isOpen: false,
+        text: '',
+        payload: {}
+    },
     formSnackbar: {
         isOpen: false,
         text: ''
@@ -116,6 +121,16 @@ const toggleReducer = (state = initialState, action) => {
             return {
                 ...state,
                 deleteProductDialog: {
+                    isOpen: action.isOpen,
+                    text: action.text,
+                    payload: action.payload
+                }
+            }
+
+        case type.TOGGLE_DELETE_BANNER_DIALOG:
+            return {
+                ...state,
+                deleteBannerDialog: {
                     isOpen: action.isOpen,
                     text: action.text,
                     payload: action.payload

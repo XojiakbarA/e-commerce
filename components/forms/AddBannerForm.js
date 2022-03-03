@@ -1,20 +1,23 @@
-import { Badge, Button, CircularProgress, Grid, IconButton, Stack, TextField } from "@mui/material"
-import SaveIcon from '@mui/icons-material/Save'
+import { Avatar, Badge, Box, Button, CircularProgress, FormHelperText, Grid, IconButton, Stack, TextField } from "@mui/material"
+import { styled } from "@mui/material/styles"
+import AddIcon from '@mui/icons-material/Add'
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
-import DeleteIcon from '@mui/icons-material/Delete'
-import AvatarUpload from '../common/AvatarUpload/AvatarUpload'
-import { bannerImageURL } from "../../utils/utils"
-import { useEditBanner } from "../../app/hooks/useFormik/useEditBanner"
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
 import { useSinglePreview } from "../../app/hooks/usePreview/useSinglePreview"
+import { useAddBanner } from "../../app/hooks/useFormik/useAddBanner"
 
-const EditBannerForm = ({ banner }) => {
+const Input = styled('input')({
+    display: 'none'
+})
 
-    const {
+const AddBannerForm = () => {
+
+    const{
         touched, errors, isSubmitting,
-        handleSubmit, getFieldProps, setValues, handleDeleteClick
-    } = useEditBanner(banner)
+        handleSubmit, getFieldProps, setValues
+    } = useAddBanner()
 
-    const { preview, handlePreviewDeleteClick, handleUploadChange } = useSinglePreview(setValues, banner.image)
+    const { preview, handlePreviewDeleteClick, handleUploadChange } = useSinglePreview(setValues)
 
     return (
         <form onSubmit={handleSubmit}>
@@ -40,7 +43,7 @@ const EditBannerForm = ({ banner }) => {
                         { ...getFieldProps('description') }
                     />
                 </Grid>
-                <Grid item xs={12} display='flex' justifyContent='center'>
+                <Grid item xs={12} display='flex' flexDirection='column' alignItems='center'>
                     <Badge
                         anchorOrigin={{vertical: 'top', horizontal: 'right'}}
                         badgeContent={
@@ -50,13 +53,39 @@ const EditBannerForm = ({ banner }) => {
                             </IconButton>
                         }
                     >
-                        <AvatarUpload
-                            variant='rounded'
-                            size={150}
-                            src={preview ?? bannerImageURL + banner.image}
-                            onChange={handleUploadChange}
-                        />
+                        {
+                            preview
+                            ?
+                            <Avatar
+                                sx={{ width: 150, height: 150 }}
+                                variant='rounded'
+                                src={preview}
+                            />
+                            :
+                            <Box sx={{
+                                width: 150,
+                                height: 150,
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                border: touched.image && errors.image ? '1px dashed red' : null,
+                                borderRadius: 1
+                            }}>
+                                <label htmlFor="images">
+                                    <Input
+                                        accept="image/*"
+                                        id="images"
+                                        type="file"
+                                        onChange={handleUploadChange}
+                                    />
+                                    <IconButton component='span'>
+                                        <AddPhotoAlternateIcon fontSize="large"/>
+                                    </IconButton>
+                                </label>
+                            </Box>
+                        }
                     </Badge>
+                    <FormHelperText error>{ touched.image && errors.image}</FormHelperText>
                 </Grid>
                 <Grid item xs={12} display='flex' justifyContent='end'>
                     <Stack direction='row' spacing={2}>
@@ -69,26 +98,11 @@ const EditBannerForm = ({ banner }) => {
                                 ?
                                 <CircularProgress color='inherit' size={20}/>
                                 :
-                                <SaveIcon/>
+                                <AddIcon/>
                             }
                             disabled={isSubmitting}
                         >
-                            Save
-                        </Button>
-                        <Button
-                            size='small'
-                            variant='outlined'
-                            color='error'
-                            onClick={handleDeleteClick}
-                            endIcon={
-                                isSubmitting
-                                ?
-                                <CircularProgress color='inherit' size={20}/>
-                                :
-                                <DeleteIcon/>
-                            }
-                        >
-                            Delete
+                            Create
                         </Button>
                     </Stack>
                 </Grid>
@@ -97,4 +111,4 @@ const EditBannerForm = ({ banner }) => {
     )
 }
 
-export default EditBannerForm
+export default AddBannerForm

@@ -153,7 +153,26 @@ export const categoryValidationSchema = yup.object({
     )
 })
 
-export const bannerValidationSchema = yup.object({
+const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/gif', 'image/png']
+
+export const createbannerValidationSchema = yup.object({
+    title: yup
+        .string('Enter Banner Title')
+        .required('Banner Title is required'),
+    description: yup
+        .string('Enter Banner Description')
+        .required('Banner Description is required'),
+    image: yup
+        .mixed()
+        .required('Image is required')
+        .test(
+            'fileFormat',
+            'Unsupported format',
+            value => value && SUPPORTED_FORMATS.includes(value.type)
+        )
+})
+
+export const editbannerValidationSchema = yup.object({
     title: yup
         .string('Enter Banner Title')
         .required('Banner Title is required'),

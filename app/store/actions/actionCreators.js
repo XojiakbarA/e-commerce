@@ -81,9 +81,19 @@ export const setBanners = (banners) => ({
     payload: banners
 })
 
+export const addBanner = (banner) => ({
+    type: type.ADD_BANNER,
+    payload: banner
+})
+
 export const updateBanners = (banner) => ({
     type: type.UPDATE_BANNERS,
     payload: banner
+})
+
+export const dropBanner = (id) => ({
+    type: type.DELETE_BANNER,
+    payload: id
 })
 
 export const setProducts = (products) => ({
@@ -158,6 +168,13 @@ export const toggleDeleteDistrictDialog = (bool, text, payload) => ({
 
 export const toggleDeleteProductDialog = (bool, text, payload) => ({
     type: type.TOGGLE_DELETE_PRODUCT_DIALOG,
+    isOpen: bool,
+    text: text,
+    payload: payload
+})
+
+export const toggleDeleteBannerDialog = (bool, text, payload) => ({
+    type: type.TOGGLE_DELETE_BANNER_DIALOG,
     isOpen: bool,
     text: text,
     payload: payload

@@ -2,7 +2,7 @@ import { useRouter } from "next/router"
 import { useDispatch, useSelector } from "react-redux"
 import {
     setProduct, toggleAccountMenu, toggleAddProductDialog, toggleAddReviewDialog,
-    toggleCartSidebar, toggleDeleteBrandDialog, toggleDeleteCategoryDialog, toggleDeleteDistrictDialog, toggleDeleteProductDialog,
+    toggleCartSidebar, toggleDeleteBannerDialog, toggleDeleteBrandDialog, toggleDeleteCategoryDialog, toggleDeleteDistrictDialog, toggleDeleteProductDialog,
     toggleDeleteRegionDialog,
     toggleDeleteSubCategoryDialog, toggleEditProductDialog, toggleEditProfileDialog,
     toggleLoginDialog, toggleOrderShipDialog, toggleRegisterDialog, toggleViewProductDialog
@@ -80,6 +80,13 @@ export const useToggle = () => {
 
     const closeDeleteDistrictDialog = (text, payload) => {
         dispatch(toggleDeleteDistrictDialog(false, '', {}))
+    }
+
+    const openDeleteBannerDialog = (text, payload) => {
+        dispatch(toggleDeleteBannerDialog(true, text, payload))
+    }
+    const closeDeleteBannerDialog = () => {
+        dispatch(toggleDeleteBannerDialog(false, '', {}))
     }
 
     const openDeleteProductDialog = (text, payload) => {
@@ -193,6 +200,8 @@ export const useToggle = () => {
         closeDeleteRegionDialog,
         openDeleteDistrictDialog,
         closeDeleteDistrictDialog,
+        openDeleteBannerDialog,
+        closeDeleteBannerDialog,
 
         handleAccount
     }
