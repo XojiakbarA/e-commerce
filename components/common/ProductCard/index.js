@@ -61,7 +61,7 @@ const ProductCard = ({product, listView}) => {
                             {
                                 product.sale_price &&
                                 <Typography variant="h6" color="text.primary">
-                                    $ {product.price}
+                                    $ {product.sale_price}
                                 </Typography>
                             }
                         </Stack>

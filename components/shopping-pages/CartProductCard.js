@@ -20,7 +20,7 @@ const CartProductCard = ({product}) => {
             >
                 <CardMedia sx={{width: 120, height: 120, position: 'relative'}}>
                     <Image
-                        src={product.image ? productImageURL + product.image.src : noImageUrl}
+                        src={product.image ? productImageURL + product.image : noImageUrl}
                         alt={product.title}
                         layout='fill'
                         objectFit='cover'
@@ -78,7 +78,7 @@ const CartProductCard = ({product}) => {
                     </Typography>
                     <Button
                         variant='outlined'
-                        disabled={cartFetching && isClicked}
+                        disabled={cartFetching && isClicked || product.quantity === 1}
                         sx={{padding: 0, minWidth: 0, marginLeft: 0}}
                         onClick={ e => removeProductCart(e, product.id) }
                     >

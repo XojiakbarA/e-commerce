@@ -20,10 +20,10 @@ const SidebarProductCard = ({product}) => {
                 disableRipple={ripple}
                 component={BaseLink}
                 href={`/products/${product.id}`}
-                sx={{display: 'flex'}}
+                sx={{display: 'flex', justifyContent: 'flex-start'}}
             >
                 <Stack
-                    paddingRight={1}
+                    padding={1}
                     justifyContent='center'
                     alignItems='center'
                     { ...events }
@@ -42,7 +42,7 @@ const SidebarProductCard = ({product}) => {
                     <Button
                         variant='outlined'
                         sx={{padding: 0, minWidth: 0, marginLeft: 0}}
-                        disabled={cartFetching && isClicked}
+                        disabled={cartFetching && isClicked || product.quantity === 1}
                         onClick={ e => removeProductCart(e, product.id) }
                     >
                         <RemoveIcon fontSize='small' />
@@ -50,7 +50,7 @@ const SidebarProductCard = ({product}) => {
                 </Stack>
                 <CardMedia sx={{position: 'relative', width: 100, height: 100}}>
                     <Image
-                        src={product.image ? productImageURL + product.image.src : noImageUrl}
+                        src={product.image ? productImageURL + product.image : noImageUrl}
                         alt={product.title}
                         layout='fill'
                         objectFit='cover'

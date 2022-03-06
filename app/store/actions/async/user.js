@@ -7,9 +7,12 @@ import {
 
 import {
     setUser, setCart, setLoading, toggleLoginDialog, toggleRegisterDialog, setWishlist, toggleOrderDialog,
-    setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog, toggleAccountMenu, toggleAddReviewDialog,
+    setOrders, setOrder, toggleEditProfileDialog, toggleAccountMenu, toggleAddReviewDialog,
     toggleSnackbar,
-    toggleCancelOrderDialog
+    toggleCancelOrderDialog,
+    addProductCart,
+    removeProductCart,
+    deleteProductCart
 } from '../actionCreators'
 
 export const getCart = (cookie) => {
@@ -30,8 +33,9 @@ export const addToCart = (id, setIsClicked, setCartFetching) => {
         try {
             setCartFetching(true)
             const res = await addCart(id)
+            console.log(res)
             if (res.status === 200) {
-                dispatch(setCart(res.data))
+                dispatch(addProductCart(res.data.data, res.data.total))
                 setCartFetching(false)
                 setIsClicked(false)
             }
@@ -46,8 +50,9 @@ export const removeFromCart = (id, setIsClicked, setCartFetching) => {
         try {
             setCartFetching(true)
             const res = await removeCart(id)
+            console.log(res)
             if (res.status === 200) {
-                dispatch(setCart(res.data))
+                dispatch(removeProductCart(res.data.data, res.data.total))
                 setCartFetching(false)
                 setIsClicked(false)
             }
@@ -63,7 +68,7 @@ export const deleteFromCart = (id, setIsClicked, setCartFetching) => {
             setCartFetching(true)
             const res = await deleteCart(id)
             if (res.status === 200) {
-                dispatch(setCart(res.data))
+                dispatch(deleteProductCart(id, res.data.total))
                 setCartFetching(false)
                 setIsClicked(false)
             }

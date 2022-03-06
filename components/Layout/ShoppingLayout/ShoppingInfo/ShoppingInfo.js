@@ -25,14 +25,16 @@ const ShoppingInfo = () => {
                     <ShoppingInfoItem name={'Total:'} value={total} nameVariant={'h6'} />
                     <VoucherForm />
                 </Box>
-                <Button
-                    variant='contained'
-                    href='/checkout'
-                    component={BaseLink}
-                    sx={isCheckoutPage && {display: 'none'}}
-                >
-                    Checkout
-                </Button>
+                {
+                    isCheckoutPage &&
+                    <Button
+                        variant='contained'
+                        href='/checkout'
+                        component={BaseLink}
+                    >
+                        Checkout
+                    </Button>
+                }
             </Stack>
         </Paper>
     )

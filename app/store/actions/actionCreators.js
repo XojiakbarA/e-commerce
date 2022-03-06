@@ -5,6 +5,24 @@ export const setCart = (cart) => ({
     payload: cart
 })
 
+export const addProductCart = (payload, total) => ({
+    type: type.ADD_CART,
+    payload: payload,
+    total: total
+})
+
+export const removeProductCart = (payload, total) => ({
+    type: type.REMOVE_CART,
+    payload: payload,
+    total: total
+})
+
+export const deleteProductCart = (payload, total) => ({
+    type: type.DELETE_CART,
+    payload: payload,
+    total: total
+})
+
 export const setWishlist = (wishlist) => ({
     type: type.SET_WISHLIST,
     payload: wishlist
