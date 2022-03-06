@@ -1,11 +1,11 @@
-import {Avatar, Box, Card, CardActionArea, Grid, IconButton, Tooltip, Typography} from "@mui/material"
+import {Box, Card, CardActionArea, Grid, IconButton, Tooltip, Typography} from "@mui/material"
 import AddCommentIcon from '@mui/icons-material/AddComment'
 import PhotoIcon from '@mui/icons-material/Photo'
 import BaseLink from '../../common/Link/BaseLink'
-import Image from 'next/image'
 import {productImageURL} from "../../../utils/utils"
 import { useRipple } from "../../../app/hooks/useRipple"
 import { useToggle } from "../../../app/hooks/useToggle"
+import ThumbImage from "../../common/Image/ThumbImage"
 
 const OrderProductListItem = ({product}) => {
 
@@ -22,20 +22,12 @@ const OrderProductListItem = ({product}) => {
             >
             <Grid container alignItems='center'>
                 <Grid item xs={3}>
-                    <Avatar variant='rounded'>
-                        {
-                            product.image
-                            ?
-                            <Image
-                                src={productImageURL + product.image}
-                                alt={product.image}
-                                layout='fill'
-                                objectFit='cover'
-                            />
-                            :
-                            <PhotoIcon/>
-                        }
-                    </Avatar>
+                    <ThumbImage
+                        variant='rounded'
+                        url={productImageURL}
+                        src={product.image}
+                        noImageIcon={<PhotoIcon/>}
+                    />
                 </Grid>
                 <Grid item xs display='flex' justifyContent='center'>
                     <Typography variant='body2'>

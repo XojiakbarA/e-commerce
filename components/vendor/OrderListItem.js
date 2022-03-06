@@ -1,9 +1,9 @@
-import {Avatar, AvatarGroup, Card, CardActionArea, Chip, Grid, Typography} from "@mui/material";
+import {AvatarGroup, Card, CardActionArea, Chip, Grid, Typography} from "@mui/material";
 import PhotoIcon from '@mui/icons-material/Photo'
 import BaseLink from '../common/Link/BaseLink';
-import Image from "next/image";
 import {productImageURL} from "../../utils/utils";
 import { useRouter } from "next/router";
+import ThumbImage from '../common/Image/ThumbImage'
 
 const OrderListItem = ({order}) => {
 
@@ -27,20 +27,12 @@ const OrderListItem = ({order}) => {
                         <AvatarGroup max={3} spacing='small'>
                             {
                                 order.order_products.map(product => (
-                                    <Avatar key={product.id}>
-                                        {
-                                            product.image
-                                            ?
-                                            <Image
-                                                src={productImageURL + product.image}
-                                                alt={product.image}
-                                                layout='fill'
-                                                objectFit='cover'
-                                            />
-                                            :
-                                            <PhotoIcon/>
-                                        }
-                                    </Avatar>
+                                    <ThumbImage
+                                        key={product.id}
+                                        url={productImageURL}
+                                        src={product.image}
+                                        noImageIcon={<PhotoIcon/>}
+                                    />
                                 ))
                             }
                         </AvatarGroup>

@@ -1,22 +1,16 @@
-import {Box, Avatar, Stack, Typography, Rating} from '@mui/material'
-import Image from 'next/image'
+import {Box, Stack, Typography, Rating} from '@mui/material'
 import { userImageURL } from '../../../utils/utils'
+import ThumbImage from '../../common/Image/ThumbImage'
 
 const ReviewItem = ({review}) => {
     return(
         <Box marginBottom={4}>
             <Stack direction='row' spacing={2} alignItems='center' marginBottom={1}>
-                <Avatar>
-                    {
-                        review.image &&
-                        <Image
-                            src={userImageURL + review.image.src}
-                            alt={review.image}
-                            layout='fill'
-                            objectFit='cover'
-                        />
-                    }
-                </Avatar>
+                <ThumbImage
+                    url={userImageURL}
+                    src={review.image?.src}
+                    size={35}
+                />
                 <Stack>
                     <Typography variant='subtitle2'>
                         {review.name}

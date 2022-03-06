@@ -1,9 +1,9 @@
-import { Avatar, Stack, TableCell, TableRow, IconButton, Tooltip } from '@mui/material'
+import { Stack, TableCell, TableRow, IconButton, Tooltip } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import VisibilityIcon from '@mui/icons-material/Visibility'
-import Image from 'next/image'
 import { userImageURL } from '../../../utils/utils'
+import ThumbImage from '../../common/Image/ThumbImage'
 
 const UserTableRow = ({ user }) => {
 
@@ -14,17 +14,10 @@ const UserTableRow = ({ user }) => {
                 {user.id}
             </TableCell>
             <TableCell component="th" scope="row">
-                <Avatar>
-                    {
-                        user.image &&
-                        <Image
-                            src={userImageURL + user.image.src}
-                            alt={user.image.src}
-                            layout='fill'
-                            objectFit='cover'
-                        />
-                    }
-                </Avatar>
+                <ThumbImage
+                    url={userImageURL}
+                    src={user.image?.src}
+                />
             </TableCell>
             <TableCell component="th" scope="row">
                 {user.first_name}

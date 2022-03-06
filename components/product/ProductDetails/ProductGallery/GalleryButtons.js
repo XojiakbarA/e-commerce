@@ -1,27 +1,26 @@
-import Button from '@mui/material/Button'
-import ButtonGroup from '@mui/material/ButtonGroup'
+import { ButtonBase, Stack } from '@mui/material'
 import Image from 'next/image'
 import { productImageURL } from '../../../../utils/utils'
 
 const GalleryButtons = ({state, images, handleClick}) => {
 
     return (
-        <ButtonGroup>
+        <Stack direction='row' spacing={1}>
             {
                 images.map((image) => (
-                    <Button
+                    <ButtonBase
                         key={image.id}
                         sx={{
-                            padding: 0.1,
                             '&:hover': {
                                 transform: 'scale(1.08)',
                                 zIndex: 1
                             },
                             transform: state === image.src ? 'scale(1.08)' : 'scale(1)',
                             zIndex: state === image.src ? 1 : 0,
-                            transition: '0.2s ease'
+                            transition: '0.2s ease',
+                            borderRadius: 2,
+                            overflow: 'hidden'
                         }}
-                        variant='contained'
                     >
                         <Image
                             src={productImageURL + image.src}
@@ -30,10 +29,10 @@ const GalleryButtons = ({state, images, handleClick}) => {
                             height={125}
                             onClick={ () => handleClick(image.src) }
                         />
-                    </Button>
+                    </ButtonBase>
                 ))
             }
-        </ButtonGroup>
+        </Stack>
     );
 }
 

@@ -8,12 +8,13 @@ import LogoutIcon from '@mui/icons-material/Logout'
 import { AppBar } from "../styledComponents"
 import IconButtonMenu from "../../../common/Menu/IconButtonMenu"
 import { useDispatch, useSelector } from "react-redux"
-import MenuAvatar from "../../../common/Avatar/MenuAvatar"
 import BaseLink from "../../../common/Link/BaseLink"
 import ButtonLink from "../../../common/Link/ButtonLink"
 import DropdownMenu from "../../../common/Menu/DropdownMenu"
 import { useToggle } from "../../../../app/hooks/useToggle"
 import { userLogout } from "../../../../app/store/actions/async/user"
+import ThumbImage from "../../../common/Image/ThumbImage"
+import { userImageURL } from "../../../../utils/utils"
 
 const Header = ({open, handleDrawerOpen}) => {
 
@@ -31,7 +32,7 @@ const Header = ({open, handleDrawerOpen}) => {
             title: 'Account',
             onClick: handleAccount,
             badgeContent: 0,
-            icon: user ? <MenuAvatar image={user.image} size={35}/> : <AccountCircle fontSize='large'/>,
+            icon: user ? <ThumbImage url={userImageURL} src={user.image?.src} size={35}/> : <AccountCircle fontSize='large'/>,
             href: null,
             component: null
         },

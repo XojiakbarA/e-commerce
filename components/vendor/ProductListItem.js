@@ -1,11 +1,11 @@
-import { Avatar, Card, Chip, Grid, IconButton, Rating, Tooltip, Typography } from "@mui/material"
-import Image from 'next/image'
+import { Card, Chip, Grid, IconButton, Rating, Tooltip, Typography } from "@mui/material"
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import PhotoIcon from '@mui/icons-material/Photo'
 import { productImageURL } from "../../utils/utils"
 import { useToggle } from "../../app/hooks/useToggle"
+import ThumbImage from "../common/Image/ThumbImage"
 
 const ProductListItem = ({ product }) => {
 
@@ -27,21 +27,12 @@ const ProductListItem = ({ product }) => {
                     </Typography>
                 </Grid>
                 <Grid item xs display='flex' justifyContent='center'>
-                    <Avatar variant="rounded">
-                        {
-                            product.image
-                            ?
-                            <Image
-                                src={productImageURL + product.image.src}
-                                alt={product.title}
-                                layout='fill'
-                                objectFit='cover'
-                            />
-                            :
-                            <PhotoIcon/>
-                        }
-                        
-                    </Avatar>
+                    <ThumbImage
+                        variant="rounded"
+                        url={productImageURL}
+                        src={product.image?.src}
+                        noImageIcon={<PhotoIcon/>}
+                    />
                 </Grid>
                 <Grid item xs display='flex' justifyContent='center'>
                     <Chip label={product.stock} color={product.stock < 6 ? 'warning' : 'info'} size='small' variant='outlined'/>

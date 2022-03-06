@@ -1,8 +1,9 @@
-import {Card, CardActions, CardContent, CardMedia, Typography, Rating, IconButton, Avatar, Box, CardActionArea} from '@mui/material'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import {Card, CardActions, CardContent, CardMedia, Typography, Rating, Box, CardActionArea} from '@mui/material'
+import PhotoIcon from '@mui/icons-material/Photo'
 import BaseLink from '../common/Link/BaseLink'
 import Image from 'next/image'
-import { shopImageURL, noBgImageUrl, noAvImageUrl } from '../../utils/utils'
+import { shopImageURL, noBgImageUrl } from '../../utils/utils'
+import ThumbImage from '../common/Image/ThumbImage'
 
 const styles = {
     card: {
@@ -64,17 +65,11 @@ const ShopCard = ({shop}) => {
                     </Typography>
                 </CardContent>
                 <CardActions sx={styles.cardActions}>
-                    <Avatar>
-                        {
-                            shop.av_image &&
-                            <Image
-                                src={shopImageURL + shop.av_image.src}
-                                alt={shop.title}
-                                layout='fill'
-                                objectFit='cover'
-                            />
-                        }
-                    </Avatar>
+                    <ThumbImage
+                        url={shopImageURL}
+                        src={shop.av_image?.src}
+                        noImageIcon={<PhotoIcon/>}
+                    />
                 </CardActions>
             </CardActionArea>
         </Card>

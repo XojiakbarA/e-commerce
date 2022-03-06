@@ -1,14 +1,14 @@
 import {useState} from 'react'
-import { Avatar, Stack, TableCell, TableRow, Typography, IconButton, Rating, Switch, Chip, Tooltip } from '@mui/material'
+import { Stack, TableCell, TableRow, Typography, IconButton, Rating, Switch, Chip, Tooltip } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import PhotoIcon from '@mui/icons-material/Photo'
-import Image from 'next/image'
-import { productImageURL } from '../../../utils/utils'
 import { useDispatch, useSelector } from 'react-redux'
 import { editProductPublished } from '../../../app/store/actions/async/admin'
 import { useRouter } from 'next/router'
+import ThumbImage from '../../common/Image/ThumbImage'
+import { productImageURL } from '../../../utils/utils'
 
 const ProductsTableRow = ({ product }) => {
 
@@ -35,20 +35,12 @@ const ProductsTableRow = ({ product }) => {
                 />
             </TableCell>
             <TableCell component="th" scope="row">
-                <Avatar variant='rounded'>
-                    {
-                        product.image
-                        ?
-                        <Image
-                            src={productImageURL + product.image.src}
-                            alt={product.image.src}
-                            layout='fill'
-                            objectFit='cover'
-                        />
-                        :
-                        <PhotoIcon/>
-                    }
-                </Avatar>
+                <ThumbImage
+                    variant='rounded'
+                    url={productImageURL}
+                    src={product.image?.src}
+                    noImageIcon={<PhotoIcon/>}
+                />
             </TableCell>
             <TableCell component="th" scope="row">
                 <Typography

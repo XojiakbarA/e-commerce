@@ -1,11 +1,12 @@
-import {Paper, Box, Stepper, Step, Typography, Stack, Avatar, StepButton} from "@mui/material";
-import Image from 'next/image'
+import {Paper, Box, Stepper, Step, Typography, Stack, StepButton} from "@mui/material";
 import CancelIcon from '@mui/icons-material/Cancel';
 import PendingIcon from '@mui/icons-material/Pending';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import PhotoIcon from '@mui/icons-material/Photo'
 import { useToggle } from "../../../app/hooks/useToggle";
 import { shopImageURL } from "../../../utils/utils";
+import ThumbImage from "../../common/Image/ThumbImage";
 
 const OrderStatus = ({orderShop}) => {
 
@@ -27,18 +28,11 @@ const OrderStatus = ({orderShop}) => {
         <Paper sx={{ paddingX: 2, paddingY: 4 }}>
             <Stack direction='row' spacing={2} justifyContent='space-between' alignItems='center'>
                 <Stack direction='row' spacing={2} alignItems='center'>
-                    <Avatar>
-                        {
-                            image &&
-                            <Image
-                                src={shopImageURL + image?.src}
-                                alt={title}
-                                layout='fill'
-                                objectFit='cover'
-                            />
-                        }
-                        
-                    </Avatar>
+                    <ThumbImage
+                        url={shopImageURL}
+                        src={image?.src}
+                        noImageIcon={<PhotoIcon/>}
+                    />
                     <Typography variant="h6">
                         {title}
                     </Typography>

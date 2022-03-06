@@ -1,20 +1,17 @@
-import { Paper, Stack, Typography, Avatar } from "@mui/material"
-import Image from 'next/image'
-import { noAvImageUrl, userImageURL } from "../../../utils/utils"
+import { Paper, Stack, Typography } from "@mui/material"
+import { userImageURL } from "../../../utils/utils"
+import ThumbImage from "../../common/Image/ThumbImage"
 
 const UserCard = ({image, firstName, lastName}) => {
 
     return (
         <Paper sx={{paddingX: 2, height: '100%', alignItems: 'center', display: 'flex'}}>
             <Stack direction='row' spacing={2} alignItems='center'>
-                <Avatar sx={{width: 70, height: 70}}>
-                    <Image
-                        src={image ? userImageURL + image.src : noAvImageUrl}
-                        alt={firstName}
-                        layout='fill'
-                        objectFit='cover'
-                    />
-                </Avatar>
+                <ThumbImage
+                    url={userImageURL}
+                    src={image?.src}
+                    size={70}
+                />
                 <Stack>
                 <Typography variant='h5'>
                     {firstName}

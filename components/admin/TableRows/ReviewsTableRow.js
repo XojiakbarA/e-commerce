@@ -1,14 +1,14 @@
 import {useState} from 'react'
-import { Avatar, Stack, TableCell, TableRow, Typography, IconButton, Rating,Switch, Tooltip } from '@mui/material'
+import { Stack, TableCell, TableRow, Typography, IconButton, Rating,Switch, Tooltip } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
-import VisibilityIcon from '@mui/icons-material/Visibility'
 import PhotoIcon from '@mui/icons-material/Photo'
-import Image from 'next/image'
-import { productImageURL, userImageURL } from '../../../utils/utils'
+import VisibilityIcon from '@mui/icons-material/Visibility'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { editReviewPublished } from '../../../app/store/actions/async/admin'
+import { productImageURL, userImageURL } from '../../../utils/utils'
+import ThumbImage from '../../common/Image/ThumbImage'
 
 const ReviewsTableRow = ({ review }) => {
 
@@ -25,7 +25,6 @@ const ReviewsTableRow = ({ review }) => {
     }
     
     return (
-        <>
         <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
             <TableCell>
                 <Switch
@@ -36,17 +35,10 @@ const ReviewsTableRow = ({ review }) => {
                 />
             </TableCell>
             <TableCell component="th" scope="row">
-                <Avatar>
-                    {
-                        review.user_image &&
-                        <Image
-                            src={userImageURL + review.user_image.src}
-                            alt={review.user_image.src}
-                            layout='fill'
-                            objectFit='cover'
-                        />
-                    }
-                </Avatar>
+                <ThumbImage
+                    url={userImageURL}
+                    src={review.user_image?.src}
+                />
             </TableCell>
             <TableCell component="th" scope="row">
                 <Typography
@@ -74,20 +66,12 @@ const ReviewsTableRow = ({ review }) => {
                 </Typography>
             </TableCell>
             <TableCell component="th" scope="row">
-                <Avatar variant='rounded'>
-                    {
-                        review.product_image
-                        ?
-                        <Image
-                            src={productImageURL + review.product_image.src}
-                            alt={review.product_image.src}
-                            layout='fill'
-                            objectFit='cover'
-                        />
-                        :
-                        <PhotoIcon/>
-                    }
-                </Avatar>
+                <ThumbImage
+                    variant='rounded'
+                    url={productImageURL}
+                    src={review.product_image.src}
+                    noImageIcon={<PhotoIcon/>}
+                />
             </TableCell>
             <TableCell>
                 <Typography
@@ -130,7 +114,6 @@ const ReviewsTableRow = ({ review }) => {
                 </Stack>
             </TableCell>
         </TableRow>
-        </>
     )
 }
 

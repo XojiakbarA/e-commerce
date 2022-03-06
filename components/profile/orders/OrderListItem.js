@@ -1,8 +1,8 @@
-import {Avatar, AvatarGroup, Card, CardActionArea, Grid, Typography} from "@mui/material"
+import {AvatarGroup, Card, CardActionArea, Grid, Typography} from "@mui/material"
 import BaseLink from '../../common/Link/BaseLink'
 import PhotoIcon from '@mui/icons-material/Photo'
-import Image from "next/image";
 import {productImageURL} from "../../../utils/utils"
+import ThumbImage from "../../common/Image/ThumbImage"
 
 const OrderListItem = ({order}) => {
 
@@ -24,21 +24,12 @@ const OrderListItem = ({order}) => {
                             {
                                 order.order_shops.map(order_shop => (
                                     order_shop.order_products.map(product => (
-                                        <Avatar key={product.id}>
-                                            {
-                                                product.image
-                                                ?
-                                                <Image
-                                                    src={productImageURL + product.image}
-                                                    alt={product.image}
-                                                    layout='fill'
-                                                    objectFit='cover'
-                                                />
-                                                :
-                                                <PhotoIcon/>
-                                            }
-                                            
-                                        </Avatar>
+                                        <ThumbImage
+                                            key={product.id}
+                                            url={productImageURL}
+                                            src={product.image}
+                                            noImageIcon={<PhotoIcon/>}
+                                        />
                                     ))
                                 ))
                             }

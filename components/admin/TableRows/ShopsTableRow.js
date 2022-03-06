@@ -1,31 +1,21 @@
-import { Avatar, Stack, TableCell, TableRow, IconButton, Tooltip, Rating } from '@mui/material'
+import { Stack, TableCell, TableRow, IconButton, Tooltip, Rating } from '@mui/material'
 import PhotoIcon from '@mui/icons-material/Photo'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import VisibilityIcon from '@mui/icons-material/Visibility'
-import Image from 'next/image'
 import { shopImageURL } from '../../../utils/utils'
+import ThumbImage from '../../common/Image/ThumbImage'
 
 const ShopsTableRow = ({ shop }) => {
 
     return (
-        <>
         <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
             <TableCell component="th" scope="row">
-                <Avatar>
-                    {
-                        shop.av_image
-                        ?
-                        <Image
-                            src={shopImageURL + shop.av_image}
-                            alt={shop.av_image}
-                            layout='fill'
-                            objectFit='cover'
-                        />
-                        :
-                        <PhotoIcon/>
-                    }
-                </Avatar>
+                <ThumbImage
+                    url={shopImageURL}
+                    src={shop.av_image}
+                    noImageIcon={<PhotoIcon/>}
+                />
             </TableCell>
             <TableCell component="th" scope="row">
                 {shop.title}
@@ -83,7 +73,6 @@ const ShopsTableRow = ({ shop }) => {
                 </Stack>
             </TableCell>
         </TableRow>
-        </>
     )
 }
 

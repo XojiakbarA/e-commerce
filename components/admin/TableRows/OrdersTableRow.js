@@ -1,9 +1,9 @@
-import { Avatar, Stack, TableCell, TableRow, IconButton, Tooltip, AvatarGroup } from '@mui/material'
+import { Stack, TableCell, TableRow, IconButton, Tooltip, AvatarGroup } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import PhotoIcon from '@mui/icons-material/Photo'
-import Image from 'next/image'
+import ThumbImage from '../../common/Image/ThumbImage'
 import { productImageURL } from '../../../utils/utils'
 
 const OrdersTableRow = ({ order }) => {
@@ -23,20 +23,12 @@ const OrdersTableRow = ({ order }) => {
                 <AvatarGroup max={3} spacing='small'>
                     {
                         order.order_products.map(product => (
-                            <Avatar key={product.id}>
-                                {
-                                    product.image
-                                    ?
-                                    <Image
-                                        src={productImageURL + product.image}
-                                        alt={product.image}
-                                        layout='fill'
-                                        objectFit='cover'
-                                    />
-                                    :
-                                    <PhotoIcon/>
-                                }
-                            </Avatar>
+                            <ThumbImage
+                                key={product.id}
+                                url={productImageURL}
+                                src={product.image}
+                                noImageIcon={<PhotoIcon/>}
+                            />
                         ))
                     }
                 </AvatarGroup>

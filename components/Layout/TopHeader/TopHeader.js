@@ -12,10 +12,11 @@ import BaseLink from "../../common/Link/BaseLink"
 import router from 'next/router'
 import { useDispatch, useSelector } from "react-redux"
 import { useToggle } from "../../../app/hooks/useToggle"
-import MenuAvatar from '../../common/Avatar/MenuAvatar'
 import ButtonLink from '../../common/Link/ButtonLink'
 import DropdownMenu from '../../common/Menu/DropdownMenu'
 import { userLogout } from '../../../app/store/actions/async/user'
+import ThumbImage from '../../common/Image/ThumbImage'
+import { userImageURL } from '../../../utils/utils'
 
 
 const TopHeader = () => {
@@ -51,7 +52,7 @@ const TopHeader = () => {
             title: 'Account',
             onClick: handleAccount,
             badgeContent: 0,
-            icon: user ? <MenuAvatar image={user.image} size={35}/> : <AccountCircle fontSize='large'/>,
+            icon: user ? <ThumbImage url={userImageURL} src={user.image?.src} size={35}/> : <AccountCircle fontSize='large'/>,
             href: null,
             component: null
         },
