@@ -1,8 +1,9 @@
-import { Stack, Paper, Typography, Box, Divider, Button } from "@mui/material"
+import { Stack, Paper, Box, Divider, Button } from "@mui/material"
 import { useRouter } from "next/router"
 import { useSelector } from "react-redux"
 import VoucherForm from "./VoucherForm"
 import ShoppingInfoItem from './ShoppingInfoItem'
+import BaseLink from '../../../common/Link/BaseLink'
 
 const ShoppingInfo = () => {
 
@@ -10,10 +11,6 @@ const ShoppingInfo = () => {
     const total = useSelector(state => state.cart.total)
 
     const isCheckoutPage = router.pathname == '/checkout'
-
-    const handleCheckout = () => {
-        router.push('/checkout')
-    }
 
     return(
         <Paper sx={{padding: 3}}>
@@ -30,10 +27,12 @@ const ShoppingInfo = () => {
                 </Box>
                 <Button
                     variant='contained'
-                    onClick={handleCheckout}
-                    sx={{display: isCheckoutPage ? 'none' : 'block'}}
+                    href='/checkout'
+                    component={BaseLink}
+                    sx={isCheckoutPage && {display: 'none'}}
                 >
-                    Checkout</Button>
+                    Checkout
+                </Button>
             </Stack>
         </Paper>
     )

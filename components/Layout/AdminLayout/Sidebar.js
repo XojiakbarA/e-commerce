@@ -1,4 +1,4 @@
-import { List, Divider, IconButton, ListItem, ListItemIcon, ListItemText, Avatar, Stack, Typography, Box } from '@mui/material'
+import { List, Divider, IconButton, ListItemIcon, ListItemText, Avatar, Stack, Typography, Box, ListItemButton } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
@@ -14,7 +14,7 @@ import CommentIcon from '@mui/icons-material/Comment'
 import SettingsIcon from '@mui/icons-material/Settings'
 import { Drawer, DrawerHeader } from "./styledComponents"
 import { useRouter } from 'next/router'
-import NextLink from '../../common/Link'
+import BaseLink from '../../common/Link/BaseLink'
 
 const menu = [
     {label: 'Products', path: '/admin/products', icon: <ListAltIcon/> },
@@ -52,14 +52,17 @@ const Sidebar = ({ open, handleDrawerClose }) => {
                 {
                     menu.map(item => (
                         <Box key={item.label} >
-                            <NextLink href={item.path}>
-                                <ListItem button key={item.label} selected={router.pathname === item.path}>
-                                    <ListItemIcon>
-                                        {item.icon}
-                                    </ListItemIcon>
-                                    <ListItemText primary={item.label}/>
-                                </ListItem>
-                            </NextLink>
+                            <ListItemButton
+                                key={item.label}
+                                selected={router.pathname === item.path}
+                                href={item.path}
+                                component={BaseLink}
+                            >
+                                <ListItemIcon>
+                                    {item.icon}
+                                </ListItemIcon>
+                                <ListItemText primary={item.label}/>
+                            </ListItemButton>
                             {
                                 item.label == 'Transactions' && <Divider />
                             }

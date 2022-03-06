@@ -1,20 +1,31 @@
-import { Avatar, Chip, Grid, IconButton, Paper, Typography } from "@mui/material"
+import { Avatar, Card, Chip, Grid, IconButton, Typography } from "@mui/material"
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import PhotoIcon from '@mui/icons-material/Photo'
+import Image from 'next/image'
 import { productImageURL } from "../../utils/utils"
 
 const OrderProductListItem = ({product, count, handleAddClick, handleRemoveClick, setSaveDisabled, editDisabled}) => {
 
     return (
-        <Paper sx={{padding: 2}}>
+        <Card sx={{padding: 2}}>
             <Grid container alignItems='center'>
                 <Grid item xs={3}>
-                    <Avatar
-                        variant='rounded'
-                        src={product.image ? productImageURL + product.image.src : undefined}
-                        alt={product.image?.src}
-                    />
+                    <Avatar variant='rounded'>
+                        {
+                            product.image
+                            ?
+                            <Image
+                                src={productImageURL + product.image}
+                                alt={product.image}
+                                layout='fill'
+                                objectFit='cover'
+                            />
+                            :
+                            <PhotoIcon/>
+                        }
+                    </Avatar>
                 </Grid>
                 <Grid item xs display='flex' justifyContent='center'>
                     <Typography variant='body2'>
@@ -62,7 +73,7 @@ const OrderProductListItem = ({product, count, handleAddClick, handleRemoveClick
                     </IconButton>
                 </Grid>
             </Grid>
-        </Paper>
+        </Card>
     )
 }
 

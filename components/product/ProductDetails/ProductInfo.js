@@ -5,7 +5,7 @@ import RemoveIcon from '@mui/icons-material/Remove'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
-import NextLink from '../../common/Link'
+import BaseLink from '../../common/Link/BaseLink'
 import { useRouter } from 'next/router'
 import { useCart } from '../../../app/hooks/useCart'
 import { useWishlist } from '../../../app/hooks/useWishlist'
@@ -67,16 +67,20 @@ const ProductInfo = ({product}) => {
                     isProductsPage
                     ?
                     <Breadcrumbs separator={<NavigateNextIcon fontSize='small'/>}>
-                        <NextLink href={'/search?cat_id=' + product.category.id}>
-                            <Typography fontWeight='bold' color='text.primary'>
-                                {product.category.title}
-                            </Typography>
-                        </NextLink>
-                        <NextLink href={'/search?sub_cat_id=' + product.sub_category.id}>
-                            <Typography fontWeight='bold' color='text.primary'>
-                                {product.sub_category.title}
-                            </Typography>
-                        </NextLink>
+                        <BaseLink
+                            href={`/search?cat_id=${product.category.id}`}
+                            underline='hover'
+                            fontWeight='bold'
+                        >
+                            {product.category.title}
+                        </BaseLink>
+                        <BaseLink
+                            href={`/search?sub_cat_id=${product.sub_category.id}`}
+                            underline='hover'
+                            fontWeight='bold'
+                        >
+                            {product.sub_category.title}
+                        </BaseLink>
                     </Breadcrumbs>
                     :
                     <Breadcrumbs separator={<NavigateNextIcon fontSize='small'/>}>
@@ -174,11 +178,13 @@ const ProductInfo = ({product}) => {
                 {
                     isProductsPage
                     ?
-                    <NextLink href={`/shops/${product.shop.id}/products`}>
-                        <Typography fontWeight='bold' color='text.primary'>
-                            {product.shop.title}
-                        </Typography>
-                    </NextLink>
+                    <BaseLink
+                        href={`/shops/${product.shop.id}/products`}
+                        underline='hover'
+                        fontWeight='bold'
+                    >
+                        {product.shop.title}
+                    </BaseLink>
                     :
                     <Typography fontWeight='bold' color='text.primary'>
                         {product.shop.title}

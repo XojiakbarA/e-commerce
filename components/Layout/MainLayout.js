@@ -3,7 +3,6 @@ import TopHeader from "./TopHeader/TopHeader"
 import BottomHeader from "./BottomHeader"
 import Footer from './Footer'
 import MenuMobile from "./MenuMobile"
-import AccountMenu from "./AccountMenu/AccountMenu"
 import LoginDialog from "../dialogs/LoginDialog"
 import CartSidebar from "./CartSidebar"
 import RegisterDialog from "../dialogs/RegisterDialog"
@@ -19,7 +18,6 @@ const MainLayout = ({children}) => {
         </Container>
         <Footer />
         <MenuMobile />
-        <AccountMenu />
         <LoginDialog />
         <RegisterDialog />
         <CartSidebar />

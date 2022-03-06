@@ -5,7 +5,7 @@ import PendingIcon from '@mui/icons-material/Pending';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { useToggle } from "../../../app/hooks/useToggle";
-import { noAvImageUrl, shopImageURL } from "../../../utils/utils";
+import { shopImageURL } from "../../../utils/utils";
 
 const OrderStatus = ({orderShop}) => {
 
@@ -28,11 +28,16 @@ const OrderStatus = ({orderShop}) => {
             <Stack direction='row' spacing={2} justifyContent='space-between' alignItems='center'>
                 <Stack direction='row' spacing={2} alignItems='center'>
                     <Avatar>
-                        <Image
-                            src={image ? shopImageURL + image : noAvImageUrl}
-                            alt={title}
-                            layout='fill'
-                        />
+                        {
+                            image &&
+                            <Image
+                                src={shopImageURL + image?.src}
+                                alt={title}
+                                layout='fill'
+                                objectFit='cover'
+                            />
+                        }
+                        
                     </Avatar>
                     <Typography variant="h6">
                         {title}

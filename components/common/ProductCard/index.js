@@ -1,6 +1,6 @@
 import {Card, CardContent, CardMedia, CardActionArea, Typography, Rating, Stack, CircularProgress} from '@mui/material'
 import { productImageURL } from '../../../utils/utils'
-import NextLink from '../Link'
+import BaseLink from '../Link/BaseLink'
 import Image from 'next/image'
 import ProductCardButtons from './ProductCardButtons'
 import { noImageUrl } from '../../../utils/utils'
@@ -24,11 +24,11 @@ const ProductCard = ({product, listView}) => {
 
     return (
         <Card sx={style.card}>
-            <CardActionArea>
-                <NextLink
-                    href={`/products/${product.id}`}
-                    style={listView ? style.list : null}
-                >
+            <CardActionArea
+                sx={listView ? style.list : null}
+                href={`/products/${product.id}`}
+                component={BaseLink}
+            >
                     <CardMedia sx={style.cardMedia}>
                         <Image
                             src={product.image ? productImageURL + product.image.src : noImageUrl}
@@ -66,7 +66,6 @@ const ProductCard = ({product, listView}) => {
                             }
                         </Stack>
                     </CardContent>
-                </NextLink>
             </CardActionArea>
             <ProductCardButtons
                 id={product.id}

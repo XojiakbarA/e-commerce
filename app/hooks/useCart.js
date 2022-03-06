@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { addToCart, deleteFromCart, removeFromCart } from "../store/actions/async/user"
 
@@ -13,6 +13,12 @@ export const useCart = (id) => {
     const [cartFetching, setCartFetching] = useState(false)
 
     const productInCart = cart.find(item => item.id === id)
+
+    useEffect(() => {
+        return () => {
+            setIsClicked(false)
+        }
+    })
 
     const addProductCart = (e, clickedId) => {
         setIsClicked(clickedId === id)

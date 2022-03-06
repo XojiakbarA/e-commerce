@@ -1,5 +1,5 @@
 import { Grid, Paper, Stack, Divider, List, ListSubheader, ListItemButton, ListItemText, ListItemIcon } from "@mui/material"
-import NextLink from '../../../common/Link'
+import BaseLink from '../../../common/Link/BaseLink'
 import { useRouter } from "next/dist/client/router"
 import UserShopList from "./UserShopList"
 import { useSelector } from "react-redux"
@@ -16,20 +16,20 @@ const ProfileSidebar = ({menu}) => {
                     <List>
                         <ListSubheader>Menu</ListSubheader>
                         {
-                            menu.map((item, i) => (
-                                <NextLink key={i} href={item.path}>
-                                    <ListItemButton
-                                        key={i}
-                                        selected={
-                                            item.path == router.asPath
-                                            ||
-                                            item.path == '/profile/orders' && router.route == '/profile/orders/[id]'
-                                        }
-                                    >
-                                        <ListItemIcon>{item.icon}</ListItemIcon>
-                                        <ListItemText primary={item.title}/>
-                                    </ListItemButton>
-                                </NextLink>
+                            menu.map(item => (
+                                <ListItemButton
+                                    key={item.title}
+                                    selected={
+                                        item.path == router.asPath
+                                        ||
+                                        item.path == '/profile/orders' && router.route == '/profile/orders/[id]'
+                                    }
+                                    href={item.path}
+                                    component={BaseLink}
+                                >
+                                    <ListItemIcon>{item.icon}</ListItemIcon>
+                                    <ListItemText primary={item.title}/>
+                                </ListItemButton>
                             ))
                         }
                     </List>

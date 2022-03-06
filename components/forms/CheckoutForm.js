@@ -4,6 +4,7 @@ import { useCheckout } from "../../app/hooks/useFormik/useCheckout"
 import { useLocation } from "../../app/hooks/useLocation"
 import AutocompleteAsync from "../common/AutocompleteAsync/AutocompleteAsync"
 import PhoneMask from "../common/PhoneMask"
+import BaseLink from '../common/Link/BaseLink'
 
 const radios = [
     {value: 'uzcard', label: 'Pay with UzCard'},
@@ -157,7 +158,14 @@ const CheckoutForm = () => {
                 </Grid>
                 <Grid item xs={12}>
                     <Stack direction='row' spacing={4} justifyContent='center'>
-                        <Button fullWidth variant='outlined' onClick={() => router.push('/cart')}>Back to Cart</Button>
+                        <Button
+                            fullWidth
+                            variant='outlined'
+                            href='/cart'
+                            component={BaseLink}
+                        >
+                            Back to Cart
+                        </Button>
                         <Button
                             variant='contained'
                             fullWidth

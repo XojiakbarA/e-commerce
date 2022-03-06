@@ -6,10 +6,10 @@ import TwitterIcon from '@mui/icons-material/Twitter'
 import YouTubeIcon from '@mui/icons-material/YouTube'
 
 import Image from 'next/image'
-import AppLogo from '../AppLogo'
 
 import googlePlay from '../../../public/images/logo/google-play.png'
 import appStore from '../../../public/images/logo/app-store.png'
+import ButtonLink from '../../common/Link/ButtonLink'
 
 
 const menu = {
@@ -26,7 +26,12 @@ const Footer = () => {
                 <Toolbar sx={{ padding: 3 }}>
                     <Grid container spacing={3}>
                         <Grid item lg={8}>
-                            <AppLogo />
+                            <ButtonLink
+                                href={'/'}
+                                text={'e-commerce'}
+                                textVariant='h6'
+                                color='inherit'
+                            />
                             <Typography variant='body1' gutterBottom>
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Auctor libero id et, in gravida. Sit diam duis mauris nulla cursus. Erat et lectus vel ut sollicitudin elit at amet.
                             </Typography>

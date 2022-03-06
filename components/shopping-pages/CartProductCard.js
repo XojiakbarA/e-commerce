@@ -3,7 +3,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import Image from 'next/image'
-import NextLink from '../common/Link'
+import BaseLink from '../common/Link/BaseLink'
 import { noImageUrl, productImageURL } from '../../utils/utils'
 import { useCart } from '../../app/hooks/useCart'
 
@@ -12,9 +12,12 @@ const CartProductCard = ({product}) => {
     const { cartFetching, isClicked, addProductCart, removeProductCart, deleteProductCart } = useCart(product.id)
 
     return(
-        <Card sx={{display: 'flex', position: 'relative'}}>
-            <CardActionArea component='div'>
-                <NextLink href={`/products/${product.id}`} style={{display: 'flex', justifyContent: 'space-between', height: '100%'}}>
+        <Card sx={{position: 'relative'}}>
+            <CardActionArea
+                component={BaseLink}
+                href={`/products/${product.id}`}
+                sx={{display: 'flex', justifyContent: 'space-between', height: '100%'}}
+            >
                 <CardMedia sx={{width: 120, height: 120, position: 'relative'}}>
                     <Image
                         src={product.image ? productImageURL + product.image.src : noImageUrl}
@@ -43,8 +46,6 @@ const CartProductCard = ({product}) => {
                         }
                     </Stack>
                 </CardContent>
-                
-                </NextLink>
             </CardActionArea>
             <Stack
                 justifyContent='space-between'

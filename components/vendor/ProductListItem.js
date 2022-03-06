@@ -1,9 +1,10 @@
-import { Avatar, Chip, Grid, IconButton, Paper, Rating, Tooltip, Typography } from "@mui/material"
+import { Avatar, Card, Chip, Grid, IconButton, Rating, Tooltip, Typography } from "@mui/material"
 import Image from 'next/image'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import VisibilityIcon from '@mui/icons-material/Visibility'
-import { productImageURL, noImageUrl } from "../../utils/utils"
+import PhotoIcon from '@mui/icons-material/Photo'
+import { productImageURL } from "../../utils/utils"
 import { useToggle } from "../../app/hooks/useToggle"
 
 const ProductListItem = ({ product }) => {
@@ -13,7 +14,7 @@ const ProductListItem = ({ product }) => {
     const dialogText = `Do you really want to delete the "${product.title}"?`
 
     return (
-        <Paper sx={{padding: 2}}>
+        <Card sx={{padding: 2}}>
             <Grid container alignItems='center'>
                 <Grid item xs={3}>
                     <Typography
@@ -27,12 +28,19 @@ const ProductListItem = ({ product }) => {
                 </Grid>
                 <Grid item xs display='flex' justifyContent='center'>
                     <Avatar variant="rounded">
-                        <Image
-                            src={product.image ? productImageURL + product.image.src : noImageUrl}
-                            alt={product.title}
-                            layout='fill'
-                            objectFit='cover'
-                        />
+                        {
+                            product.image
+                            ?
+                            <Image
+                                src={productImageURL + product.image.src}
+                                alt={product.title}
+                                layout='fill'
+                                objectFit='cover'
+                            />
+                            :
+                            <PhotoIcon/>
+                        }
+                        
                     </Avatar>
                 </Grid>
                 <Grid item xs display='flex' justifyContent='center'>
@@ -69,7 +77,7 @@ const ProductListItem = ({ product }) => {
                     </Tooltip>
                 </Grid>
             </Grid>
-        </Paper>
+        </Card>
     )
 }
 
