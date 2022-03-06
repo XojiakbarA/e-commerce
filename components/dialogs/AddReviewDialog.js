@@ -2,14 +2,15 @@ import { Dialog, DialogContent, DialogTitle, IconButton, Typography } from "@mui
 import CloseIcon from '@mui/icons-material/Close'
 import { useToggle } from "../../app/hooks/useToggle"
 import ReviewForm from '../forms/ReviewForm'
-import ProductNuller from "./ProductNuller"
 
 const AddReviewDialog = () => {
 
     const { addReviewDialog, closeAddReviewDialog } = useToggle()
 
+    const { isOpen, payload } = addReviewDialog
+
     return (
-        <Dialog open={addReviewDialog} onClose={closeAddReviewDialog}>
+        <Dialog open={isOpen} onClose={closeAddReviewDialog}>
             <DialogTitle sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                 <Typography variant="button">
                     Write a Review
@@ -19,8 +20,7 @@ const AddReviewDialog = () => {
                 </IconButton>
             </DialogTitle>
             <DialogContent>
-                <ProductNuller/>
-                <ReviewForm/>
+                <ReviewForm product_id={payload}/>
             </DialogContent>
         </Dialog>
     )

@@ -2,6 +2,7 @@ import { useRouter } from "next/router"
 import { useDispatch, useSelector } from "react-redux"
 import {
     setProduct, toggleAccountMenu, toggleAddProductDialog, toggleAddReviewDialog,
+    toggleCancelOrderDialog,
     toggleCartSidebar, toggleDeleteBannerDialog, toggleDeleteBrandDialog, toggleDeleteCategoryDialog, toggleDeleteDistrictDialog, toggleDeleteProductDialog,
     toggleDeleteRegionDialog,
     toggleDeleteSubCategoryDialog, toggleEditProductDialog, toggleEditProfileDialog,
@@ -38,11 +39,10 @@ export const useToggle = () => {
     }
 
     const openViewProductDialog = (product) => {
-        dispatch(setProduct(product))
-        dispatch(toggleViewProductDialog(true))
+        dispatch(toggleViewProductDialog(true, product))
     }
     const closeViewProductDialog = () => {
-        dispatch(toggleViewProductDialog(false))
+        dispatch(toggleViewProductDialog(false, {}))
     }
 
     const openDeleteCategoryDialog = (text, payload) => {
@@ -147,13 +147,19 @@ export const useToggle = () => {
         dispatch(toggleCartSidebar(false))
     }
 
-    const openAddReviewDialog = (e, product) => {
+    const openAddReviewDialog = (e, product_id) => {
         e.preventDefault()
-        dispatch(setProduct(product))
-        dispatch(toggleAddReviewDialog(true))
+        dispatch(toggleAddReviewDialog(true, product_id))
     }
     const closeAddReviewDialog = () => {
-        dispatch(toggleAddReviewDialog(false))
+        dispatch(toggleAddReviewDialog(false, ''))
+    }
+
+    const openCancelOrderDialog = (text, sub_order_id) => {
+        dispatch(toggleCancelOrderDialog(true, text, sub_order_id))
+    }
+    const closeCancelOrderDialog = () => {
+        dispatch(toggleCancelOrderDialog(false, '', ''))
     }
 
     const handleAccount = (e) => {
@@ -188,6 +194,8 @@ export const useToggle = () => {
         closeSidebar,
         openAddReviewDialog,
         closeAddReviewDialog,
+        openCancelOrderDialog,
+        closeCancelOrderDialog,
         openDeleteCategoryDialog,
         closeDeleteCategoryDialog,
         openDeleteProductDialog,

@@ -54,7 +54,7 @@ const OrderProductListItem = ({product}) => {
             <Box sx={{position: 'absolute', top: 0, right: 0}}>
             <Tooltip title='Write a Review'>
                 <IconButton
-                    onClick={ e => openAddReviewDialog(e, product) }
+                    onClick={ e => openAddReviewDialog(e, product.product_id) }
                     {...events}
                 >
                     <AddCommentIcon/>

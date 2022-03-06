@@ -12,7 +12,9 @@ const OrderStatus = ({orderShop}) => {
 
     const { status, title, image } = orderShop
 
-    const { openConfirmDialog } = useToggle()
+    const { openCancelOrderDialog } = useToggle()
+
+    const cancelText = `Are you sure you want to cancel the "${title}" order?`
 
     const steps = [
         {
@@ -41,7 +43,7 @@ const OrderStatus = ({orderShop}) => {
                     <Stepper activeStep={status === 'pending' ? 0 : -1}>
                         {steps.map((step) => (
                             <Step key={step.label}>
-                                <StepButton icon={step.icon} onClick={() => openConfirmDialog(orderShop)}>
+                                <StepButton icon={step.icon} onClick={() => openCancelOrderDialog(cancelText, orderShop.id)}>
                                     <Typography variant="caption">
                                         {step.label}
                                     </Typography>

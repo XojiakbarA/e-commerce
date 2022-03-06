@@ -6,11 +6,12 @@ const initialState = {
     registerDialog: false,
     orderDialog: false,
     orderShipDialog: false,
+    cancelOrderDialog: {isOpen: false, text: '', payload: ''},
     editProfileDialog: false,
     addProductDialog: false,
-    viewProductDialog: false,
+    viewProductDialog: {isOpen: false, payload: {}},
     editProductDialog: {isOpen: false, payload: {}},
-    addReviewDialog: false,
+    addReviewDialog: {isOpen: false, payload: ''},
     cartSidebar: false,
     accountMenu: null,
     deleteCategoryDialog: {
@@ -154,7 +155,13 @@ const toggleReducer = (state = initialState, action) => {
         case type.TOGGLE_ADD_PRODUCT_DIALOG:
             return { ...state, addProductDialog: action.payload }
         case type.TOGGLE_VIEW_PRODUCT_DIALOG:
-            return { ...state, viewProductDialog: action.payload }
+            return {
+                ...state,
+                viewProductDialog: {
+                    isOpen: action.isOpen,
+                    payload: action.payload
+                }
+            }
 
         case type.TOGGLE_EDIT_PRODUCT_DIALOG:
             return {
@@ -162,10 +169,28 @@ const toggleReducer = (state = initialState, action) => {
                 editProductDialog: {
                     isOpen: action.isOpen,
                     payload: action.payload
-                }}
+                }
+            }
 
         case type.TOGGLE_ADD_REVIEW_DIALOG:
-            return { ...state, addReviewDialog: action.payload }
+            return {
+                ...state,
+                addReviewDialog: {
+                    isOpen: action.isOpen,
+                    payload: action.payload
+                }
+            }
+
+        case type.TOGGLE_CANCEL_ORDER_DIALOG:
+            return {
+                ...state,
+                cancelOrderDialog: {
+                    isOpen: action.isOpen,
+                    text: action.text,
+                    payload: action.payload
+                }
+            }
+
         case type.TOGGLE_CART_SIDEBAR:
             return { ...state, cartSidebar: action.payload }
         case type.TOGGLE_ACCOUNT_MENU:

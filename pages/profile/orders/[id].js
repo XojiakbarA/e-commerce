@@ -3,8 +3,8 @@ import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import ProfileLayout from "../../../components/layout/ProfileLayout/ProfileLayout";
 import OrderStatus from "../../../components/profile/orders/OrderStatus";
 import OrderShippingAddress from "../../../components/profile/orders/OrderShippingAddress";
-import {useSelector} from "react-redux";
-import {getOrder} from "../../../app/store/actions/async/user";
+import {useDispatch, useSelector} from "react-redux";
+import {cancelOrder, getOrder} from "../../../app/store/actions/async/user";
 import OrderDetails from "../../../components/profile/orders/OrderDetails";
 import { wrapper } from "../../../app/store"
 import OrderProductListItem from "../../../components/profile/orders/OrderProductListItem";
@@ -12,10 +12,18 @@ import ConfirmDialog from "../../../components/dialogs/ConfirmDialog";
 import MainLayout from '../../../components/layout/MainLayout'
 import AddReviewDialog from "../../../components/dialogs/AddReviewDialog";
 import ProfilePageHead from "../../../components/common/ProfilePageHead";
+import { useToggle } from "../../../app/hooks/useToggle";
 
 const Order = () => {
 
+    const dispatch = useDispatch()
     const order = useSelector(state => state.order.data)
+
+    const { isLoading, cancelOrderDialog, closeCancelOrderDialog } = useToggle()
+
+    const { isOpen, text, payload } = cancelOrderDialog
+
+    const handleCancelOrder = () => dispatch(cancelOrder(payload))
 
     return (
         <Grid container spacing={2}>
@@ -57,7 +65,13 @@ const Order = () => {
                     </Grid>
                 </Grid>
             </Grid>
-            <ConfirmDialog/>
+            <ConfirmDialog
+                open={isOpen}
+                content={text}
+                loading={isLoading}
+                handleCancelClick={closeCancelOrderDialog}
+                handleConfirmClick={handleCancelOrder}
+            />
             <AddReviewDialog/>
         </Grid>
     )

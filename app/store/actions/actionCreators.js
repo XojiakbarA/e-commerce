@@ -190,9 +190,10 @@ export const toggleAddProductDialog = (bool) => ({
     payload: bool
 })
 
-export const toggleViewProductDialog = (bool) => ({
+export const toggleViewProductDialog = (bool, payload) => ({
     type: type.TOGGLE_VIEW_PRODUCT_DIALOG,
-    payload: bool
+    isOpen: bool,
+    payload: payload
 })
 
 export const toggleEditProductDialog = (bool, payload) => ({
@@ -201,9 +202,17 @@ export const toggleEditProductDialog = (bool, payload) => ({
     payload: payload
 })
 
-export const toggleAddReviewDialog = (bool) => ({
+export const toggleAddReviewDialog = (bool, payload) => ({
     type: type.TOGGLE_ADD_REVIEW_DIALOG,
-    payload: bool
+    isOpen: bool,
+    payload: payload
+})
+
+export const toggleCancelOrderDialog = (bool, text, payload) => ({
+    type: type.TOGGLE_CANCEL_ORDER_DIALOG,
+    isOpen: bool,
+    text: text,
+    payload: payload
 })
 
 export const toggleAccountMenu = (anchorEl) => ({

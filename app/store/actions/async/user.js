@@ -8,7 +8,8 @@ import {
 import {
     setUser, setCart, setLoading, toggleLoginDialog, toggleRegisterDialog, setWishlist, toggleOrderDialog,
     setOrders, setOrder, toggleConfirmDialog, toggleEditProfileDialog, toggleAccountMenu, toggleAddReviewDialog,
-    toggleSnackbar
+    toggleSnackbar,
+    toggleCancelOrderDialog
 } from '../actionCreators'
 
 export const getCart = (cookie) => {
@@ -276,7 +277,7 @@ export const cancelOrder = (id) => {
                 dispatch(setOrder(res.data))
                 dispatch(setLoading(false))
                 dispatch(toggleSnackbar(true, 'Order cancelled successfully!'))
-                dispatch(toggleConfirmDialog(false))
+                dispatch(toggleCancelOrderDialog(false, '', ''))
             }
         } catch (e) {
             console.log(e)

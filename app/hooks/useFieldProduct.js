@@ -12,7 +12,7 @@ export const useFieldProduct = (setValues, product) => {
     const initSubCategory = null
     const initBrand = null
 
-    if (product.category) {
+    if (product?.category) {
         initSubCategories = categories.find(item => item.id === product.category.id).sub_categories
         initCategory = product.category
         initSubCategory = product.sub_category

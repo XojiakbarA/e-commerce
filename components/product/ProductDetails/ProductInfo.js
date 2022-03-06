@@ -72,29 +72,29 @@ const ProductInfo = ({product}) => {
                             underline='hover'
                             fontWeight='bold'
                         >
-                            {product.category.title}
+                            {product.category}
                         </BaseLink>
                         <BaseLink
                             href={`/search?sub_cat_id=${product.sub_category.id}`}
                             underline='hover'
                             fontWeight='bold'
                         >
-                            {product.sub_category.title}
+                            {product.sub_category}
                         </BaseLink>
                     </Breadcrumbs>
                     :
                     <Breadcrumbs separator={<NavigateNextIcon fontSize='small'/>}>
                         <Typography fontWeight='bold' color='text.primary'>
-                            {product.category.title}
+                            {product.category}
                         </Typography>
                         <Typography fontWeight='bold' color='text.primary'>
-                            {product.sub_category.title}
+                            {product.sub_category}
                         </Typography>
                     </Breadcrumbs>
                 }
             </Stack>
             <Typography variant='body1'>
-                Brand: <b>{product.brand.title}</b>
+                Brand: <b>{product.brand}</b>
             </Typography>
             <Stack direction='row' spacing={2}>
                 <Typography variant='body1'>
@@ -183,11 +183,11 @@ const ProductInfo = ({product}) => {
                         underline='hover'
                         fontWeight='bold'
                     >
-                        {product.shop.title}
+                        {product.shop}
                     </BaseLink>
                     :
                     <Typography fontWeight='bold' color='text.primary'>
-                        {product.shop.title}
+                        {product.shop}
                     </Typography>
                 }
             </Stack>
