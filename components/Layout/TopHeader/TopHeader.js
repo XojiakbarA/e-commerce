@@ -58,7 +58,7 @@ const TopHeader = () => {
         },
         {
             title: cartCount ? 'Cart' : 'Cart is empty',
-            onClick: openSidebar,
+            onClick: cartCount ? openSidebar : null,
             badgeContent: cartCount,
             icon: <ShoppingCartIcon/>,
             href: null,
@@ -69,8 +69,8 @@ const TopHeader = () => {
             onClick: null,
             badgeContent: wishlistCount,
             icon: <FavoriteIcon/>,
-            href: '/wishlist',
-            component: BaseLink
+            href: wishlistCount ? '/wishlist' : null,
+            component: wishlistCount ? BaseLink : null
         }
     ]
 
