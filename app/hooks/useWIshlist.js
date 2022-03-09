@@ -1,33 +1,42 @@
-import { useState } from "react"
+import cookies from 'js-cookie'
 import { useDispatch, useSelector } from "react-redux"
-import { addToWishlist, deleteFromWishlist } from "../store/actions/async/user"
+import { addToWishlist, removeFromWishlist, toggleSnackbar } from "../store/actions/actionCreators"
 
-export const useWishlist = (id) => {
+
+export const useWishlist = (product) => {
 
     const dispatch = useDispatch()
 
     const wishlist = useSelector(state => state.wishlist)
 
-    const productInWishlist = wishlist.find(item => item.id === id)
+    const productInWishlist = wishlist.find(item => item.id === product.id)
+// console.log(wishlist)
+    const addProductWishlist = () => {
+        dispatch(addToWishlist(product))
+        dispatch(toggleSnackbar(true, 'Product added to wishlist!', 'success'))
 
-    const [isWishClicked, setIsWishClicked] = useState(false)
-
-    const [wishlistFetching, setWishlistFetching] = useState(false)
-
-    const addProductWishlist = (e, clickedId) => {
-        setIsWishClicked(clickedId === id)
-        dispatch(addToWishlist(id, setIsWishClicked, setWishlistFetching))
+        let wishlist = cookies.get('wishlist') ? JSON.parse(cookies.get('wishlist')) : []
+        wishlist.push(product.id)
+        wishlist = JSON.stringify(wishlist)
+        cookies.set('wishlist', wishlist, { expires: 7 })
     }
 
-    const deleteProductWishlist = (e, clickedId) => {
-        setIsWishClicked(clickedId === id)
-        dispatch(deleteFromWishlist(id, setIsWishClicked, setWishlistFetching))
+    const deleteProductWishlist = () => {
+        dispatch(removeFromWishlist(product.id))
+        dispatch(toggleSnackbar(true, 'Product removed from wishlist!', 'success'))
+
+        let wishlist = JSON.parse(cookies.get('wishlist'))
+        wishlist = wishlist.filter(item => item !== product.id)
+        if (wishlist.length === 0) {
+            cookies.remove('wishlist')
+            return
+        }
+        wishlist = JSON.stringify(wishlist)
+        cookies.set('wishlist', wishlist, { expires: 7 })
     }
 
     return {
         productInWishlist,
-        wishlistFetching,
-        isWishClicked,
         addProductWishlist,
         deleteProductWishlist
     }

@@ -1,9 +1,8 @@
 import router from 'next/router'
 import { fetchProducts } from '../../../../api/common'
 import {
-    login, logout, fetchUser, register, addWishlist, fetchWishlist, deleteWishlist,
-    storeOrder, fetchOrders, fetchOrder, cancellationOrder, storeShop,
-    destroyUserImage, updateUser, storeReview
+    login, logout, fetchUser, register, storeOrder, fetchOrders, fetchOrder,
+    cancellationOrder, storeShop, destroyUserImage, updateUser, storeReview
 } from '../../../../api/user'
 
 import {
@@ -14,7 +13,7 @@ import {
 
 export const getCart = (cookieCart) => {
 
-    let query = {id: cookieCart.map(item => item.id)}
+    const query = {id: cookieCart.map(item => item.id)}
 
     return async (dispatch) => {
         try {
@@ -28,44 +27,15 @@ export const getCart = (cookieCart) => {
     }
 }
 
-export const getWishlist = (cookie) => {
-    return async (dispatch) => {
-        try {
-            const res = await fetchWishlist(cookie)
-            if (res.status === 200) {
-                dispatch(setWishlist(res.data.data))
-            }
-        } catch (e) {
-            console.log(e)
-        }
-    }
-}
+export const getWishlist = (cookieWishlist) => {
 
-export const addToWishlist = (id, setIsWishClicked, setWishlistFetching) => {
-    return async (dispatch) => {
-        try {
-            setWishlistFetching(true)
-            const res = await addWishlist(id)
-            if (res.status === 200) {
-                dispatch(setWishlist(res.data.data))
-                setWishlistFetching(false)
-                setIsWishClicked(false)
-            }
-        } catch (e) {
-            console.log(e)
-        }
-    }
-}
+    const query = {id: cookieWishlist}
 
-export const deleteFromWishlist = (id, setIsWishClicked, setWishlistFetching) =>{
     return async (dispatch) => {
         try {
-            setWishlistFetching(true)
-            const res = await deleteWishlist(id)
+            const res = await fetchProducts(query)
             if (res.status === 200) {
                 dispatch(setWishlist(res.data.data))
-                setWishlistFetching(false)
-                setIsWishClicked(false)
             }
         } catch (e) {
             console.log(e)

@@ -1,11 +1,8 @@
-import {Card, CardContent, CardMedia, CardActionArea, Typography, Rating, Stack} from '@mui/material'
+import {Card, CardContent, CardActionArea, Typography, Rating, Stack} from '@mui/material'
 import PhotoIcon from '@mui/icons-material/Photo'
 import { productImageURL } from '../../../utils/utils'
 import BaseLink from '../Link/BaseLink'
-import Image from 'next/image'
 import ProductCardButtons from './ProductCardButtons'
-import { noImageUrl } from '../../../utils/utils'
-import { useWishlist } from '../../../app/hooks/useWishlist'
 import ThumbImage from '../Image/ThumbImage'
 
 const ProductCard = ({product, listView}) => {
@@ -15,10 +12,6 @@ const ProductCard = ({product, listView}) => {
         card: {boxShadow: 3, borderRadius: 2, position: 'relative'},
         cardMedia: {position: 'relative', width: listView ? 150 : '100%', height: listView ? 150 : 276}
     }
-
-    const { productInWishlist, wishlistFetching, isWishClicked, addProductWishlist, deleteProductWishlist } = useWishlist(product.id)
-
-    const hasInWishlist = Boolean(productInWishlist)
 
     return (
         <Card sx={style.card}>
@@ -64,14 +57,7 @@ const ProductCard = ({product, listView}) => {
                     </Stack>
                 </CardContent>
             </CardActionArea>
-            <ProductCardButtons
-                product={product}
-                hasInWishlist={hasInWishlist}
-                wishlistFetching={wishlistFetching}
-                isWishClicked={isWishClicked}
-                addProductWishlist={addProductWishlist}
-                deleteProductWishlist={deleteProductWishlist}
-            />
+            <ProductCardButtons product={product}/>
         </Card>
     );
 }

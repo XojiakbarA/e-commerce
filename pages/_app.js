@@ -31,16 +31,19 @@ MyApp.getInitialProps = wrapper.getInitialAppProps(store => async ({Component, c
     const {dispatch} = store
     const cookies = ctx.req?.headers.cookie
     const cookieCart = ctx.req.cookies['cart'] ? JSON.parse(ctx.req.cookies['cart']) : undefined
+    const cookieWishlist = ctx.req.cookies['wishlist'] ? JSON.parse(ctx.req.cookies['wishlist']) : undefined
 
     await dispatch(getCategories())
     await dispatch(getBrands())
 
+    if (cookies) {
+        await dispatch(getUser(cookies))
+    }
     if (cookieCart) {
         await dispatch(getCart(cookieCart))
     }
-    if (cookies) {
-        await dispatch(getUser(cookies))
-        await dispatch(getWishlist(cookies))
+    if (cookieWishlist) {
+        await dispatch(getWishlist(cookieWishlist))
     }
 
     return {

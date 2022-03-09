@@ -15,47 +15,36 @@ const ProductInfo = ({product}) => {
     const router = useRouter()
 
     const { productInCart, addProduct, incrementProduct, decrementProduct} = useCart(product)
-
-    const { wishlistFetching, isWishClicked, productInWishlist, addProductWishlist, deleteProductWishlist } = useWishlist(product.id)
+    const { productInWishlist, addProductWishlist, deleteProductWishlist } = useWishlist(product)
 
     const hasInCart = Boolean(productInCart)
     const hasInWishlist = Boolean(productInWishlist)
-    
 
     const isProductsPage = router.pathname.indexOf('/products') === 0
 
     return(
         <Stack spacing={3} sx={{marginTop: 5, paddingTop: 2, position: 'relative'}} alignItems='flex-start'>
             {
-                isProductsPage
-                ?
-                    <Stack direction='row' spacing={2} sx={{position: 'absolute', top: 0, right: 0}} alignItems='center'>
-                        {
-                            wishlistFetching && isWishClicked &&
-                            <CircularProgress size={25}/>
-                        }
-                        {
-                            hasInWishlist
-                            ?
-                            <IconButton
-                                size='large'
-                                disabled={wishlistFetching && isWishClicked}
-                                onClick={ e => deleteProductWishlist(e, product.id) }
-                            >
-                                <FavoriteIcon fontSize='large'/>
-                            </IconButton>
-                            :
-                            <IconButton
-                                size='large'
-                                disabled={wishlistFetching && isWishClicked}
-                                onClick={ e => addProductWishlist(e, product.id) }
-                            >
-                                <FavoriteBorderIcon fontSize='large'/>
-                            </IconButton>
-                        }
-                    </Stack>
-                :
-                null
+                isProductsPage &&
+                <Stack direction='row' spacing={2} sx={{position: 'absolute', top: 0, right: 0}} alignItems='center'>
+                    {
+                        hasInWishlist
+                        ?
+                        <IconButton
+                            size='large'
+                            onClick={ deleteProductWishlist }
+                        >
+                            <FavoriteIcon fontSize='large'/>
+                        </IconButton>
+                        :
+                        <IconButton
+                            size='large'
+                            onClick={ addProductWishlist }
+                        >
+                            <FavoriteBorderIcon fontSize='large'/>
+                        </IconButton>
+                    }
+                </Stack>
             }
             <Typography variant='h3'>
                 {product.title}

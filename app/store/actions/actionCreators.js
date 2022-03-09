@@ -26,9 +26,19 @@ export const decrementProductCart = (id) => ({
     id
 })
 
-export const setWishlist = (wishlist) => ({
+export const setWishlist = (payload) => ({
     type: type.SET_WISHLIST,
-    payload: wishlist
+    payload
+})
+
+export const addToWishlist = (payload) => ({
+    type: type.ADD_WISHLIST,
+    payload
+})
+
+export const removeFromWishlist = (id) => ({
+    type: type.REMOVE_WISHLIST,
+    id
 })
 
 export const setUser = (user) => ({

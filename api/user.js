@@ -31,23 +31,6 @@ export const register = async (data) => {
     return await instance.post('register', data)
 }
 
-export const fetchWishlist = async (cookie) => {
-    return await instance.get('api/wishlist', {
-        headers: {
-            'Cookie': cookie,
-            'Referer': 'http://localhost:3000/'
-        }
-    })
-}
-
-export const addWishlist = async (id) => {
-    return await instance.post(`api/wishlist/${id}`)
-}
-
-export const deleteWishlist = async (id) => {
-    return await instance.delete(`api/wishlist/${id}`)
-}
-
 export const storeShop = async (data) => {
     return await instance.post('api/shops', data)
 }

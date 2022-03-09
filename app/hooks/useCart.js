@@ -28,6 +28,10 @@ export const useCart = (product) => {
 
         let cart = JSON.parse(cookies.get('cart'))
         cart = cart.filter(item => item.id !== product.id)
+        if (cart.length === 0) {
+            cookies.remove('cart')
+            return
+        }
         cart = JSON.stringify(cart)
         cookies.set('cart', cart, { expires: 7 })
     }
@@ -52,6 +56,10 @@ export const useCart = (product) => {
             cart = cart.filter(item => item.id !== product.id)
         } else {
             cart.forEach(item => item.id === product.id && --item.quantity)
+        }
+        if (cart.length === 0) {
+            cookies.remove('cart')
+            return
         }
         cart = JSON.stringify(cart)
         cookies.set('cart', cart, { expires: 7 })
