@@ -31,27 +31,6 @@ export const register = async (data) => {
     return await instance.post('register', data)
 }
 
-export const fetchCart = async (cookie) => {
-    return await instance.get('api/cart', {
-        headers: {
-            'Cookie': cookie,
-            'Referer': 'http://localhost:3000/'
-        }
-    })
-}
-
-export const addCart = async (id) => {
-    return await instance.post(`api/cart/${id}`)
-}
-
-export const removeCart = async (id) => {
-    return await instance.put(`api/cart/${id}`)
-}
-
-export const deleteCart = async (id) => {
-    return await instance.delete(`api/cart/${id}`)
-}
-
 export const fetchWishlist = async (cookie) => {
     return await instance.get('api/wishlist', {
         headers: {

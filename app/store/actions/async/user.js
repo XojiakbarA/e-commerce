@@ -1,76 +1,26 @@
 import router from 'next/router'
+import { fetchProducts } from '../../../../api/common'
 import {
-    login, logout, fetchUser, fetchCart, addCart, removeCart, deleteCart, register, addWishlist,
-    fetchWishlist, deleteWishlist, storeOrder, fetchOrders, fetchOrder, cancellationOrder, storeShop,
+    login, logout, fetchUser, register, addWishlist, fetchWishlist, deleteWishlist,
+    storeOrder, fetchOrders, fetchOrder, cancellationOrder, storeShop,
     destroyUserImage, updateUser, storeReview
 } from '../../../../api/user'
 
 import {
     setUser, setCart, setLoading, toggleLoginDialog, toggleRegisterDialog, setWishlist, toggleOrderDialog,
     setOrders, setOrder, toggleEditProfileDialog, toggleAccountMenu, toggleAddReviewDialog,
-    toggleSnackbar,
-    toggleCancelOrderDialog,
-    addProductCart,
-    removeProductCart,
-    deleteProductCart
+    toggleSnackbar, toggleCancelOrderDialog
 } from '../actionCreators'
 
-export const getCart = (cookie) => {
-    return async (dispatch) => {
-        try {
-            const res = await fetchCart(cookie)
-            if (res.status === 200) {
-                dispatch(setCart(res.data))
-            }
-        } catch (e) {
-            console.log(e)
-        }
-    }
-}
+export const getCart = (cookieCart) => {
 
-export const addToCart = (id, setIsClicked, setCartFetching) => {
-    return async (dispatch) => {
-        try {
-            setCartFetching(true)
-            const res = await addCart(id)
-            console.log(res)
-            if (res.status === 200) {
-                dispatch(addProductCart(res.data.data, res.data.total))
-                setCartFetching(false)
-                setIsClicked(false)
-            }
-        } catch (e) {
-            console.log(e)
-        }
-    }
-}
+    let query = {id: cookieCart.map(item => item.id)}
 
-export const removeFromCart = (id, setIsClicked, setCartFetching) => {
     return async (dispatch) => {
         try {
-            setCartFetching(true)
-            const res = await removeCart(id)
-            console.log(res)
+            const res = await fetchProducts(query)
             if (res.status === 200) {
-                dispatch(removeProductCart(res.data.data, res.data.total))
-                setCartFetching(false)
-                setIsClicked(false)
-            }
-        } catch (e) {
-            console.log(e)
-        }
-    }
-}
-
-export const deleteFromCart = (id, setIsClicked, setCartFetching) => {
-    return async (dispatch) => {
-        try {
-            setCartFetching(true)
-            const res = await deleteCart(id)
-            if (res.status === 200) {
-                dispatch(deleteProductCart(id, res.data.total))
-                setCartFetching(false)
-                setIsClicked(false)
+                dispatch(setCart(res.data.data, cookieCart))
             }
         } catch (e) {
             console.log(e)

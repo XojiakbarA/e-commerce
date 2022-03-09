@@ -1,18 +1,19 @@
-import { Button, IconButton, Typography, Card, CardActionArea, CardMedia, CardContent, Stack, CircularProgress } from '@mui/material'
+import { IconButton, Typography, Card, CardActionArea, CardContent, Stack, Box } from '@mui/material'
 import BaseLink from '../../common/Link/BaseLink'
-import Image from 'next/image'
 import CloseIcon from '@mui/icons-material/Close'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
-import { noImageUrl, productImageURL } from '../../../utils/utils'
+import PhotoIcon from '@mui/icons-material/Photo'
+import { productImageURL } from '../../../utils/utils'
 import { useRipple } from '../../../app/hooks/useRipple'
 import { useCart } from '../../../app/hooks/useCart'
+import ThumbImage from '../../common/Image/ThumbImage'
 
 const SidebarProductCard = ({product}) => {
 
     const [ripple, events] = useRipple()
 
-    const { cartFetching, isClicked, addProductCart, removeProductCart, deleteProductCart} = useCart(product.id)
+    const { removeProduct, incrementProduct, decrementProduct} = useCart(product)
 
     return(
         <Card>
@@ -28,34 +29,32 @@ const SidebarProductCard = ({product}) => {
                     alignItems='center'
                     { ...events }
                 >
-                    <Button
+                    <IconButton
                         variant='outlined'
-                        sx={{padding: 0, minWidth: 0}}
-                        disabled={cartFetching && isClicked}
-                        onClick={ e => addProductCart(e, product.id) }
+                        size='small'
+                        color='primary'
+                        onClick={ incrementProduct }
                     >
                         <AddIcon fontSize='small' />
-                    </Button>
+                    </IconButton>
                     <Typography variant='body1'>
                         {product.quantity}
                     </Typography>
-                    <Button
+                    <IconButton
                         variant='outlined'
-                        sx={{padding: 0, minWidth: 0, marginLeft: 0}}
-                        disabled={cartFetching && isClicked || product.quantity === 1}
-                        onClick={ e => removeProductCart(e, product.id) }
+                        size='small'
+                        onClick={ decrementProduct }
                     >
                         <RemoveIcon fontSize='small' />
-                    </Button>
+                    </IconButton>
                 </Stack>
-                <CardMedia sx={{position: 'relative', width: 100, height: 100}}>
-                    <Image
-                        src={product.image ? productImageURL + product.image : noImageUrl}
-                        alt={product.title}
-                        layout='fill'
-                        objectFit='cover'
-                    />
-                </CardMedia>
+                <ThumbImage
+                    url={productImageURL}
+                    src={product.image}
+                    size={100}
+                    variant='rounded'
+                    noImageIcon={<PhotoIcon fontSize='large'/>}
+                />
                 <CardContent>
                     <Typography
                         variant='body2'
@@ -80,22 +79,14 @@ const SidebarProductCard = ({product}) => {
                         }
                     </Stack>
                 </CardContent>
-                <Stack
+                <Box
                     sx={{position: 'absolute', top: 0, right: 0}}
                     { ...events }
                 >
-                    {
-                        cartFetching && isClicked
-                        ?
-                        <IconButton>
-                            <CircularProgress size={20}/>
-                        </IconButton>
-                        :
-                        <IconButton onClick={ e => deleteProductCart(e, product.id) }>
-                            <CloseIcon fontSize='small' />
-                        </IconButton>
-                    }
-                </Stack>
+                    <IconButton size='small' onClick={ removeProduct }>
+                        <CloseIcon fontSize='small' />
+                    </IconButton>
+                </Box>
             </CardActionArea>
         </Card>
     )

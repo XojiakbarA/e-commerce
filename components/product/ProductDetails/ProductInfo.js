@@ -14,7 +14,8 @@ const ProductInfo = ({product}) => {
 
     const router = useRouter()
 
-    const { cartFetching, isClicked, productInCart, addProductCart, removeProductCart} = useCart(product.id)
+    const { productInCart, addProduct, incrementProduct, decrementProduct} = useCart(product)
+
     const { wishlistFetching, isWishClicked, productInWishlist, addProductWishlist, deleteProductWishlist } = useWishlist(product.id)
 
     const hasInCart = Boolean(productInCart)
@@ -72,29 +73,29 @@ const ProductInfo = ({product}) => {
                             underline='hover'
                             fontWeight='bold'
                         >
-                            {product.category}
+                            {product.category.title}
                         </BaseLink>
                         <BaseLink
                             href={`/search?sub_cat_id=${product.sub_category.id}`}
                             underline='hover'
                             fontWeight='bold'
                         >
-                            {product.sub_category}
+                            {product.sub_category.title}
                         </BaseLink>
                     </Breadcrumbs>
                     :
                     <Breadcrumbs separator={<NavigateNextIcon fontSize='small'/>}>
                         <Typography fontWeight='bold' color='text.primary'>
-                            {product.category}
+                            {product.category.title}
                         </Typography>
                         <Typography fontWeight='bold' color='text.primary'>
-                            {product.sub_category}
+                            {product.sub_category.title}
                         </Typography>
                     </Breadcrumbs>
                 }
             </Stack>
             <Typography variant='body1'>
-                Brand: <b>{product.brand}</b>
+                Brand: <b>{product.brand.title}</b>
             </Typography>
             <Stack direction='row' spacing={2}>
                 <Typography variant='body1'>
@@ -119,9 +120,7 @@ const ProductInfo = ({product}) => {
                 }
             </Stack>
             <Typography variant='body2'>
-                {
-                    product.stock ? 'Stock in available' : 'Unavailable'
-                }
+                { product.stock ? 'Stock in available' : 'Unavailable' }
             </Typography>
             {
                 isProductsPage
@@ -129,42 +128,30 @@ const ProductInfo = ({product}) => {
                     hasInCart
                     ?
                     <Stack direction='row' spacing={2} alignItems='center'>
-                        <Button
+                        <IconButton
                             variant='outlined'
-                            disabled={cartFetching && isClicked}
-                            sx={{padding: 1, minWidth: 0}}
-                            onClick={ e => addProductCart(e, product.id) }
+                            size='small'
+                            color='primary'
+                            onClick={ incrementProduct }
                         >
-                            <AddIcon />
-                        </Button>
+                            <AddIcon fontSize='large'/>
+                        </IconButton>
                         <Typography variant='h6'>
                             {productInCart.quantity}
                         </Typography>
-                        <Button
+                        <IconButton
                             variant='outlined'
-                            disabled={cartFetching && isClicked}
-                            sx={{padding: 1, minWidth: 0, marginLeft: 0}}
-                            onClick={ e => removeProductCart(e, product.id) }
+                            size='small'
+                            onClick={ decrementProduct }
                         >
-                            <RemoveIcon />
-                        </Button>
-                        {
-                            cartFetching && isClicked &&
-                            <CircularProgress size={20} sx={{alignSelf: 'start'}}/>
-                        }                        
+                            <RemoveIcon fontSize='large'/>
+                        </IconButton>                     
                     </Stack>
                     :
                     <Button
                         variant='contained'
-                        disabled={cartFetching && isClicked}
-                        onClick={ e => addProductCart(e, product.id) }
-                        endIcon={
-                            cartFetching && isClicked
-                            ?
-                            <CircularProgress size={20} color='inherit'/>
-                            :
-                            <AddShoppingCartIcon/>
-                        }
+                        onClick={ addProduct }
+                        endIcon={<AddShoppingCartIcon/>}
                     >
                         Add To Cart
                     </Button>
@@ -183,11 +170,11 @@ const ProductInfo = ({product}) => {
                         underline='hover'
                         fontWeight='bold'
                     >
-                        {product.shop}
+                        {product.shop.title}
                     </BaseLink>
                     :
                     <Typography fontWeight='bold' color='text.primary'>
-                        {product.shop}
+                        {product.shop.title}
                     </Typography>
                 }
             </Stack>

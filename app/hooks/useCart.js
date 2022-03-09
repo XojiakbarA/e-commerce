@@ -1,49 +1,67 @@
-import { useEffect, useState } from "react"
+import cookies from 'js-cookie'
 import { useDispatch, useSelector } from "react-redux"
-import { addToCart, deleteFromCart, removeFromCart } from "../store/actions/async/user"
+import { addProductCart, decrementProductCart, incrementProductCart, removeProductCart, toggleSnackbar } from "../store/actions/actionCreators"
 
-export const useCart = (id) => {
+export const useCart = (product) => {
 
     const dispatch = useDispatch()
 
     const cart = useSelector(state => state.cart.data)
 
-    const [isClicked, setIsClicked] = useState(false)
+    const productInCart = cart.find(item => item.id === product.id)
 
-    const [cartFetching, setCartFetching] = useState(false)
+    const addProduct = (e) => {
+        e.preventDefault()
+        dispatch(addProductCart(product))
+        dispatch(toggleSnackbar(true, 'Product added to cart!', 'success'))
 
-    const productInCart = cart.find(item => item.id === id)
+        let cart = cookies.get('cart') ? JSON.parse(cookies.get('cart')) : []
+        cart.push({id: product.id, quantity: 1})
+        cart = JSON.stringify(cart)
+        cookies.set('cart', cart, { expires: 7 })
+    }
 
-    useEffect(() => {
-        return () => {
-            setIsClicked(false)
+    const removeProduct = (e) => {
+        e.preventDefault()
+        dispatch(removeProductCart(product.id))
+        dispatch(toggleSnackbar(true, 'Product removed from cart!', 'success'))
+
+        let cart = JSON.parse(cookies.get('cart'))
+        cart = cart.filter(item => item.id !== product.id)
+        cart = JSON.stringify(cart)
+        cookies.set('cart', cart, { expires: 7 })
+    }
+
+    const incrementProduct = (e) => {
+        e.preventDefault()
+        dispatch(incrementProductCart(product.id))
+
+        let cart = JSON.parse(cookies.get('cart'))
+        cart.forEach(item => item.id === product.id && ++item.quantity)
+        cart = JSON.stringify(cart)
+        cookies.set('cart', cart, { expires: 7 })
+    }
+
+    const decrementProduct = (e) => {
+        e.preventDefault()
+        dispatch(decrementProductCart(product.id))
+
+        let cart = JSON.parse(cookies.get('cart'))
+        const item = cart.find(item => item.id === product.id)
+        if (item.quantity === 1) {
+            cart = cart.filter(item => item.id !== product.id)
+        } else {
+            cart.forEach(item => item.id === product.id && --item.quantity)
         }
-    })
-
-    const addProductCart = (e, clickedId) => {
-        setIsClicked(clickedId === id)
-        e.preventDefault()
-        dispatch(addToCart(id, setIsClicked, setCartFetching))
-    }
-
-    const removeProductCart = (e, clickedId) => {
-        setIsClicked(clickedId === id)
-        e.preventDefault()
-        dispatch(removeFromCart(id, setIsClicked, setCartFetching))
-    }
-
-    const deleteProductCart = (e, clickedId) => {
-        setIsClicked(clickedId === id)
-        e.preventDefault()
-        dispatch(deleteFromCart(id, setIsClicked, setCartFetching))
+        cart = JSON.stringify(cart)
+        cookies.set('cart', cart, { expires: 7 })
     }
 
     return {
         productInCart,
-        cartFetching,
-        isClicked,
-        addProductCart,
-        removeProductCart,
-        deleteProductCart
+        addProduct,
+        removeProduct,
+        incrementProduct,
+        decrementProduct
     }
 }

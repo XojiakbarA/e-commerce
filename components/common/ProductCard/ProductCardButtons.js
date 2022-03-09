@@ -3,12 +3,16 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import { useCart } from '../../../app/hooks/useCart'
 
 const ProductCardButtons = ({
-    id,
-    hasInCart, cartFetching, isClicked, addProductCart, deleteProductCart,
+    product,
     hasInWishlist, wishlistFetching, isWishClicked, addProductWishlist, deleteProductWishlist
 }) => {
+
+    const { productInCart, addProduct, removeProduct} = useCart(product)
+
+    const hasInCart = Boolean(productInCart)
 
     return (
         <Box
@@ -18,7 +22,7 @@ const ProductCardButtons = ({
                 hasInWishlist
                 ?
                 <IconButton onClick={ e => deleteProductWishlist(e, id) } disabled={wishlistFetching && isWishClicked}>
-                    <Tooltip title='Remove from wishlist' placement='right' key={id}>
+                    <Tooltip title='Remove from wishlist' placement='right' key={product.id}>
                         <FavoriteIcon />
                     </Tooltip>
                 </IconButton>
@@ -32,13 +36,13 @@ const ProductCardButtons = ({
             {
                 hasInCart
                 ?
-                <IconButton onClick={ e => deleteProductCart(e, id) } disabled={cartFetching && isClicked}>
-                    <Tooltip title='Remove from cart' placement='right' key={id}>
+                <IconButton onClick={ removeProduct }>
+                    <Tooltip title='Remove from cart' placement='right' key={product.id}>
                         <ShoppingCartIcon />
                     </Tooltip>
                 </IconButton>
                 :
-                <IconButton onClick={ e => addProductCart(e, id) } disabled={cartFetching && isClicked}>
+                <IconButton onClick={ addProduct }>
                     <Tooltip title='Add to cart' placement='right'>
                         <ShoppingCartOutlinedIcon />
                     </Tooltip>

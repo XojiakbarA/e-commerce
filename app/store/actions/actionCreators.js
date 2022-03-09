@@ -1,26 +1,29 @@
 import * as type from './types'
 
-export const setCart = (cart) => ({
+export const setCart = (payload, cookieCart) => ({
     type: type.SET_CART,
-    payload: cart
+    payload,
+    cookieCart
 })
 
-export const addProductCart = (payload, total) => ({
+export const addProductCart = (payload) => ({
     type: type.ADD_CART,
-    payload: payload,
-    total: total
+    payload
 })
 
-export const removeProductCart = (payload, total) => ({
+export const removeProductCart = (id) => ({
     type: type.REMOVE_CART,
-    payload: payload,
-    total: total
+    id
 })
 
-export const deleteProductCart = (payload, total) => ({
-    type: type.DELETE_CART,
-    payload: payload,
-    total: total
+export const incrementProductCart = (id) => ({
+    type: type.INCREMENT_CART,
+    id
+})
+
+export const decrementProductCart = (id) => ({
+    type: type.DECREMENT_CART,
+    id
 })
 
 export const setWishlist = (wishlist) => ({

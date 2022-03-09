@@ -1,15 +1,16 @@
-import { Button, IconButton, Typography, Card, CardActionArea, CardMedia, CardContent, Stack, CircularProgress } from '@mui/material'
+import { IconButton, Typography, Card, CardActionArea, CardContent, Stack } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
-import Image from 'next/image'
+import PhotoIcon from '@mui/icons-material/Photo'
 import BaseLink from '../common/Link/BaseLink'
-import { noImageUrl, productImageURL } from '../../utils/utils'
+import { productImageURL } from '../../utils/utils'
 import { useCart } from '../../app/hooks/useCart'
+import ThumbImage from '../common/Image/ThumbImage'
 
 const CartProductCard = ({product}) => {
 
-    const { cartFetching, isClicked, addProductCart, removeProductCart, deleteProductCart } = useCart(product.id)
+    const { removeProduct, incrementProduct, decrementProduct } = useCart(product)
 
     return(
         <Card sx={{position: 'relative'}}>
@@ -18,14 +19,13 @@ const CartProductCard = ({product}) => {
                 href={`/products/${product.id}`}
                 sx={{display: 'flex', justifyContent: 'space-between', height: '100%'}}
             >
-                <CardMedia sx={{width: 120, height: 120, position: 'relative'}}>
-                    <Image
-                        src={product.image ? productImageURL + product.image : noImageUrl}
-                        alt={product.title}
-                        layout='fill'
-                        objectFit='cover'
-                    />
-                </CardMedia>
+                <ThumbImage
+                    url={productImageURL}
+                    src={product.image}
+                    size={120}
+                    variant='rounded'
+                    noImageIcon={<PhotoIcon fontSize='large'/>}
+                />
                 <CardContent sx={{flex: 1}}>
                     <Typography variant='body1'>
                         {product.title}
@@ -53,37 +53,26 @@ const CartProductCard = ({product}) => {
                 padding={1}
                 sx={{position: 'absolute', top: 0, right: 0, height: '100%'}}
             >
-                {
-                    cartFetching && isClicked
-                    ?
-                    <IconButton>
-                        <CircularProgress size={20}/>
-                    </IconButton>
-                    :
-                    <IconButton onClick={ e => deleteProductCart(e, product.id) }>
-                        <CloseIcon fontSize='small' />
-                    </IconButton>
-                }
-                <Stack direction='row' spacing={1}>
-                    <Button
+                <IconButton onClick={ removeProduct }>
+                    <CloseIcon fontSize='small' />
+                </IconButton>
+                <Stack direction='row' spacing={1} alignItems='center'>
+                    <IconButton
                         variant='outlined'
-                        disabled={cartFetching && isClicked}
-                        sx={{padding: 0, minWidth: 0}}
-                        onClick={ e => addProductCart(e, product.id) }
+                        color='primary'
+                        onClick={ incrementProduct }
                     >
                         <AddIcon fontSize='small' />
-                    </Button>
+                    </IconButton>
                     <Typography variant='body1'>
                         {product.quantity}
                     </Typography>
-                    <Button
+                    <IconButton
                         variant='outlined'
-                        disabled={cartFetching && isClicked || product.quantity === 1}
-                        sx={{padding: 0, minWidth: 0, marginLeft: 0}}
-                        onClick={ e => removeProductCart(e, product.id) }
+                        onClick={ decrementProduct }
                     >
                         <RemoveIcon fontSize='small' />
-                    </Button>
+                    </IconButton>
                 </Stack>
             </Stack>
         </Card>

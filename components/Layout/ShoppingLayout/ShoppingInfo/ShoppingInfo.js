@@ -26,7 +26,7 @@ const ShoppingInfo = () => {
                     <VoucherForm />
                 </Box>
                 {
-                    isCheckoutPage &&
+                    !isCheckoutPage &&
                     <Button
                         variant='contained'
                         href='/checkout'

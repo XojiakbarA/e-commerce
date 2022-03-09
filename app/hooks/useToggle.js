@@ -1,7 +1,7 @@
 import { useRouter } from "next/router"
 import { useDispatch, useSelector } from "react-redux"
 import {
-    setProduct, toggleAccountMenu, toggleAddProductDialog, toggleAddReviewDialog,
+    toggleAccountMenu, toggleAddProductDialog, toggleAddReviewDialog,
     toggleCancelOrderDialog,
     toggleCartSidebar, toggleDeleteBannerDialog, toggleDeleteBrandDialog, toggleDeleteCategoryDialog, toggleDeleteDistrictDialog, toggleDeleteProductDialog,
     toggleDeleteRegionDialog,
@@ -138,10 +138,8 @@ export const useToggle = () => {
         dispatch(toggleAccountMenu(null))
     }
 
-    const openSidebar = (cartCount) => {
-        if (cartCount) {
-            dispatch(toggleCartSidebar(true))
-        }
+    const openSidebar = () => {
+        dispatch(toggleCartSidebar(true))
     }
     const closeSidebar = () => {
         dispatch(toggleCartSidebar(false))
