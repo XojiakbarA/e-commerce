@@ -8,6 +8,9 @@ export const useCheckout = () => {
     const dispatch = useDispatch()
 
     const user = useSelector(state => state.user)
+    const cart = useSelector(state => state.cart.data)
+    const total = useSelector(state => state.cart.total)
+    const products = cart.map(item => ({id: item.id, quantity: item.quantity}))
 
     const formik = useFormik({
         initialValues: {
@@ -18,7 +21,9 @@ export const useCheckout = () => {
             district_id: '',
             street: '',
             home: '',
-            pay_mode: ''
+            pay_mode: '',
+            products: products,
+            total: total
         },
         validationSchema: checkoutValidationSchema,
         onSubmit: (data, {setSubmitting}) => {

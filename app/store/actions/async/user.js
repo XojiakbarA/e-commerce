@@ -1,4 +1,5 @@
 import router from 'next/router'
+import cookies from 'js-cookie'
 import { fetchProducts } from '../../../../api/common'
 import {
     login, logout, fetchUser, register, storeOrder, fetchOrders, fetchOrder,
@@ -159,6 +160,7 @@ export const createOrder = (data, setSubmitting) => {
             if (res.status === 201) {
                 dispatch(setOrder(res.data.data))
                 setSubmitting(false)
+                cookies.remove('cart')
                 dispatch(toggleOrderDialog(true))
             }
         } catch (e) {
