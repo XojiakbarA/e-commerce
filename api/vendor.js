@@ -1,7 +1,7 @@
 import { instance } from "./common"
 
-export const fetchProducts = async (shop_id, query, cookie) => {
-    return await instance.get(`api/vendor/shops/${shop_id}/products`, {
+export const fetchProducts = async (query, cookie) => {
+    return await instance.get(`api/user/products`, {
         params: query,
         headers: cookie && {
             'Cookie': cookie,
@@ -10,24 +10,25 @@ export const fetchProducts = async (shop_id, query, cookie) => {
     })
 }
 
-export const storeProduct = async (shop_id, data) => {
-    return await instance.post(`api/vendor/shops/${shop_id}/products`, data)
+export const storeProduct = async (data) => {
+    return await instance.post(`api/user/products`, data)
 }
 
-export const updateProduct = async (shop_id, product_id, data) => {
-    return await instance.post(`api/vendor/shops/${shop_id}/products/${product_id}?_method=PUT`, data)
+export const updateProduct = async (id, data) => {
+    return await instance.post(`api/user/products/${id}?_method=PUT`, data)
 }
 
-export const destroyProduct = async (shop_id, product_id) => {
-    return await instance.delete(`api/vendor/shops/${shop_id}/products/${product_id}`)
+export const destroyProduct = async (id) => {
+    return await instance.delete(`api/user/products/${id}`)
 }
 
-export const destroyProductImage = async (shop_id, product_id, image_id) => {
-    return await instance.delete(`api/vendor/shops/${shop_id}/products/${product_id}/product-images/${image_id}`)
+export const destroyProductImage = async (product_id, image_id) => {
+    return await instance.delete(`api/user/products/${product_id}/product-images/${image_id}`)
 }
 
-export const fetchOrders = async (shop_id, cookie) => {
-    return await instance.get(`api/vendor/shops/${shop_id}/orders`, {
+export const fetchSubOrders = async (cookie, query) => {
+    return await instance.get(`api/user/sub-orders`, {
+        params: query,
         headers: {
             'Cookie': cookie,
             'Referer': 'http://localhost:3000/'
@@ -35,8 +36,8 @@ export const fetchOrders = async (shop_id, cookie) => {
     })
 }
 
-export const fetchOrder = async (shop_id, order_id, cookie) => {
-    return await instance.get(`api/vendor/shops/${shop_id}/orders/${order_id}`, {
+export const fetchSubOrder = async (id, cookie) => {
+    return await instance.get(`api/user/sub-orders/${id}`, {
         headers: {
             'Cookie': cookie,
             'Referer': 'http://localhost:3000/'
@@ -44,16 +45,16 @@ export const fetchOrder = async (shop_id, order_id, cookie) => {
     })
 }
 
-export const orderShip = async (shop_id, order_id) => {
-    return await instance.put(`api/vendor/shops/${shop_id}/orders/${order_id}`, {status: 'shipped'})
+export const orderShip = async (id) => {
+    return await instance.put(`api/user/sub-orders/${id}`, {status: 'shipped'})
 }
 
-export const updateOrderProducts = async (shop_id, order_id, data) => {
-    return await instance.put(`api/vendor/shops/${shop_id}/orders/${order_id}`, data)
+export const updateOrderProducts = async (id, data) => {
+    return await instance.put(`api/user/orders/${id}`, data)
 }
 
-export const fetchShop = async (shop_id, cookie) => {
-    return await instance.get(`api/vendor/shops/${shop_id}`, {
+export const fetchShop = async (cookie) => {
+    return await instance.get(`api/user/shops`, {
         headers: {
             'Cookie': cookie,
             'Referer': 'http://localhost:3000/'
@@ -62,5 +63,5 @@ export const fetchShop = async (shop_id, cookie) => {
 }
 
 export const updateShop = async (shop_id, data) => {
-    return await instance.post(`api/vendor/shops/${shop_id}?_method=PUT`, data)
+    return await instance.post(`api/user/shops/${shop_id}?_method=PUT`, data)
 }

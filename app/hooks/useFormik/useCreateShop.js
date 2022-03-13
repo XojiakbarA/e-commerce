@@ -10,8 +10,6 @@ export const useCreateShop = () => {
 
     const formik = useFormik({
         initialValues: {
-            first_name: '',
-            last_name: '',
             title: '',
             region_id: '',
             district_id: '',

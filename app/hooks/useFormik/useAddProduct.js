@@ -1,5 +1,4 @@
 import { useFormik } from "formik"
-import { useRouter } from "next/router"
 import { useDispatch } from "react-redux"
 import { createProduct } from "../../store/actions/async/vendor"
 import { appendToFormData } from "../../../utils/utils"
@@ -8,9 +7,6 @@ import { productValidationSchema } from "./validate"
 export const useAddProduct = () => {
 
     const dispatch = useDispatch()
-    const router = useRouter()
-
-    const shop_id = router.query.id
 
     const formik = useFormik({
         initialValues: {
@@ -28,7 +24,7 @@ export const useAddProduct = () => {
         validationSchema: productValidationSchema,
         onSubmit: (data, {resetForm}) => {
             const formData = appendToFormData(data)
-            dispatch(createProduct(shop_id, formData, resetForm, formik.setSubmitting))
+            dispatch(createProduct(formData, resetForm, formik.setSubmitting))
         }
     })
 

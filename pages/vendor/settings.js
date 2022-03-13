@@ -1,13 +1,12 @@
 import { Grid } from '@mui/material'
-import ProfileLayout from '../../../components/layout/ProfileLayout/ProfileLayout'
-import PageTitle from '../../../components/common/PageTitle'
 import SettingsIcon from '@mui/icons-material/Settings'
-import EditShopForm from '../../../components/forms/EditShopForm'
-import { wrapper } from '../../../app/store'
-import { getShop } from '../../../app/store/actions/async/vendor'
-import { getDistricts, getRegions } from '../../../app/store/actions/async/common'
-import ProfilePageHead from '../../../components/common/ProfilePageHead'
-import MainLayout from '../../../components/layout/MainLayout'
+import ProfileLayout from '../../components/layout/ProfileLayout/ProfileLayout'
+import EditShopForm from '../../components/forms/EditShopForm'
+import { wrapper } from '../../app/store'
+import { getShop } from '../../app/store/actions/async/vendor'
+import { getDistricts, getRegions } from '../../app/store/actions/async/common'
+import ProfilePageHead from '../../components/common/ProfilePageHead'
+import MainLayout from '../../components/layout/MainLayout'
 
 const Settings = () => {
 
@@ -44,7 +43,7 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getStat
         }
     }
 
-    await dispatch(getShop(query.id, cookie))
+    await dispatch(getShop(cookie))
     await dispatch(getRegions())
 
     const region_id = getState().shop.data.region.id

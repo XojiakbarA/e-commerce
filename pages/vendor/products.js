@@ -1,20 +1,20 @@
 import ListAltIcon from '@mui/icons-material/ListAlt'
 import AddIcon from '@mui/icons-material/Add'
-import ProfileLayout from "../../../components/layout/ProfileLayout/ProfileLayout"
+import ProfileLayout from "../../components/layout/ProfileLayout/ProfileLayout"
 import { useSelector } from 'react-redux'
 import { Grid, Typography } from '@mui/material'
-import AddProductDialog from '../../../components/dialogs/AddProductDialog'
-import ViewProductDialog from '../../../components/dialogs/ViewProductDialog'
-import EditProductDialog from '../../../components/dialogs/EditProductDialog'
-import { wrapper } from "../../../app/store"
-import ProductList from '../../../components/common/List/List'
-import ProductListItem from '../../../components/vendor/ProductListItem'
-import { useToggle } from '../../../app/hooks/useToggle'
-import { getProducts } from '../../../app/store/actions/async/vendor'
-import MainLayout from '../../../components/layout/MainLayout'
-import ProfilePageHead from '../../../components/common/ProfilePageHead'
-import ConfirmDialog from '../../../components/dialogs/ConfirmDialog'
-import { useEditProduct } from '../../../app/hooks/useFormik/useEditProduct'
+import AddProductDialog from '../../components/dialogs/AddProductDialog'
+import ViewProductDialog from '../../components/dialogs/ViewProductDialog'
+import EditProductDialog from '../../components/dialogs/EditProductDialog'
+import { wrapper } from "../../app/store"
+import ProductList from '../../components/common/List/List'
+import ProductListItem from '../../components/vendor/ProductListItem'
+import { useToggle } from '../../app/hooks/useToggle'
+import { getProducts } from '../../app/store/actions/async/vendor'
+import MainLayout from '../../components/layout/MainLayout'
+import ProfilePageHead from '../../components/common/ProfilePageHead'
+import ConfirmDialog from '../../components/dialogs/ConfirmDialog'
+import { useEditProduct } from '../../app/hooks/useFormik/useEditProduct'
 
 const labels = [ 'Title', 'Image', 'Stock', 'Price', 'Sale Price', 'Rating', '' ]
 
@@ -88,7 +88,7 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getStat
 
     const cookie = req?.headers.cookie
 
-    await dispatch(getProducts(params.id, query, cookie))
+    await dispatch(getProducts(query, cookie))
 
     const products = getState().products.data
 

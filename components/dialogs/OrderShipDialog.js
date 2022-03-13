@@ -13,7 +13,7 @@ const OrderShipDialog = () => {
     const { orderShipDialog, closeOrderShipDialog } = useToggle()
 
     const handleOrderShip = () => {
-        dispatch(orderShipping(router.query.id, router.query.order_id))
+        dispatch(orderShipping(router.query.id))
     }
 
     return (

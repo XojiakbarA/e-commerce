@@ -8,16 +8,12 @@ export const useEditProduct = (product) => {
 
     const dispatch = useDispatch()
 
-    const shop_id = product.shop?.id
-    const product_id = product.id
-
     const formik = useFormik({
         initialValues: {
             title: product.title ?? '',
             category_id: product.category?.id ?? '',
             sub_category_id: product.sub_category?.id ?? '',
             brand_id: product.brand?.id ?? '',
-            shop_id: product.shop?.id ?? '',
             description: product.description ?? '',
             stock: product.stock ?? '',
             price: product.price ?? '',
@@ -28,16 +24,16 @@ export const useEditProduct = (product) => {
         validationSchema: productValidationSchema,
         onSubmit: (data, {resetForm}) => {
             const formData = appendToFormData(data)
-            dispatch(editProduct(shop_id, product_id, formData, resetForm, formik.setSubmitting))
+            dispatch(editProduct(product.id, formData, resetForm, formik.setSubmitting))
         },
         enableReinitialize: true
     })
 
     const handleProductImageClick = (image_id) => {
-        dispatch(deleteProductImage(shop_id, product_id, image_id))
+        dispatch(deleteProductImage(product.id, image_id))
     }
     const handleDeleteClick = () => {
-        dispatch(deleteProduct(shop_id, product_id, formik.setSubmitting))
+        dispatch(deleteProduct(product.id, formik.setSubmitting))
     }
 
     return {

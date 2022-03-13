@@ -1,12 +1,12 @@
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { Grid, Typography } from '@mui/material'
-import { fetchOrders } from '../../../../api/vendor'
-import { wrapper } from '../../../../app/store'
-import ProfileLayout from "../../../../components/layout/ProfileLayout/ProfileLayout"
-import OrderListItem from '../../../../components/vendor/OrderListItem'
-import OrderList from '../../../../components/common/List/List'
-import MainLayout from '../../../../components/layout/MainLayout'
-import ProfilePageHead from '../../../../components/common/ProfilePageHead'
+import { fetchSubOrders } from '../../../api/vendor'
+import { wrapper } from '../../../app/store'
+import ProfileLayout from "../../../components/layout/ProfileLayout/ProfileLayout"
+import OrderListItem from '../../../components/vendor/OrderListItem'
+import OrderList from '../../../components/common/List/List'
+import MainLayout from '../../../components/layout/MainLayout'
+import ProfilePageHead from '../../../components/common/ProfilePageHead'
 
 const labels = ['Order ID', 'Products', 'Status', 'Date purchased', 'Total']
 
@@ -61,7 +61,7 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getStat
     }
 
     try {
-        const res = await fetchOrders(query.id, cookie)
+        const res = await fetchSubOrders(cookie, query)
         if (res.status === 200) {
             return {
                 props: {

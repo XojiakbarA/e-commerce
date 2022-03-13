@@ -1,13 +1,15 @@
 import { Grid, Paper, Stack, Divider, List, ListSubheader, ListItemButton, ListItemText, ListItemIcon } from "@mui/material"
+import AddBusinessIcon from '@mui/icons-material/AddBusiness'
+import StoreMallDirectoryIcon from '@mui/icons-material/StoreMallDirectory'
 import BaseLink from '../../../common/Link/BaseLink'
 import { useRouter } from "next/dist/client/router"
-import UserShopList from "./UserShopList"
 import { useSelector } from "react-redux"
 
 const ProfileSidebar = ({menu}) => {
 
     const router = useRouter()
-    const shops = useSelector(state => state.user.shops)
+    const isVendorPage = router.route.indexOf('/vendor') == 0
+    const shop = useSelector(state => state.user.shop)
 
     return (
         <Grid item lg={3}>
@@ -34,11 +36,20 @@ const ProfileSidebar = ({menu}) => {
                         }
                     </List>
                     {
-                        router.pathname.indexOf('/profile') == 0 && shops.length > 0
-                        ?
-                        <UserShopList shops={shops}/>
-                        :
-                        null
+                    !isVendorPage &&
+                    <List>
+                        <ListSubheader>Shop</ListSubheader>
+                        <ListItemButton
+                            selected={router.asPath == '/profile/create-shop'}
+                            href={shop ? '/vendor' : '/profile/create-shop'}
+                            component={BaseLink}
+                        >
+                            <ListItemIcon>
+                                {shop ? <StoreMallDirectoryIcon/> : <AddBusinessIcon/>}
+                            </ListItemIcon>
+                            <ListItemText primary={shop?.title ?? 'Create Shop'}/>
+                        </ListItemButton>
+                    </List>
                     }
                 </Stack>
             </Paper>

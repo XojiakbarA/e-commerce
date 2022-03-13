@@ -32,7 +32,7 @@ export const register = async (data) => {
 }
 
 export const storeShop = async (data) => {
-    return await instance.post('api/shops', data)
+    return await instance.post('api/user/shops', data)
 }
 
 export const storeOrder = async (data) => {

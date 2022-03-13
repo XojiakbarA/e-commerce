@@ -8,13 +8,12 @@ import ThumbImage from '../common/Image/ThumbImage'
 const OrderListItem = ({order}) => {
 
     const router = useRouter()
-    const shop_id = router.query.id
 
     return (
         <Card>
             <CardActionArea
                 sx={{padding: 2}}
-                href={`/vendor/${shop_id}/orders/${order.id}`}
+                href={`/vendor/orders/${order.id}`}
                 component={BaseLink}
             >
                 <Grid container alignItems='center'>

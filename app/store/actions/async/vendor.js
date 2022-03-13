@@ -4,14 +4,14 @@ import {
     toggleOrderShipDialog, toggleSnackbar
 } from "../actionCreators"
 import {
-    destroyProduct, destroyProductImage, fetchOrder, fetchProducts, fetchShop,
+    destroyProduct, destroyProductImage, fetchSubOrder, fetchProducts, fetchShop,
     orderShip, storeProduct, updateOrderProducts, updateProduct, updateShop
 } from "../../../../api/vendor"
 
-export const getProducts = (shop_id, query, cookie) => {
+export const getProducts = (query, cookie) => {
     return async (dispatch) => {
         try {
-            const res = await fetchProducts(shop_id, query, cookie)
+            const res = await fetchProducts(query, cookie)
             if (res.status === 200) {
                 dispatch(setProducts(res.data))
             }
@@ -21,10 +21,10 @@ export const getProducts = (shop_id, query, cookie) => {
     }
 }
 
-export const createProduct = (shop_id, data, resetForm, setSubmitting) => {
+export const createProduct = (data, resetForm, setSubmitting) => {
     return async (dispatch) => {
         try {
-            const res = await storeProduct(shop_id, data)
+            const res = await storeProduct(data)
             if (res.status === 201) {
                 setSubmitting(false)
                 dispatch(toggleAddProductDialog(false))
@@ -38,10 +38,10 @@ export const createProduct = (shop_id, data, resetForm, setSubmitting) => {
     }
 }
 
-export const editProduct = (shop_id, product_id, data, resetForm, setSubmitting) => {
+export const editProduct = (id, data, resetForm, setSubmitting) => {
     return async (dispatch) => {
         try {
-            const res = await updateProduct(shop_id, product_id, data)
+            const res = await updateProduct(id, data)
             if (res.status === 200) {
                 setSubmitting(false)
                 dispatch(toggleEditProductDialog(false))
@@ -55,11 +55,11 @@ export const editProduct = (shop_id, product_id, data, resetForm, setSubmitting)
     }
 }
 
-export const deleteProduct = (shop_id, product_id, setSubmitting) => {
+export const deleteProduct = (id, setSubmitting) => {
     return async (dispatch) => {
         try {
             setSubmitting(true)
-            const res = await destroyProduct(shop_id, product_id)
+            const res = await destroyProduct(id)
             if (res.status === 200) {
                 setSubmitting(false)
                 dispatch(toggleDeleteProductDialog(false, '', {}))
@@ -72,11 +72,11 @@ export const deleteProduct = (shop_id, product_id, setSubmitting) => {
     }
 }
 
-export const deleteProductImage = (shop_id, product_id, image_id) => {
+export const deleteProductImage = (product_id, image_id) => {
     return async (dispatch) => {
         try {
             dispatch(setLoading(true))
-            const res = await destroyProductImage(shop_id, product_id, image_id)
+            const res = await destroyProductImage(product_id, image_id)
             if (res.status === 200) {
                 dispatch(setProduct(res.data.data))
                 dispatch(setLoading(false))
@@ -88,24 +88,11 @@ export const deleteProductImage = (shop_id, product_id, image_id) => {
     }
 }
 
-export const getOrder = (shop_id, order_id, cookie) => {
-    return async (dispatch) => {
-        try {
-            const res = await fetchOrder(shop_id, order_id, cookie)
-            if (res.status === 200) {
-                dispatch(setOrderShop(res.data))
-            }
-        } catch (e) {
-            console.log(e)
-        }
-    }
-}
-
-export const orderShipping = (shop_id, order_id) => {
+export const orderShipping = (id) => {
     return async (dispatch) => {
         try {
             dispatch(setLoading(true))
-            const res = await orderShip(shop_id, order_id)
+            const res = await orderShip(id)
             if (res.status === 200) {
                 dispatch(setOrderShop(res.data))
                 dispatch(setLoading(false))
@@ -118,11 +105,11 @@ export const orderShipping = (shop_id, order_id) => {
     }
 }
 
-export const editOrderProducts = (shop_id, order_id, setSaveDisabled, data) => {
+export const editOrderProducts = (id, setSaveDisabled, data) => {
     return async (dispatch) => {
         try {
             dispatch(setLoading(true))
-            const res = await updateOrderProducts(shop_id, order_id, data)
+            const res = await updateOrderProducts(id, data)
             if (res.status === 200) {
                 dispatch(setOrderShop(res.data))
                 dispatch(setLoading(false))
@@ -135,10 +122,10 @@ export const editOrderProducts = (shop_id, order_id, setSaveDisabled, data) => {
     }
 }
 
-export const getShop = (shop_id, cookie) => {
+export const getShop = (cookie) => {
     return async (dispatch) => {
         try {
-            const res = await fetchShop(shop_id, cookie)
+            const res = await fetchShop(cookie)
             if (res.status === 200) {
                 dispatch(setShop(res.data))
             }

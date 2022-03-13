@@ -88,12 +88,6 @@ export const editProfileValidationSchema = yup.object({
 })
 
 export const shopValidationSchema = yup.object({
-    first_name: yup
-        .string('Enter Your First Name')
-        .required('First Name is required'),
-    last_name: yup
-        .string('Enter Your Last Name')
-        .required('Last Name is required'),
     title: yup
         .string('Enter Your Shop Title')
         .required('Shop Title is required'),

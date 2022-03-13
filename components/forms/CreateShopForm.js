@@ -49,26 +49,6 @@ const CreateShopForm = () => {
                     <Grid container spacing={2}>
                         <Grid item lg={6}>
                             <TextField
-                                label='First Name'
-                                size='small'
-                                fullWidth
-                                error={ touched.first_name && Boolean(errors.first_name) }
-                                helperText={ touched.first_name && errors.first_name }
-                                { ...getFieldProps('first_name') }
-                            />
-                        </Grid>
-                        <Grid item lg={6}>
-                            <TextField
-                                label='Last Name'
-                                size='small'
-                                fullWidth
-                                error={ touched.last_name && Boolean(errors.last_name) }
-                                helperText={ touched.last_name && errors.last_name }
-                                { ...getFieldProps('last_name') }
-                            />
-                        </Grid>
-                        <Grid item lg={6}>
-                            <TextField
                                 label='Shop Title'
                                 size='small'
                                 fullWidth

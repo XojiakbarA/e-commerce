@@ -1,9 +1,9 @@
 import { Grid, List, ListItem, ListSubheader, Paper, Stack, Typography } from '@mui/material'
 import DashboardIcon from '@mui/icons-material/Dashboard'
-import ProfileLayout from '../../../components/layout/ProfileLayout/ProfileLayout'
-import { wrapper } from '../../../app/store'
-import ProfilePageHead from '../../../components/common/ProfilePageHead'
-import MainLayout from '../../../components/layout/MainLayout'
+import ProfileLayout from '../../components/layout/ProfileLayout/ProfileLayout'
+import { wrapper } from '../../app/store'
+import ProfilePageHead from '../../components/common/ProfilePageHead'
+import MainLayout from '../../components/layout/MainLayout'
 
 const Vendor = () => {
 

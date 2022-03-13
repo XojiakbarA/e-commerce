@@ -111,8 +111,6 @@ export const userLogout = () => {
                 }
                 dispatch(toggleAccountMenu(null))
                 dispatch(setUser(null))
-                dispatch(setCart({data: [], total: 0}))
-                dispatch(setWishlist([]))
                 dispatch(toggleSnackbar(true, 'You are logged out!'))
             }
         } catch (e) {

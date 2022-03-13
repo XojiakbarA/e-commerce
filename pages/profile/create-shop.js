@@ -1,7 +1,6 @@
 import { Grid } from '@mui/material'
 import AddBusinessIcon from '@mui/icons-material/AddBusiness'
 import ProfileLayout from '../../components/layout/ProfileLayout/ProfileLayout'
-import PageTitle from '../../components/common/PageTitle'
 import { getRegions } from '../../app/store/actions/async/common'
 import { wrapper } from '../../app/store'
 import CreateShopForm from '../../components/forms/CreateShopForm'
@@ -33,6 +32,15 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getStat
         return {
             redirect: {
                 destination: '/login',
+                permanent: false
+            }
+        }
+    }
+
+    if (user.shop) {
+        return {
+            redirect: {
+                destination: '/vendor',
                 permanent: false
             }
         }

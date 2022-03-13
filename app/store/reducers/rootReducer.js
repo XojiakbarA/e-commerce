@@ -17,7 +17,6 @@ import orders from "./orders";
 import order from "./order";
 import districts from './districts'
 import regions from './regions'
-import orderShop from './orderShop'
 
 const combindedReducer = combineReducers({
     category: category,
@@ -37,7 +36,6 @@ const combindedReducer = combineReducers({
     order: order,
     regions: regions,
     districts: districts,
-    orderShop: orderShop
 })
 
 const rootReducer = (state, action) => {
