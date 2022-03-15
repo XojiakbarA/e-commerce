@@ -44,6 +44,12 @@ const initialState = {
         text: '',
         payload: {}
     },
+    deleteProductImageDialog: {
+        isOpen: false,
+        text: '',
+        product_id: null,
+        image_id: null
+    },
     deleteBannerDialog: {
         isOpen: false,
         text: '',
@@ -126,6 +132,17 @@ const toggleReducer = (state = initialState, action) => {
                     isOpen: action.isOpen,
                     text: action.text,
                     payload: action.payload
+                }
+            }
+
+        case type.TOGGLE_DELETE_PRODUCT_IMAGE_DIALOG:
+            return {
+                ...state,
+                deleteProductImageDialog: {
+                    isOpen: action.isOpen,
+                    text: action.text,
+                    product_id: action.product_id,
+                    image_id: action.image_id
                 }
             }
 

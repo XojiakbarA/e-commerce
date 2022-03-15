@@ -9,6 +9,7 @@ import { productImageURL } from "../../utils/utils"
 import { useEditProduct } from "../../app/hooks/useFormik/useEditProduct"
 import { useMultiPreview } from "../../app/hooks/usePreview/useMultiPreview"
 import { useFieldProduct } from "../../app/hooks/useFieldProduct"
+import { useToggle } from "../../app/hooks/useToggle"
 
 const Input = styled('input')({
     display: 'none'
@@ -16,8 +17,12 @@ const Input = styled('input')({
 
 const EditProductForm = ({ product }) => {
 
+    const { openDeleteProductImageDialog } = useToggle()
+
+    const dialogText = `Do you really want to delete the image?`
+
     const {
-        handleSubmit, getFieldProps, handleBlur, setValues, handleProductImageClick,
+        handleSubmit, getFieldProps, handleBlur, setValues,
         touched, errors, isSubmitting, values
     } = useEditProduct(product)
 
@@ -109,7 +114,7 @@ const EditProductForm = ({ product }) => {
                                                 <IconButton
                                                     size="small"
                                                     color='primary'
-                                                    onClick={() => handleProductImageClick(image.id)}
+                                                    onClick={() => openDeleteProductImageDialog(dialogText, product.id, image.id)}
                                                 >
                                                     <CloseIcon fontSize='small'/>
                                                 </IconButton>

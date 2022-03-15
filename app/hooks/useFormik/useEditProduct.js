@@ -22,15 +22,15 @@ export const useEditProduct = (product) => {
             images_count: 0,
         },
         validationSchema: productValidationSchema,
-        onSubmit: (data, {resetForm}) => {
+        onSubmit: (data) => {
             const formData = appendToFormData(data)
-            dispatch(editProduct(product.id, formData, resetForm, formik.setSubmitting))
+            dispatch(editProduct(product.id, formData, formik.setSubmitting))
         },
         enableReinitialize: true
     })
 
-    const handleProductImageClick = (image_id) => {
-        dispatch(deleteProductImage(product.id, image_id))
+    const handleDeleteImageClick = (product_id, image_id) => {
+        dispatch(deleteProductImage(product_id, image_id, formik.setSubmitting))
     }
     const handleDeleteClick = () => {
         dispatch(deleteProduct(product.id, formik.setSubmitting))
@@ -38,7 +38,7 @@ export const useEditProduct = (product) => {
 
     return {
         ...formik,
-        handleProductImageClick,
+        handleDeleteImageClick,
         handleDeleteClick
     }
 }

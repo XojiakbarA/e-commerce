@@ -1,10 +1,10 @@
 import {
     setLoading, setOrderShop, setProduct, setProducts, setShop,
-    toggleAddProductDialog, toggleDeleteProductDialog, toggleEditProductDialog,
+    toggleAddProductDialog, toggleDeleteProductDialog, toggleDeleteProductImageDialog, toggleEditProductDialog,
     toggleOrderShipDialog, toggleSnackbar
 } from "../actionCreators"
 import {
-    destroyProduct, destroyProductImage, fetchSubOrder, fetchProducts, fetchShop,
+    destroyProduct, destroyProductImage, fetchProducts, fetchShop,
     orderShip, storeProduct, updateOrderProducts, updateProduct, updateShop
 } from "../../../../api/vendor"
 
@@ -21,7 +21,7 @@ export const getProducts = (query, cookie) => {
     }
 }
 
-export const createProduct = (data, resetForm, setSubmitting) => {
+export const createProduct = (data, setSubmitting) => {
     return async (dispatch) => {
         try {
             const res = await storeProduct(data)
@@ -29,8 +29,7 @@ export const createProduct = (data, resetForm, setSubmitting) => {
                 setSubmitting(false)
                 dispatch(toggleAddProductDialog(false))
                 dispatch(toggleSnackbar(true, 'Product created successfully!'))
-                resetForm()
-                dispatch(getProducts(shop_id))
+                dispatch(getProducts())
             }
         } catch (e) {
             console.log(e)
@@ -38,16 +37,15 @@ export const createProduct = (data, resetForm, setSubmitting) => {
     }
 }
 
-export const editProduct = (id, data, resetForm, setSubmitting) => {
+export const editProduct = (id, data, setSubmitting) => {
     return async (dispatch) => {
         try {
             const res = await updateProduct(id, data)
             if (res.status === 200) {
                 setSubmitting(false)
-                dispatch(toggleEditProductDialog(false))
+                dispatch(toggleEditProductDialog(false, {}))
                 dispatch(toggleSnackbar(true, 'Product updated successfully!'))
-                resetForm()
-                dispatch(getProducts(shop_id))
+                dispatch(getProducts())
             }
         } catch (e) {
             console.log(e)
@@ -64,7 +62,7 @@ export const deleteProduct = (id, setSubmitting) => {
                 setSubmitting(false)
                 dispatch(toggleDeleteProductDialog(false, '', {}))
                 dispatch(toggleSnackbar(true, 'Product deleted successfully!'))
-                dispatch(getProducts(shop_id))
+                dispatch(getProducts())
             }
         } catch (e) {
             console.log(e)
@@ -72,15 +70,17 @@ export const deleteProduct = (id, setSubmitting) => {
     }
 }
 
-export const deleteProductImage = (product_id, image_id) => {
+export const deleteProductImage = (product_id, image_id, setSubmitting) => {
     return async (dispatch) => {
         try {
-            dispatch(setLoading(true))
+            setSubmitting(true)
             const res = await destroyProductImage(product_id, image_id)
             if (res.status === 200) {
-                dispatch(setProduct(res.data.data))
-                dispatch(setLoading(false))
-                dispatch(getProducts(shop_id))
+                dispatch(toggleEditProductDialog(true, res.data.data))
+                dispatch(toggleDeleteProductImageDialog(false, '', null, null))
+                dispatch(toggleSnackbar(true, 'Image deleted successfully!'))
+                setSubmitting(false)
+                dispatch(getProducts())
             }
         } catch (e) {
             console.log(e)

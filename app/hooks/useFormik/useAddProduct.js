@@ -22,9 +22,9 @@ export const useAddProduct = () => {
             images_count: 0,
         },
         validationSchema: productValidationSchema,
-        onSubmit: (data, {resetForm}) => {
+        onSubmit: (data, {setSubmitting}) => {
             const formData = appendToFormData(data)
-            dispatch(createProduct(formData, resetForm, formik.setSubmitting))
+            dispatch(createProduct(formData, setSubmitting))
         }
     })
 

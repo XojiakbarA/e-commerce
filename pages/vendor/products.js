@@ -23,11 +23,14 @@ const Products = () => {
     const products = useSelector(state => state.products.data)
     const meta = useSelector(state => state.products.meta)
 
-    const { openAddProductDialog, deleteProductDialog, closeDeleteProductDialog } = useToggle()
+    const {
+        openAddProductDialog,
+        deleteProductDialog, closeDeleteProductDialog,
+        deleteProductImageDialog, closeDeleteProductImageDialog } = useToggle()
 
     const { isOpen, text, payload } = deleteProductDialog
 
-    const { isSubmitting, handleDeleteClick } = useEditProduct(payload)
+    const { isSubmitting, handleDeleteClick, handleDeleteImageClick } = useEditProduct(payload)
 
     return (
         <Grid container spacing={2}>
@@ -67,6 +70,13 @@ const Products = () => {
                     loading={isSubmitting}
                     handleCancelClick={closeDeleteProductDialog}
                     handleConfirmClick={handleDeleteClick}
+                />
+                <ConfirmDialog
+                    open={deleteProductImageDialog.isOpen}
+                    content={deleteProductImageDialog.text}
+                    loading={isSubmitting}
+                    handleCancelClick={closeDeleteProductImageDialog}
+                    handleConfirmClick={e => handleDeleteImageClick(deleteProductImageDialog.product_id, deleteProductImageDialog.image_id)}
                 />
             </Grid>
         </Grid>

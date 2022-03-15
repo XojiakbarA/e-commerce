@@ -204,6 +204,14 @@ export const toggleDeleteProductDialog = (bool, text, payload) => ({
     payload: payload
 })
 
+export const toggleDeleteProductImageDialog = (bool, text, product_id, image_id) => ({
+    type: type.TOGGLE_DELETE_PRODUCT_IMAGE_DIALOG,
+    isOpen: bool,
+    text: text,
+    product_id,
+    image_id
+})
+
 export const toggleDeleteBannerDialog = (bool, text, payload) => ({
     type: type.TOGGLE_DELETE_BANNER_DIALOG,
     isOpen: bool,

@@ -30,7 +30,7 @@ const ProductListItem = ({ product }) => {
                     <ThumbImage
                         variant="rounded"
                         url={productImageURL}
-                        src={product.image?.src}
+                        src={product.image}
                         noImageIcon={<PhotoIcon/>}
                     />
                 </Grid>
