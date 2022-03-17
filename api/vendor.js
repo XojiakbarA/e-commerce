@@ -50,7 +50,7 @@ export const orderShip = async (id) => {
 }
 
 export const updateOrderProducts = async (id, data) => {
-    return await instance.put(`api/user/orders/${id}`, data)
+    return await instance.put(`api/user/sub-orders/${id}`, data)
 }
 
 export const fetchShop = async (cookie) => {

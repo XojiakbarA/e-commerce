@@ -1,10 +1,10 @@
 import {
-    setLoading, setOrderShop, setProduct, setProducts, setShop,
+    editQtyOrderProducts, setLoading, setProducts, setShop, setSubOrder, shipSubOrder,
     toggleAddProductDialog, toggleDeleteProductDialog, toggleDeleteProductImageDialog, toggleEditProductDialog,
     toggleOrderShipDialog, toggleSnackbar
 } from "../actionCreators"
 import {
-    destroyProduct, destroyProductImage, fetchProducts, fetchShop,
+    destroyProduct, destroyProductImage, fetchProducts, fetchShop, fetchSubOrder,
     orderShip, storeProduct, updateOrderProducts, updateProduct, updateShop
 } from "../../../../api/vendor"
 
@@ -88,13 +88,26 @@ export const deleteProductImage = (product_id, image_id, setSubmitting) => {
     }
 }
 
+export const getSubOrder = (id, cookie) => {
+    return async (dispatch) => {
+        try {
+            const res = await fetchSubOrder(id, cookie)
+            if (res.status === 200) {
+                dispatch(setSubOrder(res.data.data))
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
 export const orderShipping = (id) => {
     return async (dispatch) => {
         try {
             dispatch(setLoading(true))
             const res = await orderShip(id)
             if (res.status === 200) {
-                dispatch(setOrderShop(res.data))
+                dispatch(shipSubOrder(res.data.data.status))
                 dispatch(setLoading(false))
                 dispatch(toggleOrderShipDialog(false))
                 dispatch(toggleSnackbar(true, 'Order shipped successfully!'))
@@ -111,7 +124,7 @@ export const editOrderProducts = (id, setSaveDisabled, data) => {
             dispatch(setLoading(true))
             const res = await updateOrderProducts(id, data)
             if (res.status === 200) {
-                dispatch(setOrderShop(res.data))
+                dispatch(editQtyOrderProducts(res.data.data))
                 dispatch(setLoading(false))
                 setSaveDisabled(true)
                 dispatch(toggleSnackbar(true, 'Order products updated successfully!'))

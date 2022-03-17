@@ -157,9 +157,10 @@ export const toggleOrderDialog = (bool) => ({
     payload: bool
 })
 
-export const toggleOrderShipDialog = (bool) => ({
+export const toggleOrderShipDialog = (bool, text) => ({
     type: type.TOGGLE_ORDER_SHIP_DIALOG,
-    payload: bool
+    isOpen: bool,
+    text
 })
 
 export const toggleDeleteCategoryDialog = (bool, text, payload) => ({
@@ -287,6 +288,21 @@ export const setOrders = (orders) => ({
 export const setOrder = (order) => ({
     type: type.SET_ORDER,
     payload: order
+})
+
+export const setSubOrder = (subOrder) => ({
+    type: type.SET_SUB_ORDER,
+    payload: subOrder
+})
+
+export const shipSubOrder = (status) => ({
+    type: type.SHIP_SUB_ORDER,
+    payload: status
+})
+
+export const editQtyOrderProducts = (subOrder) => ({
+    type: type.EDIT_QTY_ORDER_PRODUCTS,
+    payload: subOrder
 })
 
 export const setRegions = (regions) => ({

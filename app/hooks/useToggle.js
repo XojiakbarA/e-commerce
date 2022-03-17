@@ -18,11 +18,11 @@ export const useToggle = () => {
     const toggle = useSelector(state => state.toggle)
     const user = useSelector(state => state.user)
 
-    const openOrderShipDialog = () => {
-        dispatch(toggleOrderShipDialog(true))
+    const openOrderShipDialog = (text) => {
+        dispatch(toggleOrderShipDialog(true, text))
     }
     const closeOrderShipDialog = () => {
-        dispatch(toggleOrderShipDialog(false))
+        dispatch(toggleOrderShipDialog(false, ''))
     }
 
     const openAddProductDialog = () => {

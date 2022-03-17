@@ -13,8 +13,9 @@ import reviews from './reviews'
 import shops from './shops'
 import shop from './shop'
 import wishlist from './wishlist'
-import orders from "./orders";
-import order from "./order";
+import orders from "./orders"
+import order from "./order"
+import subOrder from './subOrder'
 import districts from './districts'
 import regions from './regions'
 
@@ -34,6 +35,7 @@ const combindedReducer = combineReducers({
     wishlist: wishlist,
     orders: orders,
     order: order,
+    subOrder: subOrder,
     regions: regions,
     districts: districts,
 })

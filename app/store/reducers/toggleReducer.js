@@ -5,7 +5,7 @@ const initialState = {
     loginDialog: false,
     registerDialog: false,
     orderDialog: false,
-    orderShipDialog: false,
+    orderShipDialog: {isOpen: false, text: ''},
     cancelOrderDialog: {isOpen: false, text: '', payload: ''},
     editProfileDialog: false,
     addProductDialog: false,
@@ -73,7 +73,10 @@ const toggleReducer = (state = initialState, action) => {
         case type.TOGGLE_ORDER_DIALOG:
             return { ...state, orderDialog: action.payload }
         case type.TOGGLE_ORDER_SHIP_DIALOG:
-            return { ...state, orderShipDialog: action.payload }
+            return { ...state, orderShipDialog: {
+                isOpen: action.isOpen,
+                text: action.text
+            } }
 
         case type.TOGGLE_DELETE_CATEGORY_DIALOG:
             return {

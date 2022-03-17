@@ -58,7 +58,7 @@ const OrderProductListItem = ({product, count, handleAddClick, handleRemoveClick
                         size="small"
                     />
                     <IconButton
-                        disabled={editDisabled}
+                        disabled={editDisabled || count === 1}
                         onClick={() => {
                             handleRemoveClick(product.id)
                             setSaveDisabled(false)
