@@ -31,9 +31,31 @@ export const useDoublePreview = (setValues) => {
         setPreview(prevState => ({ ...prevState, av_image: url }))
     }
 
+    const handleBgPreviewDeleteClick = () => {
+        setValues(prevValues => (
+            {
+                ...prevValues,
+                bg_image: null
+            }
+        ))
+        setPreview(prevState => ({ ...prevState, bg_image: null }))
+    }
+
+    const handleAvPreviewDeleteClick = () => {
+        setValues(prevValues => (
+            {
+                ...prevValues,
+                av_image: null
+            }
+        ))
+        setPreview(prevState => ({ ...prevState, av_image: null }))
+    }
+
     return {
         preview,
         handleBgUploadChange,
-        handleAvUploadChange
+        handleAvUploadChange,
+        handleBgPreviewDeleteClick,
+        handleAvPreviewDeleteClick,
     }
 }

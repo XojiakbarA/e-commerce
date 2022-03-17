@@ -1,55 +1,13 @@
-import {Box, Avatar, Menu, MenuItem, ListItemIcon, IconButton, Tooltip, Input, CircularProgress} from '@mui/material'
-import {useState} from 'react'
+import { Menu, MenuItem, ListItemIcon, Input } from '@mui/material'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto'
-import { useDispatch, useSelector } from 'react-redux'
-import { deleteUserImage } from '../../app/store/actions/async/user'
 
-const AvatarButton = ({ handleUploadChange, value, src}) => {
-
-    const dispatch = useDispatch()
-
-    const [anchorEl, setAnchorEl] = useState(null)
-    const open = Boolean(anchorEl)
-
-    const user = useSelector(state => state.user)
-    const isLoading = useSelector(state => state.toggle.isLoading)
-
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget)
-    }
-    const handleClose = () => {
-        setAnchorEl(null)
-    }
-
-    const handleDeleteImage = () => {
-        dispatch(deleteUserImage(user.image.id))
-    }
+const UploadMenu = ({
+    open, anchorEl, name, disabled,
+    handleClose, handleDeleteImage, handleUploadChange
+}) => {
 
     return (
-        <>
-        <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-            <Tooltip title="Change Image" placement='right'>
-                <IconButton
-                    onClick={handleClick}
-                    size="large"
-                    sx={{ ml: 2 }}
-                    aria-controls={open ? 'account-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    disabled={isLoading}
-                >
-                    <Avatar
-                        sx={{ width: 70, height: 70 }}
-                        src={src}
-                    />
-                    {
-                        isLoading &&
-                        <CircularProgress sx={{position: 'absolute'}}/>
-                    }
-                </IconButton>
-            </Tooltip>
-        </Box>
         <Menu
             anchorEl={anchorEl}
             id="account-menu"
@@ -82,27 +40,27 @@ const AvatarButton = ({ handleUploadChange, value, src}) => {
             },
             }}
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+            anchorOrigin={{ horizontal: 'center', vertical: 'center' }}
         >
             <MenuItem
                 onClick={e => {
                     handleDeleteImage()
                     handleClose()
                 }}
-                disabled={!Boolean(user.image)}
+                disabled={disabled}
             >
                 <ListItemIcon>
                     <DeleteForeverIcon fontSize="small" />
                 </ListItemIcon>
-                Delete
+                Remove
             </MenuItem>
-            <label htmlFor={value}>
+            <label htmlFor={name}>
                 <Input
                     accept="image/*"
-                    id={value}
+                    id={name}
                     type="file"
                     sx={{display: 'none'}}
-                    name={value}
+                    name={name}
                     onChange={e => {
                         handleUploadChange(e)
                         handleClose()
@@ -112,13 +70,11 @@ const AvatarButton = ({ handleUploadChange, value, src}) => {
                     <ListItemIcon>
                         <AddAPhotoIcon fontSize="small" />
                     </ListItemIcon>
-                    Add
+                    Upload
                 </MenuItem>
             </label>
-            
         </Menu>
-        </>
-    );
+    )
 }
 
-export default AvatarButton
+export default UploadMenu

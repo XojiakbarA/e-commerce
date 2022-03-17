@@ -1,7 +1,7 @@
-import { Button, Card, CardContent, CardMedia, CircularProgress, Grid, TextField } from '@mui/material'
+import { Button, Card, CardContent, CircularProgress, Grid, TextField } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
-import AvatarUpload from '../../components/common/AvatarUpload/AvatarUpload'
-import UploadButton from '../../components/common/AvatarUpload/UploadButton'
+import AvatarUpload from '../common/UploadButton/AvatarUpload'
+import ImageUpload from '../common/UploadButton/ImageUpload'
 import PhoneMask from '../../components/common/PhoneMask'
 import AutocompleteAsync from '../../components/common/AutocompleteAsync/AutocompleteAsync'
 import { useEditShop } from '../../app/hooks/useFormik/useEditShop'
@@ -21,31 +21,40 @@ const EditShopForm = () => {
         handleRegionChange, handleDistrictChange
     } = useLocation(setFieldValue, shop.region, shop.district)
 
-    const { preview, handleBgUploadChange, handleAvUploadChange } = useDoublePreview(setValues)
+    const {
+        preview, handleBgUploadChange, handleAvUploadChange,
+        handleBgPreviewDeleteClick, handleAvPreviewDeleteClick
+    } = useDoublePreview(setValues)
+
+    const handleBgDeleteImage = () => {
+
+    }
+    const handleAvDeleteImage = () => {
+
+    }
 
     return (
         <form onSubmit={handleSubmit}>
-            <Card sx={{position: 'relative'}}>
-                <UploadButton
-                    styles={{position: 'absolute', top: 0, left: 0}}
-                    title='Select background'
-                    onChange={handleBgUploadChange}
-                    value='bg_image'
+            <Card sx={{position: 'relative', overflow: 'visible'}}>
+                <ImageUpload
+                    handlePrewiewDeleteClick={handleBgPreviewDeleteClick}
+                    handleUploadChange={handleBgUploadChange}
+                    handleDeleteImage={handleBgDeleteImage}
+                    name='bg_image'
+                    preview={preview.bg_image}
+                    src={shop.bg_image_big ? shopImageURL + shop.bg_image_big.src : undefined}
+                    height={200}
                 />
-                <CardMedia
-                    component="img"
-                    height="200"
-                    image={preview.bg_image ?? (shop.bg_image_big ? shopImageURL + shop.bg_image_big.src : '/images/shop/no-bg.jpeg')}
-                    alt={preview.bg_image}
-                />
-                
                 <CardContent sx={{position: 'relative'}}>
                     <AvatarUpload
-                        styles={{marginTop: '-80px'}}
-                        title='Select Avatar'
-                        onChange={handleAvUploadChange}
-                        value='av_image'
-                        src={preview.av_image ?? (shop.av_image ? shopImageURL + shop.av_image.src : undefined)}
+                        sx={{ marginTop: '-6.5%' }}
+                        handlePrewiewDeleteClick={handleAvPreviewDeleteClick}
+                        handleUploadChange={handleAvUploadChange}
+                        handleDeleteImage={handleAvDeleteImage}
+                        name='av_image'
+                        preview={preview.av_image}
+                        src={shop.av_image ? shopImageURL + shop.av_image.src : undefined}
+                        size={50}
                     />
                     <Grid container spacing={2}>
                         <Grid item lg={6}>

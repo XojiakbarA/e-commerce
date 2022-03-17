@@ -5,6 +5,7 @@ import {
     toggleCancelOrderDialog,
     toggleCartSidebar, toggleDeleteBannerDialog, toggleDeleteBrandDialog, toggleDeleteCategoryDialog, toggleDeleteDistrictDialog, toggleDeleteProductDialog,
     toggleDeleteProductImageDialog,
+    toggleDeleteProfileImageDialog,
     toggleDeleteRegionDialog,
     toggleDeleteSubCategoryDialog, toggleEditProductDialog, toggleEditProfileDialog,
     toggleLoginDialog, toggleOrderShipDialog, toggleRegisterDialog, toggleViewProductDialog
@@ -102,6 +103,13 @@ export const useToggle = () => {
     }
     const closeDeleteProductImageDialog = () => {
         dispatch(toggleDeleteProductImageDialog(false, '', null, null))
+    }
+
+    const openDeleteProfileImageDialog = (text, id) => {
+        dispatch(toggleDeleteProfileImageDialog(true, text, id))
+    }
+    const closeDeleteProfileImageDialog = () => {
+        dispatch(toggleDeleteProfileImageDialog(false, '', null))
     }
 
     const openEditProfileDialog = () => {
@@ -208,6 +216,8 @@ export const useToggle = () => {
         closeDeleteProductDialog,
         openDeleteProductImageDialog,
         closeDeleteProductImageDialog,
+        openDeleteProfileImageDialog,
+        closeDeleteProfileImageDialog,
         openDeleteSubCategoryDialog,
         closeDeleteSubCategoryDialog,
         openDeleteBrandDialog,

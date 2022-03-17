@@ -1,34 +1,43 @@
 import { Box, Button, CircularProgress, Stack, TextField } from "@mui/material"
-import SaveIcon from '@mui/icons-material/Save'
 import {DesktopDatePicker, LocalizationProvider} from "@mui/lab"
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import ruLocale from 'date-fns/locale/ru'
 import {userImageURL} from "../../utils/utils"
 import PhoneMask from "../common/PhoneMask"
-import AvatarMenu from "../common/AvatarMenu"
+import AvatarUpload from "../common/UploadButton/AvatarUpload"
 import { useEditProfile } from "../../app/hooks/useFormik/useEditProfile"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useSinglePreview } from "../../app/hooks/usePreview/useSinglePreview"
 import { useToggle } from '../../app/hooks/useToggle'
+import { deleteUserImage } from "../../app/store/actions/async/user"
 
 const EditProfileForm = () => {
 
+    const dispatch = useDispatch()
     const user = useSelector(state => state.user)
+    const isLoading = useSelector(state => state.toggle.isLoading)
 
     const { handleSubmit, getFieldProps, setValues, values, touched, errors, isSubmitting } = useEditProfile()
 
-    const { preview, handleUploadChange } = useSinglePreview(setValues)
+    const { preview, handleUploadChange, handlePreviewDeleteClick } = useSinglePreview(setValues)
 
-    const { closeEditProfileDialog } = useToggle()
+    const { closeEditProfileDialog, openDeleteProfileImageDialog } = useToggle()
+
+    const dialogText = `Do you really want to delete the image?`
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} style={{ paddingTop: 7}}>
             <Stack spacing={2}>
-                <Box alignSelf='center' paddingBottom={2}>
-                    <AvatarMenu
+                <Box alignSelf='center'>
+                    <AvatarUpload
+                        handlePrewiewDeleteClick={handlePreviewDeleteClick}
                         handleUploadChange={handleUploadChange}
-                        value='image'
-                        src={preview ?? (user.image ? userImageURL + user.image.src : undefined)}
+                        handleDeleteImage={e => openDeleteProfileImageDialog(dialogText, user.image.id)}
+                        isLoading={isLoading}
+                        name='image'
+                        preview={preview}
+                        src={user.image ? userImageURL + user.image.src : undefined}
+                        size={70}
                     />
                 </Box>
                 <TextField

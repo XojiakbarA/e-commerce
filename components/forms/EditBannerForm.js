@@ -1,8 +1,7 @@
-import { Badge, Button, CircularProgress, Grid, IconButton, Stack, TextField } from "@mui/material"
+import { Button, CircularProgress, Grid, Stack, TextField } from "@mui/material"
 import SaveIcon from '@mui/icons-material/Save'
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
 import DeleteIcon from '@mui/icons-material/Delete'
-import AvatarUpload from '../common/AvatarUpload/AvatarUpload'
+import ImageUpload from '../common/UploadButton/ImageUpload'
 import { bannerImageURL } from "../../utils/utils"
 import { useEditBanner } from "../../app/hooks/useFormik/useEditBanner"
 import { useSinglePreview } from "../../app/hooks/usePreview/useSinglePreview"
@@ -15,6 +14,10 @@ const EditBannerForm = ({ banner }) => {
     } = useEditBanner(banner)
 
     const { preview, handlePreviewDeleteClick, handleUploadChange } = useSinglePreview(setValues, banner.image)
+
+    const handleDeleteImage = () => {
+
+    }
 
     return (
         <form onSubmit={handleSubmit}>
@@ -41,22 +44,15 @@ const EditBannerForm = ({ banner }) => {
                     />
                 </Grid>
                 <Grid item xs={12} display='flex' justifyContent='center'>
-                    <Badge
-                        anchorOrigin={{vertical: 'top', horizontal: 'right'}}
-                        badgeContent={
-                            preview &&
-                            <IconButton color='error' onClick={handlePreviewDeleteClick}>
-                                <RemoveCircleIcon/>
-                            </IconButton>
-                        }
-                    >
-                        <AvatarUpload
-                            variant='rounded'
-                            size={150}
-                            src={preview ?? bannerImageURL + banner.image}
-                            onChange={handleUploadChange}
-                        />
-                    </Badge>
+                    <ImageUpload
+                        handlePrewiewDeleteClick={handlePreviewDeleteClick}
+                        handleUploadChange={handleUploadChange}
+                        handleDeleteImage={handleDeleteImage}
+                        name='image'
+                        preview={preview}
+                        src={bannerImageURL + banner.image}
+                        height={200}
+                    />
                 </Grid>
                 <Grid item xs={12} display='flex' justifyContent='end'>
                     <Stack direction='row' spacing={2}>

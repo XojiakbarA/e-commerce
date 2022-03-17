@@ -50,6 +50,11 @@ const initialState = {
         product_id: null,
         image_id: null
     },
+    deleteProfileImageDialog: {
+        isOpen: false,
+        text: '',
+        payload: null
+    },
     deleteBannerDialog: {
         isOpen: false,
         text: '',
@@ -146,6 +151,16 @@ const toggleReducer = (state = initialState, action) => {
                     text: action.text,
                     product_id: action.product_id,
                     image_id: action.image_id
+                }
+            }
+
+        case type.TOGGLE_DELETE_PROFILE_IMAGE_DIALOG:
+            return {
+                ...state,
+                deleteProfileImageDialog: {
+                    isOpen: action.isOpen,
+                    text: action.text,
+                    payload: action.payload
                 }
             }
 

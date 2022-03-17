@@ -9,7 +9,7 @@ import {
 import {
     setUser, setCart, setLoading, toggleLoginDialog, toggleRegisterDialog, setWishlist, toggleOrderDialog,
     setOrders, setOrder, toggleEditProfileDialog, toggleAccountMenu, toggleAddReviewDialog,
-    toggleSnackbar, toggleCancelOrderDialog
+    toggleSnackbar, toggleCancelOrderDialog, toggleDeleteProfileImageDialog
 } from '../actionCreators'
 
 export const getCart = (cookieCart) => {
@@ -233,6 +233,7 @@ export const deleteUserImage = (image_id) => {
             if (res.status === 200) {
                 dispatch(setUser(res.data.data))
                 dispatch(setLoading(false))
+                dispatch(toggleDeleteProfileImageDialog(false, '', null))
                 dispatch(toggleSnackbar(true,'Image deleted'))
             }
         } catch (e) {
