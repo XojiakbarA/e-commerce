@@ -1,7 +1,7 @@
 import { Typography, Grid } from "@mui/material"
 import MainLayout from "../components/layout/MainLayout"
 import Banner from "../components/index/Banner"
-import ProductCard from "../components/common/ProductCard"
+import ProductCard from "../components/common/Card/ProductCard/ProductCard"
 import { getBanners, getProducts } from "../app/store/actions/async/common"
 import { wrapper } from "../app/store"
 import { useSelector } from "react-redux"

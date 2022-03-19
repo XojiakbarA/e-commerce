@@ -1,9 +1,9 @@
 import {Card, CardContent, CardActionArea, Typography, Rating, Stack} from '@mui/material'
 import PhotoIcon from '@mui/icons-material/Photo'
-import { productImageURL } from '../../../utils/utils'
-import BaseLink from '../Link/BaseLink'
+import { productImageURL } from '../../../../utils/utils'
+import BaseLink from '../../Link/BaseLink'
 import ProductCardButtons from './ProductCardButtons'
-import ThumbImage from '../Image/ThumbImage'
+import ThumbImage from '../../Image/ThumbImage'
 
 const ProductCard = ({product, listView}) => {
 

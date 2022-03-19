@@ -4,7 +4,7 @@ import { getShop, getShopProducts } from "../../../app/store/actions/async/commo
 import { wrapper } from "../../../app/store"
 import { useSelector } from "react-redux"
 import SearchSidebar from "../../../components/search/SearchSidebar"
-import ProductCard from "../../../components/common/ProductCard"
+import ProductCard from "../../../components/common/Card/ProductCard/ProductCard"
 import MyPagination from "../../../components/common/Pagination"
 import MainLayout from "../../../components/layout/MainLayout"
 

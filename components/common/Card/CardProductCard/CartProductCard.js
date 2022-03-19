@@ -3,10 +3,10 @@ import CloseIcon from '@mui/icons-material/Close'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import PhotoIcon from '@mui/icons-material/Photo'
-import BaseLink from '../common/Link/BaseLink'
-import { productImageURL } from '../../utils/utils'
-import { useCart } from '../../app/hooks/useCart'
-import ThumbImage from '../common/Image/ThumbImage'
+import BaseLink from '../../Link/BaseLink'
+import { productImageURL } from '../../../../utils/utils'
+import { useCart } from '../../../../app/hooks/useCart'
+import ThumbImage from '../../Image/ThumbImage'
 
 const CartProductCard = ({product}) => {
 

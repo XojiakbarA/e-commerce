@@ -1,5 +1,5 @@
 import { Grid, Typography } from '@mui/material'
-import ProductCard from '../components/common/ProductCard'
+import ProductCard from '../components/common/Card/ProductCard/ProductCard'
 import { useSelector } from "react-redux"
 import { wrapper } from '../app/store'
 import MainLayout from '../components/layout/MainLayout'

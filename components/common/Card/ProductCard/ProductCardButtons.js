@@ -3,8 +3,8 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import { useCart } from '../../../app/hooks/useCart'
-import { useWishlist } from '../../../app/hooks/useWishlist'
+import { useCart } from '../../../../app/hooks/useCart'
+import { useWishlist } from '../../../../app/hooks/useWishlist'
 
 const ProductCardButtons = ({ product }) => {
 
