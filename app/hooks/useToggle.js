@@ -120,8 +120,8 @@ export const useToggle = () => {
     }
 
     const openLoginDialog = () => {
-        if (router.pathname === '/login') {
-            return
+        if (router.pathname === '/login' || router.pathname === '/register') {
+            router.push('/login')
         } else {
             dispatch(toggleRegisterDialog(false))
             dispatch(toggleLoginDialog(true))

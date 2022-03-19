@@ -10,13 +10,13 @@ const RegisterForm = () => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <Stack spacing={3}>
+            <Stack spacing={3} marginTop={1}>
                 <TextField
                     label='First Name'
                     size='small'
-                    error={ touched.name && Boolean(errors.name) }
-                    helperText={ touched.name && errors.name }
-                    { ...getFieldProps('name') }
+                    error={ touched.first_name && Boolean(errors.first_name) }
+                    helperText={ touched.first_name && errors.first_name }
+                    { ...getFieldProps('first_name') }
                 />
                 <TextField
                     label='Email'

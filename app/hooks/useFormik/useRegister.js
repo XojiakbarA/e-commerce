@@ -9,7 +9,7 @@ export const useRegister = () => {
 
     const formik = useFormik({
         initialValues: {
-            name: '',
+            first_name: '',
             email: '',
             password: '',
             password_confirmation: ''
