@@ -3,14 +3,25 @@ import SaveIcon from '@mui/icons-material/Save'
 import EditIcon from '@mui/icons-material/Edit'
 import EditOffIcon from '@mui/icons-material/EditOff'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { useEditRegion } from "../../../app/hooks/useFormik/useEditRegion"
+import { useRegion } from "../../../app/hooks/useFormik/useRegion"
+import { useDispatch } from "react-redux"
+import { editRegion } from "../../../app/store/actions/async/admin"
+import { useState } from "react"
 
 const RegionListItem = ({ region, selected, handleSelectedClick }) => {
 
+    const dispatch = useDispatch()
+
+    const [edit, setEdit] = useState(false)
+
+    const handleSubmitEdit = (data, { resetForm, setSubmitting }) => {
+        dispatch(editRegion(region.id, data, resetForm, setSubmitting, setEdit))
+    }
+
     const {
-        ripple, events, edit, values, isSubmitting, touched, errors, getFieldProps,
+        ripple, events, values, isSubmitting, touched, errors, getFieldProps,
         handleSubmit, handleEditClick, handleSubmitClick, handleBlur, handleDeleteClick
-    } = useEditRegion(region)
+    } = useRegion(region, handleSubmitEdit, setEdit)
 
     return (
         <ListItemButton

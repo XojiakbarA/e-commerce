@@ -1,5 +1,5 @@
 import { List, ListSubheader, Paper } from "@mui/material"
-import { useEditRegion } from "../../../app/hooks/useFormik/useEditRegion"
+import { useRegion } from "../../../app/hooks/useFormik/useRegion"
 import { useToggle } from "../../../app/hooks/useToggle"
 import ConfirmDialog from "../../dialogs/ConfirmDialog"
 import AddRegionListItem from "./AddRegionListItem"
@@ -11,7 +11,7 @@ const RegionList = ({ regions, selected, handleSelectedClick }) => {
 
     const { isOpen, text, payload } = deleteRegionDialog
 
-    const { isSubmitting, handleDeleteConfirmClick } = useEditRegion(payload, handleSelectedClick)
+    const { isSubmitting, handleDeleteConfirmClick } = useRegion(payload, null, null, handleSelectedClick)
 
     return (
         <Paper>

@@ -2,27 +2,29 @@ import { useFormik } from "formik"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { toggleSnackbar } from "../../store/actions/actionCreators"
-import { createRegion } from "../../store/actions/async/admin"
+import { deleteRegion } from "../../store/actions/async/admin"
 import { useRipple } from "../useRipple"
+import { useToggle } from "../useToggle"
 import { nameValidationSchema } from "./validate"
 
-export const useAddRegion = (handleSelectedClick) => {
+export const useRegion = (region, onSubmit, setEdit, handleSelectedClick) => {
 
     const dispatch = useDispatch()
 
     const [ripple, events] = useRipple()
-    const [edit, setEdit] = useState(false)
+
+    const { openDeleteRegionDialog } = useToggle()
+
+    const dialogText = `Do you really want to delete the "${region?.name}"?`
 
     const {
-        values, errors, touched, isSubmitting,
-        getFieldProps, handleSubmit, submitForm, resetForm, setSubmitting
+        values, isSubmitting, touched, errors,
+        getFieldProps, handleSubmit, resetForm, submitForm, setSubmitting
     } = useFormik({
-        initialValues: { name: '' },
+        initialValues: { name: region?.name ?? '' },
         validationSchema: nameValidationSchema,
-        onSubmit: (data) => {
-            dispatch(createRegion(data, resetForm, setSubmitting, setEdit, handleSelectedClick))
-            setSubmitting(false)
-        }
+        onSubmit: onSubmit,
+        enableReinitialize: true
     })
 
     useEffect(() => {
@@ -33,7 +35,8 @@ export const useAddRegion = (handleSelectedClick) => {
         }
     }, [dispatch, touched.name, errors.name])
 
-    const handleEditClick = () => {
+    const handleEditClick = (e) => {
+        e.stopPropagation()
         resetForm()
         setEdit(prev => !prev)
     }
@@ -43,18 +46,28 @@ export const useAddRegion = (handleSelectedClick) => {
     const handleBlur = () => {
         if (!ripple) setEdit(false)
     }
+    const handleDeleteClick = (e) => {
+        e.stopPropagation()
+        openDeleteRegionDialog(dialogText, region)
+    }
+    const handleDeleteConfirmClick = () => {
+        dispatch(deleteRegion(region?.id, setSubmitting, handleSelectedClick))
+    }
 
     return {
-        edit,
-        values,
-        errors,
-        touched,
+        ripple,
         events,
+        values,
         isSubmitting,
+        touched,
+        errors,
         getFieldProps,
         handleSubmit,
+        setSubmitting,
         handleEditClick,
         handleSubmitClick,
         handleBlur,
+        handleDeleteClick,
+        handleDeleteConfirmClick
     }
 }
