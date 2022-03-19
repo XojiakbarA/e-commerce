@@ -4,8 +4,8 @@ import { wrapper } from "../../app/store"
 import AdminPageHead from "../../components/common/AdminPageHead"
 import AdminLayout from "../../components/layout/AdminLayout/AdminLayout"
 import { fetchUsers } from "../../api/admin"
-import DataTable from "../../components/admin/DataTable"
-import UserTableRow from "../../components/admin/TableRows/UserTableRow"
+import DataTable from "../../components/admin/DataTable/DataTable"
+import UserTableRow from "../../components/admin/DataTable/DataTableRows/UserTableRow"
 import { useAdminSearch } from "../../app/hooks/useAdminSearch"
 
 const headLabels = [

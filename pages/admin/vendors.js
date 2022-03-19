@@ -1,12 +1,12 @@
 import { Grid } from '@mui/material'
 import StoreIcon from '@mui/icons-material/Store'
 import AdminPageHead from '../../components/common/AdminPageHead'
-import DataTable from '../../components/admin/DataTable'
+import DataTable from '../../components/admin/DataTable/DataTable'
 import { wrapper } from '../../app/store'
 import AdminLayout from '../../components/layout/AdminLayout/AdminLayout'
 import { fetchShops } from '../../api/admin'
 import { useAdminSearch } from '../../app/hooks/useAdminSearch'
-import ShopsTableRow from '../../components/admin/TableRows/ShopsTableRow'
+import ShopsTableRow from '../../components/admin/DataTable/DataTableRows/ShopsTableRow'
 
 const headLabels = [
     { label: 'Title', field: 'title' },

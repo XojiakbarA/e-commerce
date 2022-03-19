@@ -6,9 +6,9 @@ import PhotoIcon from '@mui/icons-material/Photo'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
-import { editReviewPublished } from '../../../app/store/actions/async/admin'
-import { productImageURL, userImageURL } from '../../../utils/utils'
-import ThumbImage from '../../common/Image/ThumbImage'
+import { editReviewPublished } from '../../../../app/store/actions/async/admin'
+import { productImageURL, userImageURL } from '../../../../utils/utils'
+import ThumbImage from '../../../common/Image/ThumbImage'
 
 const ReviewsTableRow = ({ review }) => {
 

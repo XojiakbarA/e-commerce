@@ -3,8 +3,8 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import PhotoIcon from '@mui/icons-material/Photo'
-import ThumbImage from '../../common/Image/ThumbImage'
-import { productImageURL } from '../../../utils/utils'
+import ThumbImage from '../../../common/Image/ThumbImage'
+import { productImageURL } from '../../../../utils/utils'
 
 const OrdersTableRow = ({ order }) => {
 

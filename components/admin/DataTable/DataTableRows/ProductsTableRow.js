@@ -5,10 +5,10 @@ import EditIcon from '@mui/icons-material/Edit'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import PhotoIcon from '@mui/icons-material/Photo'
 import { useDispatch, useSelector } from 'react-redux'
-import { editProductPublished } from '../../../app/store/actions/async/admin'
+import { editProductPublished } from '../../../../app/store/actions/async/admin'
 import { useRouter } from 'next/router'
-import ThumbImage from '../../common/Image/ThumbImage'
-import { productImageURL } from '../../../utils/utils'
+import ThumbImage from '../../../common/Image/ThumbImage'
+import { productImageURL } from '../../../../utils/utils'
 
 const ProductsTableRow = ({ product }) => {
 

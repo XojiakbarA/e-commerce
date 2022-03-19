@@ -4,9 +4,9 @@ import AdminPageHead from '../../components/common/AdminPageHead'
 import { useAdminSearch } from '../../app/hooks/useAdminSearch'
 import { wrapper } from "../../app/store"
 import AdminLayout from "../../components/layout/AdminLayout/AdminLayout"
-import DataTable from "../../components/admin/DataTable"
+import DataTable from "../../components/admin/DataTable/DataTable"
 import { fetchTransactions } from "../../api/admin"
-import TransactionsTableRow from "../../components/admin/TableRows/TransactionsTableRow"
+import TransactionsTableRow from "../../components/admin/DataTable/DataTableRows/TransactionsTableRow"
 
 const headLabels = [
     { label: 'Name', field: 'name' },

@@ -1,48 +1,41 @@
-import { Stack, TableCell, TableRow, IconButton, Tooltip, Rating } from '@mui/material'
-import PhotoIcon from '@mui/icons-material/Photo'
+import { Stack, TableCell, TableRow, IconButton, Tooltip } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import VisibilityIcon from '@mui/icons-material/Visibility'
-import { shopImageURL } from '../../../utils/utils'
-import ThumbImage from '../../common/Image/ThumbImage'
+import { userImageURL } from '../../../../utils/utils'
+import ThumbImage from '../../../common/Image/ThumbImage'
 
-const ShopsTableRow = ({ shop }) => {
+const UserTableRow = ({ user }) => {
 
     return (
+        <>
         <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+            <TableCell>
+                {user.id}
+            </TableCell>
             <TableCell component="th" scope="row">
                 <ThumbImage
-                    url={shopImageURL}
-                    src={shop.av_image}
-                    noImageIcon={<PhotoIcon/>}
+                    url={userImageURL}
+                    src={user.image?.src}
                 />
             </TableCell>
             <TableCell component="th" scope="row">
-                {shop.title}
-            </TableCell>
-            <TableCell>
-                <Rating value={shop.rating} size='small' readOnly/>
+                {user.first_name}
             </TableCell>
             <TableCell component="th" scope="row">
-                {shop.first_name || '-'}
+                {user.last_name || '-'}
             </TableCell>
             <TableCell component="th" scope="row">
-                {shop.last_name || '-'}
+                {user.email}
             </TableCell>
             <TableCell component="th" scope="row">
-                {shop.region}
+                {user.phone || '-'}
             </TableCell>
             <TableCell component="th" scope="row">
-                {shop.district}
+                {user.birth_date || '-'}
             </TableCell>
             <TableCell component="th" scope="row">
-                {shop.street}
-            </TableCell>
-            <TableCell component="th" scope="row">
-                {shop.home}
-            </TableCell>
-            <TableCell component="th" scope="row">
-                {shop.phone || '-'}
+                {user.role || '-'}
             </TableCell>
             <TableCell>
                 <Stack direction='row' spacing={1}>
@@ -73,7 +66,8 @@ const ShopsTableRow = ({ shop }) => {
                 </Stack>
             </TableCell>
         </TableRow>
+        </>
     )
 }
 
-export default ShopsTableRow
+export default UserTableRow

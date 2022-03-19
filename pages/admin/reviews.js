@@ -5,8 +5,8 @@ import { wrapper } from "../../app/store"
 import { getReviews } from "../../app/store/actions/async/admin"
 import { useSelector } from "react-redux"
 import AdminPageHead from "../../components/common/AdminPageHead"
-import DataTable from "../../components/admin/DataTable"
-import ReviewsTableRow from "../../components/admin/TableRows/ReviewsTableRow"
+import DataTable from "../../components/admin/DataTable/DataTable"
+import ReviewsTableRow from "../../components/admin/DataTable/DataTableRows/ReviewsTableRow"
 import { useAdminSearch } from "../../app/hooks/useAdminSearch"
 
 const headLabels = [

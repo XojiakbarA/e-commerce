@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Table, TableBody, TableCell, TableContainer, TablePagination, TableRow, Paper} from '@mui/material'
 import { useRouter } from 'next/router'
-import DataTableHead from './TableHead'
+import DataTableHead from './DataTableHead'
 
 const DataTable = ({ meta, labels, colSpan, children }) => {
 
