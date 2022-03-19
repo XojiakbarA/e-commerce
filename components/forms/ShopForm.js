@@ -1,37 +1,32 @@
 import { Button, Card, CardContent, CircularProgress, Grid, TextField } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
+import AddIcon from '@mui/icons-material/Add'
 import AvatarUpload from '../common/UploadButton/AvatarUpload'
 import ImageUpload from '../common/UploadButton/ImageUpload'
 import PhoneMask from '../../components/common/PhoneMask'
 import AutocompleteAsync from '../../components/common/AutocompleteAsync/AutocompleteAsync'
-import { useEditShop } from '../../app/hooks/useFormik/useEditShop'
 import { shopImageURL } from '../../utils/utils'
 import { useLocation } from '../../app/hooks/useLocation'
 import { useDoublePreview } from '../../app/hooks/usePreview/useDoublePreview'
+import { useShop } from '../../app/hooks/useFormik/useShop'
 
-const EditShopForm = () => {
+const ShopForm = ({ onSubmit, shop }) => {
 
     const {
+        touched, errors, isSubmitting,
         handleSubmit, setFieldValue, getFieldProps, handleBlur, setValues,
-        shop, touched, errors, isSubmitting,
-    } = useEditShop()
+        handleBgDeleteImage, handleAvDeleteImage
+    } = useShop(shop, onSubmit)
 
     const {
         regions, region, districts, district, isFetching,
         handleRegionChange, handleDistrictChange
-    } = useLocation(setFieldValue, shop.region, shop.district)
+    } = useLocation(setFieldValue, shop?.region, shop?.district)
 
     const {
         preview, handleBgUploadChange, handleAvUploadChange,
         handleBgPreviewDeleteClick, handleAvPreviewDeleteClick
     } = useDoublePreview(setValues)
-
-    const handleBgDeleteImage = () => {
-
-    }
-    const handleAvDeleteImage = () => {
-
-    }
 
     return (
         <form onSubmit={handleSubmit}>
@@ -42,7 +37,7 @@ const EditShopForm = () => {
                     handleDeleteImage={handleBgDeleteImage}
                     name='bg_image'
                     preview={preview.bg_image}
-                    src={shop.bg_image_big ? shopImageURL + shop.bg_image_big.src : undefined}
+                    src={shop?.bg_image_big ? shopImageURL + shop.bg_image_big.src : undefined}
                     height={200}
                 />
                 <CardContent sx={{position: 'relative'}}>
@@ -53,7 +48,7 @@ const EditShopForm = () => {
                         handleDeleteImage={handleAvDeleteImage}
                         name='av_image'
                         preview={preview.av_image}
-                        src={shop.av_image ? shopImageURL + shop.av_image.src : undefined}
+                        src={shop?.av_image ? shopImageURL + shop.av_image.src : undefined}
                         size={50}
                     />
                     <Grid container spacing={2}>
@@ -136,11 +131,11 @@ const EditShopForm = () => {
                                     ?
                                     <CircularProgress color='inherit' size={20}/>
                                     :
-                                    <EditIcon/>
+                                    shop ? <EditIcon/> : <AddIcon/>
                                 }
                                 disabled={isSubmitting}
                             >
-                                Edit
+                                { shop ? 'Edit' : 'Create' }
                             </Button>
                         </Grid>
                     </Grid>
@@ -150,4 +145,4 @@ const EditShopForm = () => {
     )
 }
 
-export default EditShopForm
+export default ShopForm

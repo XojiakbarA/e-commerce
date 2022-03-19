@@ -1,14 +1,25 @@
 import { Grid } from '@mui/material'
 import SettingsIcon from '@mui/icons-material/Settings'
 import ProfileLayout from '../../components/layout/ProfileLayout/ProfileLayout'
-import EditShopForm from '../../components/forms/EditShopForm'
+import ShopForm from '../../components/forms/ShopForm'
 import { wrapper } from '../../app/store'
-import { getShop } from '../../app/store/actions/async/vendor'
+import { editShop, getShop } from '../../app/store/actions/async/vendor'
 import { getDistricts, getRegions } from '../../app/store/actions/async/common'
 import ProfilePageHead from '../../components/common/ProfilePageHead'
 import MainLayout from '../../components/layout/MainLayout'
+import { useDispatch, useSelector } from 'react-redux'
+import { appendToFormData } from '../../utils/utils'
 
 const Settings = () => {
+
+    const dispatch = useDispatch()
+
+    const shop = useSelector(state => state.shop.data)
+
+    const handleSubmit = (data, { setSubmitting }) => {
+        const formData = appendToFormData(data)
+        dispatch(editShop(shop.id, formData, setSubmitting))
+    }
 
     return (
         <Grid container spacing={2}>
@@ -21,7 +32,7 @@ const Settings = () => {
             <Grid item xs={12}>
                 <Grid container>
                     <Grid item xs={12}>
-                        <EditShopForm/>
+                        <ShopForm onSubmit={handleSubmit} shop={shop}/>
                     </Grid>
                 </Grid>
             </Grid>

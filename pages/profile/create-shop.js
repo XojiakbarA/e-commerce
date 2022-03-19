@@ -3,11 +3,20 @@ import AddBusinessIcon from '@mui/icons-material/AddBusiness'
 import ProfileLayout from '../../components/layout/ProfileLayout/ProfileLayout'
 import { getRegions } from '../../app/store/actions/async/common'
 import { wrapper } from '../../app/store'
-import CreateShopForm from '../../components/forms/CreateShopForm'
+import ShopForm from '../../components/forms/ShopForm'
 import MainLayout from '../../components/layout/MainLayout'
 import ProfilePageHead from '../../components/common/ProfilePageHead'
+import { createShop } from '../../app/store/actions/async/user'
+import { useDispatch } from 'react-redux'
 
 const CreateShop = () => {
+
+    const dispatch = useDispatch()
+
+    const handleSubmit = (data, { setSubmitting }) => {
+        const formData = appendToFormData(data)
+        dispatch(createShop(formData, setSubmitting))
+    }
 
     return (
         <Grid container spacing={2}>
@@ -18,7 +27,7 @@ const CreateShop = () => {
                 />
             </Grid>
             <Grid item xs={12}>
-                <CreateShopForm/>
+                <ShopForm onSubmit={handleSubmit}/>
             </Grid>
         </Grid>
     )
