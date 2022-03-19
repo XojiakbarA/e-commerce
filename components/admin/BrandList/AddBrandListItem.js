@@ -3,39 +3,24 @@ import AddCircleIcon from '@mui/icons-material/AddCircle'
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
 import SaveIcon from '@mui/icons-material/Save'
 import { useState } from "react"
-import { useFormik } from "formik"
-import { titleValidationSchema } from "../../../app/hooks/useFormik/validate"
-import { useRipple } from "../../../app/hooks/useRipple"
 import { useDispatch } from "react-redux"
 import { createBrand } from "../../../app/store/actions/async/admin"
+import { useBrand } from "../../../app/hooks/useFormik/useBrand"
 
 const AddBrandListItem = () => {
 
     const dispatch = useDispatch()
 
-    const [ripple, events] = useRipple()
     const [edit, setEdit] = useState(false)
 
-    const { touched, errors, isValid, isSubmitting, handleSubmit, getFieldProps, resetForm, submitForm } = useFormik({
-        initialValues: {
-            title: ''
-        },
-        validationSchema: titleValidationSchema,
-        onSubmit: (data, {resetForm, setSubmitting}) => {
-            dispatch(createBrand(data, resetForm, setSubmitting, setEdit))
-        }
-    })
+    const handleSubmitCreate = (data, { resetForm, setSubmitting }) => {
+        dispatch(createBrand(data, resetForm, setSubmitting, setEdit))
+    }
 
-    const handleEditClick = () => {
-        resetForm()
-        setEdit(prev => !prev)
-    }
-    const handleBlur = () => {
-        if (!ripple) setEdit(false)
-    }
-    const handleSubmitClick = async () => {
-        await submitForm()
-    }
+    const {
+        values, touched, errors, events, isSubmitting,
+        getFieldProps, handleSubmit, handleEditClick, handleBlur, handleSubmitClick
+    } = useBrand(null, handleSubmitCreate, setEdit)
 
     return (
         <ListItem>
@@ -56,7 +41,6 @@ const AddBrandListItem = () => {
                         variant='standard'
                         placeholder='Brand Title'
                         error={ touched.title && Boolean(errors.title) }
-                        helperText={ (touched.title && errors.title) || ' ' }
                         { ...getFieldProps('title') }
                         onBlur={handleBlur}
                     />
@@ -65,11 +49,11 @@ const AddBrandListItem = () => {
                 <ListItemText primary='Add Brand'/>
             }
             {
-                edit && isValid &&
+                edit &&
                 <IconButton
                     size='small'
                     onClick={handleSubmitClick}
-                    disabled={isSubmitting}
+                    disabled={Boolean(errors.title) || !values.title || isSubmitting}
                     { ...events }
                 >
                     <SaveIcon fontSize='small'/>

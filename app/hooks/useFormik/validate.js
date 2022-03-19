@@ -178,6 +178,8 @@ export const editbannerValidationSchema = yup.object({
 export const titleValidationSchema = yup.object({
     title: yup
         .string('Enter Title')
+        .strict(true)
+        .trim('Title cannot include leading and trailing spaces')
         .required('Title is required')
 })
 

@@ -3,7 +3,7 @@ import BrandListItem from "./BrandListItem"
 import AddBrandListItem from "./AddBrandListItem"
 import ConfirmDialog from "../../dialogs/ConfirmDialog"
 import { useToggle } from "../../../app/hooks/useToggle"
-import { useEditBrand } from "../../../app/hooks/useFormik/useEditBrand"
+import { useBrand } from "../../../app/hooks/useFormik/useBrand"
 
 const BrandList = ({ brands }) => {
 
@@ -11,7 +11,7 @@ const BrandList = ({ brands }) => {
 
     const { isOpen, text, payload } = deleteBrandDialog
 
-    const { isSubmitting, handleDeleteClick } = useEditBrand(payload)
+    const { isSubmitting, handleDeleteConfirmClick } = useBrand(payload)
 
     return (
         <Paper>
@@ -29,7 +29,7 @@ const BrandList = ({ brands }) => {
                 loading={isSubmitting}
                 content={text}
                 handleCancelClick={closeDeleteBrandDialog}
-                handleConfirmClick={handleDeleteClick}
+                handleConfirmClick={handleDeleteConfirmClick}
             />
         </Paper>
     )
