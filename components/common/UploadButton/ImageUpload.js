@@ -1,4 +1,4 @@
-import { Box, IconButton, Badge, CardMedia, CardActionArea } from '@mui/material'
+import { Box, IconButton, Badge, CardMedia, CardActionArea, Avatar } from '@mui/material'
 import { useState } from 'react'
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
 import ImageIcon from '@mui/icons-material/Image'
@@ -6,7 +6,7 @@ import UploadMenu from './UploadMenu'
 
 const ImageUpload = ({
     handlePrewiewDeleteClick, handleUploadChange, handleDeleteImage,
-    isLoading, name, src, preview, height, ...others
+    isLoading, name, src, preview, width, height, ...others
 }) => {
 
     const [anchorEl, setAnchorEl] = useState(null)
@@ -39,20 +39,20 @@ const ImageUpload = ({
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
                     disabled={isLoading}
-                    sx={{width: '100%'}}
+                    sx={{width: '100%', borderRadius: 1}}
                 >
                     {
                         preview || src
                         ?
-                        <CardMedia
-                            component="img"
-                            height={height}
-                            image={preview || src}
+                        <Avatar
+                            variant='rounded'
+                            src={preview || src}
                             alt={preview || src}
-                            sx={{borderRadius: 1}}
+                            sx={{ width: width ?? '100%', height: height, borderRadius: 1 }}
                         />
                         :
                         <Box
+                            width={width}
                             height={height}
                             display='flex' justifyContent='center' alignItems='center'
                         >

@@ -1,23 +1,21 @@
-import { Button, CircularProgress, Grid, Stack, TextField } from "@mui/material"
+import { Button, CircularProgress, FormHelperText, Grid, Stack, TextField } from "@mui/material"
+import AddIcon from '@mui/icons-material/Add'
 import SaveIcon from '@mui/icons-material/Save'
 import DeleteIcon from '@mui/icons-material/Delete'
 import ImageUpload from '../common/UploadButton/ImageUpload'
 import { bannerImageURL } from "../../utils/utils"
-import { useEditBanner } from "../../app/hooks/useFormik/useEditBanner"
+import { useBanner } from "../../app/hooks/useFormik/useBanner"
 import { useSinglePreview } from "../../app/hooks/usePreview/useSinglePreview"
 
-const EditBannerForm = ({ banner }) => {
+const BannerForm = ({ banner, onSubmit }) => {
 
     const {
         touched, errors, isSubmitting,
-        handleSubmit, getFieldProps, setValues, handleDeleteClick
-    } = useEditBanner(banner)
+        handleSubmit, getFieldProps, setValues, handleDeleteClick,
+        handleDeleteImageClick
+    } = useBanner(banner, onSubmit)
 
-    const { preview, handlePreviewDeleteClick, handleUploadChange } = useSinglePreview(setValues, banner.image)
-
-    const handleDeleteImage = () => {
-
-    }
+    const { preview, handlePreviewDeleteClick, handleUploadChange } = useSinglePreview(setValues, banner?.image)
 
     return (
         <form onSubmit={handleSubmit}>
@@ -43,19 +41,39 @@ const EditBannerForm = ({ banner }) => {
                         { ...getFieldProps('description') }
                     />
                 </Grid>
-                <Grid item xs={12} display='flex' justifyContent='center'>
+                <Grid item xs={12} display='flex' flexDirection='column' alignItems='center'>
                     <ImageUpload
                         handlePrewiewDeleteClick={handlePreviewDeleteClick}
                         handleUploadChange={handleUploadChange}
-                        handleDeleteImage={handleDeleteImage}
+                        handleDeleteImage={handleDeleteImageClick}
                         name='image'
                         preview={preview}
-                        src={bannerImageURL + banner.image}
+                        src={banner?.image ? bannerImageURL + banner?.image : undefined}
+                        width={200}
                         height={200}
                     />
+                    <FormHelperText error>{ touched.image && errors.image}</FormHelperText>
                 </Grid>
                 <Grid item xs={12} display='flex' justifyContent='end'>
                     <Stack direction='row' spacing={2}>
+                        {
+                            banner &&
+                            <Button
+                                size='small'
+                                variant='outlined'
+                                color='error'
+                                onClick={handleDeleteClick}
+                                endIcon={
+                                    isSubmitting
+                                    ?
+                                    <CircularProgress color='inherit' size={20}/>
+                                    :
+                                    <DeleteIcon/>
+                                }
+                            >
+                                Delete
+                            </Button>
+                        }
                         <Button
                             size='small'
                             variant='contained'
@@ -65,26 +83,11 @@ const EditBannerForm = ({ banner }) => {
                                 ?
                                 <CircularProgress color='inherit' size={20}/>
                                 :
-                                <SaveIcon/>
+                                banner ? <SaveIcon/> : <AddIcon/>
                             }
                             disabled={isSubmitting}
                         >
-                            Save
-                        </Button>
-                        <Button
-                            size='small'
-                            variant='outlined'
-                            color='error'
-                            onClick={handleDeleteClick}
-                            endIcon={
-                                isSubmitting
-                                ?
-                                <CircularProgress color='inherit' size={20}/>
-                                :
-                                <DeleteIcon/>
-                            }
-                        >
-                            Delete
+                            { banner ? 'Save' : 'Create' }
                         </Button>
                     </Stack>
                 </Grid>
@@ -93,4 +96,4 @@ const EditBannerForm = ({ banner }) => {
     )
 }
 
-export default EditBannerForm
+export default BannerForm

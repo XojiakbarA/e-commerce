@@ -3,11 +3,13 @@ import { Tabs, Tab, Box } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
 import AddIcon from '@mui/icons-material/Add'
 import PropTypes from 'prop-types'
-import EditBannerForm from '../../forms/EditBannerForm'
-import AddBannerForm from '../../forms/AddBannerForm'
+import BannerForm from '../../forms/BannerForm'
 import ConfirmDialog from '../../dialogs/ConfirmDialog'
-import { useEditBanner } from '../../../app/hooks/useFormik/useEditBanner'
 import { useToggle } from '../../../app/hooks/useToggle'
+import { useDispatch } from 'react-redux'
+import { appendToFormData } from '../../../utils/utils'
+import { createBanner, editBanner } from '../../../app/store/actions/async/admin'
+import { useBanner } from '../../../app/hooks/useFormik/useBanner'
 
 function TabPanel({children, value, index, ...other}) {
     return (
@@ -42,16 +44,26 @@ function a11yProps(index) {
 
 const BannersFormTabs = ({ banner, handleBannerChange }) => {
 
+    const dispatch = useDispatch()
+
     const { deleteBannerDialog, closeDeleteBannerDialog } = useToggle()
 
     const { isOpen, text, payload } = deleteBannerDialog
 
-    const { isSubmitting, handleDeleteConfirmClick } = useEditBanner(payload, handleBannerChange)
+    const { isSubmitting, handleDeleteConfirmClick } = useBanner(payload, null, handleBannerChange)
 
     const [value, setValue] = useState(0)
 
     const handleChange = (event, newValue) => {
         setValue(newValue)
+    }
+    const handleSubmitEdit = (data, {setSubmitting, resetForm}) => {
+        const formData = appendToFormData(data)
+        dispatch(editBanner(banner.id, formData, setSubmitting, resetForm))
+    }
+    const handleSubmitCreate = (data, { resetForm, setSubmitting }) => {
+        const formData = appendToFormData(data)
+        dispatch(createBanner(formData, setSubmitting, resetForm))
     }
 
     return (
@@ -69,10 +81,10 @@ const BannersFormTabs = ({ banner, handleBannerChange }) => {
                 </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
-                <EditBannerForm banner={banner}/>
+                <BannerForm onSubmit={handleSubmitEdit} banner={banner}/>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <AddBannerForm/>
+                <BannerForm onSubmit={handleSubmitCreate}/>
             </TabPanel>
             <ConfirmDialog
                 open={isOpen}

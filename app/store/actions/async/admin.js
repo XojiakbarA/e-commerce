@@ -201,7 +201,7 @@ export const editBrand = (id, data, resetForm, setSubmitting, setEdit) => {
     }
 }
 
-export const createBanner = (data, resetForm, setSubmitting) => {
+export const createBanner = (data, setSubmitting, resetForm) => {
     return async (dispatch) => {
         try {
             const res = await storeBanner(data)
