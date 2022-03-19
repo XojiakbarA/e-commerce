@@ -3,14 +3,25 @@ import SaveIcon from '@mui/icons-material/Save'
 import EditIcon from '@mui/icons-material/Edit'
 import EditOffIcon from '@mui/icons-material/EditOff'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { useEditDistrict } from "../../../app/hooks/useFormik/useEditDistrict"
+import { useState } from "react"
+import { useDispatch } from "react-redux"
+import { useDistrict } from "../../../app/hooks/useFormik/useDistrict"
+import { editDistrict } from "../../../app/store/actions/async/admin"
 
 const DistrictListItem = ({ district }) => {
 
+    const dispatch = useDispatch()
+
+    const [edit, setEdit] = useState(false)
+
+    const handleSubmitEdit = (data, { resetForm, setSubmitting }) => {
+        dispatch(editDistrict(district.id, data, resetForm, setSubmitting, setEdit))
+    }
+
     const {
-        events, edit, values, isSubmitting, touched, errors, getFieldProps,
+        events, values, isSubmitting, touched, errors, getFieldProps,
         handleSubmit, handleEditClick, handleSubmitClick, handleBlur, handleDeleteClick
-    } = useEditDistrict(district)
+    } = useDistrict(district, handleSubmitEdit, setEdit)
 
     return (
         <ListItem selected={edit}>

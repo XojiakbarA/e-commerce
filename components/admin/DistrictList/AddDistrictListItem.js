@@ -2,14 +2,25 @@ import { Box, CircularProgress, IconButton, ListItem, ListItemText, TextField } 
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
 import SaveIcon from '@mui/icons-material/Save'
-import { useAddDistrict } from "../../../app/hooks/useFormik/useAddDistrict"
+import { useState } from "react"
+import { useDispatch } from "react-redux"
+import { useDistrict } from "../../../app/hooks/useFormik/useDistrict"
+import { createDistrict } from "../../../app/store/actions/async/admin"
 
 const AddDistrictListItem = ({ region }) => {
 
+    const dispatch = useDispatch()
+
+    const [edit, setEdit] = useState(false)
+
+    const handleSubmitCreate = (data, { resetForm, setSubmitting }) => {
+        dispatch(createDistrict(region.id, data, resetForm, setSubmitting, setEdit))
+    }
+
     const {
-        edit, values, errors, touched, events, isSubmitting,
+        values, errors, touched, events, isSubmitting,
         getFieldProps, handleSubmit, handleEditClick, handleSubmitClick, handleBlur
-    } = useAddDistrict(region)
+    } = useDistrict(null, handleSubmitCreate, setEdit)
 
     return (
         <ListItem selected={edit}>

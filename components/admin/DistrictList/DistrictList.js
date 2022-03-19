@@ -1,5 +1,5 @@
 import { List, ListSubheader, Paper } from "@mui/material"
-import { useEditDistrict } from "../../../app/hooks/useFormik/useEditDistrict"
+import { useDistrict } from "../../../app/hooks/useFormik/useDistrict"
 import { useToggle } from "../../../app/hooks/useToggle"
 import ConfirmDialog from "../../dialogs/ConfirmDialog"
 import AddDistrictListItem from "./AddDistrictListItem"
@@ -11,7 +11,7 @@ const DistrictList = ({ region }) => {
 
     const { isOpen, text, payload } = deleteDistrictDialog
 
-    const { isSubmitting, handleDeleteConfirmClick } = useEditDistrict(payload)
+    const { isSubmitting, handleDeleteConfirmClick } = useDistrict(payload)
 
     return (
         <Paper>
