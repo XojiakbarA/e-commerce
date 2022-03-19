@@ -1,21 +1,17 @@
 import { Avatar, Badge, Box, Button, CircularProgress, FormHelperText, Grid, IconButton, InputAdornment, TextField } from "@mui/material"
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
 import EditIcon from '@mui/icons-material/Edit'
-import CloseIcon from '@mui/icons-material/Close'
+import AddIcon from '@mui/icons-material/Add'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { styled } from "@mui/material/styles"
 import AutocompleteAsync from "../common/AutocompleteAsync/AutocompleteAsync"
+import MultipleImageUpload from "../common/UploadButton/MultipleImageUpload"
 import { productImageURL } from "../../utils/utils"
-import { useEditProduct } from "../../app/hooks/useFormik/useEditProduct"
 import { useMultiPreview } from "../../app/hooks/usePreview/useMultiPreview"
 import { useFieldProduct } from "../../app/hooks/useFieldProduct"
 import { useToggle } from "../../app/hooks/useToggle"
+import { useProduct } from "../../app/hooks/useFormik/useProduct"
 
-const Input = styled('input')({
-    display: 'none'
-})
-
-const EditProductForm = ({ product }) => {
+const ProductForm = ({ onSubmit, product }) => {
 
     const { openDeleteProductImageDialog } = useToggle()
 
@@ -24,7 +20,7 @@ const EditProductForm = ({ product }) => {
     const {
         handleSubmit, getFieldProps, handleBlur, setValues,
         touched, errors, isSubmitting, values
-    } = useEditProduct(product)
+    } = useProduct(product, onSubmit)
 
     const {
         categories, subCategories, brands, category, subCategory, brand,
@@ -104,8 +100,7 @@ const EditProductForm = ({ product }) => {
                     >
                         <Grid container spacing={2}>
                             {
-                                product?.images
-                                ?
+                                product?.images &&
                                 product.images.map(image => (
                                     <Grid item key={image.id}>
                                         <Badge
@@ -113,10 +108,10 @@ const EditProductForm = ({ product }) => {
                                             badgeContent={
                                                 <IconButton
                                                     size="small"
-                                                    color='primary'
+                                                    color='error'
                                                     onClick={() => openDeleteProductImageDialog(dialogText, product.id, image.id)}
                                                 >
-                                                    <CloseIcon fontSize='small'/>
+                                                    <RemoveCircleIcon fontSize='small'/>
                                                 </IconButton>
                                             }
                                         >
@@ -129,56 +124,14 @@ const EditProductForm = ({ product }) => {
                                         </Badge>
                                     </Grid>
                                 ))
-                                :
-                                <CircularProgress/>
                             }
-                            {
-                                preview.map((url, i) => (
-                                    <Grid item key={url}>
-                                        <Badge
-                                            anchorOrigin={{vertical: 'top', horizontal: 'right'}}
-                                            badgeContent={
-                                                <IconButton
-                                                    size="small"
-                                                    color='primary'
-                                                    onClick={() => handlePreviewDeleteClick(i)}
-                                                >
-                                                    <CloseIcon fontSize='small'/>
-                                                </IconButton>
-                                            }
-                                        >
-                                            <Avatar
-                                                src={url}
-                                                alt={url}
-                                                variant="rounded"
-                                                sx={{width: 200, height: 200}}
-                                            />
-                                        </Badge>
-                                    </Grid>
-                                ))
-                            }
-                            <Grid item>
-                                <Box sx={{
-                                        width: 200,
-                                        height: 200,
-                                        display: values.images_count > 4 ? 'none' : 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-                                    }}>
-                                    <label htmlFor="images">
-                                        <Input
-                                            accept="image/*"
-                                            id="images"
-                                            multiple
-                                            type="file"
-                                            onChange={handleUploadChange}
-                                        />
-                                        <IconButton component='span'>
-                                            <AddPhotoAlternateIcon fontSize="large"/>
-                                        </IconButton>
-                                    </label>
-                                </Box>
-                            </Grid>
+                            <MultipleImageUpload
+                                preview={preview}
+                                size={200}
+                                onDeleteClick={handlePreviewDeleteClick}
+                                onUploadChange={handleUploadChange}
+                                hideUploadButton={values.images_count > 4}
+                            />
                         </Grid>
                     </Box>
                 </Grid>
@@ -252,11 +205,11 @@ const EditProductForm = ({ product }) => {
                             ?
                             <CircularProgress color='inherit' size={20}/>
                             :
-                            <EditIcon/>
+                            product ? <EditIcon/> : <AddIcon/>
                         }
                         disabled={isSubmitting}
                     >
-                        Edit
+                        { product ? 'Edit' : 'Create' }
                     </Button>
                 </Grid>
             </Grid>
@@ -264,4 +217,4 @@ const EditProductForm = ({ product }) => {
     )
 }
 
-export default EditProductForm
+export default ProductForm

@@ -14,7 +14,7 @@ import { getProducts } from '../../app/store/actions/async/vendor'
 import MainLayout from '../../components/layout/MainLayout'
 import ProfilePageHead from '../../components/common/ProfilePageHead'
 import ConfirmDialog from '../../components/dialogs/ConfirmDialog'
-import { useEditProduct } from '../../app/hooks/useFormik/useEditProduct'
+import { useProduct } from '../../app/hooks/useFormik/useProduct'
 
 const labels = [ 'Title', 'Image', 'Stock', 'Price', 'Sale Price', 'Rating', '' ]
 
@@ -30,7 +30,7 @@ const Products = () => {
 
     const { isOpen, text, payload } = deleteProductDialog
 
-    const { isSubmitting, handleDeleteClick, handleDeleteImageClick } = useEditProduct(payload)
+    const { isSubmitting, handleDeleteClick, handleDeleteImageClick } = useProduct(payload)
 
     return (
         <Grid container spacing={2}>

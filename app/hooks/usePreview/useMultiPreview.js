@@ -1,10 +1,7 @@
 import { useState } from "react"
-import { useSelector } from "react-redux"
 import { makeURLArray } from "../../../utils/utils"
 
 export const useMultiPreview = (formikImages, setValues) => {
-
-    const product = useSelector(state => state.product)
 
     const [preview, setPreview] = useState([])
 
@@ -28,7 +25,7 @@ export const useMultiPreview = (formikImages, setValues) => {
         setValues(prevValues => (
             {
                 ...prevValues,
-                images_count: images.length + (product.images?.length ?? 0),
+                images_count: prevValues.images_count + newImages.length,
                 images: images
             }
         ))
