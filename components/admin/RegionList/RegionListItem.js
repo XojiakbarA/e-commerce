@@ -3,10 +3,11 @@ import SaveIcon from '@mui/icons-material/Save'
 import EditIcon from '@mui/icons-material/Edit'
 import EditOffIcon from '@mui/icons-material/EditOff'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { useRegion } from "../../../app/hooks/useFormik/useRegion"
+import { useFieldName } from "../../../app/hooks/useFormik/useFieldName"
 import { useDispatch } from "react-redux"
 import { editRegion } from "../../../app/store/actions/async/admin"
 import { useState } from "react"
+import { useToggle } from "../../../app/hooks/useToggle"
 
 const RegionListItem = ({ region, selected, handleSelectedClick }) => {
 
@@ -19,9 +20,13 @@ const RegionListItem = ({ region, selected, handleSelectedClick }) => {
     }
 
     const {
-        ripple, events, values, isSubmitting, touched, errors, getFieldProps,
-        handleSubmit, handleEditClick, handleSubmitClick, handleBlur, handleDeleteClick
-    } = useRegion(region, handleSubmitEdit, setEdit)
+        ripple, events, values, isSubmitting, touched, errors,
+        getFieldProps, handleSubmit, handleEditClick, handleBlur
+    } = useFieldName(region.name, handleSubmitEdit, setEdit)
+
+    const { openDeleteRegionDialog } = useToggle()
+
+    const dialogText = `Do you really want to delete the "${region.name}"?`
 
     return (
         <ListItemButton
@@ -57,8 +62,8 @@ const RegionListItem = ({ region, selected, handleSelectedClick }) => {
                 edit &&
                 <IconButton
                     size='small'
-                    disabled={Boolean(errors.name) || values.name == region.name}
-                    onClick={ handleSubmitClick }
+                    disabled={Boolean(errors.name) || values.name == region.name || isSubmitting}
+                    onClick={ handleSubmit }
                     { ...events }
                 >
                     <SaveIcon fontSize='small'/>
@@ -67,13 +72,18 @@ const RegionListItem = ({ region, selected, handleSelectedClick }) => {
             <IconButton
                 size='small'
                 onClick={handleEditClick}
+                disabled={isSubmitting}
                 { ...events }
             >
                 {edit ? <EditOffIcon fontSize='small'/> : <EditIcon fontSize='small'/>}
             </IconButton>
             <IconButton
                 size='small'
-                onClick={handleDeleteClick}
+                onClick={e => {
+                    e.stopPropagation()
+                    openDeleteRegionDialog(dialogText, region)
+                }}
+                disabled={isSubmitting}
                 { ...events }
             >
                 <DeleteIcon fontSize='small'/>

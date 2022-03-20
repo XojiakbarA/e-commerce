@@ -4,7 +4,7 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
 import SaveIcon from '@mui/icons-material/Save'
 import { useState } from "react"
 import { useDispatch } from "react-redux"
-import { useDistrict } from "../../../app/hooks/useFormik/useDistrict"
+import { useFieldName } from "../../../app/hooks/useFormik/useFieldName"
 import { createDistrict } from "../../../app/store/actions/async/admin"
 
 const AddDistrictListItem = ({ region }) => {
@@ -19,8 +19,8 @@ const AddDistrictListItem = ({ region }) => {
 
     const {
         values, errors, touched, events, isSubmitting,
-        getFieldProps, handleSubmit, handleEditClick, handleSubmitClick, handleBlur
-    } = useDistrict(null, handleSubmitCreate, setEdit)
+        getFieldProps, handleSubmit, handleEditClick, handleBlur
+    } = useFieldName(null, handleSubmitCreate, setEdit)
 
     return (
         <ListItem selected={edit}>
@@ -52,8 +52,8 @@ const AddDistrictListItem = ({ region }) => {
                 edit &&
                 <IconButton
                     size='small'
-                    onClick={handleSubmitClick}
-                    disabled={Boolean(errors.name) || !values.name}
+                    onClick={handleSubmit}
+                    disabled={Boolean(errors.name) || !values.name || isSubmitting}
                     { ...events }
                 >
                     <SaveIcon fontSize='small'/>
@@ -62,6 +62,7 @@ const AddDistrictListItem = ({ region }) => {
             <IconButton
                 size='small'
                 onClick={handleEditClick}
+                disabled={isSubmitting}
             >
                 {edit ? <RemoveCircleIcon fontSize='small'/> : <AddCircleIcon fontSize='small'/>}
             </IconButton>

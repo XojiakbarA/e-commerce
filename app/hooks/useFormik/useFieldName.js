@@ -1,27 +1,21 @@
 import { useFormik } from "formik"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { toggleSnackbar } from "../../store/actions/actionCreators"
-import { deleteRegion } from "../../store/actions/async/admin"
 import { useRipple } from "../useRipple"
-import { useToggle } from "../useToggle"
 import { nameValidationSchema } from "./validate"
 
-export const useRegion = (region, onSubmit, setEdit, handleSelectedClick) => {
+export const useFieldName = (name, onSubmit, setEdit) => {
 
     const dispatch = useDispatch()
 
     const [ripple, events] = useRipple()
 
-    const { openDeleteRegionDialog } = useToggle()
-
-    const dialogText = `Do you really want to delete the "${region?.name}"?`
-
     const {
         values, isSubmitting, touched, errors,
-        getFieldProps, handleSubmit, resetForm, submitForm, setSubmitting
+        getFieldProps, handleSubmit, resetForm, setSubmitting
     } = useFormik({
-        initialValues: { name: region?.name ?? '' },
+        initialValues: { name: name ?? '' },
         validationSchema: nameValidationSchema,
         onSubmit: onSubmit,
         enableReinitialize: true
@@ -40,18 +34,8 @@ export const useRegion = (region, onSubmit, setEdit, handleSelectedClick) => {
         resetForm()
         setEdit(prev => !prev)
     }
-    const handleSubmitClick = async () => {
-        await submitForm()
-    }
     const handleBlur = () => {
         if (!ripple) setEdit(false)
-    }
-    const handleDeleteClick = (e) => {
-        e.stopPropagation()
-        openDeleteRegionDialog(dialogText, region)
-    }
-    const handleDeleteConfirmClick = () => {
-        dispatch(deleteRegion(region?.id, setSubmitting, handleSelectedClick))
     }
 
     return {
@@ -65,9 +49,6 @@ export const useRegion = (region, onSubmit, setEdit, handleSelectedClick) => {
         handleSubmit,
         setSubmitting,
         handleEditClick,
-        handleSubmitClick,
-        handleBlur,
-        handleDeleteClick,
-        handleDeleteConfirmClick
+        handleBlur
     }
 }

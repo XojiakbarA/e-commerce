@@ -5,7 +5,8 @@ import EditOffIcon from '@mui/icons-material/EditOff'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useState } from "react"
 import { useDispatch } from "react-redux"
-import { useDistrict } from "../../../app/hooks/useFormik/useDistrict"
+import { useToggle } from "../../../app/hooks/useToggle"
+import { useFieldName } from "../../../app/hooks/useFormik/useFieldName"
 import { editDistrict } from "../../../app/store/actions/async/admin"
 
 const DistrictListItem = ({ district }) => {
@@ -19,9 +20,14 @@ const DistrictListItem = ({ district }) => {
     }
 
     const {
-        events, values, isSubmitting, touched, errors, getFieldProps,
-        handleSubmit, handleEditClick, handleSubmitClick, handleBlur, handleDeleteClick
-    } = useDistrict(district, handleSubmitEdit, setEdit)
+        events, values, isSubmitting, touched, errors,
+        getFieldProps, handleSubmit, handleEditClick, handleBlur
+    } = useFieldName(district.name, handleSubmitEdit, setEdit)
+
+    const { openDeleteDistrictDialog } = useToggle()
+
+    const dialogText = `Do you really want to delete the "${district.name}"?`
+
 
     return (
         <ListItem selected={edit}>
@@ -52,8 +58,8 @@ const DistrictListItem = ({ district }) => {
                 edit &&
                 <IconButton
                     size='small'
-                    disabled={Boolean(errors.name) || values.name == district.name}
-                    onClick={ handleSubmitClick }
+                    disabled={Boolean(errors.name) || values.name == district.name || isSubmitting}
+                    onClick={ handleSubmit }
                     { ...events }
                 >
                     <SaveIcon fontSize='small'/>
@@ -62,12 +68,14 @@ const DistrictListItem = ({ district }) => {
             <IconButton
                 size='small'
                 onClick={handleEditClick}
+                disabled={isSubmitting}
             >
                 {edit ? <EditOffIcon fontSize='small'/> : <EditIcon fontSize='small'/>}
             </IconButton>
             <IconButton
                 size='small'
-                onClick={handleDeleteClick}
+                onClick={e => openDeleteDistrictDialog(dialogText, district)}
+                disabled={isSubmitting}
             >
                 <DeleteIcon fontSize='small'/>
             </IconButton>
