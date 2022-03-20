@@ -1,31 +1,25 @@
 import { useFormik } from "formik"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { toggleSnackbar } from "../../store/actions/actionCreators"
-import { deleteBrand } from "../../store/actions/async/admin"
 import { useRipple } from "../useRipple"
-import { useToggle } from "../useToggle"
 import { titleValidationSchema } from "./validate"
 
-export const useBrand = (brand, onSubmit, setEdit) => {
+export const useFieldTitle = (title, onSubmit, edit, setEdit) => {
 
     const dispatch = useDispatch()
 
     const [ripple, events] = useRipple()
-
-    const { openDeleteBrandDialog } = useToggle()
-
-    const dialogText = `Do you really want to delete the "${brand?.title}"?`
-
-
+    const [open, setOpen] = useState(false)
+    
     const {
         values, isSubmitting, touched, errors,
-        getFieldProps, handleSubmit, handleChange, resetForm, submitForm, setSubmitting
+        getFieldProps, handleSubmit, resetForm, setSubmitting
     } = useFormik({
-        initialValues: { title: brand?.title ?? '' },
-        validationSchema: titleValidationSchema,
+        initialValues: { title: title ?? '' },
         onSubmit: onSubmit,
-        enableReinitialize: true,
+        validationSchema: titleValidationSchema,
+        enableReinitialize: true
     })
 
     useEffect(() => {
@@ -36,37 +30,31 @@ export const useBrand = (brand, onSubmit, setEdit) => {
         }
     }, [dispatch, touched.title, errors.title])
 
-    const handleEditClick = () => {
+    const handleOpenClick = (e) => {
+        if (!edit) setOpen(prev => !prev)
+    }
+    const handleEditClick = (e) => {
+        e.stopPropagation()
         resetForm()
         setEdit(prev => !prev)
-    }
-    const handleSubmitClick = async () => {
-        await submitForm()
     }
     const handleBlur = () => {
         if (!ripple) setEdit(false)
     }
-    const handleDeleteClick = () => {
-        openDeleteBrandDialog(dialogText, brand)
-    }
-    const handleDeleteConfirmClick = () => {
-        dispatch(deleteBrand(brand?.id, setSubmitting))
-    }
 
     return {
+        open,
         ripple,
-        events,
         values,
         isSubmitting,
+        events,
         touched,
         errors,
         getFieldProps,
         handleSubmit,
-        handleChange,
+        handleOpenClick,
         handleEditClick,
         handleBlur,
-        handleSubmitClick,
-        handleDeleteClick,
-        handleDeleteConfirmClick
+        setSubmitting
     }
 }

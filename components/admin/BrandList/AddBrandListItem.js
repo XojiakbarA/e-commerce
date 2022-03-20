@@ -4,8 +4,8 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
 import SaveIcon from '@mui/icons-material/Save'
 import { useState } from "react"
 import { useDispatch } from "react-redux"
+import { useFieldTitle } from "../../../app/hooks/useFormik/useFieldTitle"
 import { createBrand } from "../../../app/store/actions/async/admin"
-import { useBrand } from "../../../app/hooks/useFormik/useBrand"
 
 const AddBrandListItem = () => {
 
@@ -19,8 +19,8 @@ const AddBrandListItem = () => {
 
     const {
         values, touched, errors, events, isSubmitting,
-        getFieldProps, handleSubmit, handleEditClick, handleBlur, handleSubmitClick
-    } = useBrand(null, handleSubmitCreate, setEdit)
+        getFieldProps, handleSubmit, handleEditClick, handleBlur
+    } = useFieldTitle(null, handleSubmitCreate, edit, setEdit)
 
     return (
         <ListItem>
@@ -52,7 +52,7 @@ const AddBrandListItem = () => {
                 edit &&
                 <IconButton
                     size='small'
-                    onClick={handleSubmitClick}
+                    onClick={handleSubmit}
                     disabled={Boolean(errors.title) || !values.title || isSubmitting}
                     { ...events }
                 >

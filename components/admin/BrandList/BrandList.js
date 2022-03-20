@@ -3,15 +3,23 @@ import BrandListItem from "./BrandListItem"
 import AddBrandListItem from "./AddBrandListItem"
 import ConfirmDialog from "../../dialogs/ConfirmDialog"
 import { useToggle } from "../../../app/hooks/useToggle"
-import { useBrand } from "../../../app/hooks/useFormik/useBrand"
+import { useFieldTitle } from "../../../app/hooks/useFormik/useFieldTitle"
+import { useDispatch } from "react-redux"
+import { deleteBrand } from "../../../app/store/actions/async/admin"
 
 const BrandList = ({ brands }) => {
+
+    const dispatch = useDispatch()
 
     const { deleteBrandDialog, closeDeleteBrandDialog } = useToggle()
 
     const { isOpen, text, payload } = deleteBrandDialog
 
-    const { isSubmitting, handleDeleteConfirmClick } = useBrand(payload)
+    const { isSubmitting, setSubmitting } = useFieldTitle()
+
+    const handleDeleteClick = () => {
+        dispatch(deleteBrand(payload.id, setSubmitting))
+    }
 
     return (
         <Paper>
@@ -29,7 +37,7 @@ const BrandList = ({ brands }) => {
                 loading={isSubmitting}
                 content={text}
                 handleCancelClick={closeDeleteBrandDialog}
-                handleConfirmClick={handleDeleteConfirmClick}
+                handleConfirmClick={handleDeleteClick}
             />
         </Paper>
     )

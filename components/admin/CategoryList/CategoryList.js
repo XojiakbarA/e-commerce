@@ -1,17 +1,25 @@
 import { List, ListSubheader, Paper } from "@mui/material"
-import { useEditSubCategory } from "../../../app/hooks/useFormik/useEditSubCategory"
+import { useDispatch } from "react-redux"
+import { useFieldTitle } from "../../../app/hooks/useFormik/useFieldTitle"
 import { useToggle } from "../../../app/hooks/useToggle"
+import { deleteSubCategory } from "../../../app/store/actions/async/admin"
 import ConfirmDialog from "../../dialogs/ConfirmDialog"
 import AddCategoryListItem from "./AddCategoryListItem"
 import CategoryListItem from "./CategoryListItem"
 
 const CategoryList = ({ categories }) => {
 
+    const dispatch = useDispatch()
+
     const { deleteSubCategoryDialog, closeDeleteSubCategoryDialog } = useToggle()
 
     const { isOpen, text, payload } = deleteSubCategoryDialog
 
-    const { isSubmitting, handleDeleteClick } = useEditSubCategory(payload)
+    const { isSubmitting, setSubmitting } = useFieldTitle()
+
+    const handleDeleteClick = () => {
+        dispatch(deleteSubCategory(payload.id, setSubmitting))
+    }
 
     return (
         <Paper>

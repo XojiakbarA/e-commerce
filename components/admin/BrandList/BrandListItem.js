@@ -4,9 +4,10 @@ import EditIcon from '@mui/icons-material/Edit'
 import EditOffIcon from '@mui/icons-material/EditOff'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { editBrand } from "../../../app/store/actions/async/admin"
-import { useBrand } from "../../../app/hooks/useFormik/useBrand"
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { useFieldTitle } from "../../../app/hooks/useFormik/useFieldTitle"
+import { useToggle } from "../../../app/hooks/useToggle"
 
 const BrandListItem = ({ brand }) => {
 
@@ -19,9 +20,13 @@ const BrandListItem = ({ brand }) => {
     }
 
     const {
-        events, values, isSubmitting, touched, errors, getFieldProps,
-        handleSubmit, handleEditClick, handleSubmitClick, handleBlur, handleDeleteClick
-    } = useBrand(brand, handleSubmitEdit, setEdit)
+        events, values, isSubmitting, touched, errors,
+        getFieldProps, handleSubmit, handleEditClick, handleBlur
+    } = useFieldTitle(brand.title, handleSubmitEdit, edit, setEdit)
+
+    const { openDeleteBrandDialog } = useToggle()
+
+    const dialogText = `Do you really want to delete the "${brand.title}"?`
 
     return (
         <ListItem>
@@ -53,7 +58,7 @@ const BrandListItem = ({ brand }) => {
                 <IconButton
                     size='small'
                     disabled={Boolean(errors.title) || values.title == brand.title || isSubmitting}
-                    onClick={ handleSubmitClick }
+                    onClick={ handleSubmit }
                     { ...events }
                 >
                     <SaveIcon fontSize='small'/>
@@ -68,7 +73,7 @@ const BrandListItem = ({ brand }) => {
             </IconButton>
             <IconButton
                 size='small'
-                onClick={handleDeleteClick}
+                onClick={e => openDeleteBrandDialog(dialogText, brand)}
                 disabled={isSubmitting}
             >
                 <DeleteIcon fontSize='small'/>

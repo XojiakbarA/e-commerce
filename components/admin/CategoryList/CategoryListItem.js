@@ -4,18 +4,28 @@ import SaveIcon from '@mui/icons-material/Save'
 import EditIcon from '@mui/icons-material/Edit'
 import EditOffIcon from '@mui/icons-material/EditOff'
 import DeleteIcon from '@mui/icons-material/Delete'
-import CategorySubListItem from "./CategorySubListItem"
+import SubCategoryListItem from "./SubCategoryListItem"
 import AddSubCategoryListItem from "./AddSubCategoryListItem"
-import { useEditCategory } from "../../../app/hooks/useFormik/useEditCategory"
+import { useState } from "react"
+import { useDispatch } from "react-redux"
+import { useFieldTitle } from "../../../app/hooks/useFormik/useFieldTitle"
 import { useToggle } from "../../../app/hooks/useToggle"
+import { editCategory } from "../../../app/store/actions/async/admin"
 
 const CategoryListItem = ({ category }) => {
 
+    const dispatch = useDispatch()
+
+    const [ edit, setEdit ] = useState(false)
+
+    const handleSubmitEdit = (data, { resetForm, setSubmitting }) => {
+        dispatch(editCategory(category.id, data, resetForm, setSubmitting, setEdit))
+    }
+
     const {
-        open, edit, ripple, values, isSubmitting, events,
-        getFieldProps, handleSubmit, handleOpenClick, handleEditClick,
-        handleBlur, handleSubmitClick
-    } = useEditCategory(category)
+        open, ripple, values, isSubmitting, events, touched, errors,
+        getFieldProps, handleSubmit, handleOpenClick, handleEditClick, handleBlur
+    } = useFieldTitle(category.title, handleSubmitEdit, edit, setEdit)
 
     const { openDeleteCategoryDialog } = useToggle()
 
@@ -43,6 +53,7 @@ const CategoryListItem = ({ category }) => {
                             variant='standard'
                             fullWidth
                             autoFocus
+                            error={ touched.title && Boolean(errors.title) }
                             { ...getFieldProps('title') }
                             onBlur={handleBlur}
                             { ...events }
@@ -52,10 +63,11 @@ const CategoryListItem = ({ category }) => {
                     <ListItemText primary={category.title}/>
                 }
                 {
-                    (values.title != category.title && values.title != false) &&
+                    edit &&
                     <IconButton
                         size='small'
-                        onClick={ handleSubmitClick }
+                        disabled={Boolean(errors.title) || values.title == category.title || isSubmitting}
+                        onClick={ handleSubmit }
                         { ...events }
                     >
                         <SaveIcon fontSize='small'/>
@@ -64,6 +76,7 @@ const CategoryListItem = ({ category }) => {
                 <IconButton
                     size='small'
                     onClick={handleEditClick}
+                    disabled={isSubmitting}
                     { ...events }
                 >
                     {edit ? <EditOffIcon fontSize='small'/> : <EditIcon fontSize='small'/>}
@@ -74,6 +87,7 @@ const CategoryListItem = ({ category }) => {
                         e.stopPropagation()
                         openDeleteCategoryDialog(dialogText, category)
                     }}
+                    disabled={isSubmitting}
                     { ...events }
                 >
                     <DeleteIcon fontSize='small'/>
@@ -86,7 +100,7 @@ const CategoryListItem = ({ category }) => {
                     <List component="div" disablePadding>
                         {
                             category.sub_categories.map(sub_category => (
-                                <CategorySubListItem key={sub_category.id} sub_category={sub_category}/>
+                                <SubCategoryListItem key={sub_category.id} sub_category={sub_category}/>
                             ))
                         }
                         <AddSubCategoryListItem category_id={category.id}/>

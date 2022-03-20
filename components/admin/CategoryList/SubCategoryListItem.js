@@ -3,15 +3,26 @@ import SaveIcon from '@mui/icons-material/Save'
 import EditIcon from '@mui/icons-material/Edit'
 import EditOffIcon from '@mui/icons-material/EditOff'
 import DeleteIcon from '@mui/icons-material/Delete'
+import { useState } from "react"
+import { useDispatch } from "react-redux"
 import { useToggle } from "../../../app/hooks/useToggle"
-import { useEditSubCategory } from "../../../app/hooks/useFormik/useEditSubCategory"
+import { useFieldTitle } from "../../../app/hooks/useFormik/useFieldTitle"
+import { editSubCategory } from "../../../app/store/actions/async/admin"
 
-const CategorySubListItem = ({ sub_category }) => {
+const SubCategoryListItem = ({ sub_category }) => {
+
+    const dispatch = useDispatch()
+
+    const [ edit, setEdit ] = useState(false)
+
+    const handleSubmitEdit = (data, { resetForm, setSubmitting }) => {
+        dispatch(editSubCategory(sub_category.id, data, resetForm, setSubmitting, setEdit))
+    }
 
     const {
-        edit, values, isSubmitting, getFieldProps,handleSubmit,
-        handleEditClick, handleBlur, handleSubmitClick
-    } = useEditSubCategory(sub_category)
+        values, isSubmitting, touched, errors,
+        getFieldProps,handleSubmit, handleEditClick, handleBlur
+    } = useFieldTitle(sub_category.title, handleSubmitEdit, edit, setEdit)
 
     const { openDeleteSubCategoryDialog } = useToggle()
 
@@ -34,6 +45,7 @@ const CategorySubListItem = ({ sub_category }) => {
                         variant='standard'
                         fullWidth
                         autoFocus
+                        error={ touched.title && Boolean(errors.title) }
                         { ...getFieldProps('title') }
                         onBlur={handleBlur}
                     />
@@ -45,8 +57,8 @@ const CategorySubListItem = ({ sub_category }) => {
                 (values.title != sub_category.title && values.title != false) &&
                 <IconButton
                     size='small'
-                    onClick={handleSubmitClick}
-                    disabled={isSubmitting}
+                    disabled={Boolean(errors.title) || values.title == sub_category.title || isSubmitting}
+                    onClick={handleSubmit}
                 >
                     <SaveIcon fontSize='small'/>
                 </IconButton>
@@ -69,4 +81,4 @@ const CategorySubListItem = ({ sub_category }) => {
     )
 }
 
-export default CategorySubListItem
+export default SubCategoryListItem
