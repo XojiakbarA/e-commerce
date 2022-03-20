@@ -54,7 +54,7 @@ const SubCategoryListItem = ({ sub_category }) => {
                 <ListItemText primary={sub_category.title}/>
             }
             {
-                (values.title != sub_category.title && values.title != false) &&
+                edit &&
                 <IconButton
                     size='small'
                     disabled={Boolean(errors.title) || values.title == sub_category.title || isSubmitting}

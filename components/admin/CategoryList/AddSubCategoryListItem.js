@@ -3,42 +3,27 @@ import AddCircleIcon from '@mui/icons-material/AddCircle'
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
 import SaveIcon from '@mui/icons-material/Save'
 import { useState } from "react"
-import { useFormik } from "formik"
-import { titleValidationSchema } from "../../../app/hooks/useFormik/validate"
-import { useRipple } from "../../../app/hooks/useRipple"
 import { useDispatch } from "react-redux"
 import { createSubCategory } from "../../../app/store/actions/async/admin"
+import { useFieldTitle } from "../../../app/hooks/useFormik/useFieldTitle"
 
 const AddSubCategoryListItem = ({ category_id }) => {
 
     const dispatch = useDispatch()
 
-    const [ripple, events] = useRipple()
     const [edit, setEdit] = useState(false)
 
-    const { touched, errors, isValid, isSubmitting, handleSubmit, getFieldProps, resetForm, submitForm } = useFormik({
-        initialValues: {
-            title: ''
-        },
-        validationSchema: titleValidationSchema,
-        onSubmit: (data, {resetForm, setSubmitting}) => {
-            dispatch(createSubCategory(category_id, data, resetForm, setSubmitting, setEdit))
-        }
-    })
+    const handleSubmitCreate = (data, {resetForm, setSubmitting}) => {
+        dispatch(createSubCategory(category_id, data, resetForm, setSubmitting, setEdit))
+    }
 
-    const handleEditClick = () => {
-        resetForm()
-        setEdit(prev => !prev)
-    }
-    const handleBlur = () => {
-        if (!ripple) setEdit(false)
-    }
-    const handleSubmitClick = async () => {
-        await submitForm()
-    }
+    const {
+        events, touched, errors, values, isSubmitting,
+        handleSubmit, getFieldProps, handleEditClick, handleBlur
+    } = useFieldTitle(null, handleSubmitCreate, edit, setEdit)
 
     return (
-        <ListItem sx={{ pl: 4, alignItems: 'flex-start' }}>
+        <ListItem sx={{ pl: 4, alignItems: 'flex-start' }} selected={edit}>
             {
                 isSubmitting
                 ?
@@ -56,7 +41,6 @@ const AddSubCategoryListItem = ({ category_id }) => {
                         variant='standard'
                         placeholder='Sub Category Title'
                         error={ touched.title && Boolean(errors.title) }
-                        helperText={ (touched.title && errors.title) || ' ' }
                         { ...getFieldProps('title') }
                         onBlur={handleBlur}
                     />
@@ -65,11 +49,11 @@ const AddSubCategoryListItem = ({ category_id }) => {
                 <ListItemText primary='Add Sub Category'/>
             }
             {
-                edit && isValid &&
+                edit &&
                 <IconButton
                     size='small'
-                    onClick={handleSubmitClick}
-                    disabled={isSubmitting}
+                    onClick={handleSubmit}
+                    disabled={Boolean(errors.title) || !values.title || isSubmitting}
                     { ...events }
                 >
                     <SaveIcon fontSize='small'/>

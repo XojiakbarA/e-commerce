@@ -23,7 +23,7 @@ const AddBrandListItem = () => {
     } = useFieldTitle(null, handleSubmitCreate, edit, setEdit)
 
     return (
-        <ListItem>
+        <ListItem selected={edit}>
             {
                 isSubmitting
                 ?

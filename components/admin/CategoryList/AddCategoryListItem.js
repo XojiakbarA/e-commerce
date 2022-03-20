@@ -1,40 +1,28 @@
-import { Box, CircularProgress, Collapse, IconButton, List, ListItem, ListItemText, ListSubheader, TextField } from "@mui/material"
-import {ExpandLess, ExpandMore} from '@mui/icons-material'
+import { Box, CircularProgress, IconButton, ListItem, ListItemText, TextField } from "@mui/material"
 import AddCircleIcon from '@mui/icons-material/AddCircle'
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
 import SaveIcon from '@mui/icons-material/Save'
 import { useState } from "react"
-import { useAddCategory } from "../../../app/hooks/useFormik/useAddCategory"
-import { FieldArray, FormikProvider } from "formik"
-import { useRipple } from "../../../app/hooks/useRipple"
+import { useFieldTitle } from "../../../app/hooks/useFormik/useFieldTitle"
+import { useDispatch } from "react-redux"
+import { createCategory } from "../../../app/store/actions/async/admin"
 
 const AddCategoryListItem = () => {
 
-    const [ripple, events] = useRipple()
+    const dispatch = useDispatch()
+
     const [ edit, setEdit ] = useState(false)
 
-    const formik = useAddCategory(setEdit)
+    const handleSubmitCreate = (data, { resetForm, setSubmitting }) => {
+        dispatch(createCategory(data, resetForm, setSubmitting, setEdit))
+    }
 
     const {
-        handleSubmit, getFieldProps, resetForm, submitForm,
-        touched, errors, values, isSubmitting, isValid
-    } = formik
-
-    const handleEditClick = () => {
-        resetForm()
-        setEdit(prev => !prev)
-    }
-    const handleBlur = () => {
-        if (!ripple) setEdit(false)
-    }
-    const handleSubmitClick = async () => {
-        await submitForm()
-    }
+        events, touched, errors, values, isSubmitting,
+        handleSubmit, getFieldProps, handleEditClick, handleBlur
+    } = useFieldTitle(null, handleSubmitCreate, edit, setEdit)
 
     return (
-        <form onSubmit={handleSubmit}>
         <ListItem selected={edit}>
             {
                 isSubmitting
@@ -46,25 +34,26 @@ const AddCategoryListItem = () => {
                 :
                 edit
                 ?
-                <TextField
-                    fullWidth
-                    variant='standard'
-                    autoFocus
-                    placeholder='Category Title'
-                    error={ touched.category && Boolean(errors.category?.title) }
-                    helperText={ (touched.category && errors.category?.title) || ' ' }
-                    { ...getFieldProps('category.title') }
-                    onBlur={handleBlur}
-                />
+                <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+                    <TextField
+                        fullWidth
+                        autoFocus
+                        variant='standard'
+                        placeholder='Category Title'
+                        error={ touched.title && Boolean(errors.title) }
+                        { ...getFieldProps('title') }
+                        onBlur={handleBlur}
+                    />
+                </form>
                 :
                 <ListItemText primary='Add Category'/>
             }
             {
-                edit && isValid &&
+                edit &&
                 <IconButton
                     size='small'
-                    onClick={handleSubmitClick}
-                    disabled={isSubmitting}
+                    onClick={handleSubmit}
+                    disabled={Boolean(errors.title) || !values.title || isSubmitting}
                     { ...events }
                 >
                     <SaveIcon fontSize='small'/>
@@ -77,78 +66,7 @@ const AddCategoryListItem = () => {
             >
                 {edit ? <RemoveCircleIcon fontSize='small'/> : <AddCircleIcon fontSize='small'/>}
             </IconButton>
-            {edit ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
-        <Collapse in={edit} timeout="auto" unmountOnExit>
-            <FormikProvider value={formik}>
-            <FieldArray name='sub_categories'>
-                    {
-                        ({remove, push}) => (
-                            <List component="div" disablePadding { ...events }>
-                                <ListSubheader>Sub Categories</ListSubheader>
-                                {
-                                    values.sub_categories.map((sub_category, i) => (
-                                        <ListItem key={i} sx={{ pl: 4 }}>
-                                            {
-                                                isSubmitting
-                                                ?
-                                                <>
-                                                <CircularProgress size={20}/>
-                                                <Box sx={{ flexGrow: 1 }}/>
-                                                </>
-                                                :
-                                                <TextField
-                                                    fullWidth
-                                                    variant='standard'
-                                                    placeholder='Sub Category Title'
-                                                    error={
-                                                        touched.sub_categories
-                                                        &&
-                                                        errors.sub_categories ?
-                                                        Boolean(errors.sub_categories[i]?.title) :
-                                                        null
-                                                    }
-                                                    helperText={
-                                                        (touched.sub_categories
-                                                        &&
-                                                        errors.sub_categories ?
-                                                        errors.sub_categories[i]?.title :
-                                                        null) || ' '
-                                                    }
-                                                    { ...getFieldProps(`sub_categories[${i}].title`) }
-                                                />
-                                            }
-                                            <IconButton
-                                                size='small'
-                                                color='error'
-                                                onClick={e => remove(i)}
-                                                disabled={isSubmitting}
-                                            >
-                                                <RemoveCircleOutlineIcon fontSize='small'/>
-                                            </IconButton>
-                                        </ListItem>
-                                    ))
-                                }
-                                <ListItem sx={{ pl: 4 }}>
-                                    <ListItemText>
-                                        Add Sub Category
-                                    </ListItemText>
-                                    <IconButton
-                                        size='small'
-                                        color='primary'
-                                        onClick={e => push({title: ''})}
-                                        disabled={isSubmitting}
-                                    >
-                                        <AddCircleOutlineIcon fontSize='small'/>
-                                    </IconButton>
-                                </ListItem>
-                            </List>
-                        )
-                    }
-            </FieldArray>
-            </FormikProvider>
-        </Collapse>
-        </form>
     )
 }
 
