@@ -8,10 +8,14 @@ import {
 import {
     addBanner, addBrand, addCategory, addDistrict, addRegion, addSubCategory, dropBanner, dropBrand,
     dropCategory, dropDistrict, dropRegion, dropSubCategory, setCategories, setLoading, setProducts,
-    setRegions, setReviews, toggleDeleteBannerDialog, toggleDeleteBrandDialog, toggleDeleteCategoryDialog,
-    toggleDeleteDistrictDialog, toggleDeleteRegionDialog, toggleDeleteSubCategoryDialog, toggleSnackbar,
-    updateBanners, updateBrands, updateCategories, updateDistricts, updateRegions, updateSubCategories
+    setRegions, setReviews, toggleSnackbar, updateBanners, updateBrands, updateCategories,
+    updateDistricts, updateRegions, updateSubCategories
 } from "../actionCreators"
+import {
+    toggleLoadingConfirmDialog, toggleDeleteCategoryDialog, toggleDeleteSubCategoryDialog,
+    toggleDeleteBrandDialog, toggleDeleteDistrictDialog, toggleDeleteRegionDialog,
+    toggleDeleteBannerDialog
+} from "../dialogActions"
 
 export const getProducts = (query, cookie) => {
     return async (dispatch) => {
@@ -233,16 +237,16 @@ export const editBanner = (id, data, setSubmitting, resetForm) => {
     }
 }
 
-export const deleteBanner = (id, setSubmitting, handleBannerChange) => {
+export const deleteBanner = (id, handleBannerChange) => {
     return async (dispatch) => {
         try {
-            setSubmitting(true)
+            dispatch(toggleLoadingConfirmDialog(true))
             const res = await destroyBanner(id)
             if (res.status === 204) {
                 handleBannerChange(0)
                 dispatch(dropBanner(id))
-                setSubmitting(false)
-                dispatch(toggleDeleteBannerDialog(false, '', {}))
+                dispatch(toggleLoadingConfirmDialog(false))
+                dispatch(toggleDeleteBannerDialog(false, null, null))
                 dispatch(toggleSnackbar(true, `Banner deleted successfully!`))
             }
         } catch (e) {
@@ -251,15 +255,15 @@ export const deleteBanner = (id, setSubmitting, handleBannerChange) => {
     }
 }
 
-export const deleteCategory = (id, setSubmitting) => {
+export const deleteCategory = (id) => {
     return async (dispatch) => {
         try {
-            setSubmitting(true)
+            dispatch(toggleLoadingConfirmDialog(true))
             const res = await destroyCategory(id)
             if (res.status === 204) {
                 dispatch(dropCategory(id))
-                setSubmitting(false)
-                dispatch(toggleDeleteCategoryDialog(false, '', {}))
+                dispatch(toggleLoadingConfirmDialog(false))
+                dispatch(toggleDeleteCategoryDialog(false, null, null))
                 dispatch(toggleSnackbar(true, `Category deleted successfully!`))
             }
         } catch (e) {
@@ -268,15 +272,15 @@ export const deleteCategory = (id, setSubmitting) => {
     }
 }
 
-export const deleteSubCategory = (id, setSubmitting) => {
+export const deleteSubCategory = (id) => {
     return async (dispatch) => {
         try {
-            setSubmitting(true)
+            dispatch(toggleLoadingConfirmDialog(true))
             const res = await destroySubCategory(id)
             if (res.status === 204) {
                 dispatch(dropSubCategory(id))
-                setSubmitting(false)
-                dispatch(toggleDeleteSubCategoryDialog(false, '', {}))
+                dispatch(toggleLoadingConfirmDialog(false))
+                dispatch(toggleDeleteSubCategoryDialog(false, null, null))
                 dispatch(toggleSnackbar(true, `Sub Category deleted successfully!`))
             }
         } catch (e) {
@@ -285,15 +289,15 @@ export const deleteSubCategory = (id, setSubmitting) => {
     }
 }
 
-export const deleteBrand = (id, setSubmitting) => {
+export const deleteBrand = (id) => {
     return async (dispatch) => {
         try {
-            setSubmitting(true)
+            dispatch(toggleLoadingConfirmDialog(true))
             const res = await destroyBrand(id)
             if (res.status === 204) {
                 dispatch(dropBrand(id))
-                setSubmitting(false)
-                dispatch(toggleDeleteBrandDialog(false, '', {}))
+                dispatch(toggleLoadingConfirmDialog(false))
+                dispatch(toggleDeleteBrandDialog(false, null, null))
                 dispatch(toggleSnackbar(true, `Brand deleted successfully!`))
             }
         } catch (e) {
@@ -337,16 +341,16 @@ export const editRegion = (id, data, resetForm, setSubmitting, setEdit) => {
     }
 }
 
-export const deleteRegion = (id, setSubmitting, handleSelectedClick) => {
+export const deleteRegion = (id, handleSelectedClick) => {
     return async (dispatch, getState) => {
         try {
-            setSubmitting(true)
+            dispatch(toggleLoadingConfirmDialog(true))
             const res = await destroyRegion(id)
             if (res.status === 204) {
                 dispatch(dropRegion(id))
                 handleSelectedClick(getState().regions[0])
-                setSubmitting(false)
-                dispatch(toggleDeleteRegionDialog(false, '', {}))
+                dispatch(toggleLoadingConfirmDialog(false))
+                dispatch(toggleDeleteRegionDialog(false, null, null))
                 dispatch(toggleSnackbar(true, `Region deleted successfully!`))
             }
         } catch (e) {
@@ -389,15 +393,15 @@ export const editDistrict = (id, data, resetForm, setSubmitting, setEdit) => {
     }
 }
 
-export const deleteDistrict = (id, setSubmitting) => {
+export const deleteDistrict = (id) => {
     return async (dispatch) => {
         try {
-            setSubmitting(true)
+            dispatch(toggleLoadingConfirmDialog(true))
             const res = await destroyDistrict(id)
             if (res.status === 204) {
                 dispatch(dropDistrict(id))
-                setSubmitting(false)
-                dispatch(toggleDeleteDistrictDialog(false, '', {}))
+                dispatch(toggleLoadingConfirmDialog(false))
+                dispatch(toggleDeleteDistrictDialog(false, null, null))
                 dispatch(toggleSnackbar(true, `District deleted successfully!`))
             }
         } catch (e) {

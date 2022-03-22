@@ -1,11 +1,7 @@
 import { useFormik } from "formik"
-import { useDispatch } from "react-redux"
-import { deleteProduct, deleteProductImage } from "../../store/actions/async/vendor"
 import { productValidationSchema } from "./validate"
 
 export const useProduct = (product, onSubmit) => {
-
-    const dispatch = useDispatch()
 
     const formik = useFormik({
         initialValues: {
@@ -25,16 +21,7 @@ export const useProduct = (product, onSubmit) => {
         enableReinitialize: true
     })
 
-    const handleDeleteImageClick = (product_id, image_id) => {
-        dispatch(deleteProductImage(product_id, image_id, formik.setSubmitting))
-    }
-    const handleDeleteClick = () => {
-        dispatch(deleteProduct(product.id, formik.setSubmitting))
-    }
-
     return {
         ...formik,
-        handleDeleteImageClick,
-        handleDeleteClick
     }
 }

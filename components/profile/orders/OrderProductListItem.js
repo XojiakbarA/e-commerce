@@ -4,13 +4,20 @@ import PhotoIcon from '@mui/icons-material/Photo'
 import BaseLink from '../../common/Link/BaseLink'
 import {productImageURL} from "../../../utils/utils"
 import { useRipple } from "../../../app/hooks/useRipple"
-import { useToggle } from "../../../app/hooks/useToggle"
 import ThumbImage from "../../common/Image/ThumbImage"
+import { toggleAddReviewDialog } from "../../../app/store/actions/dialogActions"
+import { useDispatch } from "react-redux"
 
 const OrderProductListItem = ({product}) => {
 
+    const dispatch = useDispatch()
+
     const [ripple, events] = useRipple()
-    const { openAddReviewDialog } = useToggle()
+
+    const openAddReviewDialog = (e) => {
+        e.preventDefault()
+        dispatch(toggleAddReviewDialog(true, product.product_id))
+    }
 
     return (
         <Card sx={{position: 'relative'}}>
@@ -54,7 +61,7 @@ const OrderProductListItem = ({product}) => {
             <Box sx={{position: 'absolute', top: 0, right: 0}}>
             <Tooltip title='Write a Review'>
                 <IconButton
-                    onClick={ e => openAddReviewDialog(e, product.product_id) }
+                    onClick={ openAddReviewDialog }
                     {...events}
                 >
                     <AddCommentIcon/>

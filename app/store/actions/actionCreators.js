@@ -46,11 +46,6 @@ export const setUser = (user) => ({
     payload: user
 })
 
-export const setCategory = (category) => ({
-    type: type.SET_CATEGORY,
-    payload: category
-})
-
 export const setCategories = (categories) => ({
     type: type.SET_CATEGORIES,
     payload: categories
@@ -142,126 +137,6 @@ export const toggleCartSidebar = (bool) => ({
     payload: bool
 })
 
-export const toggleLoginDialog = (bool) => ({
-    type: type.TOGGLE_LOGIN_DIALOG,
-    payload: bool
-})
-
-export const toggleRegisterDialog = (bool) => ({
-    type: type.TOGGLE_REGISTER_DIALOG,
-    payload: bool
-})
-
-export const toggleOrderDialog = (bool) => ({
-    type: type.TOGGLE_ORDER_DIALOG,
-    payload: bool
-})
-
-export const toggleOrderShipDialog = (bool, text) => ({
-    type: type.TOGGLE_ORDER_SHIP_DIALOG,
-    isOpen: bool,
-    text
-})
-
-export const toggleDeleteCategoryDialog = (bool, text, payload) => ({
-    type: type.TOGGLE_DELETE_CATEGORY_DIALOG,
-    isOpen: bool,
-    text: text,
-    payload: payload
-})
-
-export const toggleDeleteSubCategoryDialog = (bool, text, payload) => ({
-    type: type.TOGGLE_DELETE_SUB_CATEGORY_DIALOG,
-    isOpen: bool,
-    text: text,
-    payload: payload
-})
-
-export const toggleDeleteBrandDialog = (bool, text, payload) => ({
-    type: type.TOGGLE_DELETE_BRAND_DIALOG,
-    isOpen: bool,
-    text: text,
-    payload: payload
-})
-
-export const toggleDeleteRegionDialog = (bool, text, payload) => ({
-    type: type.TOGGLE_DELETE_REGION_DIALOG,
-    isOpen: bool,
-    text: text,
-    payload: payload
-})
-
-export const toggleDeleteDistrictDialog = (bool, text, payload) => ({
-    type: type.TOGGLE_DELETE_DISTRICT_DIALOG,
-    isOpen: bool,
-    text: text,
-    payload: payload
-})
-
-export const toggleDeleteProductDialog = (bool, text, payload) => ({
-    type: type.TOGGLE_DELETE_PRODUCT_DIALOG,
-    isOpen: bool,
-    text: text,
-    payload: payload
-})
-
-export const toggleDeleteProductImageDialog = (bool, text, product_id, image_id) => ({
-    type: type.TOGGLE_DELETE_PRODUCT_IMAGE_DIALOG,
-    isOpen: bool,
-    text: text,
-    product_id,
-    image_id
-})
-
-export const toggleDeleteProfileImageDialog = (bool, text, id) => ({
-    type: type.TOGGLE_DELETE_PROFILE_IMAGE_DIALOG,
-    isOpen: bool,
-    text: text,
-    payload: id
-})
-
-export const toggleDeleteBannerDialog = (bool, text, payload) => ({
-    type: type.TOGGLE_DELETE_BANNER_DIALOG,
-    isOpen: bool,
-    text: text,
-    payload: payload
-})
-
-export const toggleEditProfileDialog = (bool) => ({
-    type: type.TOGGLE_EDIT_PROFILE_DIALOG,
-    payload: bool
-})
-
-export const toggleAddProductDialog = (bool) => ({
-    type: type.TOGGLE_ADD_PRODUCT_DIALOG,
-    payload: bool
-})
-
-export const toggleViewProductDialog = (bool, payload) => ({
-    type: type.TOGGLE_VIEW_PRODUCT_DIALOG,
-    isOpen: bool,
-    payload: payload
-})
-
-export const toggleEditProductDialog = (bool, payload) => ({
-    type: type.TOGGLE_EDIT_PRODUCT_DIALOG,
-    isOpen: bool,
-    payload: payload
-})
-
-export const toggleAddReviewDialog = (bool, payload) => ({
-    type: type.TOGGLE_ADD_REVIEW_DIALOG,
-    isOpen: bool,
-    payload: payload
-})
-
-export const toggleCancelOrderDialog = (bool, text, payload) => ({
-    type: type.TOGGLE_CANCEL_ORDER_DIALOG,
-    isOpen: bool,
-    text: text,
-    payload: payload
-})
-
 export const toggleAccountMenu = (anchorEl) => ({
     type: type.TOGGLE_ACCOUNT_MENU,
     payload: anchorEl
@@ -305,6 +180,11 @@ export const setSubOrder = (subOrder) => ({
 export const shipSubOrder = (status) => ({
     type: type.SHIP_SUB_ORDER,
     payload: status
+})
+
+export const setSubOrderStatus = (id, status) => ({
+    type: type.SET_SUB_ORDER_STATUS,
+    payload: { id, status }
 })
 
 export const editQtyOrderProducts = (subOrder) => ({

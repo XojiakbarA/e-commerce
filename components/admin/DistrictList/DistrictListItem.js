@@ -5,9 +5,9 @@ import EditOffIcon from '@mui/icons-material/EditOff'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useState } from "react"
 import { useDispatch } from "react-redux"
-import { useToggle } from "../../../app/hooks/useToggle"
 import { useFieldName } from "../../../app/hooks/useFormik/useFieldName"
 import { editDistrict } from "../../../app/store/actions/async/admin"
+import { toggleDeleteDistrictDialog } from "../../../app/store/actions/dialogActions"
 
 const DistrictListItem = ({ district }) => {
 
@@ -24,10 +24,11 @@ const DistrictListItem = ({ district }) => {
         getFieldProps, handleSubmit, handleEditClick, handleBlur
     } = useFieldName(district.name, handleSubmitEdit, setEdit)
 
-    const { openDeleteDistrictDialog } = useToggle()
-
     const dialogText = `Do you really want to delete the "${district.name}"?`
 
+    const openDeleteDistrictDialog = () => {
+        dispatch(toggleDeleteDistrictDialog(true, dialogText, district.id))
+    }
 
     return (
         <ListItem selected={edit}>
@@ -74,7 +75,7 @@ const DistrictListItem = ({ district }) => {
             </IconButton>
             <IconButton
                 size='small'
-                onClick={e => openDeleteDistrictDialog(dialogText, district)}
+                onClick={ openDeleteDistrictDialog }
                 disabled={isSubmitting}
             >
                 <DeleteIcon fontSize='small'/>

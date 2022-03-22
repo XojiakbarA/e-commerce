@@ -1,20 +1,24 @@
 import { Box, Dialog, DialogContent, DialogTitle, IconButton, Typography } from "@mui/material"
 import CloseIcon from '@mui/icons-material/Close'
-import { useToggle } from "../../app/hooks/useToggle"
 import ProductForm from "../forms/ProductForm"
 import { appendToFormData } from "../../utils/utils"
 import { createProduct } from "../../app/store/actions/async/vendor"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { toggleAddProductDialog } from "../../app/store/actions/dialogActions"
 
 const AddProductDialog = () => {
 
     const dispatch = useDispatch()
 
-    const { addProductDialog, closeAddProductDialog } = useToggle()
+    const { addProductDialog } = useSelector(state => state.dialog)
 
     const handleSubmit = (data, { setSubmitting }) => {
         const formData = appendToFormData(data)
         dispatch(createProduct(formData, setSubmitting))
+    }
+
+    const closeAddProductDialog = () => {
+        dispatch(toggleAddProductDialog(false))
     }
 
     return (

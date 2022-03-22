@@ -1,12 +1,13 @@
 import {
     editQtyOrderProducts, setLoading, setProducts, setShop, setSubOrder, shipSubOrder,
-    toggleAddProductDialog, toggleDeleteProductDialog, toggleDeleteProductImageDialog, toggleEditProductDialog,
-    toggleOrderShipDialog, toggleSnackbar
+    toggleAddProductDialog, toggleEditProductDialog, toggleOrderShipDialog, toggleSnackbar
 } from "../actionCreators"
 import {
     destroyProduct, destroyProductImage, fetchProducts, fetchShop, fetchSubOrder,
-    orderShip, storeProduct, updateOrderProducts, updateProduct, updateShop
+    storeProduct, updateOrderProducts, updateProduct, updateShop
 } from "../../../../api/vendor"
+import { updateSubOrderStatus } from "../../../../api/user"
+import { toggleDeleteProductDialog, toggleDeleteProductImageDialog, toggleLoadingConfirmDialog } from "../dialogActions"
 
 export const getProducts = (query, cookie) => {
     return async (dispatch) => {
@@ -26,10 +27,10 @@ export const createProduct = (data, setSubmitting) => {
         try {
             const res = await storeProduct(data)
             if (res.status === 201) {
+                await dispatch(getProducts())
                 setSubmitting(false)
                 dispatch(toggleAddProductDialog(false))
                 dispatch(toggleSnackbar(true, 'Product created successfully!'))
-                dispatch(getProducts())
             }
         } catch (e) {
             console.log(e)
@@ -42,10 +43,10 @@ export const editProduct = (id, data, setSubmitting) => {
         try {
             const res = await updateProduct(id, data)
             if (res.status === 200) {
+                await dispatch(getProducts())
                 setSubmitting(false)
                 dispatch(toggleEditProductDialog(false, {}))
                 dispatch(toggleSnackbar(true, 'Product updated successfully!'))
-                dispatch(getProducts())
             }
         } catch (e) {
             console.log(e)
@@ -53,16 +54,16 @@ export const editProduct = (id, data, setSubmitting) => {
     }
 }
 
-export const deleteProduct = (id, setSubmitting) => {
+export const deleteProduct = (id) => {
     return async (dispatch) => {
         try {
-            setSubmitting(true)
+            dispatch(toggleLoadingConfirmDialog(true))
             const res = await destroyProduct(id)
             if (res.status === 200) {
-                setSubmitting(false)
-                dispatch(toggleDeleteProductDialog(false, '', {}))
+                await dispatch(getProducts())
+                dispatch(toggleLoadingConfirmDialog(false))
+                dispatch(toggleDeleteProductDialog(false, null, null))
                 dispatch(toggleSnackbar(true, 'Product deleted successfully!'))
-                dispatch(getProducts())
             }
         } catch (e) {
             console.log(e)
@@ -70,17 +71,17 @@ export const deleteProduct = (id, setSubmitting) => {
     }
 }
 
-export const deleteProductImage = (product_id, image_id, setSubmitting) => {
+export const deleteProductImage = (product_id, image_id) => {
     return async (dispatch) => {
         try {
-            setSubmitting(true)
+            dispatch(toggleLoadingConfirmDialog(true))
             const res = await destroyProductImage(product_id, image_id)
             if (res.status === 200) {
+                await dispatch(getProducts())
                 dispatch(toggleEditProductDialog(true, res.data.data))
-                dispatch(toggleDeleteProductImageDialog(false, '', null, null))
+                dispatch(toggleLoadingConfirmDialog(false))
+                dispatch(toggleDeleteProductImageDialog(false, null, null))
                 dispatch(toggleSnackbar(true, 'Image deleted successfully!'))
-                setSubmitting(false)
-                dispatch(getProducts())
             }
         } catch (e) {
             console.log(e)
@@ -101,14 +102,14 @@ export const getSubOrder = (id, cookie) => {
     }
 }
 
-export const orderShipping = (id) => {
+export const orderShipping = (id, data) => {
     return async (dispatch) => {
         try {
-            dispatch(setLoading(true))
-            const res = await orderShip(id)
+            dispatch(toggleLoadingConfirmDialog(true))
+            const res = await updateSubOrderStatus(id, data)
             if (res.status === 200) {
-                dispatch(shipSubOrder(res.data.data.status))
-                dispatch(setLoading(false))
+                dispatch(shipSubOrder(data.status))
+                dispatch(toggleLoadingConfirmDialog(false))
                 dispatch(toggleOrderShipDialog(false))
                 dispatch(toggleSnackbar(true, 'Order shipped successfully!'))
             }

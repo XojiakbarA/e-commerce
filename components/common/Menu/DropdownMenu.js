@@ -1,16 +1,26 @@
 import { ListItemIcon, Menu, MenuItem } from "@mui/material"
+import { useDispatch, useSelector } from "react-redux"
+import { toggleAccountMenu } from "../../../app/store/actions/actionCreators"
 
-const DropdownMenu = ({ menu, anchorEl, onClose }) => {
+const DropdownMenu = ({ menu }) => {
+
+    const dispatch = useDispatch()
+
+    const { accountMenu } = useSelector(state => state.toggle)
+
+    const closeAccountMenu = () => {
+        dispatch(toggleAccountMenu(null))
+    }
 
     return (
         <Menu
-            anchorEl={anchorEl}
+            anchorEl={accountMenu}
             anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
             autoFocus={false}
             keepMounted
             transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            open={Boolean(anchorEl)}
-            onClose={onClose}
+            open={Boolean(accountMenu)}
+            onClose={closeAccountMenu}
         >
             {
                 menu.map(item => (

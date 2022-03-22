@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux'
 import { HYDRATE } from 'next-redux-wrapper'
-import category from './category'
 import categories from './categories'
 import brands from './brands'
 import banners from './banners'
@@ -18,9 +17,9 @@ import order from "./order"
 import subOrder from './subOrder'
 import districts from './districts'
 import regions from './regions'
+import dialog from './dialog'
 
 const combindedReducer = combineReducers({
-    category: category,
     categories: categories,
     brands: brands,
     banners: banners,
@@ -38,6 +37,7 @@ const combindedReducer = combineReducers({
     subOrder: subOrder,
     regions: regions,
     districts: districts,
+    dialog: dialog
 })
 
 const rootReducer = (state, action) => {

@@ -5,9 +5,9 @@ import EditOffIcon from '@mui/icons-material/EditOff'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useState } from "react"
 import { useDispatch } from "react-redux"
-import { useToggle } from "../../../app/hooks/useToggle"
 import { useFieldTitle } from "../../../app/hooks/useFormik/useFieldTitle"
 import { editSubCategory } from "../../../app/store/actions/async/admin"
+import { toggleDeleteSubCategoryDialog } from "../../../app/store/actions/dialogActions"
 
 const SubCategoryListItem = ({ sub_category }) => {
 
@@ -24,9 +24,11 @@ const SubCategoryListItem = ({ sub_category }) => {
         getFieldProps,handleSubmit, handleEditClick, handleBlur
     } = useFieldTitle(sub_category.title, handleSubmitEdit, edit, setEdit)
 
-    const { openDeleteSubCategoryDialog } = useToggle()
-
     const dialogText = `Do you really want to delete the "${sub_category.title}"?`
+
+    const openDeleteSubCategoryDialog = () => {
+        dispatch(toggleDeleteSubCategoryDialog(true, dialogText, sub_category.id))
+    }
 
     return (
         <ListItem selected={edit} sx={{ pl: 4 }}>
@@ -72,7 +74,7 @@ const SubCategoryListItem = ({ sub_category }) => {
             </IconButton>
             <IconButton
                 size='small'
-                onClick={e => openDeleteSubCategoryDialog(dialogText, sub_category)}
+                onClick={ openDeleteSubCategoryDialog }
                 disabled={isSubmitting}
             >
                 <DeleteIcon fontSize='small'/>

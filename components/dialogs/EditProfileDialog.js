@@ -1,23 +1,27 @@
 import { Dialog, DialogContent, DialogTitle, IconButton, Typography } from "@mui/material"
 import CloseIcon from '@mui/icons-material/Close'
-import { useToggle } from "../../app/hooks/useToggle"
 import EditProfileForm from "../forms/EditProfileForm"
 import ConfirmDialog from "./ConfirmDialog"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { deleteUserImage } from "../../app/store/actions/async/user"
+import { toggleDeleteProfileImageDialog, toggleEditProfileDialog } from "../../app/store/actions/dialogActions"
 
 const EditProfileDialog = () => {
 
     const dispatch = useDispatch()
 
     const {
-        isLoading, editProfileDialog, closeEditProfileDialog,
-        deleteProfileImageDialog, closeDeleteProfileImageDialog
-    } = useToggle()
+        loading, text, payload,
+        deleteProfileImageDialog, editProfileDialog
+    } = useSelector(state => state.dialog)
 
-    const { isOpen, text, payload } = deleteProfileImageDialog
-
-    const handleDeleteImage = () => {
+    const closeEditProfileDialog = () => {
+        dispatch(toggleEditProfileDialog(false))
+    }
+    const closeDeleteProfileImageDialog = () => {
+        dispatch(toggleDeleteProfileImageDialog(false, null, null))
+    }
+    const handleDeleteImageClick = () => {
         dispatch(deleteUserImage(payload))
     }
 
@@ -34,11 +38,11 @@ const EditProfileDialog = () => {
             <DialogContent sx={{marginX: 7, width: 300}}>
                 <EditProfileForm/>
                 <ConfirmDialog
-                    open={isOpen}
+                    open={deleteProfileImageDialog}
                     content={text}
-                    loading={isLoading}
+                    loading={loading}
                     handleCancelClick={closeDeleteProfileImageDialog}
-                    handleConfirmClick={handleDeleteImage}
+                    handleConfirmClick={handleDeleteImageClick}
                 />
             </DialogContent>
         </Dialog>

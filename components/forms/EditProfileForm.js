@@ -8,32 +8,32 @@ import AvatarUpload from "../common/UploadButton/AvatarUpload"
 import { useEditProfile } from "../../app/hooks/useFormik/useEditProfile"
 import { useDispatch, useSelector } from "react-redux"
 import { useSinglePreview } from "../../app/hooks/usePreview/useSinglePreview"
-import { useToggle } from '../../app/hooks/useToggle'
-import { deleteUserImage } from "../../app/store/actions/async/user"
+import { toggleDeleteProfileImageDialog } from "../../app/store/actions/dialogActions"
 
 const EditProfileForm = () => {
 
     const dispatch = useDispatch()
+
     const user = useSelector(state => state.user)
-    const isLoading = useSelector(state => state.toggle.isLoading)
 
     const { handleSubmit, getFieldProps, setValues, values, touched, errors, isSubmitting } = useEditProfile()
 
     const { preview, handleUploadChange, handlePreviewDeleteClick } = useSinglePreview(setValues)
 
-    const { closeEditProfileDialog, openDeleteProfileImageDialog } = useToggle()
-
     const dialogText = `Do you really want to delete the image?`
 
+    const openDeleteProfileImageDialog = () => {
+        dispatch(toggleDeleteProfileImageDialog(true, dialogText, user.image.id))
+    }
+
     return (
-        <form onSubmit={handleSubmit} style={{ paddingTop: 7}}>
+        <form onSubmit={handleSubmit} style={{ paddingTop: 7, paddingBottom: 10}}>
             <Stack spacing={2}>
                 <Box alignSelf='center'>
                     <AvatarUpload
                         handlePrewiewDeleteClick={handlePreviewDeleteClick}
                         handleUploadChange={handleUploadChange}
-                        handleDeleteImage={e => openDeleteProfileImageDialog(dialogText, user.image.id)}
-                        isLoading={isLoading}
+                        handleDeleteImage={ openDeleteProfileImageDialog }
                         name='image'
                         preview={preview}
                         src={user.image ? userImageURL + user.image.src : undefined}
@@ -95,13 +95,6 @@ const EditProfileForm = () => {
                     disabled={isSubmitting}
                 >
                     Save
-                </Button>
-                <Button
-                    size='small'
-                    variant='outlined'
-                    onClick={ closeEditProfileDialog }
-                >
-                    Cancel
                 </Button>
             </Stack>
         </form>

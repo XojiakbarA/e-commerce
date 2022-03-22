@@ -9,8 +9,8 @@ import AddSubCategoryListItem from "./AddSubCategoryListItem"
 import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { useFieldTitle } from "../../../app/hooks/useFormik/useFieldTitle"
-import { useToggle } from "../../../app/hooks/useToggle"
 import { editCategory } from "../../../app/store/actions/async/admin"
+import { toggleDeleteCategoryDialog } from "../../../app/store/actions/dialogActions"
 
 const CategoryListItem = ({ category }) => {
 
@@ -27,9 +27,12 @@ const CategoryListItem = ({ category }) => {
         getFieldProps, handleSubmit, handleOpenClick, handleEditClick, handleBlur
     } = useFieldTitle(category.title, handleSubmitEdit, edit, setEdit)
 
-    const { openDeleteCategoryDialog } = useToggle()
-
     const dialogText = `Do you really want to delete the "${category.title}"?`
+
+    const openDeleteCategoryDialog = (e) => {
+        e.stopPropagation()
+        dispatch(toggleDeleteCategoryDialog(true, dialogText, category.id))
+    }
 
     return (
         <>
@@ -83,10 +86,7 @@ const CategoryListItem = ({ category }) => {
                 </IconButton>
                 <IconButton
                     size='small'
-                    onClick={e => {
-                        e.stopPropagation()
-                        openDeleteCategoryDialog(dialogText, category)
-                    }}
+                    onClick={ openDeleteCategoryDialog }
                     disabled={isSubmitting}
                     { ...events }
                 >

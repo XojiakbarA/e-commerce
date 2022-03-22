@@ -3,12 +3,12 @@ import SendIcon from '@mui/icons-material/Send'
 import StarBorder from "@mui/icons-material/StarBorder"
 import { useReview } from "../../app/hooks/useFormik/useReview"
 
-const ReviewForm = ({ product_id }) => {
+const ReviewForm = () => {
 
     const {
         handleSubmit, handleChange, handleBlur, getFieldProps,
         values, touched, errors, isSubmitting
-    } = useReview(product_id)
+    } = useReview()
 
     return(
         <form onSubmit={handleSubmit}>

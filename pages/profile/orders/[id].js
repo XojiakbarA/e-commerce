@@ -12,18 +12,22 @@ import ConfirmDialog from "../../../components/dialogs/ConfirmDialog";
 import MainLayout from '../../../components/layout/MainLayout'
 import AddReviewDialog from "../../../components/dialogs/AddReviewDialog";
 import ProfilePageHead from "../../../components/common/ProfilePageHead";
-import { useToggle } from "../../../app/hooks/useToggle";
+import { toggleCancelOrderDialog } from "../../../app/store/actions/dialogActions";
 
 const Order = () => {
 
     const dispatch = useDispatch()
-    const order = useSelector(state => state.order.data)
 
-    const { isLoading, cancelOrderDialog, closeCancelOrderDialog } = useToggle()
+    const order = useSelector(state => state.order)
 
-    const { isOpen, text, payload } = cancelOrderDialog
+    const { loading, cancelOrderDialog, text, payload } = useSelector(state => state.dialog)
 
-    const handleCancelOrder = () => dispatch(cancelOrder(payload))
+    const closeCancelOrderDialog = () => {
+        dispatch(toggleCancelOrderDialog(false, null, null))
+    }
+    const handleCancelOrder = () => {
+        dispatch(cancelOrder(payload, {status: 'cancelled'}))
+    }
 
     return (
         <Grid container spacing={2}>
@@ -36,14 +40,14 @@ const Order = () => {
             <Grid item xs={12}>
                 <Grid container spacing={4}>
                     {
-                        order.order_shops.map(order_shop => (
-                            <Grid item xs={12} key={order_shop.id}>
+                        order.sub_orders.map(sub_order => (
+                            <Grid item xs={12} key={sub_order.id}>
                                 <Grid container spacing={1}>
                                     <Grid item xs={12}>
-                                        <OrderStatus orderShop={order_shop}/>
+                                        <OrderStatus subOrder={sub_order}/>
                                     </Grid>
                                     {
-                                        order_shop.order_products.map(product => (
+                                        sub_order.order_products.map(product => (
                                             <Grid item xs={12} key={product.id}>
                                                 <OrderProductListItem product={product}/>
                                             </Grid>
@@ -66,9 +70,9 @@ const Order = () => {
                 </Grid>
             </Grid>
             <ConfirmDialog
-                open={isOpen}
+                open={cancelOrderDialog}
                 content={text}
-                loading={isLoading}
+                loading={loading}
                 handleCancelClick={closeCancelOrderDialog}
                 handleConfirmClick={handleCancelOrder}
             />
@@ -92,7 +96,7 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getStat
 
     await dispatch(getOrder(params.id, req.headers.cookie))
 
-    const order = getState().order.data
+    const order = getState().order
 
     if (!order) {
         return {

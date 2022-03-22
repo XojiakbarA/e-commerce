@@ -3,7 +3,6 @@ import { IconButton, List, ListItemButton, ListItemText, Collapse } from '@mui/m
 import {ExpandLess, ExpandMore} from '@mui/icons-material'
 import { useRouter } from 'next/router'
 import { useRipple } from '../../../../app/hooks/useRipple'
-import BaseLink from '../../../common/Link/BaseLink'
 
 const CategoryListItem = ({ category }) => {
 
@@ -15,8 +14,23 @@ const CategoryListItem = ({ category }) => {
     const [ripple, events] = useRipple()
 
     const handleOpenClick = (e) => {
-        e.preventDefault()
+        e.stopPropagation()
         setOpen(!open)
+    }
+    const handleCategoryClick = (id, isCat) => {
+        const query = router.query
+
+        if (isCat) {
+            query.sub_cat_id ? delete query.sub_cat_id : null
+            query.cat_id = id
+        } else {
+            query.cat_id ? delete query.cat_id : null
+            query.sub_cat_id = id
+        }
+
+        router.push({
+            query: { ...query, page: 1 },
+        }, null, {scroll: false})
     }
 
     return(
@@ -24,8 +38,7 @@ const CategoryListItem = ({ category }) => {
             <ListItemButton
                 selected={cat_id == category.id}
                 disableRipple={ripple}
-                href={{query: { cat_id: category.id, page: 1 }}}
-                component={BaseLink}
+                onClick={ e => handleCategoryClick(category.id, true) }
             >
                 <ListItemText primary={category.title} />
                 <IconButton
@@ -48,8 +61,7 @@ const CategoryListItem = ({ category }) => {
                                 <ListItemButton
                                     selected={sub_cat_id == sub.id}
                                     sx={{ pl: 4 }}
-                                    href={{query: { sub_cat_id: sub.id, page: 1 }}}
-                                    component={BaseLink}
+                                    onClick={ e => handleCategoryClick(sub.id)}
                                 >
                                     <ListItemText primary={sub.title} />
                                 </ListItemButton>

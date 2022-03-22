@@ -4,17 +4,22 @@ import PendingIcon from '@mui/icons-material/Pending';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import PhotoIcon from '@mui/icons-material/Photo'
-import { useToggle } from "../../../app/hooks/useToggle";
 import { shopImageURL } from "../../../utils/utils";
 import ThumbImage from "../../common/Image/ThumbImage";
+import { toggleCancelOrderDialog } from "../../../app/store/actions/dialogActions";
+import { useDispatch } from "react-redux";
 
-const OrderStatus = ({orderShop}) => {
+const OrderStatus = ({subOrder}) => {
 
-    const { status, title, image } = orderShop
+    const dispatch = useDispatch()
 
-    const { openCancelOrderDialog } = useToggle()
+    const { status, title, image } = subOrder
 
     const cancelText = `Are you sure you want to cancel the "${title}" order?`
+
+    const openCancelOrderDialog = () => {
+        dispatch(toggleCancelOrderDialog(true, cancelText, subOrder.id))
+    }
 
     const steps = [
         {
@@ -43,7 +48,7 @@ const OrderStatus = ({orderShop}) => {
                     <Stepper activeStep={status === 'pending' ? 0 : -1}>
                         {steps.map((step) => (
                             <Step key={step.label}>
-                                <StepButton icon={step.icon} onClick={() => openCancelOrderDialog(cancelText, orderShop.id)}>
+                                <StepButton icon={step.icon} onClick={ openCancelOrderDialog }>
                                     <Typography variant="caption">
                                         {step.label}
                                     </Typography>

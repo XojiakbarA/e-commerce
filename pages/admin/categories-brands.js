@@ -3,13 +3,12 @@ import CategoryIcon from '@mui/icons-material/Category'
 import AdminPageHead from '../../components/common/AdminPageHead'
 import { wrapper } from "../../app/store"
 import AdminLayout from "../../components/layout/AdminLayout/AdminLayout"
-import { deleteCategory, getCategories } from "../../app/store/actions/async/admin"
+import { deleteBrand, deleteCategory, deleteSubCategory, getCategories } from "../../app/store/actions/async/admin"
 import { useDispatch, useSelector } from "react-redux"
 import CategoryList from "../../components/admin/CategoryList/CategoryList"
 import BrandList from "../../components/admin/BrandList/BrandList"
 import ConfirmDialog from "../../components/dialogs/ConfirmDialog"
-import { useToggle } from "../../app/hooks/useToggle"
-import { useFieldTitle } from "../../app/hooks/useFormik/useFieldTitle"
+import { toggleDeleteBrandDialog, toggleDeleteCategoryDialog, toggleDeleteSubCategoryDialog } from "../../app/store/actions/dialogActions"
 
 const CategoriesBrands = () => {
 
@@ -18,14 +17,28 @@ const CategoriesBrands = () => {
     const categories = useSelector(state => state.categories)
     const brands = useSelector(state => state.brands)
 
-    const { deleteCategoryDialog, closeDeleteCategoryDialog } = useToggle()
+    const {
+        loading, text, payload,
+        deleteCategoryDialog, deleteSubCategoryDialog, deleteBrandDialog
+    } = useSelector(state => state.dialog)
 
-    const { isOpen, text, payload } = deleteCategoryDialog
-
-    const { isSubmitting, setSubmitting } = useFieldTitle()
-
-    const handleDeleteClick = () => {
-        dispatch(deleteCategory(payload.id, setSubmitting))
+    const closeDeleteCategoryDialog = () => {
+        dispatch(toggleDeleteCategoryDialog(false, null, null))
+    }
+    const closeDeleteSubCategoryDialog = () => {
+        dispatch(toggleDeleteSubCategoryDialog(false, null, null))
+    }
+    const closeDeleteBrandDialog = () => {
+        dispatch(toggleDeleteBrandDialog(false, null, null))
+    }
+    const handleCategoryDeleteClick = () => {
+        dispatch(deleteCategory(payload))
+    }
+    const handleSubCategoryDeleteClick = () => {
+        dispatch(deleteSubCategory(payload))
+    }
+    const handleBrandDeleteClick = () => {
+        dispatch(deleteBrand(payload))
     }
 
     return (
@@ -38,17 +51,31 @@ const CategoriesBrands = () => {
             </Grid>
             <Grid item xs={4}>
                 <CategoryList categories={categories}/>
-                <ConfirmDialog
-                    open={isOpen}
-                    content={text}
-                    loading={isSubmitting}
-                    handleCancelClick={closeDeleteCategoryDialog}
-                    handleConfirmClick={handleDeleteClick}
-                />
             </Grid>
             <Grid item xs={4}>
                 <BrandList brands={brands}/>
             </Grid>
+            <ConfirmDialog
+                open={deleteCategoryDialog}
+                content={text}
+                loading={loading}
+                handleCancelClick={closeDeleteCategoryDialog}
+                handleConfirmClick={handleCategoryDeleteClick}
+            />
+            <ConfirmDialog
+                open={deleteSubCategoryDialog}
+                content={text}
+                loading={loading}
+                handleCancelClick={closeDeleteSubCategoryDialog}
+                handleConfirmClick={handleSubCategoryDeleteClick}
+            />
+            <ConfirmDialog
+                open={deleteBrandDialog}
+                content={text}
+                loading={loading}
+                handleCancelClick={closeDeleteBrandDialog}
+                handleConfirmClick={handleBrandDeleteClick}
+            />
         </Grid>
     )
 }

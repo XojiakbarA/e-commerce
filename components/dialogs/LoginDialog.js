@@ -1,11 +1,18 @@
 import { Dialog, Typography, IconButton, DialogTitle, DialogContent } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import LoginForm from '../forms/LoginForm'
-import { useToggle } from '../../app/hooks/useToggle'
+import { useDispatch, useSelector } from 'react-redux'
+import { toggleLoginDialog, toggleRegisterDialog } from '../../app/store/actions/dialogActions'
 
 const LoginDialog = () => {
 
-    const { loginDialog, closeLoginDialog } = useToggle()
+    const dispatch = useDispatch()
+
+    const { loginDialog } = useSelector(state => state.dialog)
+
+    const closeLoginDialog = () => {
+        dispatch(toggleLoginDialog(false))
+    }
 
     return(
         <Dialog open={loginDialog} onClose={ closeLoginDialog }>

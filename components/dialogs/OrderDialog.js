@@ -1,13 +1,18 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from "@mui/material"
-import { useSelector } from "react-redux"
-import { useToggle } from "../../app/hooks/useToggle"
+import { useDispatch, useSelector } from "react-redux"
+import { toggleOrderDialog } from "../../app/store/actions/dialogActions"
 
 
 const OrderDialog = () => {
 
-    const order = useSelector(state => state.order)
+    const dispatch = useDispatch()
 
-    const { orderDialog, closeOrderDialog } = useToggle()
+    const order = useSelector(state => state.order)
+    const { orderDialog } = useSelector(state => state.dialog)
+
+    const closeOrderDialog = () => {
+        dispatch(toggleOrderDialog(false))
+    }
 
     return (
         <Dialog open={ orderDialog }>

@@ -1,7 +1,7 @@
 import ListAltIcon from '@mui/icons-material/ListAlt'
 import AddIcon from '@mui/icons-material/Add'
 import ProfileLayout from "../../components/layout/ProfileLayout/ProfileLayout"
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Grid, Typography } from '@mui/material'
 import AddProductDialog from '../../components/dialogs/AddProductDialog'
 import ViewProductDialog from '../../components/dialogs/ViewProductDialog'
@@ -9,28 +9,41 @@ import EditProductDialog from '../../components/dialogs/EditProductDialog'
 import { wrapper } from "../../app/store"
 import ProductList from '../../components/common/List/List'
 import ProductListItem from '../../components/vendor/ProductListItem'
-import { useToggle } from '../../app/hooks/useToggle'
-import { getProducts } from '../../app/store/actions/async/vendor'
+import { deleteProduct, deleteProductImage, getProducts } from '../../app/store/actions/async/vendor'
 import MainLayout from '../../components/layout/MainLayout'
 import ProfilePageHead from '../../components/common/ProfilePageHead'
 import ConfirmDialog from '../../components/dialogs/ConfirmDialog'
-import { useProduct } from '../../app/hooks/useFormik/useProduct'
+import { toggleAddProductDialog, toggleDeleteProductDialog, toggleDeleteProductImageDialog } from '../../app/store/actions/dialogActions'
 
 const labels = [ 'Title', 'Image', 'Stock', 'Price', 'Sale Price', 'Rating', '' ]
 
 const Products = () => {
 
+    const dispatch = useDispatch()
+
     const products = useSelector(state => state.products.data)
     const meta = useSelector(state => state.products.meta)
 
     const {
-        openAddProductDialog,
-        deleteProductDialog, closeDeleteProductDialog,
-        deleteProductImageDialog, closeDeleteProductImageDialog } = useToggle()
+        loading, text, payload,
+        deleteProductDialog, deleteProductImageDialog
+    } = useSelector(state => state.dialog)
 
-    const { isOpen, text, payload } = deleteProductDialog
-
-    const { isSubmitting, handleDeleteClick, handleDeleteImageClick } = useProduct(payload)
+    const openAddProductDialog = () => {
+        dispatch(toggleAddProductDialog(true))
+    }
+    const closeDeleteProductDialog = () => {
+        dispatch(toggleDeleteProductDialog(false, null, null))
+    }
+    const closeDeleteProductImageDialog = () => {
+        dispatch(toggleDeleteProductImageDialog(false, null, null, null))
+    }
+    const handleProductDeleteClick = () => {
+        dispatch(deleteProduct(payload))
+    }
+    const handleProductImageDeleteClick = () => {
+        dispatch(deleteProductImage(payload.product_id, payload.image_id))
+    }
 
     return (
         <Grid container spacing={2}>
@@ -65,18 +78,18 @@ const Products = () => {
                 <ViewProductDialog/>
                 <EditProductDialog/>
                 <ConfirmDialog
-                    open={isOpen}
+                    open={deleteProductDialog}
                     content={text}
-                    loading={isSubmitting}
+                    loading={loading}
                     handleCancelClick={closeDeleteProductDialog}
-                    handleConfirmClick={handleDeleteClick}
+                    handleConfirmClick={handleProductDeleteClick}
                 />
                 <ConfirmDialog
-                    open={deleteProductImageDialog.isOpen}
-                    content={deleteProductImageDialog.text}
-                    loading={isSubmitting}
+                    open={deleteProductImageDialog}
+                    content={text}
+                    loading={loading}
                     handleCancelClick={closeDeleteProductImageDialog}
-                    handleConfirmClick={e => handleDeleteImageClick(deleteProductImageDialog.product_id, deleteProductImageDialog.image_id)}
+                    handleConfirmClick={handleProductImageDeleteClick}
                 />
             </Grid>
         </Grid>

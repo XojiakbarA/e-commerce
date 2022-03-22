@@ -1,16 +1,21 @@
 import { Dialog, DialogContent, DialogTitle, IconButton, Typography } from "@mui/material"
 import CloseIcon from '@mui/icons-material/Close'
-import { useToggle } from "../../app/hooks/useToggle"
 import ReviewForm from '../forms/ReviewForm'
+import { useDispatch, useSelector } from 'react-redux'
+import { toggleAddReviewDialog } from "../../app/store/actions/dialogActions"
 
 const AddReviewDialog = () => {
 
-    const { addReviewDialog, closeAddReviewDialog } = useToggle()
+    const dispatch = useDispatch()
 
-    const { isOpen, payload } = addReviewDialog
+    const { addReviewDialog } = useSelector(state => state.dialog)
+
+    const closeAddReviewDialog = () => {
+        dispatch(toggleAddReviewDialog(false, null))
+    }
 
     return (
-        <Dialog open={isOpen} onClose={closeAddReviewDialog}>
+        <Dialog open={addReviewDialog} onClose={closeAddReviewDialog}>
             <DialogTitle sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                 <Typography variant="button">
                     Write a Review
@@ -20,7 +25,7 @@ const AddReviewDialog = () => {
                 </IconButton>
             </DialogTitle>
             <DialogContent>
-                <ReviewForm product_id={payload}/>
+                <ReviewForm/>
             </DialogContent>
         </Dialog>
     )

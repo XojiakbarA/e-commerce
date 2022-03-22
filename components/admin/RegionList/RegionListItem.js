@@ -7,7 +7,7 @@ import { useFieldName } from "../../../app/hooks/useFormik/useFieldName"
 import { useDispatch } from "react-redux"
 import { editRegion } from "../../../app/store/actions/async/admin"
 import { useState } from "react"
-import { useToggle } from "../../../app/hooks/useToggle"
+import { toggleDeleteRegionDialog } from "../../../app/store/actions/dialogActions"
 
 const RegionListItem = ({ region, selected, handleSelectedClick }) => {
 
@@ -24,9 +24,12 @@ const RegionListItem = ({ region, selected, handleSelectedClick }) => {
         getFieldProps, handleSubmit, handleEditClick, handleBlur
     } = useFieldName(region.name, handleSubmitEdit, setEdit)
 
-    const { openDeleteRegionDialog } = useToggle()
-
     const dialogText = `Do you really want to delete the "${region.name}"?`
+
+    const openDeleteRegionDialog = (e) => {
+        e.stopPropagation()
+        dispatch(toggleDeleteRegionDialog(true, dialogText, region.id))
+    }
 
     return (
         <ListItemButton
@@ -79,10 +82,7 @@ const RegionListItem = ({ region, selected, handleSelectedClick }) => {
             </IconButton>
             <IconButton
                 size='small'
-                onClick={e => {
-                    e.stopPropagation()
-                    openDeleteRegionDialog(dialogText, region)
-                }}
+                onClick={ openDeleteRegionDialog }
                 disabled={isSubmitting}
                 { ...events }
             >

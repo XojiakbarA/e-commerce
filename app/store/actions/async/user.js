@@ -3,14 +3,18 @@ import cookies from 'js-cookie'
 import { fetchProducts } from '../../../../api/common'
 import {
     login, logout, fetchUser, register, storeOrder, fetchOrders, fetchOrder,
-    cancellationOrder, storeShop, destroyUserImage, updateUser, storeReview
+    storeShop, destroyUserImage, updateUser, storeReview, updateSubOrderStatus
 } from '../../../../api/user'
 
 import {
-    setUser, setCart, setLoading, toggleLoginDialog, toggleRegisterDialog, setWishlist, toggleOrderDialog,
-    setOrders, setOrder, toggleEditProfileDialog, toggleAccountMenu, toggleAddReviewDialog,
-    toggleSnackbar, toggleCancelOrderDialog, toggleDeleteProfileImageDialog
+    setUser, setCart, setLoading, setWishlist, setOrders, setOrder, toggleAccountMenu,
+    toggleSnackbar, setSubOrderStatus
 } from '../actionCreators'
+import {
+    toggleCancelOrderDialog, toggleAddReviewDialog, toggleDeleteProfileImageDialog,
+    toggleOrderDialog, toggleLoadingConfirmDialog, toggleLoginDialog,
+    toggleRegisterDialog, toggleEditProfileDialog
+} from '../dialogActions'
 
 export const getCart = (cookieCart) => {
 
@@ -185,7 +189,7 @@ export const getOrder = (id, cookie) => {
         try {
             const res = await fetchOrder(id, cookie)
             if (res.status === 200) {
-                dispatch(setOrder(res.data))
+                dispatch(setOrder(res.data.data))
             }
         } catch (e) {
             console.log(e)
@@ -193,16 +197,16 @@ export const getOrder = (id, cookie) => {
     }
 }
 
-export const cancelOrder = (id) => {
+export const cancelOrder = (id, data) => {
     return async (dispatch) => {
         try {
-            dispatch(setLoading(true))
-            const res = await cancellationOrder(id)
+            dispatch(toggleLoadingConfirmDialog(true))
+            const res = await updateSubOrderStatus(id, data)
             if (res.status === 200) {
-                dispatch(setOrder(res.data))
-                dispatch(setLoading(false))
+                dispatch(setSubOrderStatus(id, data.status))
+                dispatch(toggleLoadingConfirmDialog(false))
                 dispatch(toggleSnackbar(true, 'Order cancelled successfully!'))
-                dispatch(toggleCancelOrderDialog(false, '', ''))
+                dispatch(toggleCancelOrderDialog(false, null, null))
             }
         } catch (e) {
             console.log(e)
@@ -228,11 +232,11 @@ export const createShop = (data, setSubmitting) => {
 export const deleteUserImage = (image_id) => {
     return async (dispatch) => {
         try {
-            dispatch(setLoading(true))
+            dispatch(toggleLoadingConfirmDialog(true))
             const res = await destroyUserImage(image_id)
             if (res.status === 200) {
                 dispatch(setUser(res.data.data))
-                dispatch(setLoading(false))
+                dispatch(toggleLoadingConfirmDialog(false))
                 dispatch(toggleDeleteProfileImageDialog(false, '', null))
                 dispatch(toggleSnackbar(true,'Image deleted'))
             }

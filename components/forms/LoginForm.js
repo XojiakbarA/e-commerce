@@ -1,12 +1,24 @@
 import { Stack, Button, TextField, Typography, CircularProgress, Checkbox, FormControlLabel } from '@mui/material'
-import { useToggle } from '../../app/hooks/useToggle'
 import { useLogin } from '../../app/hooks/useFormik/useLogin'
+import { useDispatch } from 'react-redux'
+import { useRouter } from 'next/router'
+import { toggleLoginDialog, toggleRegisterDialog } from '../../app/store/actions/dialogActions'
 
 const LoginForm = () => {
 
-    const { openRegisterDialog } = useToggle()
+    const dispatch = useDispatch()
+    const router = useRouter()
 
     const { handleSubmit, getFieldProps, touched, errors, isSubmitting } = useLogin()
+
+    const openRegisterDialog = () => {
+        if (router.pathname === '/login') {
+            router.push('/register')
+        } else {
+            dispatch(toggleLoginDialog(false))
+            dispatch(toggleRegisterDialog(true))
+        }
+    }
 
     return (
         <form onSubmit={handleSubmit}>
@@ -47,12 +59,14 @@ const LoginForm = () => {
                 >
                     Login
                 </Button>
-                <Typography variant='body1' textAlign='center'>
-                    Don`t have Account? <Button size='small' onClick={ openRegisterDialog }>Sign Up</Button>
-                </Typography>
-                <Typography variant='body1' textAlign='center'>
-                    Forgot your password? <Button size='small'>Reset It</Button>
-                </Typography>
+                <Stack spacing={1}>
+                    <Typography variant='body1' textAlign='center'>
+                        Don`t have Account? <Button size='small' onClick={ openRegisterDialog }>Sign Up</Button>
+                    </Typography>
+                    <Typography variant='body1' textAlign='center'>
+                        Forgot your password? <Button size='small'>Reset It</Button>
+                    </Typography>
+                </Stack>
             </Stack>
         </form>
     )

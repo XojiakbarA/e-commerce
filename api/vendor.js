@@ -45,10 +45,6 @@ export const fetchSubOrder = async (id, cookie) => {
     })
 }
 
-export const orderShip = async (id) => {
-    return await instance.put(`api/user/sub-orders/${id}`, {status: 'shipped'})
-}
-
 export const updateOrderProducts = async (id, data) => {
     return await instance.put(`api/user/sub-orders/${id}`, data)
 }

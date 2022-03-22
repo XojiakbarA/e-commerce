@@ -9,36 +9,31 @@ import OrderShippingAddress from '../../../components/profile/orders/OrderShippi
 import OrderDetails from '../../../components/profile/orders/OrderDetails'
 import { editOrderProducts, getSubOrder, orderShipping } from '../../../app/store/actions/async/vendor';
 import { useDispatch, useSelector } from 'react-redux';
-import { useToggle } from '../../../app/hooks/useToggle';
 import OrderHead from '../../../components/vendor/OrderHead';
 import { useState } from 'react';
-import { useRouter } from 'next/router';
 import ProfilePageHead from '../../../components/common/ProfilePageHead';
 import MainLayout from '../../../components/layout/MainLayout';
 import ConfirmDialog from '../../../components/dialogs/ConfirmDialog';
+import { toggleOrderShipDialog } from '../../../app/store/actions/dialogActions';
 
 const Order = () => {
 
-    const router = useRouter()
     const dispatch = useDispatch()
-    const order = useSelector(state => state.subOrder)
+    const sub_order = useSelector(state => state.subOrder)
     const isLoading = useSelector(state => state.toggle.isLoading)
+    const { loading, orderShipDialog } = useSelector(state => state.dialog)
 
     let editDisabled = true
-    if (order.status === 'pending' && order.payment_status !== 'approved') {
+    if (sub_order.status === 'pending' && sub_order.payment_status !== 'approved') {
         editDisabled = false
     }
 
-    const map = order.order_products.map(product => [product.id, product.quantity])
+    const map = sub_order.order_products.map(product => [product.id, product.quantity])
 
     const obj = Object.fromEntries(map)
 
     const [counts, setCounts] = useState(obj)
     const [saveDisabled, setSaveDisabled] = useState(true)
-
-    const { orderShipDialog, openOrderShipDialog, closeOrderShipDialog } = useToggle()
-
-    const { isOpen, text } = orderShipDialog
 
     const dialogText = 'Are you sure you want to ship the order?'
 
@@ -57,11 +52,17 @@ const Order = () => {
             return {...prev}
         })
     }
+    const openOrderShipDialog = () => {
+        dispatch(toggleOrderShipDialog(true))
+    }
+    const closeOrderShipDialog = () => {
+        dispatch(toggleOrderShipDialog(false))
+    }
     const handleSaveClick = () => {
-        dispatch(editOrderProducts(router.query.id, setSaveDisabled, {quantity: counts}))
+        dispatch(editOrderProducts(sub_order.id, setSaveDisabled, {quantity: counts}))
     }
     const handleOrderShip = () => {
-        dispatch(orderShipping(router.query.id))
+        dispatch(orderShipping(sub_order.id, {status: 'shipped'}))
     }
 
     return (
@@ -72,17 +73,20 @@ const Order = () => {
                     titleIcon={<ShoppingCartIcon fontSize='large' />}
                     buttonText='Ship'
                     buttonIcon={<LocalShippingIcon/>}
-                    disabled={order.status !== 'shipped' && order.status !== 'cancelled' && order.payment_status === 'approved' ? false : true}
-                    onClick={e => openOrderShipDialog(dialogText)}
+                    disabled={
+                        sub_order.status !== 'shipped' &&
+                        sub_order.status !== 'cancelled' &&
+                        sub_order.payment_status === 'approved' ? false : true}
+                    onClick={ openOrderShipDialog }
                 />
             </Grid>
             <Grid item xs={12}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        <OrderHead order={order}/>
+                        <OrderHead order={sub_order}/>
                     </Grid>
                     {
-                        order.order_products.map(product => (
+                        sub_order.order_products.map(product => (
                             <Grid item xs={12} key={product.id}>
                                 <OrderProductListItem
                                     product={product}
@@ -118,19 +122,19 @@ const Order = () => {
                     <Grid item xs={12}>
                         <Grid container spacing={2}>
                             <Grid item lg={6}>
-                                <OrderShippingAddress order={order}/>
+                                <OrderShippingAddress order={sub_order}/>
                             </Grid>
                             <Grid item lg={6}>
-                                <OrderDetails order={order}/>
+                                <OrderDetails order={sub_order}/>
                             </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
             </Grid>
             <ConfirmDialog
-                open={isOpen}
-                content={text}
-                loading={isLoading}
+                open={orderShipDialog}
+                content={dialogText}
+                loading={loading}
                 handleCancelClick={closeOrderShipDialog}
                 handleConfirmClick={handleOrderShip}
             />

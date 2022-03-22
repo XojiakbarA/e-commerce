@@ -6,16 +6,25 @@ import ImageUpload from '../common/UploadButton/ImageUpload'
 import { bannerImageURL } from "../../utils/utils"
 import { useBanner } from "../../app/hooks/useFormik/useBanner"
 import { useSinglePreview } from "../../app/hooks/usePreview/useSinglePreview"
+import { toggleDeleteBannerDialog } from "../../app/store/actions/dialogActions"
+import { useDispatch } from "react-redux"
 
 const BannerForm = ({ banner, onSubmit }) => {
 
+    const dispatch = useDispatch()
+
     const {
         touched, errors, isSubmitting,
-        handleSubmit, getFieldProps, setValues, handleDeleteClick,
-        handleDeleteImageClick
+        handleSubmit, getFieldProps, setValues, handleDeleteImageClick
     } = useBanner(banner, onSubmit)
 
     const { preview, handlePreviewDeleteClick, handleUploadChange } = useSinglePreview(setValues, banner?.image)
+
+    const dialogText = `Do you really want to delete the "${banner?.title}"?`
+
+    const openDeleteBannerDialog = () => {
+        dispatch(toggleDeleteBannerDialog(true, dialogText))
+    }
 
     return (
         <form onSubmit={handleSubmit}>
@@ -62,7 +71,7 @@ const BannerForm = ({ banner, onSubmit }) => {
                                 size='small'
                                 variant='outlined'
                                 color='error'
-                                onClick={handleDeleteClick}
+                                onClick={ openDeleteBannerDialog }
                                 endIcon={
                                     isSubmitting
                                     ?

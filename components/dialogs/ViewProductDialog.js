@@ -1,16 +1,22 @@
 import { Dialog, DialogContent, DialogTitle, IconButton, Typography } from "@mui/material"
 import CloseIcon from '@mui/icons-material/Close'
-import { useToggle } from "../../app/hooks/useToggle"
 import ProductDetails from "../product/ProductDetails/ProductDetails"
+import { toggleViewProductDialog } from "../../app/store/actions/dialogActions"
+import { useDispatch, useSelector } from "react-redux"
 
 const ViewProductDialog = () => {
 
-    const { viewProductDialog, closeViewProductDialog } = useToggle()
+    const dispatch = useDispatch()
 
-    const { isOpen, payload } = viewProductDialog
+    const { viewProductDialog, payload } = useSelector(state => state.dialog)
+    const product = useSelector(state => state.products.data.find(item => item.id === payload))
+
+    const closeViewProductDialog = () => {
+        dispatch(toggleViewProductDialog(false, null, null))
+    }
 
     return (
-        <Dialog open={isOpen} onClose={closeViewProductDialog} fullWidth maxWidth='lg'>
+        <Dialog open={viewProductDialog} onClose={closeViewProductDialog} fullWidth maxWidth='lg'>
             <DialogTitle sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                 <Typography variant="button">
                     View Product
@@ -20,7 +26,7 @@ const ViewProductDialog = () => {
                 </IconButton>
             </DialogTitle>
             <DialogContent sx={{ height: '100vh' }}>
-                {isOpen && <ProductDetails product={payload}/>}
+                {viewProductDialog && <ProductDetails product={product}/>}
             </DialogContent>
         </Dialog>
     )

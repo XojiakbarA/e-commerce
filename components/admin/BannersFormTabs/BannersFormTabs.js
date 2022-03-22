@@ -5,11 +5,10 @@ import AddIcon from '@mui/icons-material/Add'
 import PropTypes from 'prop-types'
 import BannerForm from '../../forms/BannerForm'
 import ConfirmDialog from '../../dialogs/ConfirmDialog'
-import { useToggle } from '../../../app/hooks/useToggle'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { appendToFormData } from '../../../utils/utils'
-import { createBanner, editBanner } from '../../../app/store/actions/async/admin'
-import { useBanner } from '../../../app/hooks/useFormik/useBanner'
+import { createBanner, deleteBanner, editBanner } from '../../../app/store/actions/async/admin'
+import { toggleDeleteBannerDialog } from '../../../app/store/actions/dialogActions'
 
 function TabPanel({children, value, index, ...other}) {
     return (
@@ -46,16 +45,15 @@ const BannersFormTabs = ({ banner, handleBannerChange }) => {
 
     const dispatch = useDispatch()
 
-    const { deleteBannerDialog, closeDeleteBannerDialog } = useToggle()
-
-    const { isOpen, text, payload } = deleteBannerDialog
-
-    const { isSubmitting, handleDeleteConfirmClick } = useBanner(payload, null, handleBannerChange)
+    const { loading, deleteBannerDialog, text } = useSelector(state => state.dialog)
 
     const [value, setValue] = useState(0)
 
     const handleChange = (event, newValue) => {
         setValue(newValue)
+    }
+    const closeDeleteBannerDialog = () => {
+        dispatch(toggleDeleteBannerDialog(false, null, null))
     }
     const handleSubmitEdit = (data, {setSubmitting, resetForm}) => {
         const formData = appendToFormData(data)
@@ -64,6 +62,9 @@ const BannersFormTabs = ({ banner, handleBannerChange }) => {
     const handleSubmitCreate = (data, { resetForm, setSubmitting }) => {
         const formData = appendToFormData(data)
         dispatch(createBanner(formData, setSubmitting, resetForm))
+    }
+    const handleBannerDeleteClick = () => {
+        dispatch(deleteBanner(banner.id, handleBannerChange))
     }
 
     return (
@@ -87,11 +88,11 @@ const BannersFormTabs = ({ banner, handleBannerChange }) => {
                 <BannerForm onSubmit={handleSubmitCreate}/>
             </TabPanel>
             <ConfirmDialog
-                open={isOpen}
+                open={deleteBannerDialog}
                 content={text}
-                loading={isSubmitting}
+                loading={loading}
                 handleCancelClick={closeDeleteBannerDialog}
-                handleConfirmClick={handleDeleteConfirmClick}
+                handleConfirmClick={handleBannerDeleteClick}
             />
         </Box>
     )

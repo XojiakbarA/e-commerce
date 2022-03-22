@@ -22,8 +22,8 @@ const OrderListItem = ({order}) => {
                     <Grid item xs display='flex' justifyContent='center'>
                         <AvatarGroup max={3} spacing='small'>
                             {
-                                order.order_shops.map(order_shop => (
-                                    order_shop.order_products.map(product => (
+                                order.sub_orders.map(sub_order => (
+                                    sub_order.order_products.map(product => (
                                         <ThumbImage
                                             key={product.id}
                                             url={productImageURL}

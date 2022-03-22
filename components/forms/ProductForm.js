@@ -8,14 +8,10 @@ import MultipleImageUpload from "../common/UploadButton/MultipleImageUpload"
 import { productImageURL } from "../../utils/utils"
 import { useMultiPreview } from "../../app/hooks/usePreview/useMultiPreview"
 import { useFieldProduct } from "../../app/hooks/useFieldProduct"
-import { useToggle } from "../../app/hooks/useToggle"
 import { useProduct } from "../../app/hooks/useFormik/useProduct"
+import { toggleDeleteProductImageDialog } from "../../app/store/actions/dialogActions"
 
 const ProductForm = ({ onSubmit, product }) => {
-
-    const { openDeleteProductImageDialog } = useToggle()
-
-    const dialogText = `Do you really want to delete the image?`
 
     const {
         handleSubmit, getFieldProps, handleBlur, setValues,
@@ -31,6 +27,12 @@ const ProductForm = ({ onSubmit, product }) => {
         preview,
         handleUploadChange, handlePreviewDeleteClick, handleClearClick
     } = useMultiPreview(values.images, setValues)
+
+    const dialogText = `Do you really want to delete the image?`
+
+    const openDeleteProductImageDialog = (text, product_id, image_id) => {
+        dispatch(toggleDeleteProductImageDialog(true, text, product_id, image_id))
+    }
 
     return (
         <form onSubmit={handleSubmit}>

@@ -9,26 +9,26 @@ import NotificationsIcon from '@mui/icons-material/Notifications'
 import LogoutIcon from '@mui/icons-material/Logout'
 import InputSearch from './InputSearch'
 import BaseLink from "../../common/Link/BaseLink"
-import router from 'next/router'
+import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from "react-redux"
-import { useToggle } from "../../../app/hooks/useToggle"
 import ButtonLink from '../../common/Link/ButtonLink'
 import DropdownMenu from '../../common/Menu/DropdownMenu'
 import { userLogout } from '../../../app/store/actions/async/user'
 import ThumbImage from '../../common/Image/ThumbImage'
 import { userImageURL } from '../../../utils/utils'
+import { toggleAccountMenu, toggleCartSidebar } from '../../../app/store/actions/actionCreators'
+import { toggleLoginDialog } from '../../../app/store/actions/dialogActions'
 
 
 const TopHeader = () => {
 
     const dispatch = useDispatch()
+    const router = useRouter()
 
     const user = useSelector(state => state.user)
     const cartCount = useSelector(state => state.cart.data?.length)
     const wishlistCount = useSelector(state => state.wishlist.length)
     const isLoading = useSelector(state => state.toggle.isLoading)
-
-    const { accountMenu, closeAccountMenu, handleAccount, openSidebar } = useToggle()
 
     const handleSearch = (e) => {
         const value = e.target.value
@@ -43,6 +43,18 @@ const TopHeader = () => {
         }
     }
 
+    const openSidebar = () => {
+        dispatch(toggleCartSidebar(true))
+    }
+    const handleAccount = (e) => {
+        if (user) {
+            dispatch(toggleAccountMenu(e.currentTarget))
+        } else {
+            if (router.pathname !== '/login' && router.pathname !== '/register') {
+                dispatch(toggleLoginDialog(true))
+            }
+        }
+    }
     const handleLogOut = () => {
         dispatch(userLogout())
     }
@@ -111,11 +123,7 @@ const TopHeader = () => {
                     <InputSearch onKeyUp={handleSearch}/>
                     <Box sx={{ flexGrow: 1 }} />
                     <IconButtonMenu menu={userMenu}/>
-                    <DropdownMenu
-                        menu={profileMenu}
-                        anchorEl={accountMenu}
-                        onClose={closeAccountMenu}
-                    />
+                    <DropdownMenu menu={profileMenu}/>
                 </Toolbar>
             </AppBar>
             <Toolbar/>

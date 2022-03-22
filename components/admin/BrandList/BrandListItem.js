@@ -7,7 +7,7 @@ import { editBrand } from "../../../app/store/actions/async/admin"
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useFieldTitle } from "../../../app/hooks/useFormik/useFieldTitle"
-import { useToggle } from "../../../app/hooks/useToggle"
+import { toggleDeleteBrandDialog } from "../../../app/store/actions/dialogActions"
 
 const BrandListItem = ({ brand }) => {
 
@@ -24,9 +24,11 @@ const BrandListItem = ({ brand }) => {
         getFieldProps, handleSubmit, handleEditClick, handleBlur
     } = useFieldTitle(brand.title, handleSubmitEdit, edit, setEdit)
 
-    const { openDeleteBrandDialog } = useToggle()
-
     const dialogText = `Do you really want to delete the "${brand.title}"?`
+
+    const openDeleteBrandDialog = () => {
+        dispatch(toggleDeleteBrandDialog(true, dialogText, brand.id))
+    }
 
     return (
         <ListItem>
@@ -73,7 +75,7 @@ const BrandListItem = ({ brand }) => {
             </IconButton>
             <IconButton
                 size='small'
-                onClick={e => openDeleteBrandDialog(dialogText, brand)}
+                onClick={ openDeleteBrandDialog }
                 disabled={isSubmitting}
             >
                 <DeleteIcon fontSize='small'/>

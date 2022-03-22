@@ -1,11 +1,12 @@
 import { useFormik } from "formik"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { createReview } from "../../store/actions/async/user"
 import { reviewValidationSchema } from "./validate"
 
-export const useReview = (product_id) => {
+export const useReview = () => {
 
     const dispatch = useDispatch()
+    const {payload} = useSelector(state => state.dialog)
 
     const formik = useFormik({
         initialValues: {
@@ -14,7 +15,7 @@ export const useReview = (product_id) => {
         },
         validationSchema: reviewValidationSchema,
         onSubmit: (data, {setSubmitting}) => {
-            dispatch(createReview(product_id, data, setSubmitting))
+            dispatch(createReview(payload, data, setSubmitting))
         },
         enableReinitialize: true
     })

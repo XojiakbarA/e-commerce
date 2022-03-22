@@ -4,14 +4,25 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import PhotoIcon from '@mui/icons-material/Photo'
 import { productImageURL } from "../../utils/utils"
-import { useToggle } from "../../app/hooks/useToggle"
 import ThumbImage from "../common/Image/ThumbImage"
+import { toggleDeleteProductDialog, toggleEditProductDialog, toggleViewProductDialog } from "../../app/store/actions/dialogActions"
+import { useDispatch } from "react-redux"
 
 const ProductListItem = ({ product }) => {
 
-    const { openEditProductDialog, openDeleteProductDialog, openViewProductDialog } = useToggle()
+    const dispatch = useDispatch()
 
     const dialogText = `Do you really want to delete the "${product.title}"?`
+
+    const openEditProductDialog = () => {
+        dispatch(toggleEditProductDialog(true, product.id))
+    }
+    const openDeleteProductDialog = () => {
+        dispatch(toggleDeleteProductDialog(true, dialogText, product.id))
+    }
+    const openViewProductDialog = () => {
+        dispatch(toggleViewProductDialog(true, product.id))
+    }
 
     return (
         <Card sx={{padding: 2}}>
@@ -52,17 +63,17 @@ const ProductListItem = ({ product }) => {
                 </Grid>
                 <Grid item xs display='flex'>
                     <Tooltip title='Edit'>
-                        <IconButton onClick={e => openEditProductDialog(product)}>
+                        <IconButton onClick={ openEditProductDialog }>
                             <EditIcon fontSize="small"/>
                         </IconButton>
                     </Tooltip>
                     <Tooltip title='Delete'>
-                        <IconButton onClick={e => openDeleteProductDialog(dialogText, product)}>
+                        <IconButton onClick={ openDeleteProductDialog }>
                             <DeleteIcon fontSize="small"/>
                         </IconButton>
                     </Tooltip>
                     <Tooltip title='View'>
-                        <IconButton onClick={e => openViewProductDialog(product)}>
+                        <IconButton onClick={ openViewProductDialog }>
                             <VisibilityIcon fontSize="small"/>
                         </IconButton>
                     </Tooltip>

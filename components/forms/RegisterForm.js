@@ -1,12 +1,23 @@
 import { Typography, Stack, TextField, Button, CircularProgress } from "@mui/material"
+import { useRouter } from "next/router"
+import { useDispatch } from "react-redux"
 import { useRegister } from "../../app/hooks/useFormik/useRegister"
-import { useToggle } from "../../app/hooks/useToggle"
+import { toggleLoginDialog } from "../../app/store/actions/dialogActions"
 
 const RegisterForm = () => {
 
-    const { openLoginDialog } = useToggle()
+    const dispatch = useDispatch()
+    const router = useRouter()
 
     const { handleSubmit, getFieldProps, touched, errors, isSubmitting } = useRegister()
+
+    const openLoginDialog = () => {
+        if (router.pathname === '/register') {
+            router.push('/login')
+        } else {
+            dispatch(toggleLoginDialog(true))
+        }
+    }
 
     return (
         <form onSubmit={handleSubmit}>

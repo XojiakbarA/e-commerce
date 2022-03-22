@@ -11,18 +11,27 @@ import { useDispatch, useSelector } from "react-redux"
 import BaseLink from "../../../common/Link/BaseLink"
 import ButtonLink from "../../../common/Link/ButtonLink"
 import DropdownMenu from "../../../common/Menu/DropdownMenu"
-import { useToggle } from "../../../../app/hooks/useToggle"
 import { userLogout } from "../../../../app/store/actions/async/user"
 import ThumbImage from "../../../common/Image/ThumbImage"
 import { userImageURL } from "../../../../utils/utils"
+import { toggleAccountMenu } from "../../../../app/store/actions/actionCreators"
+import { toggleLoginDialog } from "../../../../app/store/actions/dialogActions"
 
 const Header = ({open, handleDrawerOpen}) => {
 
     const dispatch = useDispatch()
     const user = useSelector(state => state.user)
+    const { isLoading } = useSelector(state => state.toggle)
 
-    const { isLoading, accountMenu, closeAccountMenu, handleAccount } = useToggle()
-
+    const handleAccount = (e) => {
+        if (user) {
+            dispatch(toggleAccountMenu(e.currentTarget))
+        } else {
+            if (router.pathname !== '/login' && router.pathname !== '/register') {
+                dispatch(toggleLoginDialog(true))
+            }
+        }
+    }
     const handleLogOut = () => {
         dispatch(userLogout())
     }
@@ -97,11 +106,7 @@ const Header = ({open, handleDrawerOpen}) => {
                     menu={adminMenu}
                     display={{ xs: 'none', md: 'flex' }}
                 />
-                <DropdownMenu
-                    menu={profileMenu}
-                    anchorEl={accountMenu}
-                    onClose={closeAccountMenu}
-                />
+                <DropdownMenu menu={profileMenu}/>
             </Toolbar>
         </AppBar>
     )
