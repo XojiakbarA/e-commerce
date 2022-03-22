@@ -23,19 +23,19 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getStat
     const user = getState().user
     const cart = getState().cart.data
     
-    if (!user) {
+    if (cart.length === 0) {
         return {
             redirect: {
-                destination: '/login',
+                destination: '/cart',
                 permanent: false
             }
         }
     }
 
-    if (cart.length === 0) {
+    if (!user) {
         return {
             redirect: {
-                destination: '/cart',
+                destination: '/login',
                 permanent: false
             }
         }

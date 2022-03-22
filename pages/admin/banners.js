@@ -53,9 +53,16 @@ const Banners = () => {
     )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(({dispatch}) => async ({query, req}) => {
+export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getState}) => async ({query, req}) => {
 
     const cookie = req?.headers.cookie
+    const isAdmin = getState()?.user?.role == 'admin'
+
+    if (!isAdmin) {
+        return {
+            notFound: true
+        }
+    }
 
     await dispatch(getBanners())
 

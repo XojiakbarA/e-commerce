@@ -5,6 +5,7 @@ import { Grid, ListItem, ListItemAvatar, ListItemText, Paper } from '@mui/materi
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag'
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket'
+import { wrapper } from '../../app/store'
 
 const Admin = () => {
 
@@ -49,6 +50,18 @@ const Admin = () => {
         </Grid>
     )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(({getState}) => async () => {
+
+    const isAdmin = getState()?.user?.role == 'admin'
+
+    if (!isAdmin) {
+        return {
+            notFound: true
+        }
+    }
+
+})
 
 export default Admin
 

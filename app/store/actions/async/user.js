@@ -82,15 +82,18 @@ export const userLogin = (data, setSubmitting) => {
         try {
             const res1 = await login(data)
             const res2 = await fetchUser()
+            const user = res2.data.data
             if (res1.status === 204 && res2.status === 200) {
-                dispatch(setUser(res2.data.data))
+                dispatch(setUser(user))
                 setSubmitting(false)
-                dispatch(toggleSnackbar(true, 'You are logged in!'))
-                if (router.pathname === '/login') {
-                    router.push('/')
-                } else {
-                    dispatch(toggleLoginDialog(false))
+                dispatch(toggleLoginDialog(false))
+                if (user.role == 'admin') {
+                    await router.push('/admin')
                 }
+                if (router.pathname === '/login') {
+                    await router.push('/')
+                }
+                dispatch(toggleSnackbar(true, 'You are logged in!'))
             }
         } catch (e) {
             console.log(e)
@@ -104,17 +107,16 @@ export const userLogout = () => {
             dispatch(setLoading(true))
             const res = await logout()
             if (res.status === 204) {
-
+                dispatch(setLoading(false))
+                dispatch(toggleAccountMenu(null))
+                dispatch(setUser(null))
                 const isProtectedPage = router.pathname.indexOf('/profile') === 0 ||
                                         router.pathname.indexOf('/vendor') === 0 ||
-                                        router.pathname === '/checkout'
-
-                dispatch(setLoading(false))
+                                        router.pathname.indexOf('/checkout') === 0 ||
+                                        router.pathname.indexOf('/admin') === 0
                 if (isProtectedPage) {
                     await router.push('/')
                 }
-                dispatch(toggleAccountMenu(null))
-                dispatch(setUser(null))
                 dispatch(toggleSnackbar(true, 'You are logged out!'))
             }
         } catch (e) {
