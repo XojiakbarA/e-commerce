@@ -8,8 +8,8 @@ const ViewProductDialog = () => {
 
     const dispatch = useDispatch()
 
-    const { viewProductDialog, payload } = useSelector(state => state.dialog)
-    const product = useSelector(state => state.products.data.find(item => item.id === payload))
+    const { viewProductDialog, prod_id } = useSelector(state => state.dialog)
+    const product = useSelector(state => state.products.data.find(item => item.id === prod_id))
 
     const closeViewProductDialog = () => {
         dispatch(toggleViewProductDialog(false, null, null))

@@ -10,8 +10,11 @@ import { useMultiPreview } from "../../app/hooks/usePreview/useMultiPreview"
 import { useFieldProduct } from "../../app/hooks/useFieldProduct"
 import { useProduct } from "../../app/hooks/useFormik/useProduct"
 import { toggleDeleteProductImageDialog } from "../../app/store/actions/dialogActions"
+import { useDispatch } from "react-redux"
 
 const ProductForm = ({ onSubmit, product }) => {
+
+    const dispatch = useDispatch()
 
     const {
         handleSubmit, getFieldProps, handleBlur, setValues,
@@ -30,8 +33,8 @@ const ProductForm = ({ onSubmit, product }) => {
 
     const dialogText = `Do you really want to delete the image?`
 
-    const openDeleteProductImageDialog = (text, product_id, image_id) => {
-        dispatch(toggleDeleteProductImageDialog(true, text, product_id, image_id))
+    const openDeleteProductImageDialog = (image_id) => {
+        dispatch(toggleDeleteProductImageDialog(true, dialogText, image_id))
     }
 
     return (
@@ -111,7 +114,7 @@ const ProductForm = ({ onSubmit, product }) => {
                                                 <IconButton
                                                     size="small"
                                                     color='error'
-                                                    onClick={() => openDeleteProductImageDialog(dialogText, product.id, image.id)}
+                                                    onClick={() => openDeleteProductImageDialog(image.id)}
                                                 >
                                                     <RemoveCircleIcon fontSize='small'/>
                                                 </IconButton>

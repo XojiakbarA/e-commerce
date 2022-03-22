@@ -20,13 +20,13 @@ const Order = () => {
 
     const order = useSelector(state => state.order)
 
-    const { loading, cancelOrderDialog, text, payload } = useSelector(state => state.dialog)
+    const { loading, cancelOrderDialog, text, order_id } = useSelector(state => state.dialog)
 
     const closeCancelOrderDialog = () => {
         dispatch(toggleCancelOrderDialog(false, null, null))
     }
     const handleCancelOrder = () => {
-        dispatch(cancelOrder(payload, {status: 'cancelled'}))
+        dispatch(cancelOrder(order_id, {status: 'cancelled'}))
     }
 
     return (

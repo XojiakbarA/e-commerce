@@ -11,8 +11,8 @@ import {
     toggleSnackbar, setSubOrderStatus
 } from '../actionCreators'
 import {
-    toggleCancelOrderDialog, toggleAddReviewDialog, toggleDeleteProfileImageDialog,
-    toggleOrderDialog, toggleLoadingConfirmDialog, toggleLoginDialog,
+    toggleDialogLoading, toggleCancelOrderDialog, toggleAddReviewDialog,
+    toggleDeleteProfileImageDialog, toggleOrderDialog, toggleLoginDialog,
     toggleRegisterDialog, toggleEditProfileDialog
 } from '../dialogActions'
 
@@ -144,7 +144,7 @@ export const createReview = (id, data, setSubmitting) => {
     return async (dispatch) => {
         try {
             const res = await storeReview(id, data)
-            if (res.status === 200) {
+            if (res.status === 201) {
                 setSubmitting(false)
                 dispatch(toggleAddReviewDialog(false))
                 dispatch(toggleSnackbar(true, 'Review created successfully!'))
@@ -200,11 +200,11 @@ export const getOrder = (id, cookie) => {
 export const cancelOrder = (id, data) => {
     return async (dispatch) => {
         try {
-            dispatch(toggleLoadingConfirmDialog(true))
+            dispatch(toggleDialogLoading(true))
             const res = await updateSubOrderStatus(id, data)
             if (res.status === 200) {
                 dispatch(setSubOrderStatus(id, data.status))
-                dispatch(toggleLoadingConfirmDialog(false))
+                dispatch(toggleDialogLoading(false))
                 dispatch(toggleSnackbar(true, 'Order cancelled successfully!'))
                 dispatch(toggleCancelOrderDialog(false, null, null))
             }
@@ -232,11 +232,11 @@ export const createShop = (data, setSubmitting) => {
 export const deleteUserImage = (image_id) => {
     return async (dispatch) => {
         try {
-            dispatch(toggleLoadingConfirmDialog(true))
+            dispatch(toggleDialogLoading(true))
             const res = await destroyUserImage(image_id)
             if (res.status === 200) {
                 dispatch(setUser(res.data.data))
-                dispatch(toggleLoadingConfirmDialog(false))
+                dispatch(toggleDialogLoading(false))
                 dispatch(toggleDeleteProfileImageDialog(false, '', null))
                 dispatch(toggleSnackbar(true,'Image deleted'))
             }

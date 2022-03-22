@@ -132,6 +132,12 @@ export const setProduct = (product) => ({
     payload: product
 })
 
+export const setProductPublished = (payload, id) => ({
+    type: type.SET_PRODUCT_PUBLISHED,
+    payload,
+    id
+})
+
 export const toggleCartSidebar = (bool) => ({
     type: type.TOGGLE_CART_SIDEBAR,
     payload: bool
@@ -150,6 +156,12 @@ export const setLoading = (bool) => ({
 export const setReviews = (reviews) => ({
     type: type.SET_REVIEWS,
     payload: reviews
+})
+
+export const setReviewPublished = (payload, id) => ({
+    type: type.SET_REVIEW_PUBLISHED,
+    payload,
+    id
 })
 
 export const setShops = (shops) => ({

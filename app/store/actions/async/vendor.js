@@ -1,13 +1,14 @@
-import {
-    editQtyOrderProducts, setLoading, setProducts, setShop, setSubOrder, shipSubOrder,
-    toggleAddProductDialog, toggleEditProductDialog, toggleOrderShipDialog, toggleSnackbar
-} from "../actionCreators"
+import { editQtyOrderProducts, setLoading, setProducts, setShop, setSubOrder, shipSubOrder, toggleSnackbar } from "../actionCreators"
 import {
     destroyProduct, destroyProductImage, fetchProducts, fetchShop, fetchSubOrder,
     storeProduct, updateOrderProducts, updateProduct, updateShop
 } from "../../../../api/vendor"
 import { updateSubOrderStatus } from "../../../../api/user"
-import { toggleDeleteProductDialog, toggleDeleteProductImageDialog, toggleLoadingConfirmDialog } from "../dialogActions"
+import {
+    toggleDialogLoading, toggleEditProductDialog,
+    toggleDeleteProductDialog, toggleDeleteProductImageDialog,
+    toggleAddProductDialog, toggleOrderShipDialog
+} from "../dialogActions"
 
 export const getProducts = (query, cookie) => {
     return async (dispatch) => {
@@ -45,7 +46,7 @@ export const editProduct = (id, data, setSubmitting) => {
             if (res.status === 200) {
                 await dispatch(getProducts())
                 setSubmitting(false)
-                dispatch(toggleEditProductDialog(false, {}))
+                dispatch(toggleEditProductDialog(false, null))
                 dispatch(toggleSnackbar(true, 'Product updated successfully!'))
             }
         } catch (e) {
@@ -57,11 +58,11 @@ export const editProduct = (id, data, setSubmitting) => {
 export const deleteProduct = (id) => {
     return async (dispatch) => {
         try {
-            dispatch(toggleLoadingConfirmDialog(true))
+            dispatch(toggleDialogLoading(true))
             const res = await destroyProduct(id)
             if (res.status === 200) {
                 await dispatch(getProducts())
-                dispatch(toggleLoadingConfirmDialog(false))
+                dispatch(toggleDialogLoading(false))
                 dispatch(toggleDeleteProductDialog(false, null, null))
                 dispatch(toggleSnackbar(true, 'Product deleted successfully!'))
             }
@@ -74,12 +75,11 @@ export const deleteProduct = (id) => {
 export const deleteProductImage = (product_id, image_id) => {
     return async (dispatch) => {
         try {
-            dispatch(toggleLoadingConfirmDialog(true))
+            dispatch(toggleDialogLoading(true))
             const res = await destroyProductImage(product_id, image_id)
             if (res.status === 200) {
                 await dispatch(getProducts())
-                dispatch(toggleEditProductDialog(true, res.data.data))
-                dispatch(toggleLoadingConfirmDialog(false))
+                dispatch(toggleDialogLoading(false))
                 dispatch(toggleDeleteProductImageDialog(false, null, null))
                 dispatch(toggleSnackbar(true, 'Image deleted successfully!'))
             }
@@ -105,11 +105,11 @@ export const getSubOrder = (id, cookie) => {
 export const orderShipping = (id, data) => {
     return async (dispatch) => {
         try {
-            dispatch(toggleLoadingConfirmDialog(true))
+            dispatch(toggleDialogLoading(true))
             const res = await updateSubOrderStatus(id, data)
             if (res.status === 200) {
                 dispatch(shipSubOrder(data.status))
-                dispatch(toggleLoadingConfirmDialog(false))
+                dispatch(toggleDialogLoading(false))
                 dispatch(toggleOrderShipDialog(false))
                 dispatch(toggleSnackbar(true, 'Order shipped successfully!'))
             }

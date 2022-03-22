@@ -6,14 +6,12 @@ import VisibilityIcon from '@mui/icons-material/Visibility'
 import PhotoIcon from '@mui/icons-material/Photo'
 import { useDispatch, useSelector } from 'react-redux'
 import { editProductPublished } from '../../../../app/store/actions/async/admin'
-import { useRouter } from 'next/router'
 import ThumbImage from '../../../common/Image/ThumbImage'
 import { productImageURL } from '../../../../utils/utils'
 
 const ProductsTableRow = ({ product }) => {
 
     const dispatch = useDispatch()
-    const router = useRouter()
 
     const isLoading = useSelector(state => state.toggle.isLoading)
 
@@ -21,7 +19,7 @@ const ProductsTableRow = ({ product }) => {
 
     const handleSwitchChange = (e, id) => {
         setIsClicked(product.id === id)
-        dispatch(editProductPublished(id, router.query, setIsClicked, {published: e.target.checked}))
+        dispatch(editProductPublished(id, setIsClicked, {published: e.target.checked}))
     }
     
     return (

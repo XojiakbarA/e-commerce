@@ -25,7 +25,7 @@ const Products = () => {
     const meta = useSelector(state => state.products.meta)
 
     const {
-        loading, text, payload,
+        loading, text, prod_id, image_id,
         deleteProductDialog, deleteProductImageDialog
     } = useSelector(state => state.dialog)
 
@@ -36,13 +36,13 @@ const Products = () => {
         dispatch(toggleDeleteProductDialog(false, null, null))
     }
     const closeDeleteProductImageDialog = () => {
-        dispatch(toggleDeleteProductImageDialog(false, null, null, null))
+        dispatch(toggleDeleteProductImageDialog(false, null, null))
     }
     const handleProductDeleteClick = () => {
-        dispatch(deleteProduct(payload))
+        dispatch(deleteProduct(prod_id))
     }
     const handleProductImageDeleteClick = () => {
-        dispatch(deleteProductImage(payload.product_id, payload.image_id))
+        dispatch(deleteProductImage(prod_id, image_id))
     }
 
     return (

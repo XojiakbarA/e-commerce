@@ -10,15 +10,15 @@ const EditProductDialog = () => {
 
     const dispatch = useDispatch()
 
-    const { editProductDialog, payload } = useSelector(state => state.dialog)
-    const product = useSelector(state => state.products.data.find(item => item.id === payload))
+    const { editProductDialog, prod_id } = useSelector(state => state.dialog)
+    const product = useSelector(state => state.products.data.find(item => item.id === prod_id))
 
     const closeEditProductDialog = () => {
         dispatch(toggleEditProductDialog(false, null, null))
     }
     const handleSubmit = (data, {setSubmitting}) => {
         const formData = appendToFormData(data)
-        dispatch(editProduct(payload.id, formData, setSubmitting))
+        dispatch(editProduct(prod_id, formData, setSubmitting))
     }
 
     return (

@@ -5,7 +5,6 @@ import EditIcon from '@mui/icons-material/Edit'
 import PhotoIcon from '@mui/icons-material/Photo'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import { useDispatch, useSelector } from 'react-redux'
-import { useRouter } from 'next/router'
 import { editReviewPublished } from '../../../../app/store/actions/async/admin'
 import { productImageURL, userImageURL } from '../../../../utils/utils'
 import ThumbImage from '../../../common/Image/ThumbImage'
@@ -13,7 +12,6 @@ import ThumbImage from '../../../common/Image/ThumbImage'
 const ReviewsTableRow = ({ review }) => {
 
     const dispatch = useDispatch()
-    const router = useRouter()
 
     const isLoading = useSelector(state => state.toggle.isLoading)
 
@@ -21,7 +19,7 @@ const ReviewsTableRow = ({ review }) => {
 
     const handleSwitchChange = (e, id) => {
         setIsClicked(review.id === id)
-        dispatch(editReviewPublished(id, router.query, setIsClicked, {published: e.target.checked}))
+        dispatch(editReviewPublished(id, setIsClicked, {published: e.target.checked}))
     }
     
     return (

@@ -18,7 +18,7 @@ const CategoriesBrands = () => {
     const brands = useSelector(state => state.brands)
 
     const {
-        loading, text, payload,
+        loading, text, cat_id, sub_cat_id, brand_id,
         deleteCategoryDialog, deleteSubCategoryDialog, deleteBrandDialog
     } = useSelector(state => state.dialog)
 
@@ -32,13 +32,13 @@ const CategoriesBrands = () => {
         dispatch(toggleDeleteBrandDialog(false, null, null))
     }
     const handleCategoryDeleteClick = () => {
-        dispatch(deleteCategory(payload))
+        dispatch(deleteCategory(cat_id))
     }
     const handleSubCategoryDeleteClick = () => {
-        dispatch(deleteSubCategory(payload))
+        dispatch(deleteSubCategory(sub_cat_id))
     }
     const handleBrandDeleteClick = () => {
-        dispatch(deleteBrand(payload))
+        dispatch(deleteBrand(brand_id))
     }
 
     return (

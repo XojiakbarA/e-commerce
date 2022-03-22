@@ -11,7 +11,7 @@ const EditProfileDialog = () => {
     const dispatch = useDispatch()
 
     const {
-        loading, text, payload,
+        loading, text, image_id,
         deleteProfileImageDialog, editProfileDialog
     } = useSelector(state => state.dialog)
 
@@ -22,7 +22,7 @@ const EditProfileDialog = () => {
         dispatch(toggleDeleteProfileImageDialog(false, null, null))
     }
     const handleDeleteImageClick = () => {
-        dispatch(deleteUserImage(payload))
+        dispatch(deleteUserImage(image_id))
     }
 
     return (

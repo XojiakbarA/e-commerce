@@ -23,14 +23,24 @@ const initialState = {
     orderDialog: false,
 
     text: null,
-    payload: null
+
+    order_id: null,
+    cat_id: null,
+    sub_cat_id: null,
+    brand_id: null,
+    region_id: null,
+    district_id: null,
+    prod_id: null,
+    image_id: null,
+    banner_id: null,
+    review_id: null,
 }
 
 const dialog = (state = initialState, action) => {
 
     switch (action.type) {
 
-        case type.TOGGLE_LOADING_CONFIRM_DIALOG:
+        case type.TOGGLE_DIALOG_LOADING:
             return {
                 ...state,
                 loading: action.bool
@@ -48,7 +58,7 @@ const dialog = (state = initialState, action) => {
                 ...state,
                 cancelOrderDialog: action.bool,
                 text: action.text,
-                payload: action.payload
+                order_id: action.id
             }
 
         case type.TOGGLE_DELETE_CATEGORY_DIALOG:
@@ -56,7 +66,7 @@ const dialog = (state = initialState, action) => {
                 ...state,
                 deleteCategoryDialog: action.bool,
                 text: action.text,
-                payload: action.payload
+                cat_id: action.id
             }
 
         case type.TOGGLE_DELETE_BRAND_DIALOG:
@@ -64,7 +74,7 @@ const dialog = (state = initialState, action) => {
                 ...state,
                 deleteBrandDialog: action.bool,
                 text: action.text,
-                payload: action.payload
+                brand_id: action.id
             }
 
         case type.TOGGLE_DELETE_SUB_CATEGORY_DIALOG:
@@ -72,7 +82,7 @@ const dialog = (state = initialState, action) => {
                 ...state,
                 deleteSubCategoryDialog: action.bool,
                 text: action.text,
-                payload: action.payload
+                sub_cat_id: action.id
             }
 
         case type.TOGGLE_DELETE_REGION_DIALOG:
@@ -80,7 +90,7 @@ const dialog = (state = initialState, action) => {
                 ...state,
                 deleteRegionDialog: action.bool,
                 text: action.text,
-                payload: action.payload
+                region_id: action.id
             }
 
         case type.TOGGLE_DELETE_DISTRICT_DIALOG:
@@ -88,7 +98,7 @@ const dialog = (state = initialState, action) => {
                 ...state,
                 deleteDistrictDialog: action.bool,
                 text: action.text,
-                payload: action.payload
+                district_id: action.id
             }
 
         case type.TOGGLE_DELETE_PRODUCT_DIALOG:
@@ -96,7 +106,7 @@ const dialog = (state = initialState, action) => {
                 ...state,
                 deleteProductDialog: action.bool,
                 text: action.text,
-                payload: action.payload
+                prod_id: action.id
             }
 
         case type.TOGGLE_DELETE_PRODUCT_IMAGE_DIALOG:
@@ -104,7 +114,7 @@ const dialog = (state = initialState, action) => {
                 ...state,
                 deleteProductImageDialog: action.bool,
                 text: action.text,
-                payload: action.payload
+                image_id: action.id
             }
 
         case type.TOGGLE_DELETE_PROFILE_IMAGE_DIALOG:
@@ -112,7 +122,7 @@ const dialog = (state = initialState, action) => {
                 ...state,
                 deleteProfileImageDialog: action.bool,
                 text: action.text,
-                payload: action.payload
+                image_id: action.id
             }
 
         case type.TOGGLE_DELETE_BANNER_DIALOG:
@@ -120,28 +130,28 @@ const dialog = (state = initialState, action) => {
                 ...state,
                 deleteBannerDialog: action.bool,
                 text: action.text,
-                payload: action.payload
+                banner_id: action.id
             }
 
         case type.TOGGLE_ADD_REVIEW_DIALOG:
             return {
                 ...state,
                 addReviewDialog: action.bool,
-                payload: action.payload
+                review_id: action.id
             }
 
         case type.TOGGLE_VIEW_PRODUCT_DIALOG:
             return {
                 ...state,
                 viewProductDialog: action.bool,
-                payload: action.payload
+                prod_id: action.id
             }
 
         case type.TOGGLE_EDIT_PRODUCT_DIALOG:
             return {
                 ...state,
                 editProductDialog: action.bool,
-                payload: action.payload
+                prod_id: action.id
             }
 
         case type.TOGGLE_ADD_PRODUCT_DIALOG:

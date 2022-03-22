@@ -1,4 +1,3 @@
-import router from "next/router"
 import {
     destroyBanner, destroyBrand, destroyCategory, destroyDistrict, destroyRegion, destroySubCategory,
     fetchCategories, fetchProducts, fetchRegions, fetchReviews, storeBanner, storeBrand, storeCategory,
@@ -7,12 +6,12 @@ import {
 } from "../../../../api/admin"
 import {
     addBanner, addBrand, addCategory, addDistrict, addRegion, addSubCategory, dropBanner, dropBrand,
-    dropCategory, dropDistrict, dropRegion, dropSubCategory, setCategories, setLoading, setProducts,
-    setRegions, setReviews, toggleSnackbar, updateBanners, updateBrands, updateCategories,
+    dropCategory, dropDistrict, dropRegion, dropSubCategory, setCategories, setLoading, setProductPublished, setProducts,
+    setRegions, setReviewPublished, setReviews, toggleSnackbar, updateBanners, updateBrands, updateCategories,
     updateDistricts, updateRegions, updateSubCategories
 } from "../actionCreators"
 import {
-    toggleLoadingConfirmDialog, toggleDeleteCategoryDialog, toggleDeleteSubCategoryDialog,
+    toggleDialogLoading, toggleDeleteCategoryDialog, toggleDeleteSubCategoryDialog,
     toggleDeleteBrandDialog, toggleDeleteDistrictDialog, toggleDeleteRegionDialog,
     toggleDeleteBannerDialog
 } from "../dialogActions"
@@ -56,15 +55,15 @@ export const getRegions = (cookie) => {
     }
 }
 
-export const editProductPublished = (id, query, setIsClicked, data) => {
+export const editProductPublished = (id, setIsClicked, data) => {
     return async (dispatch) => {
         try {
             dispatch(setLoading(true))
             const res = await updateProductPublished(id, data)
             if (res.status === 200) {
+                dispatch(setProductPublished(data.published, id))
                 setIsClicked(false)
                 dispatch(setLoading(false))
-                await router.push({query})
                 dispatch(toggleSnackbar(true, `Product ${!data.published ? 'un' : ''}published successfully!`))
             }
         } catch (e) {
@@ -73,15 +72,15 @@ export const editProductPublished = (id, query, setIsClicked, data) => {
     }
 }
 
-export const editReviewPublished = (id, query, setIsClicked, data) => {
+export const editReviewPublished = (id, setIsClicked, data) => {
     return async (dispatch) => {
         try {
             dispatch(setLoading(true))
             const res = await updateReviewPublished(id, data)
             if (res.status === 200) {
+                dispatch(setReviewPublished(data.published, id))
                 setIsClicked(false)
                 dispatch(setLoading(false))
-                await router.push({query}, null, {scroll: false})
                 dispatch(toggleSnackbar(true, `Review ${!data.published ? 'un' : ''}published successfully!`))
             }
         } catch (e) {
@@ -240,12 +239,12 @@ export const editBanner = (id, data, setSubmitting, resetForm) => {
 export const deleteBanner = (id, handleBannerChange) => {
     return async (dispatch) => {
         try {
-            dispatch(toggleLoadingConfirmDialog(true))
+            dispatch(toggleDialogLoading(true))
             const res = await destroyBanner(id)
             if (res.status === 204) {
                 handleBannerChange(0)
                 dispatch(dropBanner(id))
-                dispatch(toggleLoadingConfirmDialog(false))
+                dispatch(toggleDialogLoading(false))
                 dispatch(toggleDeleteBannerDialog(false, null, null))
                 dispatch(toggleSnackbar(true, `Banner deleted successfully!`))
             }
@@ -258,11 +257,11 @@ export const deleteBanner = (id, handleBannerChange) => {
 export const deleteCategory = (id) => {
     return async (dispatch) => {
         try {
-            dispatch(toggleLoadingConfirmDialog(true))
+            dispatch(toggleDialogLoading(true))
             const res = await destroyCategory(id)
             if (res.status === 204) {
                 dispatch(dropCategory(id))
-                dispatch(toggleLoadingConfirmDialog(false))
+                dispatch(toggleDialogLoading(false))
                 dispatch(toggleDeleteCategoryDialog(false, null, null))
                 dispatch(toggleSnackbar(true, `Category deleted successfully!`))
             }
@@ -275,11 +274,11 @@ export const deleteCategory = (id) => {
 export const deleteSubCategory = (id) => {
     return async (dispatch) => {
         try {
-            dispatch(toggleLoadingConfirmDialog(true))
+            dispatch(toggleDialogLoading(true))
             const res = await destroySubCategory(id)
             if (res.status === 204) {
                 dispatch(dropSubCategory(id))
-                dispatch(toggleLoadingConfirmDialog(false))
+                dispatch(toggleDialogLoading(false))
                 dispatch(toggleDeleteSubCategoryDialog(false, null, null))
                 dispatch(toggleSnackbar(true, `Sub Category deleted successfully!`))
             }
@@ -292,11 +291,11 @@ export const deleteSubCategory = (id) => {
 export const deleteBrand = (id) => {
     return async (dispatch) => {
         try {
-            dispatch(toggleLoadingConfirmDialog(true))
+            dispatch(toggleDialogLoading(true))
             const res = await destroyBrand(id)
             if (res.status === 204) {
                 dispatch(dropBrand(id))
-                dispatch(toggleLoadingConfirmDialog(false))
+                dispatch(toggleDialogLoading(false))
                 dispatch(toggleDeleteBrandDialog(false, null, null))
                 dispatch(toggleSnackbar(true, `Brand deleted successfully!`))
             }
@@ -344,12 +343,12 @@ export const editRegion = (id, data, resetForm, setSubmitting, setEdit) => {
 export const deleteRegion = (id, handleSelectedClick) => {
     return async (dispatch, getState) => {
         try {
-            dispatch(toggleLoadingConfirmDialog(true))
+            dispatch(toggleDialogLoading(true))
             const res = await destroyRegion(id)
             if (res.status === 204) {
                 dispatch(dropRegion(id))
                 handleSelectedClick(getState().regions[0])
-                dispatch(toggleLoadingConfirmDialog(false))
+                dispatch(toggleDialogLoading(false))
                 dispatch(toggleDeleteRegionDialog(false, null, null))
                 dispatch(toggleSnackbar(true, `Region deleted successfully!`))
             }
@@ -396,11 +395,11 @@ export const editDistrict = (id, data, resetForm, setSubmitting, setEdit) => {
 export const deleteDistrict = (id) => {
     return async (dispatch) => {
         try {
-            dispatch(toggleLoadingConfirmDialog(true))
+            dispatch(toggleDialogLoading(true))
             const res = await destroyDistrict(id)
             if (res.status === 204) {
                 dispatch(dropDistrict(id))
-                dispatch(toggleLoadingConfirmDialog(false))
+                dispatch(toggleDialogLoading(false))
                 dispatch(toggleDeleteDistrictDialog(false, null, null))
                 dispatch(toggleSnackbar(true, `District deleted successfully!`))
             }

@@ -17,7 +17,7 @@ const Regions = () => {
 
     const regions = useSelector(state => state.regions)
     const {
-        loading, text, payload,
+        loading, text, region_id, district_id,
         deleteRegionDialog, deleteDistrictDialog
     } = useSelector(state => state.dialog)
 
@@ -33,10 +33,10 @@ const Regions = () => {
         dispatch(toggleDeleteDistrictDialog(false, null, null))
     }
     const handleRegionDeleteClick = () => {
-        dispatch(deleteRegion(payload, handleSelectedClick))
+        dispatch(deleteRegion(region_id, handleSelectedClick))
     }
     const handleDistrictDeleteClick = () => {
-        dispatch(deleteDistrict(payload))
+        dispatch(deleteDistrict(district_id))
     }
 
 
