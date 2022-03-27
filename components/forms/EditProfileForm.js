@@ -1,10 +1,8 @@
 import { Box, Button, CircularProgress, Stack, TextField } from "@mui/material"
-import {DesktopDatePicker, LocalizationProvider} from "@mui/lab"
-import AdapterDateFns from '@mui/lab/AdapterDateFns'
-import ruLocale from 'date-fns/locale/ru'
 import {userImageURL} from "../../utils/utils"
 import PhoneMask from "../common/PhoneMask"
 import AvatarUpload from "../common/UploadButton/AvatarUpload"
+import CustomDataPicker from "../admin/DataGrid/CustomDataPicker"
 import { useEditProfile } from "../../app/hooks/useFormik/useEditProfile"
 import { useDispatch, useSelector } from "react-redux"
 import { useSinglePreview } from "../../app/hooks/usePreview/useSinglePreview"
@@ -70,16 +68,13 @@ const EditProfileForm = () => {
                     { ...getFieldProps('phone') }
                     placeholder='(00) 000-00-00'
                 />
-                <LocalizationProvider dateAdapter={AdapterDateFns} locale={ruLocale}>
-                    <DesktopDatePicker
-                        renderInput={(params) => <TextField {...params} size='small'/>}
-                        mask='__.__.____'
-                        label="Birth Date"
-                        name='birth_date'
-                        value={values.birth_date}
-                        onChange={(value) => setValues(prevValues => ({ ...prevValues, birth_date: value }))}
-                    />
-                </LocalizationProvider>
+                <CustomDataPicker
+                    size='small'
+                    label='Birth Date'
+                    name='birth_date'
+                    value={values.birth_date}
+                    onChange={(value) => setValues(prevValues => ({ ...prevValues, birth_date: value }))}
+                />
                 <Button
                     size='small'
                     variant='contained'

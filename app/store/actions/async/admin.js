@@ -72,14 +72,13 @@ export const editProductPublished = (id, setIsClicked, data) => {
     }
 }
 
-export const editReviewPublished = (id, setIsClicked, data) => {
+export const editReviewPublished = (id, data) => {
     return async (dispatch) => {
         try {
             dispatch(setLoading(true))
             const res = await updateReviewPublished(id, data)
             if (res.status === 200) {
                 dispatch(setReviewPublished(data.published, id))
-                setIsClicked(false)
                 dispatch(setLoading(false))
                 dispatch(toggleSnackbar(true, `Review ${!data.published ? 'un' : ''}published successfully!`))
             }

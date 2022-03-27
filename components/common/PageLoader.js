@@ -9,14 +9,15 @@ const PageLoader = () => {
 
     const [routing, setRouting] = useState(false)
 
-    const handleStart = () => {
-        setRouting(true)
-    }
-    const handleComplete = () => {
-        setRouting(false)
-    }
-    
     useEffect(() => {
+
+        const handleStart = () => {
+            setRouting(true)
+        }
+        const handleComplete = () => {
+            setRouting(false)
+        }
+
         router.events.on('routeChangeStart', handleStart)
         router.events.on('routeChangeComplete', handleComplete)
 
