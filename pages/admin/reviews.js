@@ -7,12 +7,12 @@ import AdminPageHead from "../../components/common/AdminPageHead"
 import CustomDataGrid from "../../components/admin/DataGrid/DataGrid"
 import GridCellExpand from "../../components/admin/DataGrid/GridCellExpand"
 import RatingInput from "../../components/admin/DataGrid/RatingInput"
-import DateInput from "../../components/admin/DataGrid/DateInput"
 import SwitchInput from "../../components/admin/DataGrid/SwitchInput"
+import DateInput from "../../components/admin/DataGrid/DateInput"
+import { productImageURL, userImageURL } from "../../utils/utils"
 import { wrapper } from "../../app/store"
 import { editReviewPublished, getReviews } from "../../app/store/actions/async/admin"
 import { useDispatch, useSelector } from "react-redux"
-import { productImageURL, userImageURL } from "../../utils/utils"
 
 const Reviews = () => {
 
@@ -33,8 +33,8 @@ const Reviews = () => {
             minWidth: 50,
             field: 'id',
             headerName: 'ID',
-            filterOperators: getGridStringOperators()
-                .filter(operator => operator.value === 'contains')
+            sortable: false,
+            filterable: false
         },
         {
             type: 'string',

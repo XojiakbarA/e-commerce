@@ -22,7 +22,7 @@ const CustomDataGrid = ({ columns, rows, meta, loading }) => {
     }
 
     const getInitFilterModel = useCallback(() => {
-        let model = makeFilterModel(columns[0].field, columns[0].type)
+        let model = makeFilterModel(columns[1].field, columns[1].type)
         columns.forEach(column => {
             const finded = Object.keys(router.query).find(field => field === column.field)
             if (finded) {
@@ -82,7 +82,7 @@ const CustomDataGrid = ({ columns, rows, meta, loading }) => {
                 })
             }
             if (!hasInQuery) {
-                setFilterModel(makeFilterModel(columns[0].field, columns[0].type))
+                setFilterModel(makeFilterModel(columns[1].field, columns[1].type))
             }
         }
 
@@ -126,10 +126,10 @@ const CustomDataGrid = ({ columns, rows, meta, loading }) => {
         if (model.items.length) {
             const field = model.items[0].columnField
             const value = model.items[0].value
-            if (value) {
-                if (typeof value === 'string') {
-                    value = value.trim()
-                }
+            if (typeof value === 'string') {
+                value = value.trim()
+            }
+            if (value || value === 0) {
                 query[field] = value
             }
         }

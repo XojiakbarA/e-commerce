@@ -1,45 +1,193 @@
-import { Grid } from "@mui/material"
+import { Avatar, Chip, Grid, Rating, Switch } from "@mui/material"
+import { getGridBooleanOperators, getGridDateOperators, getGridNumericOperators, getGridStringOperators } from "@mui/x-data-grid"
 import ListAltIcon from '@mui/icons-material/ListAlt'
+import PhotoIcon from '@mui/icons-material/Photo'
 import AdminLayout from "../../components/layout/AdminLayout/AdminLayout"
-import { wrapper } from '../../app/store'
-import { getProducts } from '../../app/store/actions/async/admin'
-import { useSelector } from "react-redux"
 import AdminPageHead from '../../components/common/AdminPageHead'
-import DataTable from '../../components/admin/DataTable/DataTable'
-import ProductsTableRow from '../../components/admin/DataTable/DataTableRows/ProductsTableRow'
-import { useAdminSearch } from '../../app/hooks/useAdminSearch'
-
-const headLabels = [
-    { label: 'Published', field: 'published' },
-    { label: 'Title', field: 'title' },
-    { label: 'Stock', field: 'stock' },
-    { label: 'Regular Price', field: 'price' },
-    { label: 'Sales Price', field: 'sale_price' },
-    { label: 'Rating', field: 'rating' },
-    { label: 'Category', field: 'category' },
-    { label: 'Brand', field: 'brand' },
-    { label: 'Shop', field: 'shop' },
-]
-
-const colSpan = (field) => {
-    return  field === 'title' ||
-            field === 'shop'
-            ? 2 : 0
-}
-
-function* labelsGenerator() { 
-    yield {label: 'By Title', field: 'title'}
-    yield {label: 'By Category', field: 'category_title'}
-    yield {label: 'By Brand', field: 'brand_title'}
-    return {label: 'By Shop', field: 'shop_title'}
-}
+import CustomDataGrid from "../../components/admin/DataGrid/DataGrid"
+import GridCellExpand from "../../components/admin/DataGrid/GridCellExpand"
+import RatingInput from "../../components/admin/DataGrid/RatingInput"
+import SwitchInput from "../../components/admin/DataGrid/SwitchInput"
+import DateInput from "../../components/admin/DataGrid/DateInput"
+import { productImageURL } from "../../utils/utils"
+import { wrapper } from '../../app/store'
+import { editProductPublished, getProducts } from '../../app/store/actions/async/admin'
+import { useDispatch, useSelector } from "react-redux"
 
 const Products = () => {
 
+    const dispatch = useDispatch()
+
+    const isLoading = useSelector(state => state.toggle.isLoading)
     const products = useSelector(state => state.products.data)
     const meta = useSelector(state => state.products.meta)
 
-    const { label, handleSearch, handleClick } = useAdminSearch(labelsGenerator)
+    const currencyFormatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    })
+
+    const handleSwitchChange = (e, id) => {
+        dispatch(editProductPublished(id, {published: e.target.checked}))
+    }
+
+    const columns = [
+        {
+            type: 'string',
+            flex: 1,
+            minWidth: 50,
+            field: 'id',
+            headerName: 'ID',
+            sortable: false,
+            filterable: false
+        },
+        {
+            type: 'string',
+            flex: 4,
+            minWidth: 200,
+            field: 'title',
+            headerName: 'Title',
+            renderCell: ({ value, colDef, row }) => (
+                <GridCellExpand
+                    value={value}
+                    width={colDef.computedWidth}
+                >
+                    <Avatar
+                        variant='rounded'
+                        sx={{ width: 35, height:35, marginRight: 1 }}
+                        src={ row.image ? productImageURL + row.image.src : undefined }
+                    >
+                        <PhotoIcon/>
+                    </Avatar>
+                </GridCellExpand>
+            ),
+            filterOperators: getGridStringOperators()
+                .filter(operator => operator.value === 'contains')
+        },
+        {
+            type: 'number',
+            flex: 2,
+            minWidth: 100,
+            field: 'stock',
+            headerName: 'Stock',
+            renderCell: ({ row }) => (
+                <Chip
+                    label={row.stock}
+                    size='small'
+                    variant='outlined'
+                    color={row.stock < 6 ? 'warning' : 'info'}
+                />
+            )
+        },
+        {
+            type: 'number',
+            flex: 2,
+            minWidth: 100,
+            field: 'price',
+            headerName: 'Price',
+            valueFormatter: ({ value }) => currencyFormatter.format(Number(value))
+        },
+        {
+            type: 'number',
+            flex: 2,
+            minWidth: 100,
+            field: 'sale_price',
+            headerName: 'Sale Price',
+            valueFormatter: ({ value }) => {
+                if (value) {
+                    return currencyFormatter.format(Number(value))
+                }
+                return '-'
+            }
+        },
+        {
+            type: 'number',
+            flex: 2,
+            minWidth: 100,
+            field: 'rating',
+            headerName: 'Rating',
+            renderCell: ({ row }) => (
+                <Rating value={row.rating} size='small' readOnly/>
+            ),
+            filterOperators: getGridNumericOperators()
+                .filter(operator => operator.value === '=')
+                .map(operator => ({
+                    ...operator,
+                    InputComponent: RatingInput
+                }))
+        },
+        {
+            type: 'string',
+            flex: 2,
+            minWidth: 100,
+            field: 'brand_title',
+            headerName: 'Brand Title',
+            renderCell: ({ value, colDef }) => (
+                <GridCellExpand
+                    value={value}
+                    width={colDef.computedWidth}
+                />
+            )
+        },
+        {
+            type: 'string',
+            flex: 2,
+            minWidth: 100,
+            field: 'category_title',
+            headerName: 'Category Title',
+            renderCell: ({ value, colDef }) => (
+                <GridCellExpand
+                    value={value}
+                    width={colDef.computedWidth}
+                />
+            )
+        },
+        {
+            type: 'string',
+            flex: 2,
+            minWidth: 100,
+            field: 'shop_title',
+            headerName: 'Shop Title',
+            renderCell: ({ value, colDef }) => (
+                <GridCellExpand
+                    value={value}
+                    width={colDef.computedWidth}
+                />
+            )
+        },
+        {
+            type: 'date',
+            flex: 2,
+            minWidth: 100,
+            field: 'created_at',
+            headerName: 'Created At',
+            filterOperators: getGridDateOperators()
+                .filter(operator => operator.value === 'is')
+                .map(operator => ({
+                    ...operator,
+                    InputComponent: DateInput
+                }))
+        },
+        {
+            type: 'boolean',
+            flex: 2,
+            field: 'published',
+            headerName: 'Published',
+            renderCell: ({ row }) => (
+                <Switch
+                    inputProps={{ 'aria-label': 'published' }}
+                    checked={Boolean(row.published)}
+                    onChange={e => handleSwitchChange(e, row.id)}
+                    disabled={isLoading}
+                />
+            ),
+            filterOperators: getGridBooleanOperators()
+                .map(operator => ({
+                    ...operator,
+                    InputComponent: SwitchInput
+                }))
+        },
+    ]
 
     return (
         <Grid container spacing={2}>
@@ -47,19 +195,15 @@ const Products = () => {
                 <AdminPageHead
                     title='Products'
                     titleIcon={<ListAltIcon fontSize='large'/>}
-                    onKeyUp={handleSearch}
-                    onClick={handleClick}
-                    buttonText={label}
                 />
             </Grid>
             <Grid item xs={12}>
-                <DataTable meta={meta} labels={headLabels} colSpan={colSpan}>
-                    {
-                        products.map(product => (
-                            <ProductsTableRow key={product.id} product={product}/>
-                        ))
-                    }
-                </DataTable>
+                <CustomDataGrid
+                    columns={columns}
+                    rows={products}
+                    meta={meta}
+                    loading={isLoading}
+                />
             </Grid>
         </Grid>
     )

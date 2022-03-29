@@ -55,14 +55,13 @@ export const getRegions = (cookie) => {
     }
 }
 
-export const editProductPublished = (id, setIsClicked, data) => {
+export const editProductPublished = (id, data) => {
     return async (dispatch) => {
         try {
             dispatch(setLoading(true))
             const res = await updateProductPublished(id, data)
             if (res.status === 200) {
                 dispatch(setProductPublished(data.published, id))
-                setIsClicked(false)
                 dispatch(setLoading(false))
                 dispatch(toggleSnackbar(true, `Product ${!data.published ? 'un' : ''}published successfully!`))
             }
