@@ -1,46 +1,180 @@
-import { Grid } from "@mui/material"
+import { Avatar, AvatarGroup, Grid } from "@mui/material"
+import { getGridStringOperators } from "@mui/x-data-grid"
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag'
-import AdminPageHead from '../../components/common/AdminPageHead'
-import DataTable from '../../components/admin/DataTable/DataTable'
-import { wrapper } from "../../app/store"
+import PhotoIcon from '@mui/icons-material/Photo'
 import AdminLayout from "../../components/layout/AdminLayout/AdminLayout"
-import { useAdminSearch } from "../../app/hooks/useAdminSearch"
+import AdminPageHead from '../../components/common/AdminPageHead'
+import CustomDataGrid from "../../components/admin/DataGrid/DataGrid"
+import GridCellExpand from "../../components/admin/DataGrid/GridCellExpand"
+import GridCellExpandList from "../../components/admin/DataGrid/GridCellExpandList"
+import { wrapper } from "../../app/store"
 import { fetchOrders } from "../../api/admin"
-import OrdersTableRow from "../../components/admin/DataTable/DataTableRows/OrdersTableRow"
-
-const headLabels = [
-    { label: 'Name', field: 'name' },
-    { label: 'Email', field: 'email' },
-    { label: 'Phone', field: 'phone' },
-    { label: 'Region', field: 'region' },
-    { label: 'District', field: 'district' },
-    { label: 'Street', field: 'street' },
-    { label: 'Home', field: 'home' },
-    { label: 'Products', field: 'order_products' },
-    { label: 'Total', field: 'total' },
-]
-
-const colSpan = (field) => {
-    return  field == 'total'
-            ? 2 : 0
-}
-
-function* labelsGenerator() {
-    yield {label: 'By Name', field: 'name'}
-    yield {label: 'By Email', field: 'email'}
-    yield {label: 'By Phone', field: 'phone'}
-    yield {label: 'By Region', field: 'region'}
-    yield {label: 'By District', field: 'district'}
-    yield {label: 'By Street', field: 'street'}
-    yield {label: 'By Home', field: 'home'}
-}
+import { productImageURL } from "../../utils/utils"
 
 const Orders = (data) => {
 
     const orders = data.data
     const meta = data.meta
 
-    const { label, handleSearch, handleClick } = useAdminSearch(labelsGenerator)
+    const currencyFormatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    })
+
+    const columns = [
+        {
+            type: 'string',
+            flex: 1,
+            minWidth: 50,
+            field: 'id',
+            headerName: 'ID',
+            sortable: false,
+            filterable: false
+        },
+        {
+            type: 'string',
+            flex: 2,
+            minWidth: 100,
+            field: 'name',
+            headerName: 'Name',
+            renderCell: ({ value, colDef }) => (
+                <GridCellExpand
+                    value={value}
+                    width={colDef.computedWidth}
+                />
+            ),
+            filterOperators: getGridStringOperators()
+                .filter(operator => operator.value === 'contains')
+        },
+        {
+            type: 'string',
+            flex: 2,
+            minWidth: 100,
+            field: 'email',
+            headerName: 'Email',
+            renderCell: ({ value, colDef }) => (
+                <GridCellExpand
+                    value={value}
+                    width={colDef.computedWidth}
+                />
+            ),
+            filterOperators: getGridStringOperators()
+                .filter(operator => operator.value === 'contains')
+        },
+        {
+            type: 'string',
+            flex: 2,
+            minWidth: 100,
+            field: 'phone',
+            headerName: 'Phone',
+            renderCell: ({ value, colDef }) => (
+                <GridCellExpand
+                    value={value}
+                    width={colDef.computedWidth}
+                />
+            ),
+            filterOperators: getGridStringOperators()
+                .filter(operator => operator.value === 'contains')
+        },
+        {
+            type: 'string',
+            flex: 2,
+            minWidth: 100,
+            field: 'region',
+            headerName: 'Region',
+            renderCell: ({ value, colDef }) => (
+                <GridCellExpand
+                    value={value}
+                    width={colDef.computedWidth}
+                />
+            ),
+            filterOperators: getGridStringOperators()
+                .filter(operator => operator.value === 'contains')
+        },
+        {
+            type: 'string',
+            flex: 2,
+            minWidth: 100,
+            field: 'district',
+            headerName: 'District',
+            renderCell: ({ value, colDef }) => (
+                <GridCellExpand
+                    value={value}
+                    width={colDef.computedWidth}
+                />
+            ),
+            filterOperators: getGridStringOperators()
+                .filter(operator => operator.value === 'contains')
+        },
+        {
+            type: 'string',
+            flex: 2,
+            minWidth: 100,
+            field: 'street',
+            headerName: 'Street',
+            renderCell: ({ value, colDef }) => (
+                <GridCellExpand
+                    value={value}
+                    width={colDef.computedWidth}
+                />
+            ),
+            filterOperators: getGridStringOperators()
+                .filter(operator => operator.value === 'contains')
+        },
+        {
+            type: 'string',
+            flex: 1,
+            minWidth: 50,
+            field: 'home',
+            headerName: 'Home',
+            renderCell: ({ value, colDef }) => (
+                <GridCellExpand
+                    value={value}
+                    width={colDef.computedWidth}
+                />
+            ),
+            filterOperators: getGridStringOperators()
+                .filter(operator => operator.value === 'contains')
+        },
+        {
+            type: 'string',
+            flex: 2,
+            minWidth: 100,
+            field: 'order_products',
+            headerName: 'Products',
+            valueGetter: ({ row }) => row,
+            renderCell: ({ value, colDef, row }) => (
+                <GridCellExpandList
+                    value={value.order_products}
+                    width={colDef.computedWidth}
+                >
+                    <AvatarGroup max={3} spacing='small'>
+                        {
+                            row.order_products.map(product => (
+                                <Avatar
+                                    sx={{ width: 35, height:35 }}
+                                    key={product.id}
+                                    src={product.image ? productImageURL + product.image : undefined}
+                                >
+                                    <PhotoIcon/>
+                                </Avatar>
+                            ))
+                        }
+                    </AvatarGroup>
+                </GridCellExpandList>
+            ),
+            filterable: false,
+            sortable: false
+        },
+        {
+            type: 'number',
+            flex: 2,
+            minWidth: 100,
+            field: 'total',
+            headerName: 'Total',
+            valueFormatter: ({ value }) => currencyFormatter.format(Number(value))
+        },
+    ]
 
     return (
         <Grid container spacing={2}>
@@ -48,19 +182,14 @@ const Orders = (data) => {
                 <AdminPageHead
                     title='Orders'
                     titleIcon={<ShoppingBagIcon fontSize='large'/>}
-                    onKeyUp={handleSearch}
-                    onClick={handleClick}
-                    buttonText={label}
                 />
             </Grid>
             <Grid item xs={12}>
-                <DataTable meta={meta} labels={headLabels} colSpan={colSpan}>
-                    {
-                        orders.map(order => (
-                            <OrdersTableRow order={order} key={order.id}/>
-                        ))
-                    }
-                </DataTable>
+                <CustomDataGrid
+                    columns={columns}
+                    rows={orders}
+                    meta={meta}
+                />
             </Grid>
         </Grid>
     )
