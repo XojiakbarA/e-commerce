@@ -1,44 +1,143 @@
-import { Grid } from "@mui/material"
+import { Avatar, Chip, Grid } from "@mui/material"
+import { getGridDateOperators, getGridSingleSelectOperators, getGridStringOperators } from "@mui/x-data-grid"
 import GroupIcon from '@mui/icons-material/Group'
-import { wrapper } from "../../app/store"
-import AdminPageHead from "../../components/common/AdminPageHead"
+import StorefrontIcon from '@mui/icons-material/Storefront'
+import SecurityIcon from '@mui/icons-material/Security'
+import PersonIcon from '@mui/icons-material/Person'
 import AdminLayout from "../../components/layout/AdminLayout/AdminLayout"
+import AdminPageHead from "../../components/common/AdminPageHead"
+import CustomDataGrid from "../../components/admin/DataGrid/DataGrid"
+import GridCellExpand from "../../components/admin/DataGrid/GridCellExpand"
+import DateInput from "../../components/admin/DataGrid/DateInput"
+import { wrapper } from "../../app/store"
 import { fetchUsers } from "../../api/admin"
-import DataTable from "../../components/admin/DataTable/DataTable"
-import UserTableRow from "../../components/admin/DataTable/DataTableRows/UserTableRow"
-import { useAdminSearch } from "../../app/hooks/useAdminSearch"
-
-const headLabels = [
-    { label: 'User ID', field: 'id' },
-    { label: 'First Name', field: 'first_name' },
-    { label: 'Last Name', field: 'last_name' },
-    { label: 'Email', field: 'email' },
-    { label: 'Phone', field: 'phone' },
-    { label: 'Birth Date', field: 'birth_date' },
-    { label: 'Role', field: 'role' }
-]
-
-const colSpan = (field) => {
-    return  field === 'id' ||
-            field === 'role'
-            ? 2 : 0
-}
-
-function* labelsGenerator() {
-    yield {label: 'By First Name', field: 'first_name'}
-    yield {label: 'By Last Name', field: 'last_name'}
-    yield {label: 'By Email', field: 'email'}
-    yield {label: 'By Phone', field: 'phone'}
-    yield {label: 'By Birth Date', field: 'birth_date'}
-    return {label: 'By Role', field: 'role'}
-}
+import { userImageURL } from "../../utils/utils"
 
 const Users = ( data ) => {
 
     const users = data.data
     const meta = data.meta
 
-    const { label, handleSearch, handleClick } = useAdminSearch(labelsGenerator)
+    const columns = [
+        {
+            type: 'string',
+            flex: 1,
+            minWidth: 50,
+            field: 'id',
+            headerName: 'ID',
+            sortable: false,
+            filterable: false
+        },
+        {
+            type: 'string',
+            flex: 4,
+            minWidth: 100,
+            field: 'first_name',
+            headerName: 'First Name',
+            renderCell: ({ value, colDef, row }) => (
+                <GridCellExpand
+                    value={value}
+                    width={colDef.computedWidth}
+                >
+                    <Avatar
+                        sx={{ width: 35, height:35, marginRight: 1 }}
+                        src={ row.image ? userImageURL + row.image.src : undefined }
+                    />
+                </GridCellExpand>
+            ),
+            filterOperators: getGridStringOperators()
+                .filter(operator => operator.value === 'contains')
+        },
+        {
+            type: 'string',
+            flex: 4,
+            minWidth: 100,
+            field: 'last_name',
+            headerName: 'Last Name',
+            renderCell: ({ value, colDef }) => (
+                <GridCellExpand
+                    value={value}
+                    width={colDef.computedWidth}
+                />
+            ),
+            filterOperators: getGridStringOperators()
+                .filter(operator => operator.value === 'contains')
+        },
+        {
+            type: 'string',
+            flex: 3,
+            minWidth: 100,
+            field: 'email',
+            headerName: 'Email',
+            renderCell: ({ value, colDef }) => (
+                <GridCellExpand
+                    value={value}
+                    width={colDef.computedWidth}
+                />
+            ),
+            filterOperators: getGridStringOperators()
+                .filter(operator => operator.value === 'contains')
+        },
+        {
+            type: 'string',
+            flex: 3,
+            minWidth: 100,
+            field: 'phone',
+            headerName: 'Phone',
+            renderCell: ({ value, colDef }) => (
+                <GridCellExpand
+                    value={value}
+                    width={colDef.computedWidth}
+                />
+            ),
+            filterOperators: getGridStringOperators()
+                .filter(operator => operator.value === 'contains')
+        },
+        {
+            type: 'string',
+            flex: 3,
+            minWidth: 100,
+            field: 'birth_date',
+            headerName: 'Birth Date',
+            filterOperators: getGridDateOperators()
+                .filter(operator => operator.value === 'is')
+                .map(operator => ({
+                    ...operator,
+                    InputComponent: DateInput
+                }))
+        },
+        {
+            type: 'singleSelect',
+            flex: 3,
+            minWidth: 100,
+            field: 'role',
+            headerName: 'Role',
+            renderCell: ({ value }) => (
+                <Chip
+                    size='small'
+                    variant='outlined'
+                    label={value ?? 'user'}
+                    color={
+                        value === 'admin' ? 'warning'
+                        :
+                        value === 'vendor' ? 'secondary'
+                        :
+                        'primary'
+                    }
+                    icon={
+                        value === 'admin' ? <SecurityIcon/>
+                        :
+                        value === 'vendor' ? <StorefrontIcon/>
+                        :
+                        <PersonIcon/>
+                    }
+                />
+            ),
+            valueOptions: ['admin', 'vendor', 'user'],
+            filterOperators: getGridSingleSelectOperators()
+                .filter(operator => operator.value === 'is')
+        },
+    ]
 
     return (
         <Grid container spacing={2}>
@@ -46,19 +145,14 @@ const Users = ( data ) => {
                 <AdminPageHead
                     title='Users'
                     titleIcon={<GroupIcon fontSize='large'/>}
-                    onKeyUp={handleSearch}
-                    onClick={handleClick}
-                    buttonText={label}
                 />
             </Grid>
             <Grid item xs={12}>
-                <DataTable meta={meta} labels={headLabels} colSpan={colSpan}>
-                    {
-                        users.map(user => (
-                            <UserTableRow key={user.id} user={user}/>
-                        ))
-                    }
-                </DataTable>
+                <CustomDataGrid
+                    columns={columns}
+                    rows={users}
+                    meta={meta}
+                />
             </Grid>
         </Grid>
     )

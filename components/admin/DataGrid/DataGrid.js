@@ -15,6 +15,8 @@ const CustomDataGrid = ({ columns, rows, meta, loading }) => {
                     break;
                 case 'boolean':
                     operatorValue = 'is'
+                case 'singleSelect':
+                    operatorValue = 'is'
                 default:
                     break;
             }

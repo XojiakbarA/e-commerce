@@ -109,7 +109,6 @@ export const userLogout = () => {
             if (res.status === 204) {
                 dispatch(setLoading(false))
                 dispatch(toggleAccountMenu(null))
-                dispatch(setUser(null))
                 const isProtectedPage = router.pathname.indexOf('/profile') === 0 ||
                                         router.pathname.indexOf('/vendor') === 0 ||
                                         router.pathname.indexOf('/checkout') === 0 ||
@@ -117,6 +116,7 @@ export const userLogout = () => {
                 if (isProtectedPage) {
                     await router.push('/')
                 }
+                dispatch(setUser(null))
                 dispatch(toggleSnackbar(true, 'You are logged out!'))
             }
         } catch (e) {

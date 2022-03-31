@@ -80,7 +80,7 @@ const GridCellExpand = React.memo(function GridCellExpand(props) {
                 ref={cellValue}
                 sx={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
             >
-                {value}
+                {value ?? '-'}
             </Box>
             {showPopper && (
                 <Popper
@@ -103,7 +103,6 @@ const GridCellExpand = React.memo(function GridCellExpand(props) {
 });
 
 GridCellExpand.propTypes = {
-    value: PropTypes.string.isRequired,
     width: PropTypes.number.isRequired,
 }
 
