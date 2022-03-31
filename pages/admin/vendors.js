@@ -1,48 +1,175 @@
-import { Grid } from '@mui/material'
+import { Avatar, Grid, Rating } from '@mui/material'
+import { getGridNumericOperators, getGridStringOperators } from '@mui/x-data-grid'
 import StoreIcon from '@mui/icons-material/Store'
-import AdminPageHead from '../../components/common/AdminPageHead'
-import DataTable from '../../components/admin/DataTable/DataTable'
-import { wrapper } from '../../app/store'
+import PhotoIcon from '@mui/icons-material/Photo'
 import AdminLayout from '../../components/layout/AdminLayout/AdminLayout'
+import AdminPageHead from '../../components/common/AdminPageHead'
+import CustomDataGrid from '../../components/admin/DataGrid/DataGrid'
+import GridCellExpand from '../../components/admin/DataGrid/GridCellExpand'
+import RatingInput from '../../components/admin/DataGrid/RatingInput'
+import { wrapper } from '../../app/store'
 import { fetchShops } from '../../api/admin'
-import { useAdminSearch } from '../../app/hooks/useAdminSearch'
-import ShopsTableRow from '../../components/admin/DataTable/DataTableRows/ShopsTableRow'
-
-const headLabels = [
-    { label: 'Title', field: 'title' },
-    { label: 'Rating', field: 'rating' },
-    { label: 'First Name', field: 'first_name' },
-    { label: 'Last Name', field: 'last_name' },
-    { label: 'Region', field: 'region' },
-    { label: 'District', field: 'district' },
-    { label: 'Street', field: 'street' },
-    { label: 'Home', field: 'home' },
-    { label: 'Phone', field: 'phone' }
-]
-
-function* labelsGenerator() {
-    yield {label: 'By Title', field: 'title'}
-    yield {label: 'By First Name', field: 'first_name'}
-    yield {label: 'By Last Name', field: 'last_name'}
-    yield {label: 'By Region', field: 'region'}
-    yield {label: 'By District', field: 'district'}
-    yield {label: 'By Street', field: 'street'}
-    yield {label: 'By Home', field: 'home'}
-    return {label: 'By Phone', field: 'phone'}
-}
-
-const colSpan = (field) => {
-    return  field === 'title' ||
-            field === 'phone'
-            ? 2 : 0
-}
+import { shopImageURL } from '../../utils/utils'
 
 const Vendors = ( data ) => {
 
     const shops = data.data
     const meta = data.meta
 
-    const { label, handleSearch, handleClick } = useAdminSearch(labelsGenerator)
+    const columns = [
+        {
+            type: 'string',
+            flex: 1,
+            minWidth: 50,
+            field: 'id',
+            headerName: 'ID',
+            sortable: false,
+            filterable: false
+        },
+        {
+            type: 'string',
+            flex: 3,
+            minWidth: 150,
+            field: 'title',
+            headerName: 'Title',
+            renderCell: ({ value, colDef, row }) => (
+                <GridCellExpand
+                    value={value}
+                    width={colDef.computedWidth}
+                >
+                    <Avatar
+                        sx={{ width: 35, height:35, marginRight: 1 }}
+                        src={ row.av_image ? shopImageURL + row.av_image : undefined }
+                    >
+                        <PhotoIcon/>
+                    </Avatar>
+                </GridCellExpand>
+            ),
+            filterOperators: getGridStringOperators()
+                .filter(operator => operator.value === 'contains')
+        },
+        {
+            type: 'number',
+            flex: 2,
+            minWidth: 100,
+            field: 'rating',
+            headerName: 'Rating',
+            renderCell: ({ row }) => (
+                <Rating value={row.rating} size='small' readOnly/>
+            ),
+            filterOperators: getGridNumericOperators()
+                .filter(operator => operator.value === '=')
+                .map(operator => ({
+                    ...operator,
+                    InputComponent: RatingInput
+                }))
+        },
+        {
+            type: 'string',
+            flex: 2,
+            minWidth: 100,
+            field: 'first_name',
+            headerName: 'First Name',
+            renderCell: ({ value, colDef, row }) => (
+                <GridCellExpand
+                    value={value}
+                    width={colDef.computedWidth}
+                />
+            ),
+            filterOperators: getGridStringOperators()
+                .filter(operator => operator.value === 'contains')
+        },
+        {
+            type: 'string',
+            flex: 2,
+            minWidth: 100,
+            field: 'last_name',
+            headerName: 'Last Name',
+            renderCell: ({ value, colDef }) => (
+                <GridCellExpand
+                    value={value}
+                    width={colDef.computedWidth}
+                />
+            ),
+            filterOperators: getGridStringOperators()
+                .filter(operator => operator.value === 'contains')
+        },
+        {
+            type: 'string',
+            flex: 2,
+            minWidth: 100,
+            field: 'phone',
+            headerName: 'Phone',
+            renderCell: ({ value, colDef }) => (
+                <GridCellExpand
+                    value={value}
+                    width={colDef.computedWidth}
+                />
+            ),
+            filterOperators: getGridStringOperators()
+                .filter(operator => operator.value === 'contains')
+        },
+        {
+            type: 'string',
+            flex: 2,
+            minWidth: 100,
+            field: 'region',
+            headerName: 'Region',
+            renderCell: ({ value, colDef }) => (
+                <GridCellExpand
+                    value={value}
+                    width={colDef.computedWidth}
+                />
+            ),
+            filterOperators: getGridStringOperators()
+                .filter(operator => operator.value === 'contains')
+        },
+        {
+            type: 'string',
+            flex: 2,
+            minWidth: 100,
+            field: 'district',
+            headerName: 'District',
+            renderCell: ({ value, colDef }) => (
+                <GridCellExpand
+                    value={value}
+                    width={colDef.computedWidth}
+                />
+            ),
+            filterOperators: getGridStringOperators()
+                .filter(operator => operator.value === 'contains')
+        },
+        {
+            type: 'string',
+            flex: 2,
+            minWidth: 100,
+            field: 'street',
+            headerName: 'Street',
+            renderCell: ({ value, colDef }) => (
+                <GridCellExpand
+                    value={value}
+                    width={colDef.computedWidth}
+                />
+            ),
+            filterOperators: getGridStringOperators()
+                .filter(operator => operator.value === 'contains')
+        },
+        {
+            type: 'string',
+            flex: 1,
+            minWidth: 50,
+            field: 'home',
+            headerName: 'Home',
+            renderCell: ({ value, colDef }) => (
+                <GridCellExpand
+                    value={value}
+                    width={colDef.computedWidth}
+                />
+            ),
+            filterOperators: getGridStringOperators()
+                .filter(operator => operator.value === 'contains')
+        },
+    ]
 
     return (
         <Grid container spacing={2}>
@@ -50,19 +177,14 @@ const Vendors = ( data ) => {
                 <AdminPageHead
                     title='Vendors'
                     titleIcon={<StoreIcon fontSize='large'/>}
-                    onKeyUp={handleSearch}
-                    onClick={handleClick}
-                    buttonText={label}
                 />
             </Grid>
             <Grid item xs={12}>
-                <DataTable meta={meta} labels={headLabels} colSpan={colSpan}>
-                    {
-                        shops.map(shop => (
-                            <ShopsTableRow key={shop.id} shop={shop}/>
-                        ))
-                    }
-                </DataTable>
+                <CustomDataGrid
+                    columns={columns}
+                    rows={shops}
+                    meta={meta}
+                />
             </Grid>
         </Grid>
     )
