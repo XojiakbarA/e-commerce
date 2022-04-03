@@ -14,8 +14,8 @@ export const useLogin = () => {
             remember: ''
         },
         validationSchema: loginValidationSchema,
-        onSubmit: (data) => {
-            dispatch(userLogin(data, formik.setSubmitting))
+        onSubmit: (data, { setSubmitting }) => {
+            dispatch(userLogin(data, setSubmitting, setErrors))
         }
     })
 

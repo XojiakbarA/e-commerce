@@ -78,15 +78,14 @@ export const editUser = (data, id, setSubmitting) => {
 }
 
 export const userLogin = (data, setSubmitting) => {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         try {
-            const res1 = await login(data)
-            const res2 = await fetchUser()
-            const user = res2.data.data
-            if (res1.status === 204 && res2.status === 200) {
-                dispatch(setUser(user))
+            const res = await login(data)
+            if (res.status === 204) {
+                await dispatch(getUser())
                 setSubmitting(false)
                 dispatch(toggleLoginDialog(false))
+                const user = getState().user
                 if (user.role == 'admin') {
                     await router.push('/admin')
                 }
@@ -95,8 +94,11 @@ export const userLogin = (data, setSubmitting) => {
                 }
                 dispatch(toggleSnackbar(true, 'You are logged in!'))
             }
-        } catch (e) {
-            console.log(e)
+        } catch ({ response }) {
+            if (response.status === 422) {
+                setSubmitting(false)
+                dispatch(toggleSnackbar(true, 'Incorrect email and/or password', 'error'))
+            }
         }
     }
 }
@@ -125,7 +127,7 @@ export const userLogout = () => {
     }
 }
 
-export const userRegister = (data, setSubmitting) => {
+export const userRegister = (data, setSubmitting, setFieldError) => {
     return async (dispatch) => {
         try {
             const res1 = await register(data)
@@ -136,8 +138,12 @@ export const userRegister = (data, setSubmitting) => {
                 dispatch(toggleSnackbar(true, 'You are logged in!'))
                 dispatch(toggleRegisterDialog(false))
             }
-        } catch (e) {
-            console.log(e)
+        } catch ({ response }) {
+            if (response.status === 422) {
+                setSubmitting(false)
+                const errors = Object.entries(response.data.errors)
+                errors.forEach(item => setFieldError(item[0], item[1][0]))
+            }
         }
     }
 }
@@ -222,8 +228,8 @@ export const createShop = (data, setSubmitting) => {
             const res = await storeShop(data)
             if(res.status === 201) {
                 setSubmitting(false)
+                await router.push(`/vendor`)
                 dispatch(toggleSnackbar(true, 'Shop created successfully!'))
-                router.push(`/vendor/${res.data.data.id}`)
             }
         } catch (e) {
             console.log(e)

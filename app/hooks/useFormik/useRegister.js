@@ -15,8 +15,8 @@ export const useRegister = () => {
             password_confirmation: ''
         },
         validationSchema: registerValidationSchema,
-        onSubmit: (data) => {
-            dispatch(userRegister(data, formik.setSubmitting))
+        onSubmit: (data, { setSubmitting, setFieldError }) => {
+            dispatch(userRegister(data, setSubmitting, setFieldError))
         }
     })
 
