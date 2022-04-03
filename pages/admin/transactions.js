@@ -1,41 +1,176 @@
-import { Grid } from "@mui/material"
+import { Chip, Grid } from "@mui/material"
+import { getGridSingleSelectOperators, getGridStringOperators } from "@mui/x-data-grid"
 import PaidIcon from '@mui/icons-material/Paid'
-import AdminPageHead from '../../components/common/AdminPageHead'
-import { useAdminSearch } from '../../app/hooks/useAdminSearch'
-import { wrapper } from "../../app/store"
+import CancelIcon from '@mui/icons-material/Cancel'
+import PendingIcon from '@mui/icons-material/Pending'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import ReplayIcon from '@mui/icons-material/Replay'
+import Image from "next/image"
 import AdminLayout from "../../components/layout/AdminLayout/AdminLayout"
-import DataTable from "../../components/admin/DataTable/DataTable"
+import AdminPageHead from '../../components/common/AdminPageHead'
+import CustomDataGrid from "../../components/admin/DataGrid/DataGrid"
+import GridCellExpand from "../../components/admin/DataGrid/GridCellExpand"
+import { wrapper } from "../../app/store"
 import { fetchTransactions } from "../../api/admin"
-import TransactionsTableRow from "../../components/admin/DataTable/DataTableRows/TransactionsTableRow"
-
-const headLabels = [
-    { label: 'Name', field: 'name' },
-    { label: 'Email', field: 'email' },
-    { label: 'Phone', field: 'phone' },
-    { label: 'Total', field: 'total' },
-    { label: 'Pay Mode', field: 'pay_mode' },
-    { label: 'Status', field: 'status' },
-]
-
-const colSpan = (field) => {
-    return  field == 'status'
-            ? 2 : 0
-}
-
-function* labelsGenerator() {
-    yield {label: 'By Name', field: 'name'}
-    yield {label: 'By Email', field: 'email'}
-    yield {label: 'By Phone', field: 'phone'}
-    yield {label: 'By Pay Mode', field: 'pay_mode'}
-    return {label: 'By Status', field: 'status'}
-}
 
 const Transactions = (data) => {
 
     const transactions = data.data
     const meta = data.meta
 
-    const { label, handleSearch, handleClick } = useAdminSearch(labelsGenerator)
+    const currencyFormatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    })
+
+    const columns = [
+        {
+            type: 'string',
+            flex: 1,
+            minWidth: 50,
+            field: 'id',
+            headerName: 'ID',
+            sortable: false,
+            filterable: false
+        },
+        {
+            type: 'string',
+            flex: 2,
+            minWidth: 100,
+            field: 'name',
+            headerName: 'Name',
+            renderCell: ({ value, colDef }) => (
+                <GridCellExpand
+                    value={value}
+                    width={colDef.computedWidth}
+                />
+            ),
+            filterOperators: getGridStringOperators()
+                .filter(operator => operator.value === 'contains')
+        },
+        {
+            type: 'string',
+            flex: 2,
+            minWidth: 100,
+            field: 'email',
+            headerName: 'Email',
+            renderCell: ({ value, colDef }) => (
+                <GridCellExpand
+                    value={value}
+                    width={colDef.computedWidth}
+                />
+            ),
+            filterOperators: getGridStringOperators()
+                .filter(operator => operator.value === 'contains')
+        },
+        {
+            type: 'string',
+            flex: 2,
+            minWidth: 100,
+            field: 'phone',
+            headerName: 'Phone',
+            renderCell: ({ value, colDef }) => (
+                <GridCellExpand
+                    value={value}
+                    width={colDef.computedWidth}
+                />
+            ),
+            filterOperators: getGridStringOperators()
+                .filter(operator => operator.value === 'contains')
+        },
+        {
+            type: 'number',
+            flex: 2,
+            minWidth: 100,
+            field: 'total',
+            headerName: 'Total',
+            valueFormatter: ({ value }) => currencyFormatter.format(Number(value))
+        },
+        {
+            type: 'singleSelect',
+            flex: 2,
+            minWidth: 100,
+            field: 'pay_mode',
+            headerName: 'Pay Mode',
+            renderCell: ({ value }) => (
+                    value == 'click'
+                    ?
+                    <Image
+                        src='/images/logo/click-logo.png'
+                        alt='click-logo'
+                        width={70}
+                        height={26}
+                    />
+                    :
+                    value == 'payme'
+                    ?
+                    <Image
+                        src='/images/logo/payme-logo.png'
+                        alt='click-logo'
+                        width={70}
+                        height={20}
+                    />
+                    :
+                    value == 'uzcard'
+                    ?
+                    <Image
+                        src='/images/logo/uzcard-logo.png'
+                        alt='click-logo'
+                        width={70}
+                        height={36}
+                    />
+                    :
+                    value == 'cod'
+                    ?
+                    <Image
+                        src='/images/logo/cod-logo.jpeg'
+                        alt='click-logo'
+                        width={70}
+                        height={27}
+                    />
+                    :
+                    null
+            ),
+            valueOptions: ['payme', 'click', 'uzcard', 'cod'],
+            filterOperators: getGridSingleSelectOperators()
+                .filter(operator => operator.value === 'is')
+        },
+        {
+            type: 'singleSelect',
+            flex: 2,
+            minWidth: 100,
+            field: 'status',
+            headerName: 'Status',
+            renderCell: ({ value }) => (
+                <Chip
+                    size='small'
+                    variant='outlined'
+                    label={value}
+                    icon={
+                        value === 'approved' ?
+                        <CheckCircleIcon/> :
+                        value === 'declined' ?
+                        <CancelIcon/> :
+                        value === 'refunded' ?
+                        <ReplayIcon/> :
+                        <PendingIcon/>
+                    }
+                    color={
+                        value === 'approved' ?
+                        'success' :
+                        value === 'declined' ?
+                        'error' :
+                        value === 'refunded' ?
+                        'warning' :
+                        'default'
+                    }
+                />
+            ),
+            valueOptions: ['pending', 'approved', 'declined', 'refunded'],
+            filterOperators: getGridSingleSelectOperators()
+                .filter(operator => operator.value === 'is')
+        }
+    ]
 
     return (
         <Grid container spacing={2}>
@@ -43,19 +178,14 @@ const Transactions = (data) => {
                 <AdminPageHead
                     title='Transactions'
                     titleIcon={<PaidIcon fontSize='large'/>}
-                    onKeyUp={handleSearch}
-                    onClick={handleClick}
-                    buttonText={label}
                 />
             </Grid>
             <Grid item xs={12}>
-                <DataTable meta={meta} labels={headLabels} colSpan={colSpan}>
-                    {
-                        transactions.map(transaction => (
-                            <TransactionsTableRow key={transaction.id} transaction={transaction}/>
-                        ))
-                    }
-                </DataTable>
+                <CustomDataGrid
+                    columns={columns}
+                    rows={transactions}
+                    meta={meta}
+                />
             </Grid>
         </Grid>
     )
