@@ -145,6 +145,7 @@ const Order = () => {
 export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getState}) => async ({query, req}) => {
 
     const user = getState().user
+    const isVendor = user?.role == 'vendor'
     
     if (!user) {
         return {
@@ -152,6 +153,11 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getStat
                 destination: '/login',
                 permanent: false
             }
+        }
+    }
+    if (!isVendor) {
+        return {
+            notFound: true
         }
     }
 

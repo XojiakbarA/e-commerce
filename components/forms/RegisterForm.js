@@ -2,7 +2,7 @@ import { Typography, Stack, TextField, Button, CircularProgress } from "@mui/mat
 import { useRouter } from "next/router"
 import { useDispatch } from "react-redux"
 import { useRegister } from "../../app/hooks/useFormik/useRegister"
-import { toggleLoginDialog } from "../../app/store/actions/dialogActions"
+import { toggleLoginDialog, toggleRegisterDialog } from "../../app/store/actions/dialogActions"
 
 const RegisterForm = () => {
 
@@ -15,6 +15,7 @@ const RegisterForm = () => {
         if (router.pathname === '/register') {
             router.push('/login')
         } else {
+            dispatch(toggleRegisterDialog(false))
             dispatch(toggleLoginDialog(true))
         }
     }

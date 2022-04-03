@@ -49,6 +49,7 @@ const Orders = ({data}) => {
 export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getState}) => async ({query, req}) => {
 
     const user = getState().user
+    const isVendor = user?.role == 'vendor'
     const cookie = req.headers.cookie
     
     if (!user) {
@@ -57,6 +58,11 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getStat
                 destination: '/login',
                 permanent: false
             }
+        }
+    }
+    if (!isVendor) {
+        return {
+            notFound: true
         }
     }
 

@@ -115,6 +115,7 @@ const Vendor = () => {
 export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getState}) => async ({params, query}) => {
 
     const user = getState().user
+    const isVendor = user?.role == 'vendor'
     
     if (!user) {
         return {
@@ -122,6 +123,11 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getStat
                 destination: '/login',
                 permanent: false
             }
+        }
+    }
+    if (!isVendor) {
+        return {
+            notFound: true
         }
     }
 

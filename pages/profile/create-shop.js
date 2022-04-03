@@ -8,6 +8,7 @@ import MainLayout from '../../components/layout/MainLayout'
 import ProfilePageHead from '../../components/common/ProfilePageHead'
 import { createShop } from '../../app/store/actions/async/user'
 import { useDispatch } from 'react-redux'
+import { appendToFormData } from '../../utils/utils'
 
 const CreateShop = () => {
 

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import Link from 'next/link'
+import BaseLink from '../../../common/Link/BaseLink'
 import { useSelector } from 'react-redux'
 
 const MenuCategories = () => {
@@ -45,10 +45,10 @@ const MenuCategories = () => {
                     categories.map(category => (
                         <MenuItem
                             key={category.id}
+                            href={`search?cat_id=${category.id}`}
+                            component={BaseLink}
                         >
-                            <Link href='#'>
-                                <a>{category.title}</a>
-                            </Link>
+                                {category.title}
                         </MenuItem>
                     ))
                 }
