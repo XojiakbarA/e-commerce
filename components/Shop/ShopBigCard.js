@@ -4,10 +4,8 @@ import { shopImageURL, noBgImageUrl } from "../../utils/utils"
 
 const ShopBigCard = ({shop}) => {
     return (
-        <Card sx={{position: 'relative', width: '100%', height: 330}}>
-            <CardMedia
-                sx={{position: 'absolute', top: 0, left: 0, zIndex: 0, width: '100%', height: 330}}
-            >
+        <Card sx={{width: '100%', height: 330}}>
+            <CardMedia sx={{width: '100%', height: 200}}>
                 <Box sx={{position: 'relative', width: '100%', height: '100%'}}>
                     <Image
                         src={shop.bg_image_big ? shopImageURL + shop.bg_image_big.src : noBgImageUrl}
@@ -18,8 +16,8 @@ const ShopBigCard = ({shop}) => {
                     />
                 </Box>
             </CardMedia>
-            <CardContent sx={{zIndex: 1, position: 'absolute', bottom: 0, left: 0, backgroundColor: 'white', width: '100%'}}>
-                <Stack direction='row' spacing={5}>
+            <CardContent>
+                <Stack direction='row' spacing={5} alignItems='center'>
                     <Avatar
                         src={shop.av_image ? shopImageURL + shop.av_image.src : undefined}
                         alt={shop.title}
@@ -30,7 +28,7 @@ const ShopBigCard = ({shop}) => {
                             borderColor: 'white'
                         }}
                     />
-                    <Box sx={{zIndex: 1}}>
+                    <Box>
                         <Typography gutterBottom variant="h5" component="div">
                             {shop.title}
                         </Typography>

@@ -7,7 +7,7 @@ const DistrictList = ({ region }) => {
     return (
         <Paper>
             <List>
-                <ListSubheader>Districts</ListSubheader>
+                <ListSubheader sx={{ bgcolor: 'inherit' }}>Districts</ListSubheader>
                 {
                     region.districts.map(district => (
                         <DistrictListItem key={district.id} district={district}/>

@@ -1,5 +1,5 @@
-import { CssBaseline } from '@mui/material'
-import '../styles/globals.css'
+import { CssBaseline, ThemeProvider } from '@mui/material'
+import { CacheProvider } from '@emotion/react'
 import { wrapper } from '../app/store'
 import { getUser, getCart, getWishlist } from '../app/store/actions/async/user'
 import { getCategories, getBrands } from '../app/store/actions/async/common'
@@ -7,8 +7,27 @@ import { useEffect } from 'react'
 import { setToken } from '../api/common'
 import PageLoader from '../components/common/PageLoader'
 import CustomSnackbar from '../components/common/CustomSnackbar'
+import createEmotionCache from '../utils/createEmotionCache'
+import { useTheme } from '../app/hooks/useTheme'
+import { useDispatch } from 'react-redux'
+import { setTheme } from '../app/store/actions/actionCreators'
+import '@fontsource/roboto/300.css'
+import '@fontsource/roboto/400.css'
+import '@fontsource/roboto/500.css'
+import '@fontsource/roboto/700.css'
 
-const MyApp = ({Component, pageProps}) => {
+const clientSideEmotionCache = createEmotionCache()
+
+const MyApp = ({Component, emotionCache = clientSideEmotionCache, pageProps}) => {
+
+    const dispatch = useDispatch()
+
+    const { theme } = useTheme()
+
+    useEffect(() => {
+        const mode = localStorage.getItem('mode')
+        dispatch(setTheme(mode))
+    }, [dispatch])
 
     useEffect(() => {
         setToken()
@@ -16,13 +35,21 @@ const MyApp = ({Component, pageProps}) => {
 
     const getLayout = Component.getLayout || ((page) => page)
 
-    return getLayout(
-            <>
-            <PageLoader/>
-            <CssBaseline />
-            <Component {...pageProps} />
-            <CustomSnackbar/>
-            </>
+    return (
+            <CacheProvider value={emotionCache}>
+                <ThemeProvider theme={theme}>
+                    {
+                        getLayout(
+                            <>
+                            <PageLoader/>
+                            <CssBaseline />
+                            <Component {...pageProps} />
+                            <CustomSnackbar/>
+                            </>
+                        )
+                    }
+                </ThemeProvider>
+            </CacheProvider>
     )
 }
 

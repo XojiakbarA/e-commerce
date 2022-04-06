@@ -112,8 +112,8 @@ const TopHeader = () => {
 
     return (
         <Box sx={{ flexGrow: 1, display: {xs: 'none', sm: 'block'} }}>
-            <AppBar position='fixed'>
-                <Toolbar>
+            <AppBar position='fixed' sx={{ zIndex: 1200 }}>
+                <Toolbar variant='dense'>
                     <ButtonLink
                         href={'/'}
                         text={'e-commerce'}
@@ -126,7 +126,7 @@ const TopHeader = () => {
                     <DropdownMenu menu={profileMenu}/>
                 </Toolbar>
             </AppBar>
-            <Toolbar/>
+            <Toolbar variant='dense'/>
             <Toolbar/>
         </Box>
     );

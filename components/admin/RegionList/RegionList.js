@@ -7,7 +7,7 @@ const RegionList = ({ regions, selected, handleSelectedClick }) => {
     return (
         <Paper>
             <List>
-                <ListSubheader>Regions</ListSubheader>
+                <ListSubheader sx={{ bgcolor: 'inherit' }}>Regions</ListSubheader>
                 {
                     regions.map(region => (
                         <RegionListItem

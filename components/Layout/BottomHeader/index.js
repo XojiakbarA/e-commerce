@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types'
 import useScrollTrigger from '@mui/material/useScrollTrigger'
-import { AppBar, Toolbar, Slide, Box } from '@mui/material'
+import { AppBar, Toolbar, Slide, Box, Tooltip } from '@mui/material'
 import MenuCategories from './MenuCategories'
 import ButtonMenu from '../../common/Menu/ButtonMenu'
+import ToggleThemeButton from '../../common/ToggleThemeButton'
 
 function HideOnScroll({ children, window }) {
     
@@ -33,12 +34,13 @@ const navMenu = [
 const BottomHeader = (props) => {
     return (
         <HideOnScroll {...props}>
-            <AppBar sx={{zIndex: 10}} color='inherit'>
-                <Toolbar sx={{display: {xs: 'none', sm: 'block'}}} />
+            <AppBar color='inherit'>
+                <Toolbar sx={{display: {xs: 'none', sm: 'block'}}} variant='dense'/>
                 <Toolbar>
                     <MenuCategories />
-                    <Box sx={{flexGrow: 1}} />
                     <ButtonMenu menu={navMenu}/>
+                    <Box sx={{flexGrow: 1}} />
+                    <ToggleThemeButton/>
                 </Toolbar>
             </AppBar>
         </HideOnScroll>

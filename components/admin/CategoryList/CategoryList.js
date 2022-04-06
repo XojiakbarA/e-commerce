@@ -7,7 +7,7 @@ const CategoryList = ({ categories }) => {
     return (
         <Paper>
             <List>
-                <ListSubheader>Categories</ListSubheader>
+                <ListSubheader sx={{ bgcolor: 'inherit' }}>Categories</ListSubheader>
                 {
                     categories.map(category => (
                         <CategoryListItem key={category.id} category={category}/>

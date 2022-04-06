@@ -44,7 +44,14 @@ const CartSidebar = () => {
                 <Stack
                     spacing={2}
                     alignItems='center'
-                    sx={{position: 'sticky', right: 0, bottom: 0, padding: 1, backgroundColor: 'white'}}
+                    sx={{
+                        position: 'fixed',
+                        width: 350,
+                        right: 0,
+                        bottom: 0,
+                        padding: 1,
+                        bgcolor: 'background.default'
+                    }}
                 >
                     <Button
                         fullWidth

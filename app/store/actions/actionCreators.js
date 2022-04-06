@@ -1,5 +1,10 @@
 import * as type from './types'
 
+export const setTheme = (payload) => ({
+    type: type.SET_THEME,
+    payload
+})
+
 export const setCart = (payload, cookieCart) => ({
     type: type.SET_CART,
     payload,

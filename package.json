@@ -8,9 +8,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/cache": "^11.7.1",
     "@emotion/react": "^11.5.0",
+    "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.3.0",
-    "@fontsource/roboto": "^4.5.1",
+    "@fontsource/roboto": "^4.5.5",
     "@mui/icons-material": "^5.0.5",
     "@mui/lab": "^5.0.0-alpha.58",
     "@mui/material": "^5.0.6",

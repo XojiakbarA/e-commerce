@@ -69,10 +69,8 @@ const Vendor = () => {
                     </Grid>
                     <Grid item lg={4}>
                         <Paper sx={{padding: 3}}>
-                            <ListSubheader>
-                                Top Regions
-                            </ListSubheader>
                             <List>
+                                <ListSubheader sx={{ bgcolor: 'inherit' }}>Top Regions</ListSubheader>
                                 <ListItem>
                                     <Stack direction='row' justifyContent='space-between' alignItems='center' width='100%'>
                                         <Typography variant='body2'>

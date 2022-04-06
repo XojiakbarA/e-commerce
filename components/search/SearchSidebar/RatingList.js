@@ -28,7 +28,7 @@ const RatingList = () => {
 
     return(
         <Box>
-            <ListSubheader>Rating</ListSubheader>
+            <ListSubheader sx={{ bgcolor: 'inherit' }}>Rating</ListSubheader>
             <FormGroup>
                 {
                     arr.map((num, i) => (

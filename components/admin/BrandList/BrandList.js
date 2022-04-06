@@ -8,7 +8,7 @@ const BrandList = ({ brands }) => {
     return (
         <Paper>
             <List>
-                <ListSubheader>Brands</ListSubheader>
+                <ListSubheader sx={{ bgcolor: 'inherit' }}>Brands</ListSubheader>
                 {
                     brands.map(brand => (
                         <BrandListItem key={brand.id} brand={brand}/>

@@ -28,7 +28,7 @@ const BrandList = () => {
 
     return(
         <Box>
-            <ListSubheader>Brands</ListSubheader>
+            <ListSubheader sx={{ bgcolor: 'inherit' }}>Brands</ListSubheader>
             <FormGroup>
                 {
                     brands.map((brand, i) => (

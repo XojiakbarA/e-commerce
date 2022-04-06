@@ -1,6 +1,7 @@
 import * as type from '../actions/types'
 
 const initialState = {
+    theme: 'light',
     isLoading: false,
     cartSidebar: false,
     accountMenu: null,
@@ -14,6 +15,9 @@ const initialState = {
 
 const toggleReducer = (state = initialState, action) => {
     switch (action.type) {
+        case type.SET_THEME:
+            return { ...state, theme: action.payload }
+
         case type.IS_LOADING:
             return { ...state, isLoading: action.payload }
 

@@ -50,7 +50,7 @@ const PriceRange = () => {
 
     return (
         <Box>
-            <ListSubheader sx={{zIndex: 0}}>
+            <ListSubheader sx={{zIndex: 0, bgcolor: 'inherit' }}>
                 Price Range
             </ListSubheader>
             <Slider

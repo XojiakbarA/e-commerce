@@ -15,7 +15,7 @@ export const useLogin = () => {
         },
         validationSchema: loginValidationSchema,
         onSubmit: (data, { setSubmitting }) => {
-            dispatch(userLogin(data, setSubmitting, setErrors))
+            dispatch(userLogin(data, setSubmitting))
         }
     })
 

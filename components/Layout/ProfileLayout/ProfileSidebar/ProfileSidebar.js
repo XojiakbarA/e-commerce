@@ -16,7 +16,7 @@ const ProfileSidebar = ({menu}) => {
             <Paper>
                 <Stack padding={2} divider={<Divider orientation='horizontal' />}>
                     <List>
-                        <ListSubheader>Menu</ListSubheader>
+                        <ListSubheader sx={{ bgcolor: 'inherit' }}>Menu</ListSubheader>
                         {
                             menu.map(item => (
                                 <ListItemButton
@@ -38,7 +38,7 @@ const ProfileSidebar = ({menu}) => {
                     {
                     !isVendorPage &&
                     <List>
-                        <ListSubheader>Shop</ListSubheader>
+                        <ListSubheader sx={{ bgcolor: 'inherit' }}>Shop</ListSubheader>
                         <ListItemButton
                             selected={router.asPath == '/profile/create-shop'}
                             href={shop ? '/vendor' : '/profile/create-shop'}
