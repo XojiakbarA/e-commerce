@@ -22,7 +22,14 @@ const BannerItem = ({banner}) => {
                     </Stack>
                 </Grid>
                 <Grid item lg={6}>
-                    <Box sx={{ position: 'relative', width: 450, height: 450 }}>
+                    <Box sx={{
+                            position: 'relative',
+                            width: 450,
+                            height: 450,
+                            borderRadius: 2,
+                            overflow: 'hidden'
+                        }}
+                    >
                         <Image
                             src={bannerImageURL + banner.image}
                             alt={banner.image}

@@ -24,7 +24,11 @@ const ToggleThemeButton = () => {
     return (
         <div>
             <Tooltip title='Switch Theme'>
-                <IconButton aria-describedby={id} onClick={handleClick}>
+                <IconButton
+                    aria-describedby={id}
+                    onClick={handleClick}
+                    color='primary'
+                >
                     {
                         mode === 'light' ?
                         <LightModeIcon/>
@@ -51,6 +55,7 @@ const ToggleThemeButton = () => {
                     exclusive
                     onChange={handleModeChange}
                     aria-label="change mode"
+                    color='primary'
                 >
                     <ToggleButton value="light" aria-label="left aligned">
                         <LightModeIcon/>
