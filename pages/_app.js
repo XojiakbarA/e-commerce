@@ -9,7 +9,6 @@ import PageLoader from '../components/common/PageLoader'
 import CustomSnackbar from '../components/common/CustomSnackbar'
 import createEmotionCache from '../utils/createEmotionCache'
 import { useTheme } from '../app/hooks/useTheme'
-import { useDispatch } from 'react-redux'
 import { setTheme } from '../app/store/actions/actionCreators'
 import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
@@ -20,14 +19,7 @@ const clientSideEmotionCache = createEmotionCache()
 
 const MyApp = ({Component, emotionCache = clientSideEmotionCache, pageProps}) => {
 
-    const dispatch = useDispatch()
-
     const { theme } = useTheme()
-
-    useEffect(() => {
-        const mode = localStorage.getItem('mode')
-        dispatch(setTheme(mode))
-    }, [dispatch])
 
     useEffect(() => {
         setToken()
@@ -59,10 +51,14 @@ MyApp.getInitialProps = wrapper.getInitialAppProps(store => async ({Component, c
     const cookies = ctx.req?.headers.cookie
     const cookieCart = ctx.req.cookies['cart'] ? JSON.parse(ctx.req.cookies['cart']) : undefined
     const cookieWishlist = ctx.req.cookies['wishlist'] ? JSON.parse(ctx.req.cookies['wishlist']) : undefined
+    const theme = ctx.req.cookies['theme']
 
     await dispatch(getCategories())
     await dispatch(getBrands())
 
+    if (theme) {
+        dispatch(setTheme(theme))
+    }
     if (cookies) {
         await dispatch(getUser(cookies))
     }

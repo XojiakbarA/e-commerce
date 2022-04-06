@@ -1,7 +1,7 @@
 import * as type from '../actions/types'
 
 const initialState = {
-    theme: 'light',
+    theme: '',
     isLoading: false,
     cartSidebar: false,
     accountMenu: null,

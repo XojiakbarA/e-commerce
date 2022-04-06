@@ -2,6 +2,7 @@ import { useMediaQuery } from "@mui/material"
 import { createTheme } from "@mui/material/styles"
 import { useDispatch, useSelector } from "react-redux"
 import { setTheme } from "../store/actions/actionCreators"
+import cookie from "js-cookie"
 
 export const useTheme = () => {
 
@@ -13,7 +14,7 @@ export const useTheme = () => {
 
     const handleModeChange = (e, newMode) => {
         if (newMode !== null) {
-            localStorage.setItem('mode', newMode)
+            cookie.set('theme', newMode)
             dispatch(setTheme(newMode))
         }
     }
