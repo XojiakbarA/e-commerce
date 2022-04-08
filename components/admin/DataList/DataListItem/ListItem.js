@@ -4,34 +4,31 @@ import EditIcon from '@mui/icons-material/Edit'
 import EditOffIcon from '@mui/icons-material/EditOff'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useState } from "react"
-import { useDispatch } from "react-redux"
-import { useFieldTitle } from "../../../app/hooks/useFormik/useFieldTitle"
-import { editSubCategory } from "../../../app/store/actions/async/admin"
-import { toggleDeleteSubCategoryDialog } from "../../../app/store/actions/dialogActions"
+import { useSingleField } from "../../../../app/hooks/useFormik/useSingleField"
 
-const SubCategoryListItem = ({ sub_category }) => {
+const CustomListItem = ({
+    item, field, placeholder, handleSubmitEdit,
+    validationSchema, openDeleteDialog
+}) => {
 
-    const dispatch = useDispatch()
+    const [edit, setEdit] = useState(false)
 
-    const [ edit, setEdit ] = useState(false)
+    const dialogText = `Do you really want to delete the "${item[field]}"?`
 
-    const handleSubmitEdit = (data, { resetForm, setSubmitting }) => {
-        dispatch(editSubCategory(sub_category.id, data, resetForm, setSubmitting, setEdit))
+    const handleDeleteClick = () => {
+        openDeleteDialog(dialogText, item.id)
+    }
+    const onSubmit = (data, { resetForm, setSubmitting }) => {
+        handleSubmitEdit(item.id, data, resetForm, setSubmitting, setEdit)
     }
 
     const {
-        values, isSubmitting, touched, errors,
-        getFieldProps,handleSubmit, handleEditClick, handleBlur
-    } = useFieldTitle(sub_category.title, handleSubmitEdit, edit, setEdit)
-
-    const dialogText = `Do you really want to delete the "${sub_category.title}"?`
-
-    const openDeleteSubCategoryDialog = () => {
-        dispatch(toggleDeleteSubCategoryDialog(true, dialogText, sub_category.id))
-    }
+        events, values, isSubmitting, touched, errors,
+        getFieldProps, handleSubmit, handleEditClick, handleBlur
+    } = useSingleField(field, item[field], onSubmit, validationSchema, edit, setEdit)
 
     return (
-        <ListItem selected={edit} sx={{ pl: 4 }}>
+        <ListItem selected={edit}>
             {
                 isSubmitting
                 ?
@@ -44,23 +41,25 @@ const SubCategoryListItem = ({ sub_category }) => {
                 ?
                 <form onSubmit={handleSubmit} style={{ width: '100%' }}>
                     <TextField
-                        variant='standard'
                         fullWidth
                         autoFocus
-                        error={ touched.title && Boolean(errors.title) }
-                        { ...getFieldProps('title') }
+                        variant='standard'
+                        placeholder={placeholder}
+                        error={ touched[field] && Boolean(errors[field]) }
+                        { ...getFieldProps(field) }
                         onBlur={handleBlur}
                     />
                 </form>
                 :
-                <ListItemText primary={sub_category.title}/>
+                <ListItemText primary={item[field]}/>
             }
             {
                 edit &&
                 <IconButton
                     size='small'
-                    disabled={Boolean(errors.title) || values.title == sub_category.title || isSubmitting}
-                    onClick={handleSubmit}
+                    disabled={Boolean(errors[field]) || values[field] == item[field] || isSubmitting}
+                    onClick={ handleSubmit }
+                    { ...events }
                 >
                     <SaveIcon fontSize='small'/>
                 </IconButton>
@@ -74,7 +73,7 @@ const SubCategoryListItem = ({ sub_category }) => {
             </IconButton>
             <IconButton
                 size='small'
-                onClick={ openDeleteSubCategoryDialog }
+                onClick={ handleDeleteClick }
                 disabled={isSubmitting}
             >
                 <DeleteIcon fontSize='small'/>
@@ -83,4 +82,4 @@ const SubCategoryListItem = ({ sub_category }) => {
     )
 }
 
-export default SubCategoryListItem
+export default CustomListItem

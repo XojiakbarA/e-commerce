@@ -1,31 +1,34 @@
 import { Box, CircularProgress, Collapse, IconButton, List, ListItemButton, ListItemText, TextField } from "@mui/material"
-import {ExpandLess, ExpandMore} from '@mui/icons-material'
+import ExpandLessIcon from '@mui/icons-material/ExpandLess'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import SaveIcon from '@mui/icons-material/Save'
 import EditIcon from '@mui/icons-material/Edit'
 import EditOffIcon from '@mui/icons-material/EditOff'
 import DeleteIcon from '@mui/icons-material/Delete'
-import SubCategoryListItem from "./SubCategoryListItem"
-import AddSubCategoryListItem from "./AddSubCategoryListItem"
+import AddListItem from "./AddListItem"
+import CustomListItem from "./ListItem"
 import { useState } from "react"
 import { useDispatch } from "react-redux"
-import { useFieldTitle } from "../../../app/hooks/useFormik/useFieldTitle"
-import { editCategory } from "../../../app/store/actions/async/admin"
-import { toggleDeleteCategoryDialog } from "../../../app/store/actions/dialogActions"
+import { useSingleField } from "../../../../app/hooks/useFormik/useSingleField"
+import { createSubCategory, editCategory, editSubCategory } from "../../../../app/store/actions/async/admin"
+import { toggleDeleteCategoryDialog, toggleDeleteSubCategoryDialog } from "../../../../app/store/actions/dialogActions"
+import { titleValidationSchema } from "../../../../app/hooks/useFormik/validate"
+
 
 const CategoryListItem = ({ category }) => {
 
     const dispatch = useDispatch()
 
-    const [ edit, setEdit ] = useState(false)
+    const [ catEdit, setCatEdit ] = useState(false)
 
-    const handleSubmitEdit = (data, { resetForm, setSubmitting }) => {
-        dispatch(editCategory(category.id, data, resetForm, setSubmitting, setEdit))
+    const handleCatEditSubmit = (data, { resetForm, setSubmitting }) => {
+        dispatch(editCategory(category.id, data, resetForm, setSubmitting, setCatEdit))
     }
 
     const {
         open, ripple, values, isSubmitting, events, touched, errors,
         getFieldProps, handleSubmit, handleOpenClick, handleEditClick, handleBlur
-    } = useFieldTitle(category.title, handleSubmitEdit, edit, setEdit)
+    } = useSingleField('title', category.title, handleCatEditSubmit, titleValidationSchema, catEdit, setCatEdit)
 
     const dialogText = `Do you really want to delete the "${category.title}"?`
 
@@ -34,10 +37,25 @@ const CategoryListItem = ({ category }) => {
         dispatch(toggleDeleteCategoryDialog(true, dialogText, category.id))
     }
 
+    const [subCatCreate, setSubCatCreate] = useState(false)
+
+    const handleSubCatCreateSubmit = (data, {resetForm, setSubmitting}) => {
+        dispatch(createSubCategory(category.id, data, resetForm, setSubmitting, setSubCatCreate))
+    }
+
+    const subCatFormik = useSingleField('title', null, handleSubCatCreateSubmit, titleValidationSchema, subCatCreate, setSubCatCreate)
+
+    const handleSubCatEditSubmit = (id, data, resetForm, setSubmitting, setEdit) => {
+        dispatch(editSubCategory(id, data, resetForm, setSubmitting, setEdit))
+    }
+    const openDeleteSubCategoryDialog = (dialogText, id) => {
+        dispatch(toggleDeleteSubCategoryDialog(true, dialogText, id))
+    }
+
     return (
         <>
             <ListItemButton
-                selected={open || edit}
+                selected={open || catEdit}
                 disableRipple={ripple}
                 onClick={ handleOpenClick }
             >
@@ -49,13 +67,14 @@ const CategoryListItem = ({ category }) => {
                     <Box sx={{ flexGrow: 1 }}/>
                     </>
                     :
-                    edit
+                    catEdit
                     ?
                     <form onSubmit={handleSubmit} style={{ width: '100%' }}>
                         <TextField
-                            variant='standard'
                             fullWidth
                             autoFocus
+                            variant='standard'
+                            placeholder='Category Title'
                             error={ touched.title && Boolean(errors.title) }
                             { ...getFieldProps('title') }
                             onBlur={handleBlur}
@@ -66,7 +85,7 @@ const CategoryListItem = ({ category }) => {
                     <ListItemText primary={category.title}/>
                 }
                 {
-                    edit &&
+                    catEdit &&
                     <IconButton
                         size='small'
                         disabled={Boolean(errors.title) || values.title == category.title || isSubmitting}
@@ -82,7 +101,7 @@ const CategoryListItem = ({ category }) => {
                     disabled={isSubmitting}
                     { ...events }
                 >
-                    {edit ? <EditOffIcon fontSize='small'/> : <EditIcon fontSize='small'/>}
+                    {catEdit ? <EditOffIcon fontSize='small'/> : <EditIcon fontSize='small'/>}
                 </IconButton>
                 <IconButton
                     size='small'
@@ -92,7 +111,7 @@ const CategoryListItem = ({ category }) => {
                 >
                     <DeleteIcon fontSize='small'/>
                 </IconButton>
-                { category.sub_categories && (open ? <ExpandLess /> : <ExpandMore />) }
+                { category.sub_categories && (open ? <ExpandLessIcon /> : <ExpandMoreIcon />) }
             </ListItemButton>
             {
                 category.sub_categories &&
@@ -100,10 +119,25 @@ const CategoryListItem = ({ category }) => {
                     <List component="div" disablePadding>
                         {
                             category.sub_categories.map(sub_category => (
-                                <SubCategoryListItem key={sub_category.id} sub_category={sub_category}/>
+                                <CustomListItem
+                                    key={sub_category.id}
+                                    item={sub_category}
+                                    field='title'
+                                    placeholder='Sub Category Title'
+                                    handleSubmitEdit={handleSubCatEditSubmit}
+                                    validationSchema={titleValidationSchema}
+                                    openDeleteDialog={openDeleteSubCategoryDialog}
+                                />
                             ))
                         }
-                        <AddSubCategoryListItem category_id={category.id}/>
+                        <AddListItem
+                            formik={subCatFormik}
+                            edit={subCatCreate}
+                            placeholder='Sub Category Title'
+                            listItemText='Add Sub Category'
+                            listItemStyle={{ pl: 4, alignItems: 'flex-start' }}
+                            field='title'
+                        />
                     </List>
                 </Collapse>
             }

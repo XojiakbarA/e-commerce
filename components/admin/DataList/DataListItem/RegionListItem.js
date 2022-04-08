@@ -1,37 +1,43 @@
-import { Box, CircularProgress, IconButton, ListItem, ListItemText, TextField } from "@mui/material"
+import { Box, CircularProgress, IconButton, ListItemButton, ListItemText, TextField } from "@mui/material"
 import SaveIcon from '@mui/icons-material/Save'
 import EditIcon from '@mui/icons-material/Edit'
 import EditOffIcon from '@mui/icons-material/EditOff'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useState } from "react"
 import { useDispatch } from "react-redux"
-import { useFieldName } from "../../../app/hooks/useFormik/useFieldName"
-import { editDistrict } from "../../../app/store/actions/async/admin"
-import { toggleDeleteDistrictDialog } from "../../../app/store/actions/dialogActions"
+import { useSingleField } from "../../../../app/hooks/useFormik/useSingleField"
+import { editRegion } from "../../../../app/store/actions/async/admin"
+import { toggleDeleteRegionDialog } from "../../../../app/store/actions/dialogActions"
+import { nameValidationSchema } from "../../../../app/hooks/useFormik/validate"
 
-const DistrictListItem = ({ district }) => {
+const RegionListItem = ({ region, selected, handleSelectedClick }) => {
 
     const dispatch = useDispatch()
 
     const [edit, setEdit] = useState(false)
 
     const handleSubmitEdit = (data, { resetForm, setSubmitting }) => {
-        dispatch(editDistrict(district.id, data, resetForm, setSubmitting, setEdit))
+        dispatch(editRegion(region.id, data, resetForm, setSubmitting, setEdit))
     }
 
     const {
-        events, values, isSubmitting, touched, errors,
+        ripple, events, values, isSubmitting, touched, errors,
         getFieldProps, handleSubmit, handleEditClick, handleBlur
-    } = useFieldName(district.name, handleSubmitEdit, setEdit)
+    } = useSingleField('name', region.name, handleSubmitEdit, nameValidationSchema, edit, setEdit)
 
-    const dialogText = `Do you really want to delete the "${district.name}"?`
+    const dialogText = `Do you really want to delete the "${region.name}"?`
 
-    const openDeleteDistrictDialog = () => {
-        dispatch(toggleDeleteDistrictDialog(true, dialogText, district.id))
+    const openDeleteRegionDialog = (e) => {
+        e.stopPropagation()
+        dispatch(toggleDeleteRegionDialog(true, dialogText, region.id))
     }
 
     return (
-        <ListItem selected={edit}>
+        <ListItemButton
+            disableRipple={ripple}
+            selected={selected.id === region.id || edit}
+            onClick={e => handleSelectedClick(region)}
+        >
             {
                 isSubmitting
                 ?
@@ -47,19 +53,21 @@ const DistrictListItem = ({ district }) => {
                         fullWidth
                         autoFocus
                         variant='standard'
+                        placeholder='Region Name'
                         error={ touched.name && Boolean(errors.name) }
                         { ...getFieldProps('name') }
                         onBlur={handleBlur}
+                        { ...events }
                     />
                 </form>
                 :
-                <ListItemText primary={district.name}/>
+                <ListItemText primary={region.name}/>
             }
             {
                 edit &&
                 <IconButton
                     size='small'
-                    disabled={Boolean(errors.name) || values.name == district.name || isSubmitting}
+                    disabled={Boolean(errors.name) || values.name == region.name || isSubmitting}
                     onClick={ handleSubmit }
                     { ...events }
                 >
@@ -70,18 +78,20 @@ const DistrictListItem = ({ district }) => {
                 size='small'
                 onClick={handleEditClick}
                 disabled={isSubmitting}
+                { ...events }
             >
                 {edit ? <EditOffIcon fontSize='small'/> : <EditIcon fontSize='small'/>}
             </IconButton>
             <IconButton
                 size='small'
-                onClick={ openDeleteDistrictDialog }
+                onClick={ openDeleteRegionDialog }
                 disabled={isSubmitting}
+                { ...events }
             >
                 <DeleteIcon fontSize='small'/>
             </IconButton>
-        </ListItem>
+        </ListItemButton>
     )
 }
 
-export default DistrictListItem
+export default RegionListItem

@@ -1,14 +1,19 @@
 import { Grid } from "@mui/material"
 import CategoryIcon from '@mui/icons-material/Category'
 import AdminPageHead from '../../components/common/AdminPageHead'
-import { wrapper } from "../../app/store"
 import AdminLayout from "../../components/layout/AdminLayout/AdminLayout"
-import { deleteBrand, deleteCategory, deleteSubCategory, getCategories } from "../../app/store/actions/async/admin"
-import { useDispatch, useSelector } from "react-redux"
-import CategoryList from "../../components/admin/CategoryList/CategoryList"
-import BrandList from "../../components/admin/BrandList/BrandList"
 import ConfirmDialog from "../../components/dialogs/ConfirmDialog"
+import DataList from "../../components/admin/DataList/DataList"
+import CategoryListItem from "../../components/admin/DataList/DataListItem/CategoryListItem"
+import AddListItem from "../../components/admin/DataList/DataListItem/AddListItem"
+import CustomListItem from "../../components/admin/DataList/DataListItem/ListItem"
+import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useSingleField } from "../../app/hooks/useFormik/useSingleField"
+import { wrapper } from "../../app/store"
+import { createBrand, createCategory, deleteBrand, deleteCategory, deleteSubCategory, editBrand, getCategories } from "../../app/store/actions/async/admin"
 import { toggleDeleteBrandDialog, toggleDeleteCategoryDialog, toggleDeleteSubCategoryDialog } from "../../app/store/actions/dialogActions"
+import { titleValidationSchema } from "../../app/hooks/useFormik/validate"
 
 const CategoriesBrands = () => {
 
@@ -41,6 +46,29 @@ const CategoriesBrands = () => {
         dispatch(deleteBrand(brand_id))
     }
 
+    const [ catEdit, setCatEdit ] = useState(false)
+
+    const handleCatCreateSubmit = (data, { resetForm, setSubmitting }) => {
+        dispatch(createCategory(data, resetForm, setSubmitting, setCatEdit))
+    }
+
+    const catFormik = useSingleField('title', null, handleCatCreateSubmit, titleValidationSchema, catEdit, setCatEdit)
+
+    const [brandEdit, setBrandEdit] = useState(false)
+
+    const handleBrandCreateSubmit = (data, { resetForm, setSubmitting }) => {
+        dispatch(createBrand(data, resetForm, setSubmitting, setBrandEdit))
+    }
+
+    const brandFormik = useSingleField('title', null, handleBrandCreateSubmit, titleValidationSchema, brandEdit, setBrandEdit)
+
+    const handleBrandEditSubmit = (id, data, resetForm, setSubmitting, setEdit) => {
+        dispatch(editBrand(id, data, resetForm, setSubmitting, setEdit))
+    }
+    const openDeleteBrandDialog = (dialogText, id) => {
+        dispatch(toggleDeleteBrandDialog(true, dialogText, id))
+    }
+
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -50,10 +78,44 @@ const CategoriesBrands = () => {
                 />
             </Grid>
             <Grid item xs={4}>
-                <CategoryList categories={categories}/>
+                <DataList subHeader='Categories'>
+                    {
+                        categories.map(category => (
+                            <CategoryListItem key={category.id} category={category}/>
+                        ))
+                    }
+                    <AddListItem
+                        formik={catFormik}
+                        edit={catEdit}
+                        placeholder='Category Title'
+                        listItemText='Add Category'
+                        field='title'
+                    />
+                </DataList>
             </Grid>
             <Grid item xs={4}>
-                <BrandList brands={brands}/>
+                <DataList subHeader='Brands'>
+                    {
+                        brands.map(brand => (
+                            <CustomListItem
+                                key={brand.id}
+                                item={brand}
+                                field='title'
+                                placeholder='Brand Title'
+                                handleSubmitEdit={handleBrandEditSubmit}
+                                validationSchema={titleValidationSchema}
+                                openDeleteDialog={openDeleteBrandDialog}
+                            />
+                        ))
+                    }
+                    <AddListItem
+                        formik={brandFormik}
+                        edit={brandEdit}
+                        placeholder='Brand Title'
+                        listItemText='Add Brand'
+                        field='title'
+                    />
+                </DataList>
             </Grid>
             <ConfirmDialog
                 open={deleteCategoryDialog}

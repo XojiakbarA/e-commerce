@@ -1,29 +1,17 @@
 import { Box, CircularProgress, IconButton, ListItem, ListItemText, TextField } from "@mui/material"
 import AddCircleIcon from '@mui/icons-material/AddCircle'
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
+import CancelIcon from '@mui/icons-material/Cancel'
 import SaveIcon from '@mui/icons-material/Save'
-import { useState } from "react"
-import { useDispatch } from "react-redux"
-import { useFieldTitle } from "../../../app/hooks/useFormik/useFieldTitle"
-import { createBrand } from "../../../app/store/actions/async/admin"
 
-const AddBrandListItem = () => {
-
-    const dispatch = useDispatch()
-
-    const [edit, setEdit] = useState(false)
-
-    const handleSubmitCreate = (data, { resetForm, setSubmitting }) => {
-        dispatch(createBrand(data, resetForm, setSubmitting, setEdit))
-    }
+const AddListItem = ({ formik, edit, placeholder, listItemText, listItemStyle, field }) => {
 
     const {
-        values, touched, errors, events, isSubmitting,
+        values, errors, touched, events, isSubmitting,
         getFieldProps, handleSubmit, handleEditClick, handleBlur
-    } = useFieldTitle(null, handleSubmitCreate, edit, setEdit)
+    } = formik
 
     return (
-        <ListItem selected={edit}>
+        <ListItem selected={edit} sx={listItemStyle}>
             {
                 isSubmitting
                 ?
@@ -39,21 +27,21 @@ const AddBrandListItem = () => {
                         fullWidth
                         autoFocus
                         variant='standard'
-                        placeholder='Brand Title'
-                        error={ touched.title && Boolean(errors.title) }
-                        { ...getFieldProps('title') }
+                        placeholder={placeholder}
+                        error={ touched[field] && Boolean(errors[field]) }
+                        { ...getFieldProps(field) }
                         onBlur={handleBlur}
                     />
                 </form>
                 :
-                <ListItemText primary='Add Brand'/>
+                <ListItemText primary={listItemText}/>
             }
             {
                 edit &&
                 <IconButton
                     size='small'
                     onClick={handleSubmit}
-                    disabled={Boolean(errors.title) || !values.title || isSubmitting}
+                    disabled={Boolean(errors[field]) || !values[field] || isSubmitting}
                     { ...events }
                 >
                     <SaveIcon fontSize='small'/>
@@ -64,10 +52,10 @@ const AddBrandListItem = () => {
                 onClick={handleEditClick}
                 disabled={isSubmitting}
             >
-                {edit ? <RemoveCircleIcon fontSize='small'/> : <AddCircleIcon fontSize='small'/>}
+                {edit ? <CancelIcon fontSize='small'/> : <AddCircleIcon fontSize='small'/>}
             </IconButton>
         </ListItem>
     )
 }
 
-export default AddBrandListItem
+export default AddListItem

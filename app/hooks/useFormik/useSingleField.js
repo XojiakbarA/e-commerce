@@ -1,34 +1,39 @@
 import { useFormik } from "formik"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { toggleSnackbar } from "../../store/actions/actionCreators"
 import { useRipple } from "../useRipple"
-import { nameValidationSchema } from "./validate"
 
-export const useFieldName = (name, onSubmit, setEdit) => {
+export const useSingleField = (field, value, onSubmit, validationSchema, edit, setEdit) => {
 
     const dispatch = useDispatch()
 
     const [ripple, events] = useRipple()
+    const [open, setOpen] = useState(false)
+
+    const initialValues = Object.fromEntries([[field, value || '']])
 
     const {
         values, isSubmitting, touched, errors,
         getFieldProps, handleSubmit, resetForm, setSubmitting
     } = useFormik({
-        initialValues: { name: name ?? '' },
-        validationSchema: nameValidationSchema,
-        onSubmit: onSubmit,
+        initialValues,
+        onSubmit,
+        validationSchema,
         enableReinitialize: true
     })
 
     useEffect(() => {
-        if (touched.name && errors.name) {
-            dispatch(toggleSnackbar(true, errors.name, 'error'))
+        if (touched[field] && errors[field]) {
+            dispatch(toggleSnackbar(true, errors[field], 'error'))
         } else {
             dispatch(toggleSnackbar(false, ''))
         }
-    }, [dispatch, touched.name, errors.name])
+    }, [dispatch, touched, errors, field])
 
+    const handleOpenClick = (e) => {
+        if (!edit) setOpen(prev => !prev)
+    }
     const handleEditClick = (e) => {
         e.stopPropagation()
         resetForm()
@@ -39,16 +44,18 @@ export const useFieldName = (name, onSubmit, setEdit) => {
     }
 
     return {
+        open,
         ripple,
-        events,
         values,
         isSubmitting,
+        events,
         touched,
         errors,
         getFieldProps,
         handleSubmit,
-        setSubmitting,
+        handleOpenClick,
         handleEditClick,
-        handleBlur
+        handleBlur,
+        setSubmitting
     }
 }
