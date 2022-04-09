@@ -1,19 +1,20 @@
+import { Grid, Typography } from '@mui/material'
 import ListAltIcon from '@mui/icons-material/ListAlt'
 import AddIcon from '@mui/icons-material/Add'
+import MainLayout from '../../components/layout/MainLayout'
 import ProfileLayout from "../../components/layout/ProfileLayout/ProfileLayout"
-import { useDispatch, useSelector } from 'react-redux'
-import { Grid, Typography } from '@mui/material'
-import AddProductDialog from '../../components/dialogs/AddProductDialog'
-import ViewProductDialog from '../../components/dialogs/ViewProductDialog'
-import EditProductDialog from '../../components/dialogs/EditProductDialog'
-import { wrapper } from "../../app/store"
+import ProfilePageHead from '../../components/common/ProfilePageHead'
 import ProductList from '../../components/common/List/List'
 import ProductListItem from '../../components/vendor/ProductListItem'
-import { deleteProduct, deleteProductImage, getProducts } from '../../app/store/actions/async/vendor'
-import MainLayout from '../../components/layout/MainLayout'
-import ProfilePageHead from '../../components/common/ProfilePageHead'
 import ConfirmDialog from '../../components/dialogs/ConfirmDialog'
-import { toggleAddProductDialog, toggleDeleteProductDialog, toggleDeleteProductImageDialog } from '../../app/store/actions/dialogActions'
+import ProductDialog from '../../components/dialogs/ProductDialog'
+import ProductForm from '../../components/forms/ProductForm'
+import ProductDetails from '../../components/product/ProductDetails/ProductDetails'
+import { useDispatch, useSelector } from 'react-redux'
+import { wrapper } from "../../app/store"
+import { createProduct, deleteProduct, deleteProductImage, editProduct, getProducts } from '../../app/store/actions/async/vendor'
+import { toggleAddProductDialog, toggleDeleteProductDialog, toggleDeleteProductImageDialog, toggleEditProductDialog, toggleViewProductDialog } from '../../app/store/actions/dialogActions'
+import { appendToFormData } from '../../utils/utils'
 
 const labels = [ 'Title', 'Image', 'Stock', 'Price', 'Sale Price', 'Rating', '' ]
 
@@ -26,11 +27,23 @@ const Products = () => {
 
     const {
         loading, text, prod_id, image_id,
+        addProductDialog, viewProductDialog, editProductDialog,
         deleteProductDialog, deleteProductImageDialog
     } = useSelector(state => state.dialog)
 
+    const product = useSelector(state => state.products.data.find(item => item.id === prod_id))
+
     const openAddProductDialog = () => {
         dispatch(toggleAddProductDialog(true))
+    }
+    const closeAddProductDialog = () => {
+        dispatch(toggleAddProductDialog(false))
+    }
+    const closeViewProductDialog = () => {
+        dispatch(toggleViewProductDialog(false, null, null))
+    }
+    const closeEditProductDialog = () => {
+        dispatch(toggleEditProductDialog(false, null, null))
     }
     const closeDeleteProductDialog = () => {
         dispatch(toggleDeleteProductDialog(false, null, null))
@@ -38,12 +51,24 @@ const Products = () => {
     const closeDeleteProductImageDialog = () => {
         dispatch(toggleDeleteProductImageDialog(false, null, null))
     }
+
     const handleProductDeleteClick = () => {
         dispatch(deleteProduct(prod_id))
     }
     const handleProductImageDeleteClick = () => {
         dispatch(deleteProductImage(prod_id, image_id))
     }
+
+    const handleCreateSubmit = (data, { setSubmitting }) => {
+        const formData = appendToFormData(data)
+        dispatch(createProduct(formData, setSubmitting))
+    }
+    const handleEditSubmit = (data, {setSubmitting}) => {
+        const formData = appendToFormData(data)
+        dispatch(editProduct(prod_id, formData, setSubmitting))
+    }
+
+
 
     return (
         <Grid container spacing={2}>
@@ -74,9 +99,27 @@ const Products = () => {
                         No products yet
                     </Typography>
                 }
-                <AddProductDialog/>
-                <ViewProductDialog/>
-                <EditProductDialog/>
+                <ProductDialog
+                    open={addProductDialog}
+                    onClose={closeAddProductDialog}
+                    title='Add Product'
+                >
+                    <ProductForm onSubmit={handleCreateSubmit}/>
+                </ProductDialog>
+                <ProductDialog
+                    open={viewProductDialog}
+                    onClose={closeViewProductDialog}
+                    title='View Product'
+                >
+                    {viewProductDialog && <ProductDetails product={product}/>}
+                </ProductDialog>
+                <ProductDialog
+                    open={editProductDialog}
+                    onClose={closeEditProductDialog}
+                    title='Edit Product'
+                >
+                    <ProductForm onSubmit={handleEditSubmit} product={product}/>
+                </ProductDialog>
                 <ConfirmDialog
                     open={deleteProductDialog}
                     content={text}
