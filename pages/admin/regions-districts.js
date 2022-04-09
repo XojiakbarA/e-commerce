@@ -4,16 +4,15 @@ import AdminPageHead from "../../components/common/AdminPageHead"
 import AdminLayout from "../../components/layout/AdminLayout/AdminLayout"
 import ConfirmDialog from "../../components/dialogs/ConfirmDialog"
 import DataList from "../../components/admin/DataList/DataList"
-import RegionListItem from "../../components/admin/DataList/DataListItem/RegionListItem"
 import AddListItem from "../../components/admin/DataList/DataListItem/AddListItem"
 import CustomListItem from "../../components/admin/DataList/DataListItem/ListItem"
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useSingleField } from "../../app/hooks/useFormik/useSingleField"
 import { wrapper } from "../../app/store"
-import { createDistrict, createRegion, deleteDistrict, deleteRegion, editDistrict, getRegions } from "../../app/store/actions/async/admin"
+import { createDistrict, createRegion, deleteDistrict, deleteRegion, editDistrict, editRegion, getRegions } from "../../app/store/actions/async/admin"
 import { toggleDeleteDistrictDialog, toggleDeleteRegionDialog } from "../../app/store/actions/dialogActions"
 import { nameValidationSchema } from "../../app/hooks/useFormik/validate"
+import CustomListItemButton from "../../components/admin/DataList/DataListItem/ListItemButton"
 
 const RegionsDistricts = () => {
 
@@ -36,6 +35,13 @@ const RegionsDistricts = () => {
     const closeDeleteDistrictDialog = () => {
         dispatch(toggleDeleteDistrictDialog(false, null, null))
     }
+    const openDeleteRegionDialog = (dialogText, id) => {
+        dispatch(toggleDeleteRegionDialog(true, dialogText, id))
+    }
+    const openDeleteDistrictDialog = (dialogText, id) => {
+        dispatch(toggleDeleteDistrictDialog(true, dialogText, id))
+    }
+
     const handleRegionDeleteClick = () => {
         dispatch(deleteRegion(region_id, handleSelectedClick))
     }
@@ -43,27 +49,17 @@ const RegionsDistricts = () => {
         dispatch(deleteDistrict(district_id))
     }
 
-    const [regionEdit, setRegionEdit] = useState(false)
-
-    const handleRegionCreateSubmit = (data, { resetForm, setSubmitting }) => {
-        dispatch(createRegion(data, resetForm, setSubmitting, setRegionEdit, handleSelectedClick))
+    const handleRegionCreateSubmit = (data, resetForm, setSubmitting, setEdit) => {
+        dispatch(createRegion(data, resetForm, setSubmitting, setEdit, handleSelectedClick))
     }
-
-    const regionFormik = useSingleField('name', null, handleRegionCreateSubmit, nameValidationSchema, regionEdit, setRegionEdit)
-
-    const [districtCreate, setDistrictCreate] = useState(false)
-
-    const handleDistrictCreateSubmit = (data, { resetForm, setSubmitting }) => {
-        dispatch(createDistrict(selected.id, data, resetForm, setSubmitting, setDistrictCreate))
+    const handleRegionEditSubmit = (id, data, resetForm, setSubmitting, setEdit) => {
+        dispatch(editRegion(id, data, resetForm, setSubmitting, setEdit))
     }
-
-    const districtFormik = useSingleField('name', null, handleDistrictCreateSubmit, nameValidationSchema, districtCreate, setDistrictCreate)
-
+    const handleDistrictCreateSubmit = (data, resetForm, setSubmitting, setEdit, id) => {
+        dispatch(createDistrict(id, data, resetForm, setSubmitting, setEdit))
+    }
     const handleDistrictEditSubmit = (id, data, resetForm, setSubmitting, setEdit) => {
         dispatch(editDistrict(id, data, resetForm, setSubmitting, setEdit))
-    }
-    const openDeleteDistrictDialog = (dialogText, id) => {
-        dispatch(toggleDeleteDistrictDialog(true, dialogText, id))
     }
 
     return (
@@ -78,20 +74,25 @@ const RegionsDistricts = () => {
                 <DataList subHeader='Regions'>
                     {
                         regions.map(region => (
-                            <RegionListItem
+                            <CustomListItemButton
                                 key={region.id}
-                                region={region}
-                                selected={selected}
+                                item={region}
+                                field='name'
+                                placeholder='Region Name'
+                                handleSubmitEdit={handleRegionEditSubmit}
                                 handleSelectedClick={handleSelectedClick}
+                                validationSchema={nameValidationSchema}
+                                openDeleteDialog={openDeleteRegionDialog}
+                                isSelected={selected.id === region.id}
                             />
                         ))
                     }
                     <AddListItem
-                        formik={regionFormik}
-                        edit={regionEdit}
+                        field='name'
                         placeholder='Region Name'
                         listItemText='Add Region'
-                        field='name'
+                        handleCreateSubmit={handleRegionCreateSubmit}
+                        validationSchema={nameValidationSchema}
                     />
                 </DataList>
             </Grid>
@@ -111,11 +112,12 @@ const RegionsDistricts = () => {
                         ))
                     }
                     <AddListItem
-                        formik={districtFormik}
-                        edit={districtCreate}
+                        field='name'
                         placeholder='District Name'
                         listItemText='Add District'
-                        field='name'
+                        handleCreateSubmit={handleDistrictCreateSubmit}
+                        validationSchema={nameValidationSchema}
+                        id={selected.id}
                     />
                 </DataList>
             </Grid>

@@ -100,12 +100,13 @@ export const getCategories = (cookie) => {
     }
 }
 
-export const createCategory = (data, resetForm, setSubmitting, setEdit) => {
+export const createCategory = (data, resetForm, setSubmitting, setEdit, handleSelectedClick) => {
     return async (dispatch) => {
         try {
             const res = await storeCategory(data)
             if (res.status === 201) {
                 dispatch(addCategory(res.data.data))
+                handleSelectedClick(res.data.data)
                 resetForm()
                 setSubmitting(false)
                 setEdit(false)
@@ -252,13 +253,14 @@ export const deleteBanner = (id, handleBannerChange) => {
     }
 }
 
-export const deleteCategory = (id) => {
-    return async (dispatch) => {
+export const deleteCategory = (id, handleSelectedClick) => {
+    return async (dispatch, getState) => {
         try {
             dispatch(toggleDialogLoading(true))
             const res = await destroyCategory(id)
             if (res.status === 204) {
                 dispatch(dropCategory(id))
+                handleSelectedClick(getState().categories[0])
                 dispatch(toggleDialogLoading(false))
                 dispatch(toggleDeleteCategoryDialog(false, null, null))
                 dispatch(toggleSnackbar(true, `Category deleted successfully!`))

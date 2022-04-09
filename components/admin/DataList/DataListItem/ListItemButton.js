@@ -4,39 +4,37 @@ import EditIcon from '@mui/icons-material/Edit'
 import EditOffIcon from '@mui/icons-material/EditOff'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useState } from "react"
-import { useDispatch } from "react-redux"
 import { useSingleField } from "../../../../app/hooks/useFormik/useSingleField"
-import { editRegion } from "../../../../app/store/actions/async/admin"
-import { toggleDeleteRegionDialog } from "../../../../app/store/actions/dialogActions"
-import { nameValidationSchema } from "../../../../app/hooks/useFormik/validate"
 
-const RegionListItem = ({ region, selected, handleSelectedClick }) => {
 
-    const dispatch = useDispatch()
+const CustomListItemButton = ({
+    item, field, placeholder, openDeleteDialog, isSelected,
+    validationSchema, handleSubmitEdit, handleSelectedClick
+}) => {
 
-    const [edit, setEdit] = useState(false)
+    const [ edit, setEdit ] = useState(false)
 
-    const handleSubmitEdit = (data, { resetForm, setSubmitting }) => {
-        dispatch(editRegion(region.id, data, resetForm, setSubmitting, setEdit))
+    const dialogText = `Do you really want to delete the "${item[field]}"?`
+
+    const handleDeleteClick = (e) => {
+        e.stopPropagation()
+        openDeleteDialog(dialogText, item.id)
+    }
+
+    const onSubmit = (data, { resetForm, setSubmitting }) => {
+        handleSubmitEdit(item.id, data, resetForm, setSubmitting, setEdit)
     }
 
     const {
-        ripple, events, values, isSubmitting, touched, errors,
+        ripple, values, isSubmitting, events, touched, errors,
         getFieldProps, handleSubmit, handleEditClick, handleBlur
-    } = useSingleField('name', region.name, handleSubmitEdit, nameValidationSchema, edit, setEdit)
-
-    const dialogText = `Do you really want to delete the "${region.name}"?`
-
-    const openDeleteRegionDialog = (e) => {
-        e.stopPropagation()
-        dispatch(toggleDeleteRegionDialog(true, dialogText, region.id))
-    }
+    } = useSingleField(field, item[field], onSubmit, validationSchema, setEdit)
 
     return (
         <ListItemButton
+            selected={isSelected || edit}
             disableRipple={ripple}
-            selected={selected.id === region.id || edit}
-            onClick={e => handleSelectedClick(region)}
+            onClick={ e => handleSelectedClick(item) }
         >
             {
                 isSubmitting
@@ -53,21 +51,21 @@ const RegionListItem = ({ region, selected, handleSelectedClick }) => {
                         fullWidth
                         autoFocus
                         variant='standard'
-                        placeholder='Region Name'
-                        error={ touched.name && Boolean(errors.name) }
-                        { ...getFieldProps('name') }
+                        placeholder={placeholder}
+                        error={ touched[field] && Boolean(errors[field]) }
+                        { ...getFieldProps(field) }
                         onBlur={handleBlur}
                         { ...events }
                     />
                 </form>
                 :
-                <ListItemText primary={region.name}/>
+                <ListItemText primary={item[field]}/>
             }
             {
                 edit &&
                 <IconButton
                     size='small'
-                    disabled={Boolean(errors.name) || values.name == region.name || isSubmitting}
+                    disabled={Boolean(errors[field]) || values[field] == item[field] || isSubmitting}
                     onClick={ handleSubmit }
                     { ...events }
                 >
@@ -84,7 +82,7 @@ const RegionListItem = ({ region, selected, handleSelectedClick }) => {
             </IconButton>
             <IconButton
                 size='small'
-                onClick={ openDeleteRegionDialog }
+                onClick={ handleDeleteClick }
                 disabled={isSubmitting}
                 { ...events }
             >
@@ -94,4 +92,4 @@ const RegionListItem = ({ region, selected, handleSelectedClick }) => {
     )
 }
 
-export default RegionListItem
+export default CustomListItemButton

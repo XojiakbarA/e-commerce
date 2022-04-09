@@ -1,15 +1,14 @@
 import { useFormik } from "formik"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { toggleSnackbar } from "../../store/actions/actionCreators"
 import { useRipple } from "../useRipple"
 
-export const useSingleField = (field, value, onSubmit, validationSchema, edit, setEdit) => {
+export const useSingleField = (field, value, onSubmit, validationSchema, setEdit) => {
 
     const dispatch = useDispatch()
 
     const [ripple, events] = useRipple()
-    const [open, setOpen] = useState(false)
 
     const initialValues = Object.fromEntries([[field, value || '']])
 
@@ -31,9 +30,6 @@ export const useSingleField = (field, value, onSubmit, validationSchema, edit, s
         }
     }, [dispatch, touched, errors, field])
 
-    const handleOpenClick = (e) => {
-        if (!edit) setOpen(prev => !prev)
-    }
     const handleEditClick = (e) => {
         e.stopPropagation()
         resetForm()
@@ -44,7 +40,6 @@ export const useSingleField = (field, value, onSubmit, validationSchema, edit, s
     }
 
     return {
-        open,
         ripple,
         values,
         isSubmitting,
@@ -53,7 +48,6 @@ export const useSingleField = (field, value, onSubmit, validationSchema, edit, s
         errors,
         getFieldProps,
         handleSubmit,
-        handleOpenClick,
         handleEditClick,
         handleBlur,
         setSubmitting

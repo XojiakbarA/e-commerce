@@ -8,7 +8,7 @@ import { useSingleField } from "../../../../app/hooks/useFormik/useSingleField"
 
 const CustomListItem = ({
     item, field, placeholder, handleSubmitEdit,
-    validationSchema, openDeleteDialog
+    validationSchema, openDeleteDialog, listItemStyle
 }) => {
 
     const [edit, setEdit] = useState(false)
@@ -25,10 +25,10 @@ const CustomListItem = ({
     const {
         events, values, isSubmitting, touched, errors,
         getFieldProps, handleSubmit, handleEditClick, handleBlur
-    } = useSingleField(field, item[field], onSubmit, validationSchema, edit, setEdit)
+    } = useSingleField(field, item[field], onSubmit, validationSchema, setEdit)
 
     return (
-        <ListItem selected={edit}>
+        <ListItem selected={edit} sx={listItemStyle}>
             {
                 isSubmitting
                 ?
