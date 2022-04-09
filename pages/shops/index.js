@@ -1,10 +1,10 @@
 import { Grid } from "@mui/material"
-import ShopCard from '../../components/shop/ShopCard'
+import MainLayout from "../../components/layout/MainLayout"
+import ShopCard from '../../components/common/Card/ShopCard/ShopCard'
+import MyPagination from "../../components/common/Pagination"
 import { wrapper } from "../../app/store"
 import { getShops } from "../../app/store/actions/async/common"
 import { useSelector } from "react-redux"
-import MyPagination from "../../components/common/Pagination"
-import MainLayout from "../../components/layout/MainLayout"
 
 const Shops = () => {
 

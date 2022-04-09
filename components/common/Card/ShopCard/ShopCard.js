@@ -1,9 +1,9 @@
 import {Card, CardActions, CardContent, CardMedia, Typography, Rating, Box, CardActionArea} from '@mui/material'
 import PhotoIcon from '@mui/icons-material/Photo'
-import BaseLink from '../common/Link/BaseLink'
 import Image from 'next/image'
-import { shopImageURL, noBgImageUrl } from '../../utils/utils'
-import ThumbImage from '../common/Image/ThumbImage'
+import ThumbImage from '../../../common/Image/ThumbImage'
+import BaseLink from '../../Link/BaseLink'
+import { shopImageURL, noBgImageUrl } from '../../../../utils/utils'
 
 const styles = {
     card: {

@@ -3,8 +3,8 @@ import EditIcon from '@mui/icons-material/Edit'
 import AddIcon from '@mui/icons-material/Add'
 import AvatarUpload from '../common/UploadButton/AvatarUpload'
 import ImageUpload from '../common/UploadButton/ImageUpload'
-import PhoneMask from '../../components/common/PhoneMask'
-import AutocompleteAsync from '../../components/common/AutocompleteAsync/AutocompleteAsync'
+import PhoneMaskInput from '../common/Input/PhoneMaskInput'
+import AutocompleteInput from '../../components/common/Input/AutocompleteInput'
 import { shopImageURL } from '../../utils/utils'
 import { useLocation } from '../../app/hooks/useLocation'
 import { useDoublePreview } from '../../app/hooks/usePreview/useDoublePreview'
@@ -63,7 +63,7 @@ const ShopForm = ({ onSubmit, shop }) => {
                             />
                         </Grid>
                         <Grid item lg={6}>
-                            <AutocompleteAsync
+                            <AutocompleteInput
                                 name='region_id'
                                 label='Region'
                                 error={touched.region_id && Boolean(errors.region_id)}
@@ -76,7 +76,7 @@ const ShopForm = ({ onSubmit, shop }) => {
                             />
                         </Grid>
                         <Grid item lg={6}>
-                            <AutocompleteAsync
+                            <AutocompleteInput
                                 name='district_id'
                                 label='District'
                                 error={touched.district_id && Boolean(errors.district_id)}
@@ -114,7 +114,7 @@ const ShopForm = ({ onSubmit, shop }) => {
                                 label='Phone Number'
                                 size='small'
                                 fullWidth
-                                InputProps={{inputComponent: PhoneMask, inputProps: {name: 'phone'}}}
+                                InputProps={{inputComponent: PhoneMaskInput, inputProps: {name: 'phone'}}}
                                 error={ touched.phone && Boolean(errors.phone) }
                                 helperText={ touched.phone && errors.phone }
                                 { ...getFieldProps('phone') }

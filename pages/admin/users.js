@@ -5,7 +5,7 @@ import StorefrontIcon from '@mui/icons-material/Storefront'
 import SecurityIcon from '@mui/icons-material/Security'
 import PersonIcon from '@mui/icons-material/Person'
 import AdminLayout from "../../components/layout/AdminLayout/AdminLayout"
-import AdminPageHead from "../../components/common/AdminPageHead"
+import PageTitle from "../../components/common/PageTitle"
 import CustomDataGrid from "../../components/admin/DataGrid/DataGrid"
 import GridCellExpand from "../../components/admin/DataGrid/GridCellExpand"
 import DateInput from "../../components/admin/DataGrid/DateInput"
@@ -142,7 +142,7 @@ const Users = ( data ) => {
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
-                <AdminPageHead
+                <PageTitle
                     title='Users'
                     titleIcon={<GroupIcon fontSize='large'/>}
                 />

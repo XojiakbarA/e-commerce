@@ -1,10 +1,10 @@
 import { Avatar, Card, Box, CardContent, CardMedia, Rating, Stack, Typography } from "@mui/material"
 import Image from 'next/image'
-import { shopImageURL, noBgImageUrl } from "../../utils/utils"
+import { shopImageURL, noBgImageUrl } from "../../../../utils/utils"
 
 const ShopBigCard = ({shop}) => {
     return (
-        <Card sx={{width: '100%', height: 330}}>
+        <Card sx={{width: '100%'}}>
             <CardMedia sx={{width: '100%', height: 200}}>
                 <Box sx={{position: 'relative', width: '100%', height: '100%'}}>
                     <Image

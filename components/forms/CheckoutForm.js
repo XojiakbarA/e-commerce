@@ -1,9 +1,8 @@
 import { Grid, Paper, Typography, TextField, RadioGroup, FormControlLabel, Stack, Radio, Divider, FormControl, FormHelperText, Button, CircularProgress } from "@mui/material"
-import { useRouter } from "next/router"
 import { useCheckout } from "../../app/hooks/useFormik/useCheckout"
 import { useLocation } from "../../app/hooks/useLocation"
-import AutocompleteAsync from "../common/AutocompleteAsync/AutocompleteAsync"
-import PhoneMask from "../common/PhoneMask"
+import AutocompleteInput from "../common/Input/AutocompleteInput"
+import PhoneMaskInput from "../common/Input/PhoneMaskInput"
 import BaseLink from '../common/Link/BaseLink'
 
 const radios = [
@@ -14,8 +13,6 @@ const radios = [
 ]
 
 const CheckoutForm = () => {
-
-    const router = useRouter()
 
     const {
         handleSubmit, getFieldProps, handleBlur, handleChange, setFieldValue,
@@ -51,7 +48,7 @@ const CheckoutForm = () => {
                                     label='Phone Number'
                                     size='small'
                                     fullWidth
-                                    InputProps={{inputComponent: PhoneMask, inputProps: {name: 'phone'}}}
+                                    InputProps={{inputComponent: PhoneMaskInput, inputProps: {name: 'phone'}}}
                                     error={ touched.phone && Boolean(errors.phone) }
                                     helperText={ touched.phone && errors.phone }
                                     { ...getFieldProps('phone') }
@@ -71,7 +68,7 @@ const CheckoutForm = () => {
                             <Grid item lg={12}>
                                 <Grid container spacing={2}>
                                     <Grid item lg={6}>
-                                        <AutocompleteAsync
+                                        <AutocompleteInput
                                             name='region_id'
                                             label='Region'
                                             error={touched.region_id && Boolean(errors.region_id)}
@@ -84,7 +81,7 @@ const CheckoutForm = () => {
                                         />
                                     </Grid>
                                     <Grid item lg={6}>
-                                        <AutocompleteAsync
+                                        <AutocompleteInput
                                             name='district_id'
                                             label='District'
                                             error={ touched.district_id && Boolean(errors.district_id)}

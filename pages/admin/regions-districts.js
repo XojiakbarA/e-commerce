@@ -1,18 +1,18 @@
 import { Grid } from "@mui/material"
 import LocationOnIcon from '@mui/icons-material/LocationOn'
-import AdminPageHead from "../../components/common/AdminPageHead"
 import AdminLayout from "../../components/layout/AdminLayout/AdminLayout"
+import PageTitle from "../../components/common/PageTitle"
 import ConfirmDialog from "../../components/dialogs/ConfirmDialog"
 import DataList from "../../components/admin/DataList/DataList"
 import AddListItem from "../../components/admin/DataList/DataListItem/AddListItem"
 import CustomListItem from "../../components/admin/DataList/DataListItem/ListItem"
+import CustomListItemButton from "../../components/admin/DataList/DataListItem/ListItemButton"
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { wrapper } from "../../app/store"
 import { createDistrict, createRegion, deleteDistrict, deleteRegion, editDistrict, editRegion, getRegions } from "../../app/store/actions/async/admin"
 import { toggleDeleteDistrictDialog, toggleDeleteRegionDialog } from "../../app/store/actions/dialogActions"
 import { nameValidationSchema } from "../../app/hooks/useFormik/validate"
-import CustomListItemButton from "../../components/admin/DataList/DataListItem/ListItemButton"
 
 const RegionsDistricts = () => {
 
@@ -65,7 +65,7 @@ const RegionsDistricts = () => {
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
-                <AdminPageHead
+                <PageTitle
                     title='Regions & Districts'
                     titleIcon={<LocationOnIcon fontSize='large'/>}
                 />

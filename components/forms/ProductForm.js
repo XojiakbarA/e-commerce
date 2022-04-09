@@ -3,7 +3,7 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
 import EditIcon from '@mui/icons-material/Edit'
 import AddIcon from '@mui/icons-material/Add'
 import DeleteIcon from '@mui/icons-material/Delete'
-import AutocompleteAsync from "../common/AutocompleteAsync/AutocompleteAsync"
+import AutocompleteInput from "../common/Input/AutocompleteInput"
 import MultipleImageUpload from "../common/UploadButton/MultipleImageUpload"
 import { productImageURL } from "../../utils/utils"
 import { useMultiPreview } from "../../app/hooks/usePreview/useMultiPreview"
@@ -53,7 +53,7 @@ const ProductForm = ({ onSubmit, product }) => {
                 <Grid item lg={12}>
                     <Grid container spacing={2}>
                         <Grid item lg={4}>
-                            <AutocompleteAsync
+                            <AutocompleteInput
                                 name='category_id'
                                 label='Category'
                                 error={touched.category_id && Boolean(errors.category_id)}
@@ -66,7 +66,7 @@ const ProductForm = ({ onSubmit, product }) => {
                             />
                         </Grid>
                         <Grid item lg={4}>
-                            <AutocompleteAsync
+                            <AutocompleteInput
                                 name='sub_category_id'
                                 label='Sub Category'
                                 error={touched.sub_category_id && Boolean(errors.sub_category_id)}
@@ -79,7 +79,7 @@ const ProductForm = ({ onSubmit, product }) => {
                             />
                         </Grid>
                         <Grid item lg={4}>
-                            <AutocompleteAsync
+                            <AutocompleteInput
                                 name='brand_id'
                                 label='Brand'
                                 error={touched.brand_id && Boolean(errors.brand_id)}

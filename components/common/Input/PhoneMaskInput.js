@@ -1,7 +1,7 @@
 import { forwardRef } from "react"
 import { IMaskInput } from "react-imask"
 
-const PhoneMask = forwardRef(function PhoneMask({onChange, name, ...other}, ref) {
+const PhoneMaskInput = forwardRef(function PhoneMask({onChange, name, ...other}, ref) {
     return (
         <IMaskInput
             {...other}
@@ -14,4 +14,4 @@ const PhoneMask = forwardRef(function PhoneMask({onChange, name, ...other}, ref)
     )
 })
 
-export default PhoneMask
+export default PhoneMaskInput

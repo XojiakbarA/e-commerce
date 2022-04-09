@@ -3,7 +3,7 @@ import { getGridNumericOperators, getGridStringOperators } from '@mui/x-data-gri
 import StoreIcon from '@mui/icons-material/Store'
 import PhotoIcon from '@mui/icons-material/Photo'
 import AdminLayout from '../../components/layout/AdminLayout/AdminLayout'
-import AdminPageHead from '../../components/common/AdminPageHead'
+import PageTitle from '../../components/common/PageTitle'
 import CustomDataGrid from '../../components/admin/DataGrid/DataGrid'
 import GridCellExpand from '../../components/admin/DataGrid/GridCellExpand'
 import RatingInput from '../../components/admin/DataGrid/RatingInput'
@@ -174,7 +174,7 @@ const Vendors = ( data ) => {
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
-                <AdminPageHead
+                <PageTitle
                     title='Vendors'
                     titleIcon={<StoreIcon fontSize='large'/>}
                 />

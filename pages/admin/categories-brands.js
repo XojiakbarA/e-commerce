@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material"
 import CategoryIcon from '@mui/icons-material/Category'
-import AdminPageHead from '../../components/common/AdminPageHead'
 import AdminLayout from "../../components/layout/AdminLayout/AdminLayout"
+import PageTitle from "../../components/common/PageTitle"
 import ConfirmDialog from "../../components/dialogs/ConfirmDialog"
 import DataList from "../../components/admin/DataList/DataList"
 import AddListItem from "../../components/admin/DataList/DataListItem/AddListItem"
@@ -84,7 +84,7 @@ const CategoriesBrands = () => {
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
-                <AdminPageHead
+                <PageTitle
                     title='Categories & Brands'
                     titleIcon={<CategoryIcon fontSize='large'/>}
                 />

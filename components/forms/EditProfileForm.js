@@ -1,6 +1,6 @@
 import { Box, Button, CircularProgress, Stack, TextField } from "@mui/material"
 import {userImageURL} from "../../utils/utils"
-import PhoneMask from "../common/PhoneMask"
+import PhoneMaskInput from "../common/Input/PhoneMaskInput"
 import AvatarUpload from "../common/UploadButton/AvatarUpload"
 import CustomDataPicker from "../admin/DataGrid/CustomDataPicker"
 import { useEditProfile } from "../../app/hooks/useFormik/useEditProfile"
@@ -62,7 +62,7 @@ const EditProfileForm = () => {
                 <TextField
                     label='Phone Number'
                     size='small'
-                    InputProps={{inputComponent: PhoneMask, inputProps: {name: 'phone'}}}
+                    InputProps={{inputComponent: PhoneMaskInput, inputProps: {name: 'phone'}}}
                     error={ touched.phone && Boolean(errors.phone) }
                     helperText={ touched.phone && errors.phone }
                     { ...getFieldProps('phone') }

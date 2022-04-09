@@ -1,6 +1,6 @@
 import { Autocomplete, CircularProgress, TextField } from "@mui/material"
 
-const AutocompleteAsync = ({
+const AutocompleteInput = ({
     name, label, error, helperText,
     options, option, getOptionLabel, loading,
     handleChange, handleBlur, disabled
@@ -39,4 +39,4 @@ const AutocompleteAsync = ({
     )
 }
 
-export default AutocompleteAsync
+export default AutocompleteInput

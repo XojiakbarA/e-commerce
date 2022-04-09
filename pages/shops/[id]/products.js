@@ -1,5 +1,5 @@
 import { Grid, Paper, Typography } from "@mui/material"
-import ShopBigCard from "../../../components/shop/ShopBigCard"
+import ShopBigCard from "../../../components/common/Card/ShopCard/ShopBigCard"
 import { getShop, getShopProducts } from "../../../app/store/actions/async/common"
 import { wrapper } from "../../../app/store"
 import { useSelector } from "react-redux"

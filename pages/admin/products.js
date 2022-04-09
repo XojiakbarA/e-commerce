@@ -3,7 +3,7 @@ import { getGridBooleanOperators, getGridDateOperators, getGridNumericOperators,
 import ListAltIcon from '@mui/icons-material/ListAlt'
 import PhotoIcon from '@mui/icons-material/Photo'
 import AdminLayout from "../../components/layout/AdminLayout/AdminLayout"
-import AdminPageHead from '../../components/common/AdminPageHead'
+import PageTitle from "../../components/common/PageTitle"
 import CustomDataGrid from "../../components/admin/DataGrid/DataGrid"
 import GridCellExpand from "../../components/admin/DataGrid/GridCellExpand"
 import RatingInput from "../../components/admin/DataGrid/RatingInput"
@@ -192,7 +192,7 @@ const Products = () => {
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
-                <AdminPageHead
+                <PageTitle
                     title='Products'
                     titleIcon={<ListAltIcon fontSize='large'/>}
                 />

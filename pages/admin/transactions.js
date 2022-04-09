@@ -7,7 +7,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import ReplayIcon from '@mui/icons-material/Replay'
 import Image from "next/image"
 import AdminLayout from "../../components/layout/AdminLayout/AdminLayout"
-import AdminPageHead from '../../components/common/AdminPageHead'
+import PageTitle from "../../components/common/PageTitle"
 import CustomDataGrid from "../../components/admin/DataGrid/DataGrid"
 import GridCellExpand from "../../components/admin/DataGrid/GridCellExpand"
 import { wrapper } from "../../app/store"
@@ -175,7 +175,7 @@ const Transactions = (data) => {
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
-                <AdminPageHead
+                <PageTitle
                     title='Transactions'
                     titleIcon={<PaidIcon fontSize='large'/>}
                 />

@@ -1,14 +1,14 @@
 import { Grid, Paper } from "@mui/material"
 import ViewCarouselIcon from '@mui/icons-material/ViewCarousel'
-import AdminPageHead from "../../components/common/AdminPageHead"
-import { wrapper } from "../../app/store"
 import AdminLayout from "../../components/layout/AdminLayout/AdminLayout"
+import PageTitle from "../../components/common/PageTitle"
 import Carousel from "react-material-ui-carousel"
-import { useSelector } from "react-redux"
-import BannerItem from "../../components/index/Banner/BannerItem"
+import BannerItem from "../../components/common/Banner/BannerItem"
+import BannersFormTabs from "../../components/admin/BannersFormTabs/BannersFormTabs"
+import { wrapper } from "../../app/store"
 import { getBanners } from "../../app/store/actions/async/common"
 import { useState } from "react"
-import BannersFormTabs from "../../components/admin/BannersFormTabs/BannersFormTabs"
+import { useSelector } from "react-redux"
 
 const Banners = () => {
 
@@ -23,7 +23,7 @@ const Banners = () => {
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
-                <AdminPageHead
+                <PageTitle
                     title='Banners'
                     titleIcon={<ViewCarouselIcon fontSize='large'/>}
                 />

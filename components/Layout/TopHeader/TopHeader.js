@@ -7,7 +7,7 @@ import PersonIcon from '@mui/icons-material/Person'
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import LogoutIcon from '@mui/icons-material/Logout'
-import InputSearch from './InputSearch'
+import SearchInput from '../../common/Input/SearchInput'
 import BaseLink from "../../common/Link/BaseLink"
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from "react-redux"
@@ -120,7 +120,7 @@ const TopHeader = () => {
                         textVariant='h6'
                         color='inherit'
                     />
-                    <InputSearch onKeyUp={handleSearch}/>
+                    <SearchInput onKeyUp={handleSearch}/>
                     <Box sx={{ flexGrow: 1 }} />
                     <IconButtonMenu menu={userMenu}/>
                     <DropdownMenu menu={profileMenu}/>

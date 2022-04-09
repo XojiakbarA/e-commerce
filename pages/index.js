@@ -1,6 +1,7 @@
 import { Typography, Grid } from "@mui/material"
 import MainLayout from "../components/layout/MainLayout"
-import Banner from "../components/index/Banner"
+import Carousel from "react-material-ui-carousel"
+import BannerItem from "../components/common/Banner/BannerItem"
 import ProductCard from "../components/common/Card/ProductCard/ProductCard"
 import { getBanners, getProducts } from "../app/store/actions/async/common"
 import { wrapper } from "../app/store"
@@ -8,11 +9,16 @@ import { useSelector } from "react-redux"
 
 const Index = () => {
 
+    const banners = useSelector(state => state.banners)
     const products = useSelector(state => state.products.data)
 
     return(
         <>
-            <Banner />
+            <Carousel sx={{ overflow: 'visible' }}>
+                {
+                    banners.map( (banner) => <BannerItem key={banner.id} banner={banner} /> )
+                }
+            </Carousel>
             <Typography variant='h3' gutterBottom>
                 New Products
             </Typography>

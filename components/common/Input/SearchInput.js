@@ -42,7 +42,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const InputSearch = ({ onKeyUp }) => {
+const SearchInput = ({ onKeyUp }) => {
 
     return(
         <Search>
@@ -57,4 +57,4 @@ const InputSearch = ({ onKeyUp }) => {
     )
 }
 
-export default InputSearch
+export default SearchInput
