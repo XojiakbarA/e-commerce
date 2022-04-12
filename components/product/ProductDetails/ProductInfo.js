@@ -1,4 +1,4 @@
-import { Breadcrumbs, Button, CircularProgress, IconButton, Rating, Stack, Typography } from '@mui/material'
+import { Breadcrumbs, Button, IconButton, Rating, Stack, Typography } from '@mui/material'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
@@ -46,7 +46,7 @@ const ProductInfo = ({product}) => {
                     }
                 </Stack>
             }
-            <Typography variant='h3'>
+            <Typography variant='h4'>
                 {product.title}
             </Typography>
             <Stack direction='row' spacing={1}>
@@ -94,8 +94,8 @@ const ProductInfo = ({product}) => {
             </Stack>
             <Stack direction='row' spacing={2}>
                 <Typography
-                    variant='h4'
-                    color={product.sale_price ? 'gray' : 'primary'}
+                    variant='h5'
+                    color={product.sale_price ? 'text.secondary' : 'primary'}
                     sx={{textDecoration: product.sale_price ? 'line-through' : 'none'}}
                 >
                     $ {product.price}
@@ -103,7 +103,7 @@ const ProductInfo = ({product}) => {
                 {
                     product.sale_price
                     &&
-                    <Typography variant='h4' color='primary'>
+                    <Typography variant='h5' color='primary'>
                         $ {product.sale_price}
                     </Typography>
                 }

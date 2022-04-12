@@ -10,8 +10,9 @@ export const useWishlist = (product) => {
     const wishlist = useSelector(state => state.wishlist)
 
     const productInWishlist = wishlist.find(item => item.id === product.id)
-// console.log(wishlist)
-    const addProductWishlist = () => {
+
+    const addProductWishlist = (e) => {
+        e.preventDefault()
         dispatch(addToWishlist(product))
         dispatch(toggleSnackbar(true, 'Product added to wishlist!', 'success'))
 
@@ -21,7 +22,8 @@ export const useWishlist = (product) => {
         cookies.set('wishlist', wishlist, { expires: 7 })
     }
 
-    const deleteProductWishlist = () => {
+    const deleteProductWishlist = (e) => {
+        e.preventDefault()
         dispatch(removeFromWishlist(product.id))
         dispatch(toggleSnackbar(true, 'Product removed from wishlist!', 'success'))
 

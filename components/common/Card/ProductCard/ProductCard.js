@@ -1,16 +1,17 @@
-import {Card, CardContent, CardActionArea, Typography, Rating, Stack} from '@mui/material'
+import {Card, CardContent, CardActionArea, Box} from '@mui/material'
 import PhotoIcon from '@mui/icons-material/Photo'
-import { productImageURL } from '../../../../utils/utils'
 import BaseLink from '../../Link/BaseLink'
-import ProductCardButtons from './ProductCardButtons'
 import ThumbImage from '../../Image/ThumbImage'
+import ProductCardButtons from './ProductCardButtons'
+import ProductDetails from './ProductDetails'
+import { productImageURL } from '../../../../utils/utils'
 
 const ProductCard = ({product, listView}) => {
 
     const style = {
         list: {display: 'flex', justifyContent: 'flex-start'},
         card: {boxShadow: 3, borderRadius: 2, position: 'relative'},
-        cardMedia: {position: 'relative', width: listView ? 150 : '100%', height: listView ? 150 : 276}
+        image: {position: 'relative', width: listView ? 150 : '100%', height: listView ? 150 : 276}
     }
 
     return (
@@ -23,41 +24,22 @@ const ProductCard = ({product, listView}) => {
                 <ThumbImage
                     url={productImageURL}
                     src={product.image}
-                    style={style.cardMedia}
+                    style={style.image}
                     variant='rounded'
                     noImageIcon={<PhotoIcon fontSize='large'/>}
                 />
-                <CardContent>
-                    <Typography gutterBottom
-                        variant="h6"
-                        component="div"
-                        whiteSpace='nowrap'
-                        textOverflow='ellipsis'
-                        overflow='hidden'
-                    >
-                        {product.title}
-                    </Typography>
-
-                    <Rating value={product.rating} size='small' readOnly/>
-                    
-                    <Stack direction='row' spacing={2}>
-                        <Typography
-                            variant="h6"
-                            color={product.sale_price ? 'text.secondary' : 'text.primary'}
-                            sx={{textDecoration: product.sale_price ? 'line-through' : 'none'}}
-                        >
-                            $ {product.price}
-                        </Typography>
-                        {
-                            product.sale_price &&
-                            <Typography variant="h6" color="text.primary">
-                                $ {product.sale_price}
-                            </Typography>
-                        }
-                    </Stack>
+                <CardContent sx={{width: '100%'}}>
+                    <Box display='flex'>
+                        <ProductDetails product={product}/>
+                        <ProductCardButtons
+                            product={product}
+                            display='flex'
+                            flexDirection='column'
+                            justifyContent='center'
+                        />
+                    </Box>
                 </CardContent>
             </CardActionArea>
-            <ProductCardButtons product={product}/>
         </Card>
     );
 }

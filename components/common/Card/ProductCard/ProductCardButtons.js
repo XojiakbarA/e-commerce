@@ -6,7 +6,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { useCart } from '../../../../app/hooks/useCart'
 import { useWishlist } from '../../../../app/hooks/useWishlist'
 
-const ProductCardButtons = ({ product }) => {
+const ProductCardButtons = ({ product, ...others }) => {
 
     const { productInCart, addProduct, removeProduct} = useCart(product)
     const { productInWishlist, addProductWishlist, deleteProductWishlist } = useWishlist(product)
@@ -15,9 +15,7 @@ const ProductCardButtons = ({ product }) => {
     const hasInWishlist = Boolean(productInWishlist)
 
     return (
-        <Box
-            sx={{display: 'flex', flexDirection: 'column', position: 'absolute', top: 0, right: 0}}
-        >
+        <Box {...others}>
             {
                 hasInWishlist
                 ?
