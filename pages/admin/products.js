@@ -55,7 +55,7 @@ const Products = () => {
                     <Avatar
                         variant='rounded'
                         sx={{ width: 35, height:35, marginRight: 1 }}
-                        src={ row.image ? productImageURL + row.image.src : undefined }
+                        src={ row.image ? productImageURL + row.image : undefined }
                     >
                         <PhotoIcon/>
                     </Avatar>

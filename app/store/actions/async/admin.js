@@ -363,7 +363,7 @@ export const createDistrict = (reg_id, data, resetForm, setSubmitting, setEdit) 
         try {
             const res = await storeDistrict(reg_id, data)
             if (res.status === 201) {
-                dispatch(addDistrict(res.data.data, reg_id))
+                dispatch(addDistrict(res.data.data))
                 resetForm()
                 setSubmitting(false)
                 setEdit(false)

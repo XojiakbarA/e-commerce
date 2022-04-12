@@ -39,7 +39,7 @@ const Vendors = ( data ) => {
                 >
                     <Avatar
                         sx={{ width: 35, height:35, marginRight: 1 }}
-                        src={ row.av_image ? shopImageURL + row.av_image : undefined }
+                        src={ row.av_image ? shopImageURL + row.av_image.src : undefined }
                     >
                         <PhotoIcon/>
                     </Avatar>
@@ -117,7 +117,7 @@ const Vendors = ( data ) => {
             headerName: 'Region',
             renderCell: ({ value, colDef }) => (
                 <GridCellExpand
-                    value={value}
+                    value={value.name}
                     width={colDef.computedWidth}
                 />
             ),
@@ -132,7 +132,7 @@ const Vendors = ( data ) => {
             headerName: 'District',
             renderCell: ({ value, colDef }) => (
                 <GridCellExpand
-                    value={value}
+                    value={value.name}
                     width={colDef.computedWidth}
                 />
             ),

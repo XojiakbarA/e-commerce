@@ -84,7 +84,7 @@ const Orders = (data) => {
             headerName: 'Region',
             renderCell: ({ value, colDef }) => (
                 <GridCellExpand
-                    value={value}
+                    value={value.name}
                     width={colDef.computedWidth}
                 />
             ),
@@ -99,7 +99,7 @@ const Orders = (data) => {
             headerName: 'District',
             renderCell: ({ value, colDef }) => (
                 <GridCellExpand
-                    value={value}
+                    value={value.name}
                     width={colDef.computedWidth}
                 />
             ),

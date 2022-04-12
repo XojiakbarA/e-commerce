@@ -246,10 +246,9 @@ export const dropRegion = (id) => ({
     payload: id
 })
 
-export const addDistrict = (district, region_id) => ({
+export const addDistrict = (district) => ({
     type: type.ADD_DISTRICT,
-    payload: district,
-    region_id
+    payload: district
 })
 
 export const updateDistricts = (district) => ({

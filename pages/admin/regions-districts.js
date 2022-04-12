@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material"
+import { CircularProgress, Grid, ListItem } from "@mui/material"
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import AdminLayout from "../../components/layout/AdminLayout/AdminLayout"
 import PageTitle from "../../components/common/PageTitle"
@@ -13,12 +13,16 @@ import { wrapper } from "../../app/store"
 import { createDistrict, createRegion, deleteDistrict, deleteRegion, editDistrict, editRegion, getRegions } from "../../app/store/actions/async/admin"
 import { toggleDeleteDistrictDialog, toggleDeleteRegionDialog } from "../../app/store/actions/dialogActions"
 import { nameValidationSchema } from "../../app/hooks/useFormik/validate"
+import { getDistricts } from "../../app/store/actions/async/common"
 
 const RegionsDistricts = () => {
 
     const dispatch = useDispatch()
 
     const regions = useSelector(state => state.regions)
+    const districts = useSelector(state => state.districts.data)
+    const isFetching = useSelector(state => state.districts.isFetching)
+
     const {
         loading, text, region_id, district_id,
         deleteRegionDialog, deleteDistrictDialog
@@ -28,6 +32,7 @@ const RegionsDistricts = () => {
 
     const handleSelectedClick = (region) => {
         setSelected(region)
+        dispatch(getDistricts(region.id))
     }
     const closeDeleteRegionDialog = () => {
         dispatch(toggleDeleteRegionDialog(false, null, null))
@@ -99,7 +104,13 @@ const RegionsDistricts = () => {
             <Grid item xs={4}>
                 <DataList subHeader='Districts'>
                     {
-                        selected.districts.map(district => (
+                        isFetching
+                        ?
+                        <ListItem>
+                            <CircularProgress/>
+                        </ListItem>
+                        :
+                        districts.map(district => (
                             <CustomListItem
                                 key={district.id}
                                 item={district}
@@ -151,6 +162,10 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getStat
     }
 
     await dispatch(getRegions(cookie))
+
+    const region_id = getState()?.regions[0]?.id
+    
+    await dispatch(getDistricts(region_id))
 
 })
 

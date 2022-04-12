@@ -8,12 +8,12 @@ const ReviewItem = ({review}) => {
             <Stack direction='row' spacing={2} alignItems='center' marginBottom={1}>
                 <ThumbImage
                     url={userImageURL}
-                    src={review.image?.src}
+                    src={review.user_image?.src}
                     size={35}
                 />
                 <Stack>
                     <Typography variant='subtitle2'>
-                        {review.name}
+                        {review.user_name}
                     </Typography>
                     <Stack direction='row' alignItems='center' spacing={2}>
                         <Rating name='review' size='small' value={review.rating} readOnly />
