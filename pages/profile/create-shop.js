@@ -7,16 +7,17 @@ import ShopForm from '../../components/forms/ShopForm'
 import MainLayout from '../../components/layout/MainLayout'
 import ProfilePageHead from '../../components/common/ProfilePageHead'
 import { createShop } from '../../app/store/actions/async/user'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { appendToFormData } from '../../utils/utils'
 
 const CreateShop = () => {
 
     const dispatch = useDispatch()
+    const user_id = useSelector(state => state.user.id)
 
-    const handleSubmit = (data, { setSubmitting }) => {
+    const handleSubmit = (data, { setSubmitting, setFieldError }) => {
         const formData = appendToFormData(data)
-        dispatch(createShop(formData, setSubmitting))
+        dispatch(createShop(user_id, formData, setSubmitting, setFieldError))
     }
 
     return (

@@ -1,9 +1,11 @@
 import {
     destroyBanner, destroyBrand, destroyCategory, destroyDistrict, destroyRegion, destroySubCategory,
-    fetchCategories, fetchProducts, fetchRegions, fetchReviews, storeBanner, storeBrand, storeCategory,
+    fetchReviews, storeBanner, storeBrand, storeCategory,
     storeDistrict, storeRegion, storeSubCategory, updateBanner, updateBrand, updateCategory, updateDistrict,
-    updateProductPublished, updateRegion, updateReviewPublished, updateSubCategory
+    updateRegion, updateReview, updateSubCategory
 } from "../../../../api/admin"
+import { fetchCategories, fetchProducts, fetchRegions } from "../../../../api/common"
+import { updateProduct } from "../../../../api/vendor"
 import {
     addBanner, addBrand, addCategory, addDistrict, addRegion, addSubCategory, dropBanner, dropBrand,
     dropCategory, dropDistrict, dropRegion, dropSubCategory, setCategories, setLoading, setProductPublished, setProducts,
@@ -16,10 +18,10 @@ import {
     toggleDeleteBannerDialog
 } from "../dialogActions"
 
-export const getProducts = (query, cookie) => {
+export const getProducts = (query) => {
     return async (dispatch) => {
         try {
-            const res = await fetchProducts(query, cookie)
+            const res = await fetchProducts(query)
             if (res.status === 200) {
                 dispatch(setProducts(res.data))
             }
@@ -59,7 +61,7 @@ export const editProductPublished = (id, data) => {
     return async (dispatch) => {
         try {
             dispatch(setLoading(true))
-            const res = await updateProductPublished(id, data)
+            const res = await updateProduct(id, data)
             if (res.status === 200) {
                 dispatch(setProductPublished(data.published, id))
                 dispatch(setLoading(false))
@@ -75,7 +77,7 @@ export const editReviewPublished = (id, data) => {
     return async (dispatch) => {
         try {
             dispatch(setLoading(true))
-            const res = await updateReviewPublished(id, data)
+            const res = await updateReview(id, data)
             if (res.status === 200) {
                 dispatch(setReviewPublished(data.published, id))
                 dispatch(setLoading(false))

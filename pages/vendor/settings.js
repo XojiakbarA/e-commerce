@@ -60,7 +60,7 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getStat
         }
     }
 
-    await dispatch(getShop(cookie))
+    await dispatch(getShop(user.id, cookie))
     await dispatch(getRegions())
 
     const region_id = getState().shop.data.region.id

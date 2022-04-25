@@ -1,5 +1,10 @@
 import { instance } from "./common"
 
+export const register = async (data) => {
+    await instance.get('sanctum/csrf-cookie')
+    return await instance.post('register', data)
+}
+
 export const login = async (data) => {
     await instance.get('sanctum/csrf-cookie')
     return await instance.post('login', data)
@@ -10,7 +15,7 @@ export const logout = async () => {
 }
 
 export const fetchUser = async (cookie) => {
-    return await instance.get('api/users', cookie && {
+    return await instance.get('api/me', cookie && {
         headers: {
             'Cookie': cookie,
             'Referer': 'http://localhost:3000/'
@@ -22,25 +27,20 @@ export const updateUser = async (data, id) => {
     return await instance.post(`api/users/${id}?_method=PUT`, data)
 }
 
-export const destroyUserImage = async (image_id) => {
-    return await instance.delete(`api/user/user-images/${image_id}`)
+export const destroyUserImage = async (user_id, image_id) => {
+    return await instance.delete(`api/users/${user_id}/images/${image_id}`)
 }
 
-export const register = async (data) => {
-    await instance.get('sanctum/csrf-cookie')
-    return await instance.post('register', data)
+export const storeShop = async (user_id, data) => {
+    return await instance.post(`api/users/${user_id}/shops`, data)
 }
 
-export const storeShop = async (data) => {
-    return await instance.post('api/user/shops', data)
+export const storeOrder = async (user_id, data) => {
+    return await instance.post(`api/users/${user_id}/orders`, data)
 }
 
-export const storeOrder = async (data) => {
-    return await instance.post('api/user/orders', data)
-}
-
-export const fetchOrders = async (query, cookie) => {
-    return await instance.get('api/user/orders', {
+export const fetchOrders = async (user_id, query, cookie) => {
+    return await instance.get(`api/users/${user_id}/orders`, {
         params: query,
         headers: {
             'Cookie': cookie,
@@ -49,8 +49,8 @@ export const fetchOrders = async (query, cookie) => {
     })
 }
 
-export const fetchOrder = async (id, cookie) => {
-    return await instance.get(`api/user/orders/${id}`, {
+export const fetchOrder = async (order_id, cookie) => {
+    return await instance.get(`api/orders/${order_id}`, {
         headers: {
             'Cookie': cookie,
             'Referer': 'http://localhost:3000/'
@@ -58,10 +58,6 @@ export const fetchOrder = async (id, cookie) => {
     })
 }
 
-export const updateSubOrderStatus = async (id, data) => {
-    return await instance.put(`api/user/sub-orders/${id}`, data)
-}
-
-export const storeReview = async (id, data) => {
-    return await instance.post(`api/user/products/${id}/reviews`, data)
+export const storeReview = async (user_id, data) => {
+    return await instance.post(`api/users/${user_id}/reviews`, data)
 }

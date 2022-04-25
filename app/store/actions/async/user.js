@@ -3,18 +3,19 @@ import cookies from 'js-cookie'
 import { fetchProducts } from '../../../../api/common'
 import {
     login, logout, fetchUser, register, storeOrder, fetchOrders, fetchOrder,
-    storeShop, destroyUserImage, updateUser, storeReview, updateSubOrderStatus
+    storeShop, destroyUserImage, updateUser, storeReview
 } from '../../../../api/user'
 
 import {
     setUser, setCart, setLoading, setWishlist, setOrders, setOrder, toggleAccountMenu,
-    toggleSnackbar, setSubOrderStatus
+    toggleSnackbar, setSubOrderStatus, dropUserImage
 } from '../actionCreators'
 import {
     toggleDialogLoading, toggleCancelOrderDialog, toggleAddReviewDialog,
     toggleDeleteProfileImageDialog, toggleOrderDialog, toggleLoginDialog,
     toggleRegisterDialog, toggleEditProfileDialog
 } from '../dialogActions'
+import { updateSubOrder } from '../../../../api/vendor'
 
 export const getCart = (cookieCart) => {
 
@@ -148,10 +149,10 @@ export const userRegister = (data, setSubmitting, setFieldError) => {
     }
 }
 
-export const createReview = (id, data, setSubmitting) => {
+export const createReview = (user_id, data, setSubmitting) => {
     return async (dispatch) => {
         try {
-            const res = await storeReview(id, data)
+            const res = await storeReview(user_id, data)
             if (res.status === 201) {
                 setSubmitting(false)
                 dispatch(toggleAddReviewDialog(false))
@@ -163,10 +164,10 @@ export const createReview = (id, data, setSubmitting) => {
     }
 }
 
-export const createOrder = (data, setSubmitting) => {
+export const createOrder = (user_id, data, setSubmitting) => {
     return async (dispatch) => {
         try {
-            const res = await storeOrder(data)
+            const res = await storeOrder(user_id, data)
             if (res.status === 201) {
                 dispatch(setOrder(res.data.data))
                 setSubmitting(false)
@@ -179,10 +180,10 @@ export const createOrder = (data, setSubmitting) => {
     }
 }
 
-export const getOrders = (query, cookie) => {
+export const getOrders = (user_id, query, cookie) => {
     return async (dispatch) => {
         try {
-            const res = await fetchOrders(query, cookie)
+            const res = await fetchOrders(user_id, query, cookie)
             if (res.status === 200) {
                 dispatch(setOrders(res.data))
             }
@@ -192,10 +193,10 @@ export const getOrders = (query, cookie) => {
     }
 }
 
-export const getOrder = (id, cookie) => {
+export const getOrder = (order_id, cookie) => {
     return async (dispatch) => {
         try {
-            const res = await fetchOrder(id, cookie)
+            const res = await fetchOrder(order_id, cookie)
             if (res.status === 200) {
                 dispatch(setOrder(res.data.data))
             }
@@ -205,13 +206,13 @@ export const getOrder = (id, cookie) => {
     }
 }
 
-export const cancelOrder = (id, data) => {
+export const cancelSubOrder = (sub_order_id, data) => {
     return async (dispatch) => {
         try {
             dispatch(toggleDialogLoading(true))
-            const res = await updateSubOrderStatus(id, data)
+            const res = await updateSubOrder(sub_order_id, data)
             if (res.status === 200) {
-                dispatch(setSubOrderStatus(id, data.status))
+                dispatch(setSubOrderStatus(sub_order_id, data.status))
                 dispatch(toggleDialogLoading(false))
                 dispatch(toggleSnackbar(true, 'Order cancelled successfully!'))
                 dispatch(toggleCancelOrderDialog(false, null, null))
@@ -222,31 +223,35 @@ export const cancelOrder = (id, data) => {
     }
 }
 
-export const createShop = (data, setSubmitting) => {
+export const createShop = (user_id, data, setSubmitting, setFieldError) => {
     return async (dispatch) => {
         try {
-            const res = await storeShop(data)
+            const res = await storeShop(user_id, data)
             if(res.status === 201) {
                 setSubmitting(false)
                 await router.push(`/vendor`)
                 dispatch(toggleSnackbar(true, 'Shop created successfully!'))
             }
-        } catch (e) {
-            console.log(e)
+        } catch ({ response }) {
+            if (response.status === 422) {
+                setSubmitting(false)
+                const errors = Object.entries(response.data.errors)
+                errors.forEach(item => setFieldError(item[0], item[1][0]))
+            }
         }
     }
 }
 
-export const deleteUserImage = (image_id) => {
+export const deleteUserImage = (user_id, image_id) => {
     return async (dispatch) => {
         try {
             dispatch(toggleDialogLoading(true))
-            const res = await destroyUserImage(image_id)
-            if (res.status === 200) {
-                dispatch(setUser(res.data.data))
+            const res = await destroyUserImage(user_id, image_id)
+            if (res.status === 204) {
+                dispatch(dropUserImage())
                 dispatch(toggleDialogLoading(false))
                 dispatch(toggleDeleteProfileImageDialog(false, '', null))
-                dispatch(toggleSnackbar(true,'Image deleted'))
+                dispatch(toggleSnackbar(true, 'Image deleted'))
             }
         } catch (e) {
             console.log(e)

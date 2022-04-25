@@ -60,7 +60,7 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getStat
         }
     }
 
-    await dispatch(getOrders(query, req.headers.cookie))
+    await dispatch(getOrders(user.id, query, req.headers.cookie))
 
 })
 

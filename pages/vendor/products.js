@@ -21,6 +21,7 @@ const labels = [ 'Title', 'Image', 'Stock', 'Price', 'Sale Price', 'Rating', '' 
 const Products = () => {
 
     const dispatch = useDispatch()
+    const user_id = useSelector(state => state.user.id)
 
     const products = useSelector(state => state.products.data)
     const meta = useSelector(state => state.products.meta)
@@ -53,19 +54,19 @@ const Products = () => {
     }
 
     const handleProductDeleteClick = () => {
-        dispatch(deleteProduct(prod_id))
+        dispatch(deleteProduct(user_id, prod_id))
     }
     const handleProductImageDeleteClick = () => {
-        dispatch(deleteProductImage(prod_id, image_id))
+        dispatch(deleteProductImage(user_id, prod_id, image_id))
     }
 
     const handleCreateSubmit = (data, { setSubmitting }) => {
         const formData = appendToFormData(data)
-        dispatch(createProduct(formData, setSubmitting))
+        dispatch(createProduct(user_id, formData, setSubmitting))
     }
     const handleEditSubmit = (data, {setSubmitting}) => {
         const formData = appendToFormData(data)
-        dispatch(editProduct(prod_id, formData, setSubmitting))
+        dispatch(editProduct(user_id, prod_id, formData, setSubmitting))
     }
 
 
@@ -160,7 +161,7 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getStat
 
     const cookie = req?.headers.cookie
 
-    await dispatch(getProducts(query, cookie))
+    await dispatch(getProducts(user.id, query, cookie))
 
     const products = getState().products.data
 

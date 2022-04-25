@@ -120,11 +120,11 @@ const Products = () => {
             type: 'string',
             flex: 2,
             minWidth: 100,
-            field: 'brand_title',
-            headerName: 'Brand Title',
+            field: 'brand',
+            headerName: 'Brand',
             renderCell: ({ value, colDef }) => (
                 <GridCellExpand
-                    value={value}
+                    value={value.title}
                     width={colDef.computedWidth}
                 />
             )
@@ -133,11 +133,11 @@ const Products = () => {
             type: 'string',
             flex: 2,
             minWidth: 100,
-            field: 'category_title',
+            field: 'category',
             headerName: 'Category Title',
             renderCell: ({ value, colDef }) => (
                 <GridCellExpand
-                    value={value}
+                    value={value.title}
                     width={colDef.computedWidth}
                 />
             )
@@ -146,11 +146,11 @@ const Products = () => {
             type: 'string',
             flex: 2,
             minWidth: 100,
-            field: 'shop_title',
+            field: 'shop',
             headerName: 'Shop Title',
             renderCell: ({ value, colDef }) => (
                 <GridCellExpand
-                    value={value}
+                    value={value.title}
                     width={colDef.computedWidth}
                 />
             )
@@ -209,9 +209,8 @@ const Products = () => {
     )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getState}) => async ({query, req}) => {
+export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getState}) => async ({query}) => {
 
-    const cookie = req.headers.cookie
     const isAdmin = getState()?.user?.role == 'admin'
 
     if (!isAdmin) {
@@ -223,7 +222,7 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getStat
     query.count = query.count ?? 5
     query.page = query.page ?? 1
 
-    await dispatch(getProducts(query, cookie))
+    await dispatch(getProducts(query))
 
 })
 

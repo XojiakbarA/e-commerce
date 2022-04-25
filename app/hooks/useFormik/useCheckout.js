@@ -27,7 +27,7 @@ export const useCheckout = () => {
         },
         validationSchema: checkoutValidationSchema,
         onSubmit: (data, {setSubmitting}) => {
-            dispatch(createOrder(data, setSubmitting))
+            dispatch(createOrder(user.id, data, setSubmitting))
         },
         enableReinitialize: true
     })

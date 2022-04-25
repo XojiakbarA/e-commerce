@@ -9,6 +9,7 @@ import { toggleDeleteProfileImageDialog, toggleEditProfileDialog } from "../../a
 const EditProfileDialog = () => {
 
     const dispatch = useDispatch()
+    const user_id = useSelector(state => state.user.id)
 
     const {
         loading, text, image_id,
@@ -22,7 +23,7 @@ const EditProfileDialog = () => {
         dispatch(toggleDeleteProfileImageDialog(false, null, null))
     }
     const handleDeleteImageClick = () => {
-        dispatch(deleteUserImage(image_id))
+        dispatch(deleteUserImage(user_id, image_id))
     }
 
     return (

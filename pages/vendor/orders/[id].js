@@ -7,7 +7,7 @@ import OrderProductListItem from '../../../components/vendor/OrderProductListIte
 import { wrapper } from '../../../app/store'
 import OrderShippingAddress from '../../../components/profile/orders/OrderShippingAddress'
 import OrderDetails from '../../../components/profile/orders/OrderDetails'
-import { editOrderProducts, getSubOrder, orderShipping } from '../../../app/store/actions/async/vendor';
+import { editSubOrder, getSubOrder, orderShipping } from '../../../app/store/actions/async/vendor';
 import { useDispatch, useSelector } from 'react-redux';
 import OrderHead from '../../../components/vendor/OrderHead';
 import { useState } from 'react';
@@ -19,16 +19,16 @@ import { toggleOrderShipDialog } from '../../../app/store/actions/dialogActions'
 const Order = () => {
 
     const dispatch = useDispatch()
-    const sub_order = useSelector(state => state.subOrder)
+    const subOrder = useSelector(state => state.subOrder)
     const isLoading = useSelector(state => state.toggle.isLoading)
     const { loading, orderShipDialog } = useSelector(state => state.dialog)
 
     let editDisabled = true
-    if (sub_order.status === 'pending' && sub_order.payment_status !== 'approved') {
+    if (subOrder.status === 'pending' && subOrder.payment_status !== 'approved') {
         editDisabled = false
     }
 
-    const map = sub_order.order_products.map(product => [product.id, product.quantity])
+    const map = subOrder.order_products.map(product => [product.id, product.quantity])
 
     const obj = Object.fromEntries(map)
 
@@ -59,10 +59,10 @@ const Order = () => {
         dispatch(toggleOrderShipDialog(false))
     }
     const handleSaveClick = () => {
-        dispatch(editOrderProducts(sub_order.id, setSaveDisabled, {quantity: counts}))
+        dispatch(editSubOrder(subOrder.id, setSaveDisabled, {quantity: counts}))
     }
     const handleOrderShip = () => {
-        dispatch(orderShipping(sub_order.id, {status: 'shipped'}))
+        dispatch(orderShipping(subOrder.id, {status: 'shipped'}))
     }
 
     return (
@@ -74,19 +74,19 @@ const Order = () => {
                     buttonText='Ship'
                     buttonIcon={<LocalShippingIcon/>}
                     disabled={
-                        sub_order.status !== 'shipped' &&
-                        sub_order.status !== 'cancelled' &&
-                        sub_order.payment_status === 'approved' ? false : true}
+                        subOrder.status !== 'shipped' &&
+                        subOrder.status !== 'cancelled' &&
+                        subOrder.payment_status === 'approved' ? false : true}
                     onClick={ openOrderShipDialog }
                 />
             </Grid>
             <Grid item xs={12}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        <OrderHead order={sub_order}/>
+                        <OrderHead order={subOrder}/>
                     </Grid>
                     {
-                        sub_order.order_products.map(product => (
+                        subOrder.order_products.map(product => (
                             <Grid item xs={12} key={product.id}>
                                 <OrderProductListItem
                                     product={product}
@@ -122,10 +122,10 @@ const Order = () => {
                     <Grid item xs={12}>
                         <Grid container spacing={2}>
                             <Grid item lg={6}>
-                                <OrderShippingAddress order={sub_order}/>
+                                <OrderShippingAddress order={subOrder}/>
                             </Grid>
                             <Grid item lg={6}>
-                                <OrderDetails order={sub_order}/>
+                                <OrderDetails order={subOrder}/>
                             </Grid>
                         </Grid>
                     </Grid>

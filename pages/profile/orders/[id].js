@@ -4,7 +4,7 @@ import ProfileLayout from "../../../components/layout/ProfileLayout/ProfileLayou
 import OrderStatus from "../../../components/profile/orders/OrderStatus";
 import OrderShippingAddress from "../../../components/profile/orders/OrderShippingAddress";
 import {useDispatch, useSelector} from "react-redux";
-import {cancelOrder, getOrder} from "../../../app/store/actions/async/user";
+import {cancelSubOrder, getOrder} from "../../../app/store/actions/async/user";
 import OrderDetails from "../../../components/profile/orders/OrderDetails";
 import { wrapper } from "../../../app/store"
 import OrderProductListItem from "../../../components/profile/orders/OrderProductListItem";
@@ -26,7 +26,7 @@ const Order = () => {
         dispatch(toggleCancelOrderDialog(false, null, null))
     }
     const handleCancelOrder = () => {
-        dispatch(cancelOrder(order_id, {status: 'cancelled'}))
+        dispatch(cancelSubOrder(order_id, {status: 'cancelled'}))
     }
 
     return (

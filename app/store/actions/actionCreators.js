@@ -51,6 +51,10 @@ export const setUser = (user) => ({
     payload: user
 })
 
+export const dropUserImage = () => ({
+    type: type.DROP_USER_IMAGE
+})
+
 export const setCategories = (categories) => ({
     type: type.SET_CATEGORIES,
     payload: categories

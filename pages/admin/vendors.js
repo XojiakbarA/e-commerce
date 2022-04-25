@@ -8,7 +8,7 @@ import CustomDataGrid from '../../components/admin/DataGrid/DataGrid'
 import GridCellExpand from '../../components/admin/DataGrid/GridCellExpand'
 import RatingInput from '../../components/admin/DataGrid/RatingInput'
 import { wrapper } from '../../app/store'
-import { fetchShops } from '../../api/admin'
+import { fetchShops } from '../../api/common'
 import { shopImageURL } from '../../utils/utils'
 
 const Vendors = ( data ) => {

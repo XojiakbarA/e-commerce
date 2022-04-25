@@ -54,7 +54,3 @@ export const fetchRegions = async () => {
 export const fetchDistricts = async (id) => {
     return await instance.get(`api/regions/${id}/districts`)
 }
-
-export const fetchReviews = async (id) => {
-    return await instance.get(`api/products/${id}/reviews`)
-}

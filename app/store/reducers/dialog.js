@@ -32,8 +32,7 @@ const initialState = {
     district_id: null,
     prod_id: null,
     image_id: null,
-    banner_id: null,
-    review_id: null,
+    banner_id: null
 }
 
 const dialog = (state = initialState, action) => {
@@ -137,7 +136,7 @@ const dialog = (state = initialState, action) => {
             return {
                 ...state,
                 addReviewDialog: action.bool,
-                review_id: action.id
+                prod_id: action.id
             }
 
         case type.TOGGLE_VIEW_PRODUCT_DIALOG:

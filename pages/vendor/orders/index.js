@@ -67,7 +67,7 @@ export const getServerSideProps = wrapper.getServerSideProps(({dispatch, getStat
     }
 
     try {
-        const res = await fetchSubOrders(cookie, query)
+        const res = await fetchSubOrders(user.id, cookie, query)
         if (res.status === 200) {
             return {
                 props: {

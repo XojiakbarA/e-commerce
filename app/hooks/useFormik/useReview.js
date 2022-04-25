@@ -6,16 +6,18 @@ import { reviewValidationSchema } from "./validate"
 export const useReview = () => {
 
     const dispatch = useDispatch()
-    const {review_id} = useSelector(state => state.dialog)
+    const user_id = useSelector(state => state.user.id)
+    const product_id = useSelector(state => state.dialog.prod_id)
 
     const formik = useFormik({
         initialValues: {
             rating: '',
-            text: ''
+            text: '',
+            product_id
         },
         validationSchema: reviewValidationSchema,
         onSubmit: (data, {setSubmitting}) => {
-            dispatch(createReview(review_id, data, setSubmitting))
+            dispatch(createReview(user_id, data, setSubmitting))
         },
         enableReinitialize: true
     })
