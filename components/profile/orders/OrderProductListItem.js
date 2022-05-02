@@ -2,7 +2,6 @@ import {Box, Card, CardActionArea, Grid, IconButton, Tooltip, Typography} from "
 import AddCommentIcon from '@mui/icons-material/AddComment'
 import PhotoIcon from '@mui/icons-material/Photo'
 import BaseLink from '../../common/Link/BaseLink'
-import {productImageURL} from "../../../utils/utils"
 import { useRipple } from "../../../app/hooks/useRipple"
 import ThumbImage from "../../common/Image/ThumbImage"
 import { toggleAddReviewDialog } from "../../../app/store/actions/dialogActions"
@@ -31,8 +30,7 @@ const OrderProductListItem = ({product}) => {
                 <Grid item xs={3}>
                     <ThumbImage
                         variant='rounded'
-                        url={productImageURL}
-                        src={product.image}
+                        src={product.main_image}
                         noImageIcon={<PhotoIcon/>}
                     />
                 </Grid>

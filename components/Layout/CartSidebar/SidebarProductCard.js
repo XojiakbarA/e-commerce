@@ -4,10 +4,9 @@ import CloseIcon from '@mui/icons-material/Close'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import PhotoIcon from '@mui/icons-material/Photo'
-import { productImageURL } from '../../../utils/utils'
+import ThumbImage from '../../common/Image/ThumbImage'
 import { useRipple } from '../../../app/hooks/useRipple'
 import { useCart } from '../../../app/hooks/useCart'
-import ThumbImage from '../../common/Image/ThumbImage'
 
 const SidebarProductCard = ({product}) => {
 
@@ -49,8 +48,7 @@ const SidebarProductCard = ({product}) => {
                     </IconButton>
                 </Stack>
                 <ThumbImage
-                    url={productImageURL}
-                    src={product.image}
+                    src={product.main_image}
                     size={100}
                     variant='rounded'
                     noImageIcon={<PhotoIcon fontSize='large'/>}

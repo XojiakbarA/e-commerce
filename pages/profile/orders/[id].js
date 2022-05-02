@@ -1,17 +1,16 @@
 import {Grid} from "@mui/material";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
+import MainLayout from '../../../components/layout/MainLayout'
 import ProfileLayout from "../../../components/layout/ProfileLayout/ProfileLayout";
+import ProfilePageHead from "../../../components/common/ProfilePageHead";
 import OrderStatus from "../../../components/profile/orders/OrderStatus";
-import OrderShippingAddress from "../../../components/profile/orders/OrderShippingAddress";
+import OrderDetails from "../../../components/profile/orders/OrderDetails";
+import OrderProductListItem from "../../../components/profile/orders/OrderProductListItem";
+import AddReviewDialog from "../../../components/dialogs/AddReviewDialog";
+import ConfirmDialog from "../../../components/dialogs/ConfirmDialog";
 import {useDispatch, useSelector} from "react-redux";
 import {cancelSubOrder, getOrder} from "../../../app/store/actions/async/user";
-import OrderDetails from "../../../components/profile/orders/OrderDetails";
 import { wrapper } from "../../../app/store"
-import OrderProductListItem from "../../../components/profile/orders/OrderProductListItem";
-import ConfirmDialog from "../../../components/dialogs/ConfirmDialog";
-import MainLayout from '../../../components/layout/MainLayout'
-import AddReviewDialog from "../../../components/dialogs/AddReviewDialog";
-import ProfilePageHead from "../../../components/common/ProfilePageHead";
 import { toggleCancelOrderDialog } from "../../../app/store/actions/dialogActions";
 
 const Order = () => {
@@ -58,14 +57,7 @@ const Order = () => {
                         ))
                     }
                     <Grid item xs={12}>
-                        <Grid container spacing={2}>
-                            <Grid item lg={6}>
-                                <OrderShippingAddress order={order}/>
-                            </Grid>
-                            <Grid item lg={6}>
-                                <OrderDetails order={order}/>
-                            </Grid>
-                        </Grid>
+                        <OrderDetails order={order}/>
                     </Grid>
                 </Grid>
             </Grid>

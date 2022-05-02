@@ -4,7 +4,6 @@ import PendingIcon from '@mui/icons-material/Pending';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import PhotoIcon from '@mui/icons-material/Photo'
-import { shopImageURL } from "../../../utils/utils";
 import ThumbImage from "../../common/Image/ThumbImage";
 import { toggleCancelOrderDialog } from "../../../app/store/actions/dialogActions";
 import { useDispatch } from "react-redux";
@@ -36,7 +35,6 @@ const OrderStatus = ({subOrder}) => {
             <Stack direction='row' spacing={2} justifyContent='space-between' alignItems='center'>
                 <Stack direction='row' spacing={2} alignItems='center'>
                     <ThumbImage
-                        url={shopImageURL}
                         src={image?.src}
                         noImageIcon={<PhotoIcon/>}
                     />

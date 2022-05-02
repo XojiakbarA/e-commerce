@@ -4,7 +4,7 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import PhotoIcon from '@mui/icons-material/Photo'
 import Image from 'next/image'
-import { productImageURL } from "../../utils/utils"
+import { appURL } from "../../utils/utils"
 
 const OrderProductListItem = ({product, count, handleAddClick, handleRemoveClick, setSaveDisabled, editDisabled}) => {
 
@@ -14,11 +14,11 @@ const OrderProductListItem = ({product, count, handleAddClick, handleRemoveClick
                 <Grid item xs={3}>
                     <Avatar variant='rounded'>
                         {
-                            product.image
+                            product.main_image
                             ?
                             <Image
-                                src={productImageURL + product.image}
-                                alt={product.image}
+                                src={appURL + product.main_image}
+                                alt={product.main_image}
                                 layout='fill'
                                 objectFit='cover'
                             />

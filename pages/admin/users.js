@@ -11,7 +11,7 @@ import GridCellExpand from "../../components/admin/DataGrid/GridCellExpand"
 import DateInput from "../../components/admin/DataGrid/DateInput"
 import { wrapper } from "../../app/store"
 import { fetchUsers } from "../../api/admin"
-import { userImageURL } from "../../utils/utils"
+import { appURL } from "../../utils/utils"
 
 const Users = ( data ) => {
 
@@ -41,7 +41,7 @@ const Users = ( data ) => {
                 >
                     <Avatar
                         sx={{ width: 35, height:35, marginRight: 1 }}
-                        src={ row.image ? userImageURL + row.image.src : undefined }
+                        src={ row.image ? appURL + row.image.src : undefined }
                     />
                 </GridCellExpand>
             ),

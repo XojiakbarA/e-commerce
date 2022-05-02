@@ -9,7 +9,7 @@ import GridCellExpand from "../../components/admin/DataGrid/GridCellExpand"
 import RatingInput from "../../components/admin/DataGrid/RatingInput"
 import SwitchInput from "../../components/admin/DataGrid/SwitchInput"
 import DateInput from "../../components/admin/DataGrid/DateInput"
-import { productImageURL } from "../../utils/utils"
+import { appURL } from "../../utils/utils"
 import { wrapper } from '../../app/store'
 import { editProductPublished, getProducts } from '../../app/store/actions/async/admin'
 import { useDispatch, useSelector } from "react-redux"
@@ -55,7 +55,7 @@ const Products = () => {
                     <Avatar
                         variant='rounded'
                         sx={{ width: 35, height:35, marginRight: 1 }}
-                        src={ row.image ? productImageURL + row.image : undefined }
+                        src={ row.main_image ? appURL + row.main_image : undefined }
                     >
                         <PhotoIcon/>
                     </Avatar>

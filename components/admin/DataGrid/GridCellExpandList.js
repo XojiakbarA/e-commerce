@@ -2,7 +2,7 @@ import * as React from 'react'
 import PropTypes from 'prop-types'
 import { Avatar, List, ListItem, ListItemAvatar, ListItemText, Box, Paper, Popper } from '@mui/material'
 import PhotoIcon from '@mui/icons-material/Photo'
-import { productImageURL } from '../../../utils/utils'
+import { appURL } from '../../../utils/utils'
 
 const GridCellExpandList = React.memo(function GridCellExpand(props) {
     const { width, value, children } = props;
@@ -86,7 +86,7 @@ const GridCellExpandList = React.memo(function GridCellExpand(props) {
                                         <Avatar
                                             variant='rounded'
                                             sx={{ width: 35, height:35, marginRight: 1 }}
-                                            src={ product.image ? productImageURL + product.image : undefined }
+                                            src={ product.main_image ? appURL + product.main_image : undefined }
                                         >
                                             <PhotoIcon />
                                         </Avatar>

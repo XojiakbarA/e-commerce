@@ -1,15 +1,8 @@
-export const productImageURL = 'http://127.0.0.1:8888/e-commerce-api/public/storage/images/products/'
-export const shopImageURL = 'http://127.0.0.1:8888/e-commerce-api/public/storage/images/shops/'
-export const userImageURL = 'http://127.0.0.1:8888/e-commerce-api/public/storage/images/users/'
-export const bannerImageURL = 'http://127.0.0.1:8888/e-commerce-api/public/storage/images/banners/'
+export const appURL = 'http://127.0.0.1:8000/'
 
 export const noImageUrl = '/images/products/no_image.jpeg'
 export const noBgImageUrl = '/images/products/no-bg.jpeg'
 export const noAvImageUrl = '/images/products/no-av.jpeg'
-
-export const imageLoader = ({src}) => {
-    return 'http://127.0.0.1:8888/e-commerce-api/public/storage/images/' + src
-}
 
 export const stringToArray = (str) => {
     return str.split(',').map(item => Number(item))

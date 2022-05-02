@@ -1,5 +1,5 @@
 import { Box, Button, CircularProgress, Stack, TextField } from "@mui/material"
-import {userImageURL} from "../../utils/utils"
+import { appURL } from "../../utils/utils"
 import PhoneMaskInput from "../common/Input/PhoneMaskInput"
 import AvatarUpload from "../common/UploadButton/AvatarUpload"
 import CustomDataPicker from "../admin/DataGrid/CustomDataPicker"
@@ -34,7 +34,7 @@ const EditProfileForm = () => {
                         handleDeleteImage={ openDeleteProfileImageDialog }
                         name='image'
                         preview={preview}
-                        src={user.image ? userImageURL + user.image.src : undefined}
+                        src={user.image ? appURL + user.image.src : undefined}
                         size={70}
                     />
                 </Box>

@@ -4,7 +4,6 @@ import BaseLink from '../../Link/BaseLink'
 import ThumbImage from '../../Image/ThumbImage'
 import ProductCardButtons from './ProductCardButtons'
 import ProductDetails from './ProductDetails'
-import { productImageURL } from '../../../../utils/utils'
 
 const ProductCard = ({product, listView}) => {
 
@@ -22,8 +21,7 @@ const ProductCard = ({product, listView}) => {
                 component={BaseLink}
             >
                 <ThumbImage
-                    url={productImageURL}
-                    src={product.image}
+                    src={product.main_image}
                     style={style.image}
                     variant='rounded'
                     noImageIcon={<PhotoIcon fontSize='large'/>}

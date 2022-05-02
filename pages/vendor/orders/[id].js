@@ -1,20 +1,19 @@
 import { Button, CircularProgress, Grid } from '@mui/material'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping'
 import SaveIcon from '@mui/icons-material/Save'
+import MainLayout from '../../../components/layout/MainLayout'
 import ProfileLayout from "../../../components/layout/ProfileLayout/ProfileLayout"
-import OrderProductListItem from '../../../components/vendor/OrderProductListItem'
-import { wrapper } from '../../../app/store'
-import OrderShippingAddress from '../../../components/profile/orders/OrderShippingAddress'
+import ProfilePageHead from '../../../components/common/ProfilePageHead'
+import OrderHead from '../../../components/vendor/OrderHead'
 import OrderDetails from '../../../components/profile/orders/OrderDetails'
-import { editSubOrder, getSubOrder, orderShipping } from '../../../app/store/actions/async/vendor';
-import { useDispatch, useSelector } from 'react-redux';
-import OrderHead from '../../../components/vendor/OrderHead';
+import OrderProductListItem from '../../../components/vendor/OrderProductListItem'
+import ConfirmDialog from '../../../components/dialogs/ConfirmDialog'
+import { wrapper } from '../../../app/store'
+import { editSubOrder, getSubOrder, orderShipping } from '../../../app/store/actions/async/vendor'
+import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react';
-import ProfilePageHead from '../../../components/common/ProfilePageHead';
-import MainLayout from '../../../components/layout/MainLayout';
-import ConfirmDialog from '../../../components/dialogs/ConfirmDialog';
-import { toggleOrderShipDialog } from '../../../app/store/actions/dialogActions';
+import { toggleOrderShipDialog } from '../../../app/store/actions/dialogActions'
 
 const Order = () => {
 
@@ -120,14 +119,7 @@ const Order = () => {
                         </Button>
                     </Grid>
                     <Grid item xs={12}>
-                        <Grid container spacing={2}>
-                            <Grid item lg={6}>
-                                <OrderShippingAddress order={subOrder}/>
-                            </Grid>
-                            <Grid item lg={6}>
-                                <OrderDetails order={subOrder}/>
-                            </Grid>
-                        </Grid>
+                        <OrderDetails order={subOrder}/>
                     </Grid>
                 </Grid>
             </Grid>

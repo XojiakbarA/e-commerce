@@ -1,6 +1,6 @@
 import { Button, Grid, Box, Typography, Stack, Card } from '@mui/material'
 import Image from 'next/image'
-import { bannerImageURL } from '../../../utils/utils'
+import { appURL } from '../../../utils/utils'
 
 const BannerItem = ({banner}) => {
     return (
@@ -31,7 +31,7 @@ const BannerItem = ({banner}) => {
                         }}
                     >
                         <Image
-                            src={bannerImageURL + banner.image}
+                            src={appURL + banner.image}
                             alt={banner.image}
                             layout='fill'
                             objectFit='cover'

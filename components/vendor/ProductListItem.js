@@ -3,7 +3,6 @@ import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import PhotoIcon from '@mui/icons-material/Photo'
-import { productImageURL } from "../../utils/utils"
 import ThumbImage from "../common/Image/ThumbImage"
 import { toggleDeleteProductDialog, toggleEditProductDialog, toggleViewProductDialog } from "../../app/store/actions/dialogActions"
 import { useDispatch } from "react-redux"
@@ -40,8 +39,7 @@ const ProductListItem = ({ product }) => {
                 <Grid item xs display='flex' justifyContent='center'>
                     <ThumbImage
                         variant="rounded"
-                        url={productImageURL}
-                        src={product.image}
+                        src={product.main_image}
                         noImageIcon={<PhotoIcon/>}
                     />
                 </Grid>

@@ -3,7 +3,7 @@ import PhotoIcon from '@mui/icons-material/Photo'
 import Image from 'next/image'
 import ThumbImage from '../../../common/Image/ThumbImage'
 import BaseLink from '../../Link/BaseLink'
-import { shopImageURL, noBgImageUrl } from '../../../../utils/utils'
+import { noBgImageUrl, appURL } from '../../../../utils/utils'
 
 const styles = {
     card: {
@@ -47,7 +47,7 @@ const ShopCard = ({shop}) => {
                 <CardMedia sx={styles.cardMedia}>
                     <Box sx={{position: 'relative', width: '100%', height: '100%'}}>
                         <Image
-                            src={shop.bg_image_small ? shopImageURL + shop.bg_image_small.src : noBgImageUrl}
+                            src={shop.bg_image_small ? appURL + shop.bg_image_small.src : noBgImageUrl}
                             alt={shop.title}
                             layout='fill'
                             priority
@@ -66,7 +66,6 @@ const ShopCard = ({shop}) => {
                 </CardContent>
                 <CardActions sx={styles.cardActions}>
                     <ThumbImage
-                        url={shopImageURL}
                         src={shop.av_image?.src}
                         noImageIcon={<PhotoIcon/>}
                     />

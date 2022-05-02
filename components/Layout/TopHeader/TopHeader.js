@@ -15,7 +15,6 @@ import ButtonLink from '../../common/Link/ButtonLink'
 import DropdownMenu from '../../common/Menu/DropdownMenu'
 import { userLogout } from '../../../app/store/actions/async/user'
 import ThumbImage from '../../common/Image/ThumbImage'
-import { userImageURL } from '../../../utils/utils'
 import { toggleAccountMenu, toggleCartSidebar } from '../../../app/store/actions/actionCreators'
 import { toggleLoginDialog } from '../../../app/store/actions/dialogActions'
 
@@ -64,7 +63,7 @@ const TopHeader = () => {
             title: 'Account',
             onClick: handleAccount,
             badgeContent: 0,
-            icon: user ? <ThumbImage url={userImageURL} src={user.image?.src} size={35}/> : <AccountCircle fontSize='large'/>,
+            icon: user ? <ThumbImage src={user.image?.src} size={35}/> : <AccountCircle fontSize='large'/>,
             href: null,
             component: null
         },

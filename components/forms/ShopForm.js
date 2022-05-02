@@ -5,7 +5,7 @@ import AvatarUpload from '../common/UploadButton/AvatarUpload'
 import ImageUpload from '../common/UploadButton/ImageUpload'
 import PhoneMaskInput from '../common/Input/PhoneMaskInput'
 import AutocompleteInput from '../../components/common/Input/AutocompleteInput'
-import { shopImageURL } from '../../utils/utils'
+import { appURL } from '../../utils/utils'
 import { useLocation } from '../../app/hooks/useLocation'
 import { useDoublePreview } from '../../app/hooks/usePreview/useDoublePreview'
 import { useShop } from '../../app/hooks/useFormik/useShop'
@@ -37,7 +37,7 @@ const ShopForm = ({ onSubmit, shop }) => {
                     handleDeleteImage={handleBgDeleteImage}
                     name='bg_image'
                     preview={preview.bg_image}
-                    src={shop?.bg_image_big ? shopImageURL + shop.bg_image_big.src : undefined}
+                    src={shop?.bg_image_big ? appURL + shop.bg_image_big.src : undefined}
                     height={200}
                 />
                 <CardContent sx={{position: 'relative'}}>
@@ -48,7 +48,7 @@ const ShopForm = ({ onSubmit, shop }) => {
                         handleDeleteImage={handleAvDeleteImage}
                         name='av_image'
                         preview={preview.av_image}
-                        src={shop?.av_image ? shopImageURL + shop.av_image.src : undefined}
+                        src={shop?.av_image ? appURL + shop.av_image.src : undefined}
                         size={50}
                     />
                     <Grid container spacing={2}>

@@ -5,7 +5,7 @@ import AddIcon from '@mui/icons-material/Add'
 import DeleteIcon from '@mui/icons-material/Delete'
 import AutocompleteInput from "../common/Input/AutocompleteInput"
 import MultipleImageUpload from "../common/UploadButton/MultipleImageUpload"
-import { productImageURL } from "../../utils/utils"
+import { appURL } from "../../utils/utils"
 import { useMultiPreview } from "../../app/hooks/usePreview/useMultiPreview"
 import { useFieldProduct } from "../../app/hooks/useFieldProduct"
 import { useProduct } from "../../app/hooks/useFormik/useProduct"
@@ -121,7 +121,7 @@ const ProductForm = ({ onSubmit, product }) => {
                                             }
                                         >
                                             <Avatar
-                                                src={productImageURL + image.src}
+                                                src={appURL + image.src}
                                                 alt={image.src}
                                                 variant="rounded"
                                                 sx={{width: 200, height: 200}}

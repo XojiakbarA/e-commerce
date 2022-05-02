@@ -1,7 +1,6 @@
 import {AvatarGroup, Card, CardActionArea, Chip, Grid, Typography} from "@mui/material";
 import PhotoIcon from '@mui/icons-material/Photo'
 import BaseLink from '../common/Link/BaseLink';
-import {productImageURL} from "../../utils/utils";
 import { useRouter } from "next/router";
 import ThumbImage from '../common/Image/ThumbImage'
 
@@ -28,8 +27,7 @@ const OrderListItem = ({order}) => {
                                 order.order_products.map(product => (
                                     <ThumbImage
                                         key={product.id}
-                                        url={productImageURL}
-                                        src={product.image}
+                                        src={product.main_image}
                                         noImageIcon={<PhotoIcon/>}
                                     />
                                 ))

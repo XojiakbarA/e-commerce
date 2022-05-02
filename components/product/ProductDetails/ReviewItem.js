@@ -1,5 +1,4 @@
 import {Box, Stack, Typography, Rating} from '@mui/material'
-import { userImageURL } from '../../../utils/utils'
 import ThumbImage from '../../common/Image/ThumbImage'
 
 const ReviewItem = ({review}) => {
@@ -7,7 +6,6 @@ const ReviewItem = ({review}) => {
         <Box marginBottom={4}>
             <Stack direction='row' spacing={2} alignItems='center' marginBottom={1}>
                 <ThumbImage
-                    url={userImageURL}
                     src={review.user_image?.src}
                     size={35}
                 />

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Box, Grid } from "@mui/material"
 import Image from 'next/image'
 import GalleryButtons from "./GalleryButtons"
-import { productImageURL } from "../../../../utils/utils"
+import { appURL } from "../../../../utils/utils"
 
 const ProductGallery = ({images}) => {
 
@@ -29,7 +29,7 @@ const ProductGallery = ({images}) => {
             <Grid item lg={12}>
                 <Box borderRadius={5} overflow='hidden' width={500} height={625}>
                     <Image
-                        src={productImageURL + src}
+                        src={appURL + src}
                         alt={src}
                         width={500}
                         height={625}

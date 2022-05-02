@@ -4,9 +4,8 @@ import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import PhotoIcon from '@mui/icons-material/Photo'
 import BaseLink from '../../Link/BaseLink'
-import { productImageURL } from '../../../../utils/utils'
-import { useCart } from '../../../../app/hooks/useCart'
 import ThumbImage from '../../Image/ThumbImage'
+import { useCart } from '../../../../app/hooks/useCart'
 
 const CartProductCard = ({product}) => {
 
@@ -20,8 +19,7 @@ const CartProductCard = ({product}) => {
                 sx={{display: 'flex', justifyContent: 'space-between', height: '100%'}}
             >
                 <ThumbImage
-                    url={productImageURL}
-                    src={product.image}
+                    src={product.main_image}
                     size={120}
                     variant='rounded'
                     noImageIcon={<PhotoIcon fontSize='large'/>}

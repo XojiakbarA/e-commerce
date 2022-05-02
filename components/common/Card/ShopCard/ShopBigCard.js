@@ -1,6 +1,6 @@
 import { Avatar, Card, Box, CardContent, CardMedia, Rating, Stack, Typography } from "@mui/material"
 import Image from 'next/image'
-import { shopImageURL, noBgImageUrl } from "../../../../utils/utils"
+import { noBgImageUrl, appURL } from "../../../../utils/utils"
 
 const ShopBigCard = ({shop}) => {
     return (
@@ -8,7 +8,7 @@ const ShopBigCard = ({shop}) => {
             <CardMedia sx={{width: '100%', height: 200}}>
                 <Box sx={{position: 'relative', width: '100%', height: '100%'}}>
                     <Image
-                        src={shop.bg_image_big ? shopImageURL + shop.bg_image_big.src : noBgImageUrl}
+                        src={shop.bg_image_big ? appURL + shop.bg_image_big.src : noBgImageUrl}
                         alt={shop.title}
                         layout="fill"
                         priority
@@ -19,7 +19,7 @@ const ShopBigCard = ({shop}) => {
             <CardContent>
                 <Stack direction='row' spacing={5} alignItems='center'>
                     <Avatar
-                        src={shop.av_image ? shopImageURL + shop.av_image.src : undefined}
+                        src={shop.av_image ? appURL + shop.av_image.src : undefined}
                         alt={shop.title}
                         sx={{
                             width: 80,

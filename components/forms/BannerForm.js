@@ -3,7 +3,7 @@ import AddIcon from '@mui/icons-material/Add'
 import SaveIcon from '@mui/icons-material/Save'
 import DeleteIcon from '@mui/icons-material/Delete'
 import ImageUpload from '../common/UploadButton/ImageUpload'
-import { bannerImageURL } from "../../utils/utils"
+import { appURL } from "../../utils/utils"
 import { useBanner } from "../../app/hooks/useFormik/useBanner"
 import { useSinglePreview } from "../../app/hooks/usePreview/useSinglePreview"
 import { toggleDeleteBannerDialog } from "../../app/store/actions/dialogActions"
@@ -57,7 +57,7 @@ const BannerForm = ({ banner, onSubmit }) => {
                         handleDeleteImage={handleDeleteImageClick}
                         name='image'
                         preview={preview}
-                        src={banner?.image ? bannerImageURL + banner?.image : undefined}
+                        src={banner.image ? appURL + banner.image : undefined}
                         width={200}
                         height={200}
                     />

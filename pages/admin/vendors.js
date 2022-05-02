@@ -9,7 +9,7 @@ import GridCellExpand from '../../components/admin/DataGrid/GridCellExpand'
 import RatingInput from '../../components/admin/DataGrid/RatingInput'
 import { wrapper } from '../../app/store'
 import { fetchShops } from '../../api/common'
-import { shopImageURL } from '../../utils/utils'
+import { appURL } from '../../utils/utils'
 
 const Vendors = ( data ) => {
 
@@ -39,7 +39,7 @@ const Vendors = ( data ) => {
                 >
                     <Avatar
                         sx={{ width: 35, height:35, marginRight: 1 }}
-                        src={ row.av_image ? shopImageURL + row.av_image.src : undefined }
+                        src={ row.av_image ? appURL + row.av_image.src : undefined }
                     >
                         <PhotoIcon/>
                     </Avatar>

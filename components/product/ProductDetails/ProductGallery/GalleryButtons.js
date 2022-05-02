@@ -1,6 +1,6 @@
 import { ButtonBase, Stack } from '@mui/material'
 import Image from 'next/image'
-import { productImageURL } from '../../../../utils/utils'
+import { appURL } from '../../../../utils/utils'
 
 const GalleryButtons = ({state, images, handleClick}) => {
 
@@ -23,7 +23,7 @@ const GalleryButtons = ({state, images, handleClick}) => {
                         }}
                     >
                         <Image
-                            src={productImageURL + image.src}
+                            src={appURL + image.src}
                             alt={image.src}
                             width={100}
                             height={125}

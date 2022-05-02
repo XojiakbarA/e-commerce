@@ -9,7 +9,7 @@ import GridCellExpand from "../../components/admin/DataGrid/GridCellExpand"
 import GridCellExpandList from "../../components/admin/DataGrid/GridCellExpandList"
 import { wrapper } from "../../app/store"
 import { fetchOrders } from "../../api/admin"
-import { productImageURL } from "../../utils/utils"
+import { appURL } from "../../utils/utils"
 
 const Orders = (data) => {
 
@@ -154,7 +154,7 @@ const Orders = (data) => {
                                 <Avatar
                                     sx={{ width: 35, height:35 }}
                                     key={product.id}
-                                    src={product.image ? productImageURL + product.image : undefined}
+                                    src={product.main_image ? appURL + product.main_image : undefined}
                                 >
                                     <PhotoIcon/>
                                 </Avatar>
